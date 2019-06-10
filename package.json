@@ -1,0 +1,12 @@
+{
+  "name": "vue-luck-draw",
+  "version": "1.0.4",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ldq <17778888138@189.cn>",
+  "license": "ISC"
+}
