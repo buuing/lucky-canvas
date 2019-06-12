@@ -93,7 +93,7 @@ export default {
       for (let i = 0; i < awards.length; i++) {
         ctx.save()
         ctx.beginPath()
-        ctx.fillStyle = awards[i].color
+        ctx.fillStyle = awards[i].color || i % 2 == 0 ? '#f8d384' : '#f9e3bb'
         ctx.moveTo(this.radius, this.radius)
         ctx.arc(this.radius, this.radius, this.radius - 20, startRadian, endRadian, false)
         ctx.fill()
