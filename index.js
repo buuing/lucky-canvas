@@ -1,7 +1,1 @@
-import LuckDraw from './LuckDraw'
-
-export default {
-  install (Vue, options) {
-    Vue.component('LuckDraw', LuckDraw)
-  }
-}
+module.exports = require('./dist/vue-luck-draw.common.js')
