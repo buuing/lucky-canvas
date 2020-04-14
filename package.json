@@ -1,10 +1,10 @@
 {
   "name": "vue-luck-draw",
-  "version": "1.0.8",
+  "version": "1.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "package": "vue-cli-service build --target lib --name vue-luck-draw ./src/components/vue-luck-draw/src/index.js"
+    "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
   "keywords": [],
   "author": "ldq <17778888138@189.cn>",
