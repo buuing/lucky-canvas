@@ -2467,12 +2467,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"04d38efe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=e2c4d794&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{attrs:{"id":"canvas"}})}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"75ca8044-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=78af948f&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{staticClass:"ldq-luck",attrs:{"id":"canvas"}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=e2c4d794&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=78af948f&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.fill.js
 var es_array_fill = __webpack_require__("cb29");
@@ -2518,8 +2518,9 @@ var web_dom_collections_for_each = __webpack_require__("159b");
       ctx: '',
       startRadian: 0,
       // 初始角度
-      canBeClick: true // 控制抽奖进行中不让再抽奖
-
+      canBeClick: true,
+      // 控制抽奖进行中不让再抽奖
+      currIndex: this.value
     };
   },
   props: {
@@ -2613,6 +2614,11 @@ var web_dom_collections_for_each = __webpack_require__("159b");
       default: '#d64737'
     } // 边框颜色
 
+  },
+  watch: {
+    value: function value(val) {
+      this.currIndex = val;
+    }
   },
   mounted: function mounted() {
     this.initCanvas();
@@ -2713,6 +2719,34 @@ var web_dom_collections_for_each = __webpack_require__("159b");
         y: y - canvasPostion.top
       };
     },
+    play: function play(index, e) {
+      // 开始游戏的方法
+      var dom = document.querySelector('.ldq-luck');
+      var canvas = this.canvas;
+      var ctx = this.ctx;
+      if (index < 0 || index >= this.awards.length) console.error('该索引的奖品不存在!');
+      if (!this.canBeClick || index < 0 || index >= this.awards.length) return false;
+      this.currIndex = index;
+      this.canBeClick = false;
+      var loc = e ? this.windowToCanvas(canvas, e) : {
+        // 模拟点击坐标
+        x: dom.offsetWidth / 2,
+        y: dom.offsetHeight / 2
+      };
+      ctx.beginPath();
+      ctx.arc(this.radius, this.radius, 50, 0, Math.PI * 2, false);
+
+      if (ctx.isPointInPath(loc.x, loc.y)) {
+        this.$emit('start'); // 每次点击抽奖，都将初始化角度重置
+
+        this.startRadian = -Math.floor(Math.random() * 180); // distance是计算出的将指定奖品旋转到指针处需要旋转的角度距离，distanceToStop下面会又说明
+
+        var distance = this.distanceToStop();
+        this.rotatePanel(distance);
+      } else {
+        this.canBeClick = true;
+      }
+    },
     // 初始化
     startRotate: function startRotate() {
       var _this2 = this;
@@ -2722,28 +2756,7 @@ var web_dom_collections_for_each = __webpack_require__("159b");
       var canvasStyle = canvas.getAttribute('style');
       this.render();
       canvas.addEventListener('mousedown', function (e) {
-        // 只要抽奖没有结束，就不让再次抽奖
-        if (_this2.value < 0 || _this2.value >= _this2.awards.length) console.error('该索引的奖品不存在!');
-        if (!_this2.canBeClick || _this2.value < 0 || _this2.value >= _this2.awards.length) return false;
-        _this2.canBeClick = false;
-
-        var loc = _this2.windowToCanvas(canvas, e);
-
-        ctx.beginPath();
-        ctx.arc(_this2.radius, _this2.radius, 50, 0, Math.PI * 2, false);
-
-        if (ctx.isPointInPath(loc.x, loc.y)) {
-          _this2.$emit('start'); // 每次点击抽奖，都将初始化角度重置
-
-
-          _this2.startRadian = -Math.floor(Math.random() * 180); // distance是计算出的将指定奖品旋转到指针处需要旋转的角度距离，distanceToStop下面会又说明
-
-          var distance = _this2.distanceToStop();
-
-          _this2.rotatePanel(distance);
-        } else {
-          _this2.canBeClick = true;
-        }
+        return _this2.play(_this2.currIndex, e);
       });
       canvas.addEventListener('mousemove', function (e) {
         var loc = _this2.windowToCanvas(canvas, e);
@@ -2765,7 +2778,7 @@ var web_dom_collections_for_each = __webpack_require__("159b");
       this.startRadian += changeRadian; // 当最后的目标距离与startRadian之间的差距低于0.05时，就默认奖品抽完了，可以继续抽下一个了。
 
       if (distance - this.startRadian <= 0.05) {
-        this.$emit('end', this.value);
+        this.$emit('end', this.currIndex);
         return this.canBeClick = true;
       }
 
@@ -2828,7 +2841,7 @@ var web_dom_collections_for_each = __webpack_require__("159b");
         return awardRadian * index + (awardRadian * (index + 1) - awardRadian * index) / 2;
       }); // 此次抽奖应该中的奖品
 
-      var currentPrizeIndex = this.value;
+      var currentPrizeIndex = this.currIndex;
       middleDegrees = awardsToDegreesList[currentPrizeIndex]; // 因为指针是垂直向上的，相当坐标系的Math.PI/2,所以这里要进行判断来移动角度
 
       distance = Math.PI * 3 / 2 - middleDegrees;

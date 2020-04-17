@@ -27,6 +27,7 @@ Vue.use(LuckDraw)
 <template>
   <div id="app">
     <LuckDraw
+      ref="luckDraw"
       v-model="currIndex"
       :awards="awards"
       @start="handleStart"
@@ -53,6 +54,9 @@ export default {
     }
   },
   methods: {
+    toPlay () { // 新增异步抽奖
+      this.$refs.luckDraw.play(3)
+    },
     handleStart () {
       console.log('开始抽奖')
     },
@@ -64,6 +68,10 @@ export default {
 </script>
 ```
 
+> 增加异步抽奖方法 `this.$refs.luckDraw.play(中奖的索引)`
+
+<br />
+
 > 但我提供了更多可配置的参数, 比如:
 
 ```html
@@ -71,6 +79,7 @@ export default {
   <div id="app">
     <!-- 以下是默认配置参数, 可以根据个人需要进行修改 -->
     <LuckDraw
+      ref="luckDraw"
       v-model="currIndex"
       :awards="awards"
       :rate="rate"
