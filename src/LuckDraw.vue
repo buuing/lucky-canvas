@@ -183,6 +183,7 @@ export default {
       this.startRadian += changeRadian
       // 当最后的目标距离与startRadian之间的差距低于0.05时，就默认奖品抽完了，可以继续抽下一个了。
       if (distance - this.startRadian <= 0.05) {
+        this.$emit('input', this.currIndex)
         this.$emit('end', this.currIndex)
         return this.canBeClick = true
       }
