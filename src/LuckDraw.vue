@@ -14,6 +14,7 @@ export default {
     }
   },
   props: {
+    async: { type: Boolean, default: false },              // 开启异步抽奖
     value: { type: Number, default: 0 },                   // 中奖的索引
     awards: { type: Array, default: [] },                  // 奖品数组
     rate: { type: Number, default: 80 },                   // 转盘速率
@@ -163,7 +164,11 @@ export default {
       const ctx = this.ctx
       const canvasStyle = canvas.getAttribute('style');
       this.render()
-      canvas.addEventListener('mousedown', e => this.play(this.currIndex, e))
+      if (this.async) {
+        canvas.addEventListener('mousedown', e => this.$emit('before-start'))
+      } else {
+        canvas.addEventListener('mousedown', e => this.play(this.currIndex, e))
+      }
       canvas.addEventListener('mousemove', e => {
         let loc = this.windowToCanvas(canvas, e)
         ctx.beginPath()
