@@ -2467,12 +2467,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0f64ee7b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=70df1598&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"29e9d844-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=4a2c4c20&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{staticClass:"ldq-luck",attrs:{"id":"canvas"}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=70df1598&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=4a2c4c20&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.fill.js
 var es_array_fill = __webpack_require__("cb29");
@@ -2524,6 +2524,11 @@ var web_dom_collections_for_each = __webpack_require__("159b");
     };
   },
   props: {
+    async: {
+      type: Boolean,
+      default: false
+    },
+    // 开启异步抽奖
     value: {
       type: Number,
       default: 0
@@ -2755,9 +2760,17 @@ var web_dom_collections_for_each = __webpack_require__("159b");
       var ctx = this.ctx;
       var canvasStyle = canvas.getAttribute('style');
       this.render();
-      canvas.addEventListener('mousedown', function (e) {
-        return _this2.play(_this2.currIndex, e);
-      });
+
+      if (this.async) {
+        canvas.addEventListener('mousedown', function (e) {
+          return _this2.$emit('before-start');
+        });
+      } else {
+        canvas.addEventListener('mousedown', function (e) {
+          return _this2.play(_this2.currIndex, e);
+        });
+      }
+
       canvas.addEventListener('mousemove', function (e) {
         var loc = _this2.windowToCanvas(canvas, e);
 

@@ -29,8 +29,8 @@ Vue.use(LuckDraw)
     <LuckDraw
       ref="luckDraw"
       v-model="currIndex"
-      :async="async"
       :awards="awards"
+      :async="true"
       @before-start="handleBeforeStart"
       @start="handleStart"
       @end="handleEnd"
@@ -43,7 +43,6 @@ export default {
   data () {
     return {
       currIndex: 0, // 奖品的索引
-      async: true,  // 开启异步抽奖
       awards: [     // 奖品
         { name: '价值5988元华为 P30pro', color: '#f9e3bb' },
         { name: '价值398元车载空气净化器', color: '#f8d384' },
@@ -58,7 +57,9 @@ export default {
   },
   methods: {
     handleBeforeStart () { // 新增异步抽奖
-      this.$refs.luckDraw.play(3)
+      setTimeout(() => {
+        this.$refs.luckDraw.play(3)
+      }, 3000)
     },
     handleStart () {
       console.log('开始抽奖')
