@@ -1,7 +1,7 @@
 
 // 绘制圆角矩形
 export const roundRect = (ctx, x, y, w, h, r, color) => {
-  if (r > w / 2) r = w
+  if (r > w / 2) r = w / 2
   ctx.beginPath()
   ctx.fillStyle = color
   ctx.moveTo(x + r, y)
