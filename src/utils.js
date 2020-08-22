@@ -1,4 +1,12 @@
-
+/**
+ * 判断是否是期望的类型
+ * @param { any } param 将要判断的变量
+ * @param { string } type 期望的的类型
+ * @return { boolean } 返回期望是否正确
+ */
+export const isExpectType = (param, type) => {
+  return Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type
+}
 // 绘制圆角矩形
 export const roundRect = (ctx, x, y, w, h, r, color) => {
   if (r > w / 2) r = w / 2
