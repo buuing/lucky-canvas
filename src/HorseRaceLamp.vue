@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import { roundRect, isExpectType } from './utils.js'
+import { roundRect, isExpectType, computePadding } from './utils.js'
 export default {
   name: 'HorseRaceLamp',
   props: {
+    // 默认配置项
     options: {
       type: Object,
       required: true,
@@ -22,21 +23,22 @@ export default {
         return true
       }
     },
-    // 关于宽度
-    outBoxPadding: { type: Number, default: 30 }, // 外边框宽度
-    insideBoxPadding: { type: Number, default: 10 }, // 内边框宽度
-    prizeGutter: { type: Number, default: 5 }, // 奖品格子之间间隔
-    // 关于颜色
-    outBoxColor: { type: String, default: '#1a4ebf' }, // 外边框颜色
-    insideBoxColor: { type: String, default: '#399eee' }, // 内边框颜色
-    prizeBgColor: { type: String, default: '#3e45ba' }, // 奖品区域背景颜色
-    btnBgColor: { type: String, default: '#f2c001' }, // 抽奖按钮背景颜色
-    activeColor: { type: String, default: '#ff8c3e' }, // 中奖标记颜色
-    // 关于半径
-    outRadius: { type: Number, default: 30 }, // 外圆角半径
-    insideRadius: { type: Number, default: 20 }, // 内圆角半径
-    prizeRadius: { type: Number, default: 20 }, // 奖品格子圆角半径
-    btnRadius: { type: Number, default: Infinity }, // 抽奖按钮圆角半径
+    // 横向等分成cols个格子
+    cols: { type: Number, default: 3 },
+    // 纵向等分成rows个格子
+    rows: { type: Number, default: 3 },
+    // 格子之间的间隔
+    cellGutter: { type: Number, default: 10 },
+    // 格子背景颜色
+    cellBackground: { type: String, default: '#fff' },
+    // 中奖标记颜色
+    activeBackground: { type: String, default: '#ff8c3e' },
+    // 默认字体颜色
+    fontColor: { type: String, default: '#000' },
+    // 默认字体样式
+    fontStyle: { type: String, default: '18px sans-serif' },
+    // 格子圆角半径
+    cellRadius: { type: Number, default: 20 },
   },
   data () {
     return {
@@ -46,27 +48,39 @@ export default {
       prizeIndex: undefined, // 中奖索引
       timer: null, // 游走时间id
       speed: 0, // 速度
-      boxWidth: 0, // canvas宽度
-      prizeAxis: [ // 奖品坐标
-        [0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]
-      ],
+      prizeArea: {}, // 奖品区域信息
       prizeImgs: [], // 奖品图片
       btnImgs: [], // 按钮图片
     }
   },
   mounted () {
-    this.initCanvas()
-    document.addEventListener('resize', this.initCanvas)
+    this.init()
+    document.addEventListener('resize', this.init)
   },
   methods: {
-    async initCanvas () {
+    async init () {
       const options = this.options
       const box = document.querySelector('.ldq-canvas-box')
       const canvas = document.querySelector('#canvas')
-      this.boxWidth = box.offsetWidth
-      canvas.width = canvas.height = this.boxWidth
+      this.boxWidth = canvas.width = box.offsetWidth
+      this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
-      // 初始化图片
+      // 计算所有边框信息
+      this.blockData = []
+      this.prizeArea = options.block.reduce(({x, y, w, h}, block) => {
+        const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
+        this.blockData.push([x, y, w, h, block.radius, block.background])
+        return {
+          x: x + paddingLeft,
+          y: y + paddingTop,
+          w: w - paddingLeft - paddingRight,
+          h: h - paddingTop - paddingBottom
+        }
+      }, { x: 0, y: 0, w: this.boxWidth, h: this.boxHeight })
+      // 计算单一奖品格子的宽度和高度
+      this.prizeWidth = (this.prizeArea.w - this.cellGutter * (this.cols - 1)) / this.cols
+      this.prizeHeight = (this.prizeArea.h - this.cellGutter * (this.rows - 1)) / this.rows
+      // 提前加载图片, 并处理默认赋值
       let num = 0, sum = 0
       // 图片加载回调函数
       const onloadCallBack = () => {
@@ -76,29 +90,23 @@ export default {
         // 开始首次渲染
         this.draw()
         // 自动游走
-        this.walk()
+        // this.walk()
         // 点击按钮开始
-        canvas.addEventListener('mousedown', e => {
-          const [x, y] = this.getCoordinate([1, 1])
-          if (
-            e.offsetX < x ||
-            e.offsetY < y ||
-            e.offsetX > x + this.prizeWidth ||
-            e.offsetY > y + this.prizeWidth
-          ) return false
-          this.play()
-        })
+        // canvas.addEventListener('mousedown', e => {
+        //   const [x, y] = this.getGeometricProperty([1, 1])
+        //   if (
+        //     e.offsetX < x ||
+        //     e.offsetY < y ||
+        //     e.offsetX > x + this.prizeWidth ||
+        //     e.offsetY > y + this.prizeWidth
+        //   ) return false
+        //   this.play()
+        // })
       }
-      // 添加按钮图片
-      options.button.imgs.forEach(img => {
-        sum++
-        const currImg = new Image()
-        this.btnImgs.push(currImg)
-        currImg.src = img.src
-        currImg.onload = onloadCallBack
-      })
-      // 添加奖品图片
       options.prizes.forEach((prize, index) => {
+        prize.col = prize.col || 1
+        prize.row = prize.row || 1
+        // 图片预加载
         this.prizeImgs[index] = []
         prize.imgs.forEach(img => {
           sum++
@@ -108,6 +116,89 @@ export default {
           currImg.onload = onloadCallBack
         })
       })
+    },
+    // 绘制九宫格抽奖
+    draw () {
+      const { ctx, options } = this
+      // 清空画布
+      ctx.fillStyle = '#fff'
+      ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
+      // 绘制所有边框
+      this.blockData.forEach(info => roundRect(ctx, ...info))
+      // 绘制所有格子
+      options.prizes.forEach((prize, index) => {
+        let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
+        // 绘制阴影, 防止有人声明多个阴影, 所以截取逗号前的字符串
+        const shadow = prize.shadow ? prize.shadow.replace(/px/g, '').split(',')[0].split(' ').map((n, i) => {
+          // 把前三个数值转换成数字
+          return i === 3 ? n : ~~n
+        }) : []
+        if (shadow.length === 4) {
+          ctx.shadowColor = shadow[3]
+          ctx.shadowOffsetX = shadow[0]
+          ctx.shadowOffsetY = shadow[1]
+          ctx.shadowBlur = shadow[2]
+          // 修正格子的位置, 这里使用逗号运算符
+          shadow[0] > 0 ? (width -= shadow[0]) : (width += shadow[0], x -= shadow[0])
+          shadow[1] > 0 ? (height -= shadow[1]) : (height += shadow[1], y -= shadow[1])
+        } else console.error('shadow阴影属性只允许有4个值: \n1.水平位置(允许负值)\n2.垂直位置(允许负值)\n3.模糊程度(0等于不模糊)\n4.阴影的颜色')
+        // 绘制背景
+        roundRect(ctx, x, y, width, height, prize.radius || this.cellRadius, prize.background || this.prizeBackground)
+        // 清空阴影
+        ctx.shadowColor = 'rgba(255, 255, 255, 0)'
+        ctx.shadowOffsetX = 0
+        ctx.shadowOffsetY = 0
+        ctx.shadowBlur = 0
+        // 绘制图片
+        prize.imgs.forEach((imgInfo, i) => {
+          ctx.drawImage(this.prizeImgs[index][i], x, y)
+        })
+        // 绘制文字
+        prize.font.forEach(font => {
+          font.text.split('\n').forEach((line, index) => {
+            ctx.beginPath()
+            ctx.font = font.style || this.fontStyle
+            ctx.fillStyle = font.color || this.fontColor
+            ctx.fillText(line, x, y + 100 + 20*index)
+          })
+        })
+      })
+      // this.prizeAxis.forEach((axis, index) => {
+      //   const [x, y] = this.getGeometricProperty(axis)
+      //   const currPrize = options.prizes[index]
+      //   // 如果奖品不存在就空着
+      //   if (!currPrize) return false
+      //   // 绘制奖品图片
+      //   currPrize.imgs.forEach((imgInfo, ind) => {
+      //     ctx.drawImage(this.prizeImgs[index][ind], x + 10, y + -15, this.prizeWidth - 20, this.prizeWidth - 20)
+      //   })
+      //   // 绘制奖品文字
+      //   currPrize.text.split('\n').forEach((line, index) => {
+      //     ctx.beginPath()
+      //     ctx.font = options?.font?.style || '18px sans-serif'
+      //     ctx.fillStyle = options?.font?.color || '#000'
+      //     ctx.fillText(line, x, y + 100 + 20*index)
+      //   })
+      // })
+      // // 绘制抽奖按钮格子
+      // const [btnX, btnY] = this.getGeometricProperty([1, 1])
+      // roundRect(
+      //   ctx, btnX, btnY,
+      //   this.prizeWidth,
+      //   this.prizeWidth,
+      //   options?.button?.radius || 0,
+      //   options?.button?.bgColor || '#fff'
+      // )
+      // this.btnImgs.forEach((img, index) => {
+      //   const info = options.button.imgs[index]
+      //   ctx.drawImage(
+      //     img,
+      //     btnX + info.offsetX,
+      //     btnY + info.offsetY,
+      //     img.width + info.offsetWidth,
+      //     img.height + info.offsetheight
+      //   )
+      // })
     },
     setSpeed () {
       this.speed = 0.2
@@ -157,83 +248,21 @@ export default {
       this.draw()
       window.requestAnimationFrame(this.slowDown)
     },
-    // 绘制九宫格抽奖
-    draw () {
-      const { ctx, options } = this
-      ctx.fillStyle = '#fff'
-      ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
-      roundRect( // 绘制外边框
-        ctx, 0, 0,
-        this.boxWidth,
-        this.boxWidth,
-        this.outRadius,
-        this.outBoxColor
-      )
-      roundRect( // 绘制内边框
-        ctx,
-        this.outBoxPadding,
-        this.outBoxPadding,
-        this.boxWidth - this.outBoxPadding * 2,
-        this.boxWidth - this.outBoxPadding * 2,
-        this.insideRadius,
-        this.insideBoxColor
-      )
-      // 奖品总区域宽度
-      const areaWidth = this.boxWidth - (this.outBoxPadding + this.insideBoxPadding) * 2
-      // 奖品格子的宽度
-      this.prizeWidth = (areaWidth - this.prizeGutter * 2) / 3
-      // 绘制8个奖品
-      this.prizeAxis.forEach((axis, index) => {
-        const [x, y] = this.getCoordinate(axis)
-        const currPrize = options.prizes[index]
-        // 先画背景
-        roundRect(
-          ctx, x, y,
-          this.prizeWidth,
-          this.prizeWidth,
-          this.prizeRadius,
-          index === this.currIndex % 8 >> 0 ? this.activeColor : this.prizeBgColor
-        )
-        // 如果奖品不存在就空着
-        if (!currPrize) return false
-        // 绘制奖品图片
-        currPrize.imgs.forEach((imgInfo, ind) => {
-          ctx.drawImage(this.prizeImgs[index][ind], x + 10, y + -15, this.prizeWidth - 20, this.prizeWidth - 20)
-        })
-        // 绘制奖品文字
-        currPrize.name.split('\n').forEach((line, index) => {
-          ctx.beginPath()
-          ctx.font = options?.font?.style || '18px sans-serif'
-          ctx.fillStyle = options?.font?.color || '#000'
-          ctx.fillText(line, x, y + 100 + 20*index)
-        })
-      })
-      // 绘制抽奖按钮格子
-      const [btnX, btnY] = this.getCoordinate([1, 1])
-      roundRect(
-        ctx, btnX, btnY,
-        this.prizeWidth,
-        this.prizeWidth,
-        options?.button?.radius || 0,
-        options?.button?.bgColor || '#fff'
-      )
-      this.btnImgs.forEach((img, index) => {
-        const info = options.button.imgs[index]
-        ctx.drawImage(
-          img,
-          btnX + info.offsetX,
-          btnY + info.offsetY,
-          img.width + info.offsetWidth,
-          img.height + info.offsetheight
-        )
-      })
-    },
-    // 计算格子坐标
-    getCoordinate ([x, y]) {
-      return [
-        this.outBoxPadding + this.insideBoxPadding + (this.prizeWidth + this.prizeGutter) * x,
-        this.outBoxPadding + this.insideBoxPadding + (this.prizeWidth + this.prizeGutter) * y
+    /**
+     * 计算奖品格子的集合属性
+     * @param { array } [...矩阵坐标, col, row]
+     * @return { array } [...真实坐标, width, height]
+     */
+    getGeometricProperty ([x, y, col, row]) {
+      let res = [
+        this.prizeArea.x + (this.prizeWidth + this.cellGutter) * x,
+        this.prizeArea.y + (this.prizeHeight + this.cellGutter) * y
       ]
+      col && row && res.push(
+        this.prizeWidth * col + this.cellGutter * (col - 1),
+        this.prizeHeight * row + this.cellGutter * (row - 1),
+      )
+      return res
     },
     // 绘制灯带
     drawLamp () {
@@ -254,6 +283,7 @@ export default {
 <style>
 .ldq-canvas-box {
   width: 500px;
+  height: 500px;
   position: relative;
   /* position: relative; */
   /* transform: scale(0.5); */
