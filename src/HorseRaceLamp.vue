@@ -23,43 +23,76 @@ export default {
         return true
       }
     },
-    // 横向等分成cols个格子
+    // 横向等分成 cols 个格子
     cols: { type: Number, default: 3 },
-    // 纵向等分成rows个格子
+    // 纵向等分成 rows 个格子
     rows: { type: Number, default: 3 },
-    // 格子之间的间隔
-    cellGutter: { type: Number, default: 10 },
-    // 格子背景颜色
-    cellBackground: { type: String, default: '#fff' },
-    // 中奖标记颜色
-    activeBackground: { type: String, default: '#ff8c3e' },
-    // 默认字体颜色
-    fontColor: { type: String, default: '#000' },
-    // 默认字体样式
-    fontStyle: { type: String, default: '18px sans-serif' },
-    // 格子圆角半径
-    cellRadius: { type: Number, default: 20 },
+    // 格子的默认样式
+    defaultStyle: {
+      type: Object,
+      default () { // 默认配置在computed里面: _defaultStyle
+        return {}
+      }
+    },
+    // 中奖标记样式
+    activeStyle: {
+      type: Object,
+      default () { // 默认配置在computed里面: _activeStyle
+        return {}
+      }
+    }
   },
   data () {
     return {
       ctx: null,
       canPlay: true, // 是否可以开始
-      currIndex: 0, // 当前index
+      currIndex: 0, // 当前index累加
       prizeIndex: undefined, // 中奖索引
       timer: null, // 游走时间id
       speed: 0, // 速度
-      prizeArea: {}, // 奖品区域信息
-      prizeImgs: [], // 奖品图片
-      btnImgs: [], // 按钮图片
+      prizeArea: {}, // 奖品区域几何信息
+      cellImgs: [], // 奖品图片
+    }
+  },
+  computed: {
+    _defaultStyle () {
+      // 默认样式
+      let style = {
+        gutter: 5,
+        radius: 20,
+        fontColor: '#DF424B',
+        fontStyle: '18px sans-serif',
+        textAlign: 'center',
+        background: '#fff',
+        shadow: '0 8 1 #ebf1f4'
+      }
+      // 传入的样式进行覆盖
+      for (let key in this.defaultStyle) {
+        style[key] = this.defaultStyle[key]
+      }
+      return style
+    },
+    _activeStyle () {
+      // 默认样式
+      let style = {
+        background: '#ffce98',
+        shadow: ''
+      }
+      // 传入的样式进行覆盖
+      for (let key in this.activeStyle) {
+        style[key] = this.activeStyle[key]
+      }
+      return style
     }
   },
   mounted () {
+    clearInterval(this.timer)
     this.init()
-    document.addEventListener('resize', this.init)
+    window.addEventListener('resize', this.init)
   },
   methods: {
     async init () {
-      const options = this.options
+      const { options, _defaultStyle } = this
       const box = document.querySelector('.ldq-canvas-box')
       const canvas = document.querySelector('#canvas')
       this.boxWidth = canvas.width = box.offsetWidth
@@ -78,48 +111,67 @@ export default {
         }
       }, { x: 0, y: 0, w: this.boxWidth, h: this.boxHeight })
       // 计算单一奖品格子的宽度和高度
-      this.prizeWidth = (this.prizeArea.w - this.cellGutter * (this.cols - 1)) / this.cols
-      this.prizeHeight = (this.prizeArea.h - this.cellGutter * (this.rows - 1)) / this.rows
+      this.cellWidth = (this.prizeArea.w - _defaultStyle.gutter * (this.cols - 1)) / this.cols
+      this.cellHeight = (this.prizeArea.h - _defaultStyle.gutter * (this.rows - 1)) / this.rows
       // 提前加载图片, 并处理默认赋值
       let num = 0, sum = 0
       // 图片加载回调函数
-      const onloadCallBack = () => {
+      let btnInfo = {}
+      const onloadCallBack = callback => {
+        callback()
         num++
         // 判断所有图片是否全都加载完毕
         if (num !== sum) return false
         // 开始首次渲染
         this.draw()
-        // 自动游走
-        // this.walk()
         // 点击按钮开始
-        // canvas.addEventListener('mousedown', e => {
-        //   const [x, y] = this.getGeometricProperty([1, 1])
-        //   if (
-        //     e.offsetX < x ||
-        //     e.offsetY < y ||
-        //     e.offsetX > x + this.prizeWidth ||
-        //     e.offsetY > y + this.prizeWidth
-        //   ) return false
-        //   this.play()
-        // })
+        canvas.addEventListener('mousedown', e => {
+          const btns = options.prizes.filter(cell => cell.type && cell.type === 'button')
+          btns.forEach(btn => {
+            const [x, y] = this.getGeometricProperty(btn.x, btn.y)
+            if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
+            this.play()
+          })
+        })
       }
       options.prizes.forEach((prize, index) => {
         prize.col = prize.col || 1
         prize.row = prize.row || 1
         // 图片预加载
-        this.prizeImgs[index] = []
-        prize.imgs.forEach(img => {
+        this.cellImgs[index] = []
+        prize.imgs.forEach(imgInfo => {
           sum++
-          const currImg = new Image()
-          this.prizeImgs[index].push(currImg)
-          currImg.src = img.src
-          currImg.onload = onloadCallBack
+          const imgObj = new Image()
+          this.cellImgs[index].push(imgObj)
+          imgObj.src = imgInfo.src
+          imgObj.onload = onloadCallBack.bind(this, () => {
+            // 根据配置的样式计算图片的真实宽高
+            if (imgInfo.width && imgInfo.height) {
+              // 如果宽度和高度都填写了, 就如实计算
+              imgInfo.trueWidth = this.getWidth(imgInfo.width)
+              imgInfo.trueHeight = this.getHeight(imgInfo.height)
+            } else if (imgInfo.width && !imgInfo.height) {
+              // 如果只填写了宽度, 没填写高度
+              imgInfo.trueWidth = this.getWidth(imgInfo.width)
+              // 那高度就随着宽度进行等比缩放
+              imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width)
+            } else if (!imgInfo.width && imgInfo.height) {
+              // 如果只填写了宽度, 没填写高度
+              imgInfo.trueHeight = this.getHeight(imgInfo.height)
+              // 那宽度就随着高度进行等比缩放
+              imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height)
+            } else {
+              // 如果没有配置宽高, 则使用图片本身的宽高
+              imgInfo.trueWidth = imgObj.width
+              imgInfo.trueHeight = imgObj.height
+            }
+          })
         })
       })
     },
     // 绘制九宫格抽奖
     draw () {
-      const { ctx, options } = this
+      const { ctx, options, _defaultStyle, _activeStyle } = this
       // 清空画布
       ctx.fillStyle = '#fff'
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
@@ -128,22 +180,33 @@ export default {
       // 绘制所有格子
       options.prizes.forEach((prize, index) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
-        // 绘制阴影, 防止有人声明多个阴影, 所以截取逗号前的字符串
-        const shadow = prize.shadow ? prize.shadow.replace(/px/g, '').split(',')[0].split(' ').map((n, i) => {
-          // 把前三个数值转换成数字
-          return i === 3 ? n : ~~n
-        }) : []
+        const isActive = index === this.currIndex % 8 >> 0
+        // 处理阴影
+        const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
+          .replace(/px/g, '') // 清空px字符串
+          .split(',')[0].split(' ') // 防止有人声明多个阴影, 截取第一个阴影
+          .map((n, i) => i === 3 ? n : ~~n) // 把数组的前三个转化成数字
+        // 绘制阴影
         if (shadow.length === 4) {
           ctx.shadowColor = shadow[3]
           ctx.shadowOffsetX = shadow[0]
           ctx.shadowOffsetY = shadow[1]
           ctx.shadowBlur = shadow[2]
-          // 修正格子的位置, 这里使用逗号运算符
+          // 修正(格子+阴影)的位置, 这里使用逗号运算符
           shadow[0] > 0 ? (width -= shadow[0]) : (width += shadow[0], x -= shadow[0])
           shadow[1] > 0 ? (height -= shadow[1]) : (height += shadow[1], y -= shadow[1])
-        } else console.error('shadow阴影属性只允许有4个值: \n1.水平位置(允许负值)\n2.垂直位置(允许负值)\n3.模糊程度(0等于不模糊)\n4.阴影的颜色')
+        }
         // 绘制背景
-        roundRect(ctx, x, y, width, height, prize.radius || this.cellRadius, prize.background || this.prizeBackground)
+        let background = isActive ? _activeStyle.background : (prize.background || _defaultStyle.background)
+        if (background.includes('linear-gradient')) {
+          // 处理线性渐变
+          background = this.getLinearGradient(ctx, x, y, width, height, background)
+        }
+        roundRect(
+          ctx, x, y, width, height,
+          prize.radius || this._defaultStyle.radius,
+          background
+        )
         // 清空阴影
         ctx.shadowColor = 'rgba(255, 255, 255, 0)'
         ctx.shadowOffsetX = 0
@@ -151,54 +214,78 @@ export default {
         ctx.shadowBlur = 0
         // 绘制图片
         prize.imgs.forEach((imgInfo, i) => {
-          ctx.drawImage(this.prizeImgs[index][i], x, y)
+          const imgObj = this.cellImgs[index][i]
+          ctx.drawImage(
+            imgObj,
+            x + this.getOffsetX(imgInfo.trueWidth),
+            y + this.getHeight(imgInfo.top),
+            imgInfo.trueWidth,
+            imgInfo.trueHeight
+          )
         })
         // 绘制文字
         prize.font.forEach(font => {
           font.text.split('\n').forEach((line, index) => {
             ctx.beginPath()
-            ctx.font = font.style || this.fontStyle
-            ctx.fillStyle = font.color || this.fontColor
-            ctx.fillText(line, x, y + 100 + 20*index)
+            ctx.font = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
+            ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
+            const width = ctx.measureText(line).width
+            ctx.fillText(line, x + this.getOffsetX(width), y + this.getHeight(font.top) + index * (font.lineHeight || 0))
           })
         })
       })
-      // this.prizeAxis.forEach((axis, index) => {
-      //   const [x, y] = this.getGeometricProperty(axis)
-      //   const currPrize = options.prizes[index]
-      //   // 如果奖品不存在就空着
-      //   if (!currPrize) return false
-      //   // 绘制奖品图片
-      //   currPrize.imgs.forEach((imgInfo, ind) => {
-      //     ctx.drawImage(this.prizeImgs[index][ind], x + 10, y + -15, this.prizeWidth - 20, this.prizeWidth - 20)
-      //   })
-      //   // 绘制奖品文字
-      //   currPrize.text.split('\n').forEach((line, index) => {
-      //     ctx.beginPath()
-      //     ctx.font = options?.font?.style || '18px sans-serif'
-      //     ctx.fillStyle = options?.font?.color || '#000'
-      //     ctx.fillText(line, x, y + 100 + 20*index)
-      //   })
-      // })
-      // // 绘制抽奖按钮格子
-      // const [btnX, btnY] = this.getGeometricProperty([1, 1])
-      // roundRect(
-      //   ctx, btnX, btnY,
-      //   this.prizeWidth,
-      //   this.prizeWidth,
-      //   options?.button?.radius || 0,
-      //   options?.button?.bgColor || '#fff'
-      // )
-      // this.btnImgs.forEach((img, index) => {
-      //   const info = options.button.imgs[index]
-      //   ctx.drawImage(
-      //     img,
-      //     btnX + info.offsetX,
-      //     btnY + info.offsetY,
-      //     img.width + info.offsetWidth,
-      //     img.height + info.offsetheight
-      //   )
-      // })
+    },
+    /**
+     * 创建线性渐变色
+     */
+    getLinearGradient (ctx, x, y, w, h, background) {
+      const context = /linear-gradient\((.+)\)/.exec(background)[1]
+        .split(',') // 根据逗号分割
+        .map(text => text.trim()) // 去除两边空格
+      let deg = context.shift(), direction
+      // 通过起始点和角度计算渐变终点的坐标点, 这里感谢泽宇大神提醒我使用勾股定理....
+      if (deg.includes('deg')) {
+        deg = deg.slice(0, -3)
+        let h1 = w * Math.tan(deg / 180 * Math.PI)
+        let x1 = x + w
+        let y1 = y + h - h1
+        direction = [x, y + h, x1, y1]
+      }
+      else if (deg.includes('top')) direction = [x, y + h, x, y]
+      else if (deg.includes('bottom')) direction = [x, y, x, y + h]
+      else if (deg.includes('left')) direction = [x + w, y, x, y]
+      else if (deg.includes('right')) direction = [x, y, x + w, y]
+      const gradient = ctx.createLinearGradient(...direction.map(n => n >> 0))
+      return context.reduce((gradient, item, index) => {
+        const info = item.split(' ')
+        if (info.length === 1) gradient.addColorStop(index, info[0])
+        else if (info.length === 2) gradient.addColorStop(...info)
+        return gradient
+      }, gradient)
+    },
+    getWidth (width) {
+      if (isExpectType(width, 'number')) return width
+      if (isExpectType(width, 'string')) {
+        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '')
+      }
+      return 0
+    },
+    getHeight (height) {
+      if (isExpectType(height, 'number')) return height
+      if (isExpectType(height, 'string')) {
+        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '')
+      }
+      return 0
+    },
+    getLength (length) {
+      if (isExpectType(length, 'number')) return length
+      if (isExpectType(length, 'string')) {
+        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '')
+      }
+      return 0
+    },
+    getOffsetX (width) {
+      return (this.cellWidth - width) / 2
     },
     setSpeed () {
       this.speed = 0.2
@@ -214,6 +301,7 @@ export default {
     },
     // 增加中奖标识自动游走
     walk () {
+      clearInterval(this.timer)
       this.timer = setInterval(() => {
         this.currIndex += 1
         this.draw()
@@ -238,7 +326,7 @@ export default {
         if (this.prizeIndex === this.currIndex % 8 >> 0) {
           this.speed = 0
           this.canPlay = true
-          this.$emit('end', this.currIndex % 8 >> 0)
+          this.$emit('end', {...this.options.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
           return false
         }
       } else {
@@ -255,43 +343,38 @@ export default {
      */
     getGeometricProperty ([x, y, col, row]) {
       let res = [
-        this.prizeArea.x + (this.prizeWidth + this.cellGutter) * x,
-        this.prizeArea.y + (this.prizeHeight + this.cellGutter) * y
+        this.prizeArea.x + (this.cellWidth + this._defaultStyle.gutter) * x,
+        this.prizeArea.y + (this.cellHeight + this._defaultStyle.gutter) * y
       ]
       col && row && res.push(
-        this.prizeWidth * col + this.cellGutter * (col - 1),
-        this.prizeHeight * row + this.cellGutter * (row - 1),
+        this.cellWidth * col + this._defaultStyle.gutter * (col - 1),
+        this.cellHeight * row + this._defaultStyle.gutter * (row - 1),
       )
       return res
     },
     // 绘制灯带
-    drawLamp () {
-      this.ctx.beginPath()
-      this.ctx.fillStyle = '#fff'
-      const middleLine = this.outBoxPadding / 2
-      const lampRadius = middleLine - 6
-      const interval = (this.outRadius + this.insideRadius) / 2
-      let start = interval + lampRadius
-      this.ctx.arc(start, middleLine, lampRadius, 0, Math.PI * 2, true)
-      this.ctx.closePath()
-      this.ctx.fill()
-    },
+    // drawLamp () {
+    //   this.ctx.beginPath()
+    //   this.ctx.fillStyle = '#fff'
+    //   const middleLine = this.outBoxPadding / 2
+    //   const lampRadius = middleLine - 6
+    //   const interval = (this.outRadius + this.insideRadius) / 2
+    //   let start = interval + lampRadius
+    //   this.ctx.arc(start, middleLine, lampRadius, 0, Math.PI * 2, true)
+    //   this.ctx.closePath()
+    //   this.ctx.fill()
+    // },
   }
 }
 </script>
 
-<style>
+<style scoped>
 .ldq-canvas-box {
   width: 500px;
   height: 500px;
   position: relative;
-  /* position: relative; */
-  /* transform: scale(0.5); */
 }
 #canvas {
   position: relative;
-  /* position: absolute; */
-  /* left: 0; */
-  /* top: 0; */
 }
 </style>
