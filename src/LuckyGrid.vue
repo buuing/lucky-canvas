@@ -159,13 +159,12 @@ export default {
         if (num !== sum) return false
         // 开始首次渲染
         this.draw()
-        // 点击按钮开始
-        canvas.addEventListener('mousedown', e => {
-          const btn = this.button
-          const [x, y] = this.getGeometricProperty([btn.x, btn.y])
+        // 点击按钮开始, 这里不能使用 addEventListener
+        canvas.onmousedown = e => {
+          const [x, y] = this.getGeometricProperty([this.button.x, this.button.y])
           if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
-          this.play()
-        })
+          this.$emit('start', e)
+        }
       }
       this.cells.forEach((prize, index) => {
         prize.col = prize.col || 1
@@ -303,7 +302,6 @@ export default {
     play () {
       if (!this.canPlay) return false
       clearInterval(this.timer)
-      this.$emit('start')
       this.prizeIndex = undefined
       this.canPlay = false
       this.setSpeed()
