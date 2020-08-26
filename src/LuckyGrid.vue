@@ -12,22 +12,34 @@ export default {
     // 边框
     blocks: {
       type: Array,
-      // validator: function (options) {
-      //   // 检查options是否存在
-      //   if (!options) return console.error('缺少重要配置项: options')
-      //   if (!isExpectType(options, 'object')) return console.error('options 必须是一个对象')
-      //   // 检查奖品是否配置
-      //   if (!options.prizes) return console.error('缺少奖品数组: options.prizes')
-      //   if (!isExpectType(options.prizes, 'array')) return console.error('options.prizes 必须是一个数组')
-      //   return true
-      // }
+      validator: function (blocks) {
+        return blocks.every((item, index) => {
+          if (!item.padding) return console.error(`blocks[${index}]缺少 padding 属性`)
+          if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
+          return true
+        })
+      }
     },
-    // 
+    // 奖品
     prizes: {
       type: Array,
+      validator: function (prizes) {
+        return prizes.every((item, index) => {
+          if (!item.hasOwnProperty('index')) return console.error(`prizes[${index}]缺少 index 属性`)
+          if (!item.hasOwnProperty('x')) return console.error(`prizes[${index}]缺少 x 属性`)
+          if (!item.hasOwnProperty('y')) return console.error(`prizes[${index}]缺少 y 属性`)
+          return true
+        })
+      }
     },
+    // 按钮
     button: {
       type: Object,
+      validator: function (button) {
+        if (!button.hasOwnProperty('x')) return console.error(`button对象缺少 x 属性`)
+        if (!button.hasOwnProperty('y')) return console.error(`button对象缺少 y 属性`)
+        return true
+      }
     },
     // 横向等分成 cols 个格子
     cols: { type: Number, default: 3 },
@@ -57,8 +69,23 @@ export default {
       timer: null, // 游走时间id
       speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
+      cells: [],
       cellImgs: [], // 奖品图片
     }
+  },
+  watch: {
+    'blocks': {
+      handler () { this.init() },
+      deep: true,
+    },
+    'prizes': {
+      handler () { this.init() },
+      deep: true,
+    },
+    'button': {
+      handler () { this.init() },
+      deep: true,
+    },
   },
   computed: {
     _defaultStyle () {
@@ -93,11 +120,11 @@ export default {
   },
   mounted () {
     clearInterval(this.timer)
-    this.init()
+    this.init(9)
     window.addEventListener('resize', this.init)
   },
   methods: {
-    async init () {
+    async init (aaa) {
       const { _defaultStyle } = this
       const box = document.querySelector('.ldq-luck')
       const canvas = document.querySelector('#canvas')
@@ -105,7 +132,7 @@ export default {
       this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
       // 把按钮放到奖品里面
-      this.prizes.push({ ...this.button, index: null })
+      this.cells = [...this.prizes, { ...this.button, index: null }]
       // 计算所有边框信息
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
@@ -140,12 +167,12 @@ export default {
           this.play()
         })
       }
-      this.prizes.forEach((prize, index) => {
+      this.cells.forEach((prize, index) => {
         prize.col = prize.col || 1
         prize.row = prize.row || 1
         // 图片预加载
         this.cellImgs[index] = []
-        prize.imgs.forEach(imgInfo => {
+        prize.imgs && prize.imgs.forEach(imgInfo => {
           sum++
           const imgObj = new Image()
           this.cellImgs[index].push(imgObj)
@@ -186,7 +213,7 @@ export default {
         roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, color))
       })
       // 绘制所有格子
-      this.prizes.forEach((prize, index) => {
+      this.cells.forEach((prize, index) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
         const isActive = index === this.currIndex % 8 >> 0
         // 处理阴影
@@ -227,7 +254,7 @@ export default {
         })
         // 绘制文字
         prize.font.forEach(font => {
-          font.text.split('\n').forEach((line, index) => {
+          String(font.text).split('\n').forEach((line, index) => {
             ctx.beginPath()
             ctx.font = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
