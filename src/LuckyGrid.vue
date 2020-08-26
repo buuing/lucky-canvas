@@ -176,7 +176,7 @@ export default {
     draw () {
       const { ctx, _defaultStyle, _activeStyle } = this
       // 清空画布
-      ctx.fillStyle = '#fff'
+      ctx.fillStyle = 'rgba(255, 255, 255, 0)'
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
       // 绘制所有边框
       this.blockData.forEach(([x, y, w, h, r, color]) => {
