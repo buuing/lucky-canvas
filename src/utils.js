@@ -65,3 +65,31 @@ export const roundRect = (ctx, x, y, w, h, r, color) => {
   ctx.closePath()
   ctx.fill()
 }
+/**
+ * 创建线性渐变色
+ */
+export const getLinearGradient = (ctx, x, y, w, h, background) => {
+  const context = /linear-gradient\((.+)\)/.exec(background)[1]
+    .split(',') // 根据逗号分割
+    .map(text => text.trim()) // 去除两边空格
+  let deg = context.shift(), direction
+  // 通过起始点和角度计算渐变终点的坐标点, 这里感谢泽宇大神提醒我使用勾股定理....
+  if (deg.includes('deg')) {
+    deg = deg.slice(0, -3)
+    let h1 = w * Math.tan(deg / 180 * Math.PI)
+    let x1 = x + w
+    let y1 = y + h - h1
+    direction = [x, y + h, x1, y1]
+  }
+  else if (deg.includes('top')) direction = [x, y + h, x, y]
+  else if (deg.includes('bottom')) direction = [x, y, x, y + h]
+  else if (deg.includes('left')) direction = [x + w, y, x, y]
+  else if (deg.includes('right')) direction = [x, y, x + w, y]
+  const gradient = ctx.createLinearGradient(...direction.map(n => n >> 0))
+  return context.reduce((gradient, item, index) => {
+    const info = item.split(' ')
+    if (info.length === 1) gradient.addColorStop(index, info[0])
+    else if (info.length === 2) gradient.addColorStop(...info)
+    return gradient
+  }, gradient)
+}

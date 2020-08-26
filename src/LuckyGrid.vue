@@ -1,27 +1,30 @@
 <template>
-  <div class="ldq-canvas-box">
+  <div class="ldq-luck">
     <canvas id="canvas"></canvas>
   </div>
 </template>
 
 <script>
-import { roundRect, isExpectType, computePadding } from './utils.js'
+import { roundRect, isExpectType, computePadding, getLinearGradient } from './utils.js'
 export default {
   name: 'HorseRaceLamp',
   props: {
-    // 默认配置项
-    options: {
-      type: Object,
-      required: true,
-      validator: function (options) {
-        // 检查options是否存在
-        if (!options) return console.error('缺少重要配置项: options')
-        if (!isExpectType(options, 'object')) return console.error('options 必须是一个对象')
-        // 检查奖品是否配置
-        if (!options.prizes) return console.error('缺少奖品数组: options.prizes')
-        if (!isExpectType(options.prizes, 'array')) return console.error('options.prizes 必须是一个数组')
-        return true
-      }
+    // 边框
+    blocks: {
+      type: Array,
+      // validator: function (options) {
+      //   // 检查options是否存在
+      //   if (!options) return console.error('缺少重要配置项: options')
+      //   if (!isExpectType(options, 'object')) return console.error('options 必须是一个对象')
+      //   // 检查奖品是否配置
+      //   if (!options.prizes) return console.error('缺少奖品数组: options.prizes')
+      //   if (!isExpectType(options.prizes, 'array')) return console.error('options.prizes 必须是一个数组')
+      //   return true
+      // }
+    },
+    // 
+    prizes: {
+      type: Array,
     },
     // 横向等分成 cols 个格子
     cols: { type: Number, default: 3 },
@@ -92,15 +95,15 @@ export default {
   },
   methods: {
     async init () {
-      const { options, _defaultStyle } = this
-      const box = document.querySelector('.ldq-canvas-box')
+      const { _defaultStyle } = this
+      const box = document.querySelector('.ldq-luck')
       const canvas = document.querySelector('#canvas')
       this.boxWidth = canvas.width = box.offsetWidth
       this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
       // 计算所有边框信息
       this.blockData = []
-      this.prizeArea = options.block.reduce(({x, y, w, h}, block) => {
+      this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
         this.blockData.push([x, y, w, h, block.radius, block.background])
         return {
@@ -126,15 +129,15 @@ export default {
         this.draw()
         // 点击按钮开始
         canvas.addEventListener('mousedown', e => {
-          const btns = options.prizes.filter(cell => cell.type && cell.type === 'button')
+          const btns = this.prizes.filter(cell => cell.type && cell.type === 'button')
           btns.forEach(btn => {
-            const [x, y] = this.getGeometricProperty(btn.x, btn.y)
+            const [x, y] = this.getGeometricProperty([btn.x, btn.y])
             if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
             this.play()
           })
         })
       }
-      options.prizes.forEach((prize, index) => {
+      this.prizes.forEach((prize, index) => {
         prize.col = prize.col || 1
         prize.row = prize.row || 1
         // 图片预加载
@@ -171,14 +174,16 @@ export default {
     },
     // 绘制九宫格抽奖
     draw () {
-      const { ctx, options, _defaultStyle, _activeStyle } = this
+      const { ctx, _defaultStyle, _activeStyle } = this
       // 清空画布
       ctx.fillStyle = '#fff'
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
       // 绘制所有边框
-      this.blockData.forEach(info => roundRect(ctx, ...info))
+      this.blockData.forEach(([x, y, w, h, r, color]) => {
+        roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, color))
+      })
       // 绘制所有格子
-      options.prizes.forEach((prize, index) => {
+      this.prizes.forEach((prize, index) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
         const isActive = index === this.currIndex % 8 >> 0
         // 处理阴影
@@ -196,16 +201,10 @@ export default {
           shadow[0] > 0 ? (width -= shadow[0]) : (width += shadow[0], x -= shadow[0])
           shadow[1] > 0 ? (height -= shadow[1]) : (height += shadow[1], y -= shadow[1])
         }
-        // 绘制背景
-        let background = isActive ? _activeStyle.background : (prize.background || _defaultStyle.background)
-        if (background.includes('linear-gradient')) {
-          // 处理线性渐变
-          background = this.getLinearGradient(ctx, x, y, width, height, background)
-        }
         roundRect(
           ctx, x, y, width, height,
           prize.radius || this._defaultStyle.radius,
-          background
+          this.handleBackground(x, y, width, height, prize.background, isActive)
         )
         // 清空阴影
         ctx.shadowColor = 'rgba(255, 255, 255, 0)'
@@ -235,33 +234,14 @@ export default {
         })
       })
     },
-    /**
-     * 创建线性渐变色
-     */
-    getLinearGradient (ctx, x, y, w, h, background) {
-      const context = /linear-gradient\((.+)\)/.exec(background)[1]
-        .split(',') // 根据逗号分割
-        .map(text => text.trim()) // 去除两边空格
-      let deg = context.shift(), direction
-      // 通过起始点和角度计算渐变终点的坐标点, 这里感谢泽宇大神提醒我使用勾股定理....
-      if (deg.includes('deg')) {
-        deg = deg.slice(0, -3)
-        let h1 = w * Math.tan(deg / 180 * Math.PI)
-        let x1 = x + w
-        let y1 = y + h - h1
-        direction = [x, y + h, x1, y1]
+    handleBackground (x, y, width, height, background, isActive = false) {
+      const { ctx, _defaultStyle, _activeStyle } = this
+      background = isActive ? _activeStyle.background : (background || _defaultStyle.background)
+      // 处理线性渐变
+      if (background.includes('linear-gradient')) {
+        background = getLinearGradient(ctx, x, y, width, height, background)
       }
-      else if (deg.includes('top')) direction = [x, y + h, x, y]
-      else if (deg.includes('bottom')) direction = [x, y, x, y + h]
-      else if (deg.includes('left')) direction = [x + w, y, x, y]
-      else if (deg.includes('right')) direction = [x, y, x + w, y]
-      const gradient = ctx.createLinearGradient(...direction.map(n => n >> 0))
-      return context.reduce((gradient, item, index) => {
-        const info = item.split(' ')
-        if (info.length === 1) gradient.addColorStop(index, info[0])
-        else if (info.length === 2) gradient.addColorStop(...info)
-        return gradient
-      }, gradient)
+      return background
     },
     getWidth (width) {
       if (isExpectType(width, 'number')) return width
@@ -326,7 +306,7 @@ export default {
         if (this.prizeIndex === this.currIndex % 8 >> 0) {
           this.speed = 0
           this.canPlay = true
-          this.$emit('end', {...this.options.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
+          this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
           return false
         }
       } else {
@@ -369,12 +349,7 @@ export default {
 </script>
 
 <style scoped>
-.ldq-canvas-box {
-  width: 500px;
-  height: 500px;
-  position: relative;
-}
-#canvas {
+.ldq-luck {
   position: relative;
 }
 </style>
