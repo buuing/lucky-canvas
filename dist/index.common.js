@@ -1608,6 +1608,13 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
+/***/ "61e3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "6547":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1666,17 +1673,6 @@ module.exports = function (originalArray, length) {
   } return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
 };
 
-
-/***/ }),
-
-/***/ "6771":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_fcdae622_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e87a");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_fcdae622_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_fcdae622_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_fcdae622_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -3178,6 +3174,74 @@ module.exports = isForced;
 
 /***/ }),
 
+/***/ "99af":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var fails = __webpack_require__("d039");
+var isArray = __webpack_require__("e8b5");
+var isObject = __webpack_require__("861d");
+var toObject = __webpack_require__("7b0b");
+var toLength = __webpack_require__("50c4");
+var createProperty = __webpack_require__("8418");
+var arraySpeciesCreate = __webpack_require__("65f0");
+var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var wellKnownSymbol = __webpack_require__("b622");
+var V8_VERSION = __webpack_require__("2d00");
+
+var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+
+// We can't use this feature detection in V8 since it causes
+// deoptimization and serious performance degradation
+// https://github.com/zloirock/core-js/issues/679
+var IS_CONCAT_SPREADABLE_SUPPORT = V8_VERSION >= 51 || !fails(function () {
+  var array = [];
+  array[IS_CONCAT_SPREADABLE] = false;
+  return array.concat()[0] !== array;
+});
+
+var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+
+var isConcatSpreadable = function (O) {
+  if (!isObject(O)) return false;
+  var spreadable = O[IS_CONCAT_SPREADABLE];
+  return spreadable !== undefined ? !!spreadable : isArray(O);
+};
+
+var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+
+// `Array.prototype.concat` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.concat
+// with adding support of @@isConcatSpreadable and @@species
+$({ target: 'Array', proto: true, forced: FORCED }, {
+  concat: function concat(arg) { // eslint-disable-line no-unused-vars
+    var O = toObject(this);
+    var A = arraySpeciesCreate(O, 0);
+    var n = 0;
+    var i, k, length, len, E;
+    for (i = -1, length = arguments.length; i < length; i++) {
+      E = i === -1 ? O : arguments[i];
+      if (isConcatSpreadable(E)) {
+        len = toLength(E.length);
+        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
+      } else {
+        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        createProperty(A, n++, E);
+      }
+    }
+    A.length = n;
+    return A;
+  }
+});
+
+
+/***/ }),
+
 /***/ "9bdd":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3595,6 +3659,30 @@ if (!$Symbol[PROTOTYPE][TO_PRIMITIVE]) {
 setToStringTag($Symbol, SYMBOL);
 
 hiddenKeys[HIDDEN] = true;
+
+
+/***/ }),
+
+/***/ "a623":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $every = __webpack_require__("b727").every;
+var arrayMethodIsStrict = __webpack_require__("a640");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+
+var STRICT_METHOD = arrayMethodIsStrict('every');
+var USES_TO_LENGTH = arrayMethodUsesToLength('every');
+
+// `Array.prototype.every` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.every
+$({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH }, {
+  every: function every(callbackfn /* , thisArg */) {
+    return $every(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
 
 
 /***/ }),
@@ -4970,6 +5058,17 @@ module.exports = function (target, src, options) {
 
 /***/ }),
 
+/***/ "e386":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("61e3");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "e439":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5401,13 +5500,6 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
   }
 });
 
-
-/***/ }),
-
-/***/ "e87a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -6088,15 +6180,18 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0eaaf034-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=fcdae622&scoped=true&
-var LuckyGridvue_type_template_id_fcdae622_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var LuckyGridvue_type_template_id_fcdae622_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0eaaf034-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=eaa59754&scoped=true&
+var LuckyGridvue_type_template_id_eaa59754_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
+var LuckyGridvue_type_template_id_eaa59754_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=fcdae622&scoped=true&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=eaa59754&scoped=true&
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
-var es_array_filter = __webpack_require__("4de4");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
+var es_array_concat = __webpack_require__("99af");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.every.js
+var es_array_every = __webpack_require__("a623");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__("7db0");
@@ -6116,80 +6211,13 @@ var es_string_includes = __webpack_require__("2532");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
 var es_string_replace = __webpack_require__("5319");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
-var es_symbol = __webpack_require__("a4d3");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptor.js
-var es_object_get_own_property_descriptor = __webpack_require__("e439");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptors.js
-var es_object_get_own_property_descriptors = __webpack_require__("dbb4");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
-var es_object_keys = __webpack_require__("b64b");
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-
-
-
-
-
-
-
-
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
+var es_symbol = __webpack_require__("a4d3");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
 var es_symbol_description = __webpack_require__("e01a");
 
@@ -6286,6 +6314,105 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptor.js
+var es_object_get_own_property_descriptor = __webpack_require__("e439");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.get-own-property-descriptors.js
+var es_object_get_own_property_descriptors = __webpack_require__("dbb4");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
+var es_object_keys = __webpack_require__("b64b");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+
+
+
+
+
+
+
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
+
+
+
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__("96cf");
 
@@ -6334,35 +6461,6 @@ function _asyncToGenerator(fn) {
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__("498a");
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-
-
-
-
-
-
-
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
-
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/utils.js
 
 
@@ -6502,6 +6600,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 
 
+
+
 //
 //
 //
@@ -6514,20 +6614,35 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
   props: {
     // 边框
     blocks: {
-      type: Array // validator: function (options) {
-      //   // 检查options是否存在
-      //   if (!options) return console.error('缺少重要配置项: options')
-      //   if (!isExpectType(options, 'object')) return console.error('options 必须是一个对象')
-      //   // 检查奖品是否配置
-      //   if (!options.prizes) return console.error('缺少奖品数组: options.prizes')
-      //   if (!isExpectType(options.prizes, 'array')) return console.error('options.prizes 必须是一个数组')
-      //   return true
-      // }
-
+      type: Array,
+      validator: function validator(blocks) {
+        return blocks.every(function (item, index) {
+          if (!item.padding) return console.error("blocks[".concat(index, "]\u7F3A\u5C11 padding \u5C5E\u6027"));
+          if (!item.background) console.error("blocks[".concat(index, "]\u7F3A\u5C11 background \u5C5E\u6027"));
+          return true;
+        });
+      }
     },
-    // 
+    // 奖品
     prizes: {
-      type: Array
+      type: Array,
+      validator: function validator(prizes) {
+        return prizes.every(function (item, index) {
+          if (!item.hasOwnProperty('index')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 index \u5C5E\u6027"));
+          if (!item.hasOwnProperty('x')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 x \u5C5E\u6027"));
+          if (!item.hasOwnProperty('y')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 y \u5C5E\u6027"));
+          return true;
+        });
+      }
+    },
+    // 按钮
+    button: {
+      type: Object,
+      validator: function validator(button) {
+        if (!button.hasOwnProperty('x')) return console.error("button\u5BF9\u8C61\u7F3A\u5C11 x \u5C5E\u6027");
+        if (!button.hasOwnProperty('y')) return console.error("button\u5BF9\u8C61\u7F3A\u5C11 y \u5C5E\u6027");
+        return true;
+      }
     },
     // 横向等分成 cols 个格子
     cols: {
@@ -6571,9 +6686,30 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       // 速度
       prizeArea: {},
       // 奖品区域几何信息
+      cells: [],
       cellImgs: [] // 奖品图片
 
     };
+  },
+  watch: {
+    'blocks': {
+      handler: function handler() {
+        this.init();
+      },
+      deep: true
+    },
+    'prizes': {
+      handler: function handler() {
+        this.init();
+      },
+      deep: true
+    },
+    'button': {
+      handler: function handler() {
+        this.init();
+      },
+      deep: true
+    }
   },
   computed: {
     _defaultStyle: function _defaultStyle() {
@@ -6610,11 +6746,11 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
   },
   mounted: function mounted() {
     clearInterval(this.timer);
-    this.init();
+    this.init(9);
     window.addEventListener('resize', this.init);
   },
   methods: {
-    init: function init() {
+    init: function init(aaa) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -6629,7 +6765,11 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                 canvas = document.querySelector('#canvas');
                 _this.boxWidth = canvas.width = box.offsetWidth;
                 _this.boxHeight = canvas.height = box.offsetHeight;
-                _this.ctx = canvas.getContext('2d'); // 计算所有边框信息
+                _this.ctx = canvas.getContext('2d'); // 把按钮放到奖品里面
+
+                _this.cells = [].concat(_toConsumableArray(_this.prizes), [_objectSpread2({}, _this.button, {
+                  index: null
+                })]); // 计算所有边框信息
 
                 _this.blockData = [];
                 _this.prizeArea = _this.blocks.reduce(function (_ref, block) {
@@ -6672,33 +6812,27 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
                   if (num !== sum) return false; // 开始首次渲染
 
-                  _this.draw(); // 点击按钮开始
+                  _this.draw(); // 点击按钮开始, 这里不能使用 addEventListener
 
 
-                  canvas.addEventListener('mousedown', function (e) {
-                    var btns = _this.prizes.filter(function (cell) {
-                      return cell.type && cell.type === 'button';
-                    });
+                  canvas.onmousedown = function (e) {
+                    var _this$getGeometricPro = _this.getGeometricProperty([_this.button.x, _this.button.y]),
+                        _this$getGeometricPro2 = _slicedToArray(_this$getGeometricPro, 2),
+                        x = _this$getGeometricPro2[0],
+                        y = _this$getGeometricPro2[1];
 
-                    btns.forEach(function (btn) {
-                      var _this$getGeometricPro = _this.getGeometricProperty([btn.x, btn.y]),
-                          _this$getGeometricPro2 = _slicedToArray(_this$getGeometricPro, 2),
-                          x = _this$getGeometricPro2[0],
-                          y = _this$getGeometricPro2[1];
+                    if (e.offsetX < x || e.offsetY < y || e.offsetX > x + _this.cellWidth || e.offsetY > y + _this.cellWidth) return false;
 
-                      if (e.offsetX < x || e.offsetY < y || e.offsetX > x + _this.cellWidth || e.offsetY > y + _this.cellWidth) return false;
-
-                      _this.play();
-                    });
-                  });
+                    _this.$emit('start', e);
+                  };
                 };
 
-                _this.prizes.forEach(function (prize, index) {
+                _this.cells.forEach(function (prize, index) {
                   prize.col = prize.col || 1;
                   prize.row = prize.row || 1; // 图片预加载
 
                   _this.cellImgs[index] = [];
-                  prize.imgs.forEach(function (imgInfo) {
+                  prize.imgs && prize.imgs.forEach(function (imgInfo) {
                     sum++;
                     var imgObj = new Image();
 
@@ -6730,7 +6864,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                   });
                 });
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -6746,7 +6880,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
           _defaultStyle = this._defaultStyle,
           _activeStyle = this._activeStyle; // 清空画布
 
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0)';
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth); // 绘制所有边框
 
       this.blockData.forEach(function (_ref2) {
@@ -6761,7 +6895,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         roundRect(ctx, x, y, w, h, r, _this2.handleBackground(x, y, w, h, color));
       }); // 绘制所有格子
 
-      this.prizes.forEach(function (prize, index) {
+      this.cells.forEach(function (prize, index) {
         var _this2$getGeometricPr = _this2.getGeometricProperty([prize.x, prize.y, prize.col, prize.row]),
             _this2$getGeometricPr2 = _slicedToArray(_this2$getGeometricPr, 4),
             x = _this2$getGeometricPr2[0],
@@ -6801,7 +6935,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         }); // 绘制文字
 
         prize.font.forEach(function (font) {
-          font.text.split('\n').forEach(function (line, index) {
+          String(font.text).split('\n').forEach(function (line, index) {
             ctx.beginPath();
             ctx.font = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
             ctx.fillStyle = isActive && _activeStyle.fontColor ? _activeStyle.fontColor : font.color || _defaultStyle.fontColor;
@@ -6860,7 +6994,6 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     play: function play() {
       if (!this.canPlay) return false;
       clearInterval(this.timer);
-      this.$emit('start');
       this.prizeIndex = undefined;
       this.canPlay = false;
       this.setSpeed();
@@ -6945,8 +7078,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=fcdae622&scoped=true&lang=css&
-var LuckyGridvue_type_style_index_0_id_fcdae622_scoped_true_lang_css_ = __webpack_require__("6771");
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=eaa59754&scoped=true&lang=css&
+var LuckyGridvue_type_style_index_0_id_eaa59754_scoped_true_lang_css_ = __webpack_require__("e386");
 
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
 
@@ -6959,11 +7092,11 @@ var LuckyGridvue_type_style_index_0_id_fcdae622_scoped_true_lang_css_ = __webpac
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_fcdae622_scoped_true_render,
-  LuckyGridvue_type_template_id_fcdae622_scoped_true_staticRenderFns,
+  LuckyGridvue_type_template_id_eaa59754_scoped_true_render,
+  LuckyGridvue_type_template_id_eaa59754_scoped_true_staticRenderFns,
   false,
   null,
-  "fcdae622",
+  "eaa59754",
   null
   
 )
