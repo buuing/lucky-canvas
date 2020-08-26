@@ -26,6 +26,9 @@ export default {
     prizes: {
       type: Array,
     },
+    button: {
+      type: Object,
+    },
     // 横向等分成 cols 个格子
     cols: { type: Number, default: 3 },
     // 纵向等分成 rows 个格子
@@ -101,6 +104,8 @@ export default {
       this.boxWidth = canvas.width = box.offsetWidth
       this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
+      // 把按钮放到奖品里面
+      this.prizes.push({ ...this.button, index: null })
       // 计算所有边框信息
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
@@ -129,12 +134,10 @@ export default {
         this.draw()
         // 点击按钮开始
         canvas.addEventListener('mousedown', e => {
-          const btns = this.prizes.filter(cell => cell.type && cell.type === 'button')
-          btns.forEach(btn => {
-            const [x, y] = this.getGeometricProperty([btn.x, btn.y])
-            if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
-            this.play()
-          })
+          const btn = this.button
+          const [x, y] = this.getGeometricProperty([btn.x, btn.y])
+          if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
+          this.play()
         })
       }
       this.prizes.forEach((prize, index) => {
