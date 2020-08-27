@@ -1,12 +1,16 @@
 {
   "name": "vue-luck-draw",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "vue抽奖",
+    "大转盘抽奖",
+    "九宫格抽奖"
+  ],
   "author": "ldq <17778888138@189.cn>",
   "license": "ISC"
 }

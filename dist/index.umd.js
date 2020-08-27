@@ -1617,13 +1617,6 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
-/***/ "61e3":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "6547":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3857,6 +3850,17 @@ module.exports = function (METHOD_NAME) {
 
 /***/ }),
 
+/***/ "abe1":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_7eb07945_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d111");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_7eb07945_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_7eb07945_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_7eb07945_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "ac1f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4486,6 +4490,13 @@ module.exports = function (namespace, method) {
 
 /***/ }),
 
+/***/ "d111":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "d1e7":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5064,17 +5075,6 @@ module.exports = function (target, src, options) {
   return target;
 };
 
-
-/***/ }),
-
-/***/ "e386":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("61e3");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_eaa59754_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -6189,12 +6189,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0eaaf034-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=eaa59754&scoped=true&
-var LuckyGridvue_type_template_id_eaa59754_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var LuckyGridvue_type_template_id_eaa59754_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0eaaf034-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=7eb07945&scoped=true&
+var LuckyGridvue_type_template_id_7eb07945_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
+var LuckyGridvue_type_template_id_7eb07945_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=eaa59754&scoped=true&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=7eb07945&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -6619,7 +6619,6 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 //
 
 /* harmony default export */ var LuckyGridvue_type_script_lang_js_ = ({
-  name: 'HorseRaceLamp',
   props: {
     // 边框
     blocks: {
@@ -6689,8 +6688,6 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       // 当前index累加
       prizeIndex: undefined,
       // 中奖索引
-      timer: null,
-      // 游走时间id
       speed: 0,
       // 速度
       prizeArea: {},
@@ -6754,16 +6751,19 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     }
   },
   mounted: function mounted() {
-    clearInterval(this.timer);
-    this.init(9);
-    window.addEventListener('resize', this.init);
+    this.init(true);
+    window.addEventListener('resize', this.init.bind(this, true));
   },
   methods: {
-    init: function init(aaa) {
+    /**
+     * 初始化canvas抽奖
+     * @param { boolean } isUpdateImg 是否需要重新加载图片
+     */
+    init: function init(isUpdateImg) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _defaultStyle, box, canvas, num, sum, btnInfo, onloadCallBack;
+        var _defaultStyle, box, canvas, endCallBack, imgOnLoad;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -6809,18 +6809,10 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                 }); // 计算单一奖品格子的宽度和高度
 
                 _this.cellWidth = (_this.prizeArea.w - _defaultStyle.gutter * (_this.cols - 1)) / _this.cols;
-                _this.cellHeight = (_this.prizeArea.h - _defaultStyle.gutter * (_this.rows - 1)) / _this.rows; // 提前加载图片, 并处理默认赋值
+                _this.cellHeight = (_this.prizeArea.h - _defaultStyle.gutter * (_this.rows - 1)) / _this.rows;
 
-                num = 0, sum = 0; // 图片加载回调函数
-
-                btnInfo = {};
-
-                onloadCallBack = function onloadCallBack(callback) {
-                  callback();
-                  num++; // 判断所有图片是否全都加载完毕
-
-                  if (num !== sum) return false; // 开始首次渲染
-
+                endCallBack = function endCallBack() {
+                  // 开始首次渲染
                   _this.draw(); // 点击按钮开始, 这里不能使用 addEventListener
 
 
@@ -6836,44 +6828,32 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                   };
                 };
 
-                _this.cells.forEach(function (prize, index) {
-                  prize.col = prize.col || 1;
-                  prize.row = prize.row || 1; // 图片预加载
+                imgOnLoad = function imgOnLoad(imgObj, imgInfo) {
+                  // 根据配置的样式计算图片的真实宽高
+                  if (imgInfo.width && imgInfo.height) {
+                    // 如果宽度和高度都填写了, 就如实计算
+                    imgInfo.trueWidth = _this.getWidth(imgInfo.width);
+                    imgInfo.trueHeight = _this.getHeight(imgInfo.height);
+                  } else if (imgInfo.width && !imgInfo.height) {
+                    // 如果只填写了宽度, 没填写高度
+                    imgInfo.trueWidth = _this.getWidth(imgInfo.width); // 那高度就随着宽度进行等比缩放
 
-                  _this.cellImgs[index] = [];
-                  prize.imgs && prize.imgs.forEach(function (imgInfo) {
-                    sum++;
-                    var imgObj = new Image();
+                    imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width);
+                  } else if (!imgInfo.width && imgInfo.height) {
+                    // 如果只填写了宽度, 没填写高度
+                    imgInfo.trueHeight = _this.getHeight(imgInfo.height); // 那宽度就随着高度进行等比缩放
 
-                    _this.cellImgs[index].push(imgObj);
+                    imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height);
+                  } else {
+                    // 如果没有配置宽高, 则使用图片本身的宽高
+                    imgInfo.trueWidth = imgObj.width;
+                    imgInfo.trueHeight = imgObj.height;
+                  }
+                };
 
-                    imgObj.src = imgInfo.src;
-                    imgObj.onload = onloadCallBack.bind(_this, function () {
-                      // 根据配置的样式计算图片的真实宽高
-                      if (imgInfo.width && imgInfo.height) {
-                        // 如果宽度和高度都填写了, 就如实计算
-                        imgInfo.trueWidth = _this.getWidth(imgInfo.width);
-                        imgInfo.trueHeight = _this.getHeight(imgInfo.height);
-                      } else if (imgInfo.width && !imgInfo.height) {
-                        // 如果只填写了宽度, 没填写高度
-                        imgInfo.trueWidth = _this.getWidth(imgInfo.width); // 那高度就随着宽度进行等比缩放
+                _this.syncLoadImg(isUpdateImg, imgOnLoad, endCallBack);
 
-                        imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width);
-                      } else if (!imgInfo.width && imgInfo.height) {
-                        // 如果只填写了宽度, 没填写高度
-                        imgInfo.trueHeight = _this.getHeight(imgInfo.height); // 那宽度就随着高度进行等比缩放
-
-                        imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height);
-                      } else {
-                        // 如果没有配置宽高, 则使用图片本身的宽高
-                        imgInfo.trueWidth = imgObj.width;
-                        imgInfo.trueHeight = imgObj.height;
-                      }
-                    });
-                  });
-                });
-
-              case 15:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -6881,9 +6861,49 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         }, _callee);
       }))();
     },
+
+    /**
+     * 同步加载图片函数
+     * @param { boolean } isUpdateImg 是否需要重新加载图片
+     * @param { Function } imgOnLoad 单个图片加载完毕回调
+     * @param { Function } endCallBack 所有图片全部加载完毕回调
+     */
+    syncLoadImg: function syncLoadImg(isUpdateImg, imgOnLoad, endCallBack) {
+      var _this2 = this;
+
+      var num = 0,
+          sum = 0;
+      this.cells.forEach(function (prize, index) {
+        // 初始化
+        prize.col = prize.col || 1;
+        prize.row = prize.row || 1;
+        isUpdateImg && (_this2.cellImgs[index] = []);
+        prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
+          sum++;
+
+          if (isUpdateImg) {
+            var imgObj = new Image();
+
+            _this2.cellImgs[index].push(imgObj);
+
+            imgObj.src = imgInfo.src;
+
+            imgObj.onload = function () {
+              num++;
+              imgOnLoad.call(_this2, imgObj, imgInfo);
+              if (sum === num) endCallBack.call(_this2);
+            };
+          } else {
+            num++;
+            imgOnLoad.call(_this2, _this2.cellImgs[index][i], imgInfo);
+            if (sum === num) endCallBack.call(_this2);
+          }
+        });
+      });
+    },
     // 绘制九宫格抽奖
     draw: function draw() {
-      var _this2 = this;
+      var _this3 = this;
 
       var ctx = this.ctx,
           _defaultStyle = this._defaultStyle,
@@ -6901,23 +6921,23 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
             r = _ref3[4],
             color = _ref3[5];
 
-        roundRect(ctx, x, y, w, h, r, _this2.handleBackground(x, y, w, h, color));
+        roundRect(ctx, x, y, w, h, r, _this3.handleBackground(x, y, w, h, color));
       }); // 绘制所有格子
 
       this.cells.forEach(function (prize, index) {
-        var _this2$getGeometricPr = _this2.getGeometricProperty([prize.x, prize.y, prize.col, prize.row]),
-            _this2$getGeometricPr2 = _slicedToArray(_this2$getGeometricPr, 4),
-            x = _this2$getGeometricPr2[0],
-            y = _this2$getGeometricPr2[1],
-            width = _this2$getGeometricPr2[2],
-            height = _this2$getGeometricPr2[3];
+        var _this3$getGeometricPr = _this3.getGeometricProperty([prize.x, prize.y, prize.col, prize.row]),
+            _this3$getGeometricPr2 = _slicedToArray(_this3$getGeometricPr, 4),
+            x = _this3$getGeometricPr2[0],
+            y = _this3$getGeometricPr2[1],
+            width = _this3$getGeometricPr2[2],
+            height = _this3$getGeometricPr2[3];
 
-        var isActive = index === _this2.currIndex % 8 >> 0; // 处理阴影
+        var isActive = index === _this3.currIndex % 8 >> 0; // 处理阴影
 
         var shadow = (isActive ? _activeStyle.shadow : prize.shadow || _defaultStyle.shadow).replace(/px/g, '') // 清空px字符串
         .split(',')[0].split(' ') // 防止有人声明多个阴影, 截取第一个阴影
         .map(function (n, i) {
-          return i === 3 ? n : ~~n;
+          return i < 3 ? ~~n : n;
         }); // 把数组的前三个转化成数字
         // 绘制阴影
 
@@ -6931,7 +6951,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
           shadow[1] > 0 ? height -= shadow[1] : (height += shadow[1], y -= shadow[1]);
         }
 
-        roundRect(ctx, x, y, width, height, prize.radius || _this2._defaultStyle.radius, _this2.handleBackground(x, y, width, height, prize.background, isActive)); // 清空阴影
+        roundRect(ctx, x, y, width, height, prize.radius || _this3._defaultStyle.radius, _this3.handleBackground(x, y, width, height, prize.background, isActive)); // 清空阴影
 
         ctx.shadowColor = 'rgba(255, 255, 255, 0)';
         ctx.shadowOffsetX = 0;
@@ -6939,8 +6959,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         ctx.shadowBlur = 0; // 绘制图片
 
         prize.imgs.forEach(function (imgInfo, i) {
-          var imgObj = _this2.cellImgs[index][i];
-          ctx.drawImage(imgObj, x + _this2.getOffsetX(imgInfo.trueWidth), y + _this2.getHeight(imgInfo.top), imgInfo.trueWidth, imgInfo.trueHeight);
+          var imgObj = _this3.cellImgs[index][i];
+          ctx.drawImage(imgObj, x + _this3.getOffsetX(imgInfo.trueWidth), y + _this3.getHeight(imgInfo.top), imgInfo.trueWidth, imgInfo.trueHeight);
         }); // 绘制文字
 
         prize.font.forEach(function (font) {
@@ -6949,11 +6969,12 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
             ctx.font = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
             ctx.fillStyle = isActive && _activeStyle.fontColor ? _activeStyle.fontColor : font.color || _defaultStyle.fontColor;
             var width = ctx.measureText(line).width;
-            ctx.fillText(line, x + _this2.getOffsetX(width), y + _this2.getHeight(font.top) + index * (font.lineHeight || 0));
+            ctx.fillText(line, x + _this3.getOffsetX(width), y + _this3.getHeight(font.top) + index * (font.lineHeight || 0));
           });
         });
       });
     },
+    // 处理背景色
     handleBackground: function handleBackground(x, y, width, height, background) {
       var isActive = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
       var ctx = this.ctx,
@@ -6967,58 +6988,15 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
       return background;
     },
-    getWidth: function getWidth(width) {
-      if (isExpectType(width, 'number')) return width;
-
-      if (isExpectType(width, 'string')) {
-        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '');
-      }
-
-      return 0;
-    },
-    getHeight: function getHeight(height) {
-      if (isExpectType(height, 'number')) return height;
-
-      if (isExpectType(height, 'string')) {
-        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '');
-      }
-
-      return 0;
-    },
-    getLength: function getLength(length) {
-      if (isExpectType(length, 'number')) return length;
-
-      if (isExpectType(length, 'string')) {
-        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '');
-      }
-
-      return 0;
-    },
-    getOffsetX: function getOffsetX(width) {
-      return (this.cellWidth - width) / 2;
-    },
-    setSpeed: function setSpeed() {
-      this.speed = 0.2;
-    },
+    // 对外暴露: 开始抽奖方法
     play: function play() {
       if (!this.canPlay) return false;
-      clearInterval(this.timer);
       this.prizeIndex = undefined;
       this.canPlay = false;
       this.setSpeed();
       this.run();
     },
-    // 增加中奖标识自动游走
-    walk: function walk() {
-      var _this3 = this;
-
-      clearInterval(this.timer);
-      this.timer = setInterval(function () {
-        _this3.currIndex += 1;
-
-        _this3.draw();
-      }, 1300);
-    },
+    // 实际开始执行方法
     run: function run() {
       if (this.prizeIndex == this.currIndex % 8 >> 0) {
         return this.slowDown();
@@ -7029,7 +7007,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       this.draw();
       window.requestAnimationFrame(this.run);
     },
-    // 得到中奖索引之后就可以停止了
+    // 对外暴露: 缓慢停止方法
     stop: function stop(index) {
       this.prizeIndex = index;
     },
@@ -7070,7 +7048,53 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       var res = [this.prizeArea.x + (this.cellWidth + this._defaultStyle.gutter) * x, this.prizeArea.y + (this.cellHeight + this._defaultStyle.gutter) * y];
       col && row && res.push(this.cellWidth * col + this._defaultStyle.gutter * (col - 1), this.cellHeight * row + this._defaultStyle.gutter * (row - 1));
       return res;
-    } // 绘制灯带
+    },
+    // 转换并获取宽度
+    getWidth: function getWidth(width) {
+      if (isExpectType(width, 'number')) return width;
+
+      if (isExpectType(width, 'string')) {
+        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '');
+      }
+
+      return 0;
+    },
+    // 转换并获取高度
+    getHeight: function getHeight(height) {
+      if (isExpectType(height, 'number')) return height;
+
+      if (isExpectType(height, 'string')) {
+        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '');
+      }
+
+      return 0;
+    },
+    // 转换并获取长度
+    getLength: function getLength(length) {
+      if (isExpectType(length, 'number')) return length;
+
+      if (isExpectType(length, 'string')) {
+        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '');
+      }
+
+      return 0;
+    },
+    // 获取相对(居中)X坐标
+    getOffsetX: function getOffsetX(width) {
+      return (this.cellWidth - width) / 2;
+    },
+    // 设置速度
+    setSpeed: function setSpeed() {
+      this.speed = 0.2;
+    } // 增加中奖标识自动游走
+    // walk () {
+    //   clearInterval(this.timer)
+    //   this.timer = setInterval(() => {
+    //     this.currIndex += 1
+    //     this.draw()
+    //   }, 1300)
+    // },
+    // 绘制灯带
     // drawLamp () {
     //   this.ctx.beginPath()
     //   this.ctx.fillStyle = '#fff'
@@ -7087,8 +7111,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=eaa59754&scoped=true&lang=css&
-var LuckyGridvue_type_style_index_0_id_eaa59754_scoped_true_lang_css_ = __webpack_require__("e386");
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=7eb07945&scoped=true&lang=css&
+var LuckyGridvue_type_style_index_0_id_7eb07945_scoped_true_lang_css_ = __webpack_require__("abe1");
 
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
 
@@ -7101,11 +7125,11 @@ var LuckyGridvue_type_style_index_0_id_eaa59754_scoped_true_lang_css_ = __webpac
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_eaa59754_scoped_true_render,
-  LuckyGridvue_type_template_id_eaa59754_scoped_true_staticRenderFns,
+  LuckyGridvue_type_template_id_7eb07945_scoped_true_render,
+  LuckyGridvue_type_template_id_7eb07945_scoped_true_staticRenderFns,
   false,
   null,
-  "eaa59754",
+  "7eb07945",
   null
   
 )

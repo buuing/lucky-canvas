@@ -7,7 +7,6 @@
 <script>
 import { roundRect, isExpectType, computePadding, getLinearGradient } from './utils.js'
 export default {
-  name: 'HorseRaceLamp',
   props: {
     // 边框
     blocks: {
@@ -66,7 +65,6 @@ export default {
       canPlay: true, // 是否可以开始
       currIndex: 0, // 当前index累加
       prizeIndex: undefined, // 中奖索引
-      timer: null, // 游走时间id
       speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
@@ -119,12 +117,15 @@ export default {
     }
   },
   mounted () {
-    clearInterval(this.timer)
-    this.init(9)
-    window.addEventListener('resize', this.init)
+    this.init(true)
+    window.addEventListener('resize', this.init.bind(this, true))
   },
   methods: {
-    async init (aaa) {
+    /**
+     * 初始化canvas抽奖
+     * @param { boolean } isUpdateImg 是否需要重新加载图片
+     */
+    async init (isUpdateImg) {
       const { _defaultStyle } = this
       const box = document.querySelector('.ldq-luck')
       const canvas = document.querySelector('#canvas')
@@ -148,15 +149,7 @@ export default {
       // 计算单一奖品格子的宽度和高度
       this.cellWidth = (this.prizeArea.w - _defaultStyle.gutter * (this.cols - 1)) / this.cols
       this.cellHeight = (this.prizeArea.h - _defaultStyle.gutter * (this.rows - 1)) / this.rows
-      // 提前加载图片, 并处理默认赋值
-      let num = 0, sum = 0
-      // 图片加载回调函数
-      let btnInfo = {}
-      const onloadCallBack = callback => {
-        callback()
-        num++
-        // 判断所有图片是否全都加载完毕
-        if (num !== sum) return false
+      const endCallBack = () => {
         // 开始首次渲染
         this.draw()
         // 点击按钮开始, 这里不能使用 addEventListener
@@ -166,38 +159,59 @@ export default {
           this.$emit('start', e)
         }
       }
+      const imgOnLoad = (imgObj, imgInfo) => {
+        // 根据配置的样式计算图片的真实宽高
+        if (imgInfo.width && imgInfo.height) {
+          // 如果宽度和高度都填写了, 就如实计算
+          imgInfo.trueWidth = this.getWidth(imgInfo.width)
+          imgInfo.trueHeight = this.getHeight(imgInfo.height)
+        } else if (imgInfo.width && !imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          imgInfo.trueWidth = this.getWidth(imgInfo.width)
+          // 那高度就随着宽度进行等比缩放
+          imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width)
+        } else if (!imgInfo.width && imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          imgInfo.trueHeight = this.getHeight(imgInfo.height)
+          // 那宽度就随着高度进行等比缩放
+          imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height)
+        } else {
+          // 如果没有配置宽高, 则使用图片本身的宽高
+          imgInfo.trueWidth = imgObj.width
+          imgInfo.trueHeight = imgObj.height
+        }
+      }
+      this.syncLoadImg(isUpdateImg, imgOnLoad, endCallBack)
+    },
+    /**
+     * 同步加载图片函数
+     * @param { boolean } isUpdateImg 是否需要重新加载图片
+     * @param { Function } imgOnLoad 单个图片加载完毕回调
+     * @param { Function } endCallBack 所有图片全部加载完毕回调
+     */
+    syncLoadImg (isUpdateImg, imgOnLoad, endCallBack) {
+      let num = 0, sum = 0
       this.cells.forEach((prize, index) => {
+        // 初始化
         prize.col = prize.col || 1
         prize.row = prize.row || 1
-        // 图片预加载
-        this.cellImgs[index] = []
-        prize.imgs && prize.imgs.forEach(imgInfo => {
+        isUpdateImg && (this.cellImgs[index] = [])
+        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
           sum++
-          const imgObj = new Image()
-          this.cellImgs[index].push(imgObj)
-          imgObj.src = imgInfo.src
-          imgObj.onload = onloadCallBack.bind(this, () => {
-            // 根据配置的样式计算图片的真实宽高
-            if (imgInfo.width && imgInfo.height) {
-              // 如果宽度和高度都填写了, 就如实计算
-              imgInfo.trueWidth = this.getWidth(imgInfo.width)
-              imgInfo.trueHeight = this.getHeight(imgInfo.height)
-            } else if (imgInfo.width && !imgInfo.height) {
-              // 如果只填写了宽度, 没填写高度
-              imgInfo.trueWidth = this.getWidth(imgInfo.width)
-              // 那高度就随着宽度进行等比缩放
-              imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width)
-            } else if (!imgInfo.width && imgInfo.height) {
-              // 如果只填写了宽度, 没填写高度
-              imgInfo.trueHeight = this.getHeight(imgInfo.height)
-              // 那宽度就随着高度进行等比缩放
-              imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height)
-            } else {
-              // 如果没有配置宽高, 则使用图片本身的宽高
-              imgInfo.trueWidth = imgObj.width
-              imgInfo.trueHeight = imgObj.height
+          if (isUpdateImg) {
+            const imgObj = new Image()
+            this.cellImgs[index].push(imgObj)
+            imgObj.src = imgInfo.src
+            imgObj.onload = () => {
+              num++
+              imgOnLoad.call(this, imgObj, imgInfo)
+              if (sum === num) endCallBack.call(this)
             }
-          })
+          } else {
+            num++
+            imgOnLoad.call(this, this.cellImgs[index][i], imgInfo)
+            if (sum === num) endCallBack.call(this)
+          }
         })
       })
     },
@@ -219,7 +233,7 @@ export default {
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
           .split(',')[0].split(' ') // 防止有人声明多个阴影, 截取第一个阴影
-          .map((n, i) => i === 3 ? n : ~~n) // 把数组的前三个转化成数字
+          .map((n, i) => i < 3 ? ~~n : n) // 把数组的前三个转化成数字
         // 绘制阴影
         if (shadow.length === 4) {
           ctx.shadowColor = shadow[3]
@@ -263,6 +277,7 @@ export default {
         })
       })
     },
+    // 处理背景色
     handleBackground (x, y, width, height, background, isActive = false) {
       const { ctx, _defaultStyle, _activeStyle } = this
       background = isActive ? _activeStyle.background : (background || _defaultStyle.background)
@@ -272,49 +287,15 @@ export default {
       }
       return background
     },
-    getWidth (width) {
-      if (isExpectType(width, 'number')) return width
-      if (isExpectType(width, 'string')) {
-        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '')
-      }
-      return 0
-    },
-    getHeight (height) {
-      if (isExpectType(height, 'number')) return height
-      if (isExpectType(height, 'string')) {
-        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '')
-      }
-      return 0
-    },
-    getLength (length) {
-      if (isExpectType(length, 'number')) return length
-      if (isExpectType(length, 'string')) {
-        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '')
-      }
-      return 0
-    },
-    getOffsetX (width) {
-      return (this.cellWidth - width) / 2
-    },
-    setSpeed () {
-      this.speed = 0.2
-    },
+    // 对外暴露: 开始抽奖方法
     play () {
       if (!this.canPlay) return false
-      clearInterval(this.timer)
       this.prizeIndex = undefined
       this.canPlay = false
       this.setSpeed()
       this.run()
     },
-    // 增加中奖标识自动游走
-    walk () {
-      clearInterval(this.timer)
-      this.timer = setInterval(() => {
-        this.currIndex += 1
-        this.draw()
-      }, 1300)
-    },
+    // 实际开始执行方法
     run () {
       if (this.prizeIndex == this.currIndex % 8 >> 0) {
         return this.slowDown()
@@ -324,7 +305,7 @@ export default {
       this.draw()
       window.requestAnimationFrame(this.run)
     },
-    // 得到中奖索引之后就可以停止了
+    // 对外暴露: 缓慢停止方法
     stop (index) {
       this.prizeIndex = index
     },
@@ -360,6 +341,46 @@ export default {
       )
       return res
     },
+    // 转换并获取宽度
+    getWidth (width) {
+      if (isExpectType(width, 'number')) return width
+      if (isExpectType(width, 'string')) {
+        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '')
+      }
+      return 0
+    },
+    // 转换并获取高度
+    getHeight (height) {
+      if (isExpectType(height, 'number')) return height
+      if (isExpectType(height, 'string')) {
+        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '')
+      }
+      return 0
+    },
+    // 转换并获取长度
+    getLength (length) {
+      if (isExpectType(length, 'number')) return length
+      if (isExpectType(length, 'string')) {
+        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '')
+      }
+      return 0
+    },
+    // 获取相对(居中)X坐标
+    getOffsetX (width) {
+      return (this.cellWidth - width) / 2
+    },
+    // 设置速度
+    setSpeed () {
+      this.speed = 0.2
+    },
+    // 增加中奖标识自动游走
+    // walk () {
+    //   clearInterval(this.timer)
+    //   this.timer = setInterval(() => {
+    //     this.currIndex += 1
+    //     this.draw()
+    //   }, 1300)
+    // },
     // 绘制灯带
     // drawLamp () {
     //   this.ctx.beginPath()
