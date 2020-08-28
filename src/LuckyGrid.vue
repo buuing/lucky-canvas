@@ -68,7 +68,6 @@ export default {
       speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
-      cellImgs: [], // 奖品图片
     }
   },
   watch: {
@@ -159,7 +158,8 @@ export default {
           this.$emit('start', e)
         }
       }
-      const imgOnLoad = (imgObj, imgInfo) => {
+      const imgOnLoad = imgInfo => {
+        const imgObj = imgInfo.imgObj
         // 根据配置的样式计算图片的真实宽高
         if (imgInfo.width && imgInfo.height) {
           // 如果宽度和高度都填写了, 就如实计算
@@ -195,25 +195,25 @@ export default {
         // 初始化
         prize.col = prize.col || 1
         prize.row = prize.row || 1
-        isUpdateImg && (this.cellImgs[index] = [])
-        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
+        prize.imgs && prize.imgs.forEach(imgInfo => {
           sum++
           if (isUpdateImg) {
             const imgObj = new Image()
-            this.cellImgs[index].push(imgObj)
+            imgInfo.imgObj = imgObj
             imgObj.src = imgInfo.src
             imgObj.onload = () => {
               num++
-              imgOnLoad.call(this, imgObj, imgInfo)
+              imgOnLoad.call(this, imgInfo)
               if (sum === num) endCallBack.call(this)
             }
           } else {
             num++
-            imgOnLoad.call(this, this.cellImgs[index][i], imgInfo)
+            imgOnLoad.call(this, imgInfo)
             if (sum === num) endCallBack.call(this)
           }
         })
       })
+      if (!sum) endCallBack.call(this)
     },
     // 绘制九宫格抽奖
     draw () {
@@ -255,10 +255,9 @@ export default {
         ctx.shadowOffsetY = 0
         ctx.shadowBlur = 0
         // 绘制图片
-        prize.imgs.forEach((imgInfo, i) => {
-          const imgObj = this.cellImgs[index][i]
+        prize.imgs && prize.imgs.forEach(imgInfo => {
           ctx.drawImage(
-            imgObj,
+            imgInfo.imgObj,
             x + this.getOffsetX(imgInfo.trueWidth),
             y + this.getHeight(imgInfo.top),
             imgInfo.trueWidth,
