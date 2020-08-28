@@ -68,6 +68,7 @@ export default {
       speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
+      cellImgs: [],
     }
   },
   watch: {
@@ -152,14 +153,13 @@ export default {
         // 开始首次渲染
         this.draw()
         // 点击按钮开始, 这里不能使用 addEventListener
-        canvas.onmousedown = e => {
+        if (this.button) canvas.onmousedown = e => {
           const [x, y] = this.getGeometricProperty([this.button.x, this.button.y])
           if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
           this.$emit('start', e)
         }
       }
-      const imgOnLoad = imgInfo => {
-        const imgObj = imgInfo.imgObj
+      const imgOnLoad = (imgInfo, imgObj) => {
         // 根据配置的样式计算图片的真实宽高
         if (imgInfo.width && imgInfo.height) {
           // 如果宽度和高度都填写了, 就如实计算
@@ -191,24 +191,25 @@ export default {
      */
     syncLoadImg (isUpdateImg, imgOnLoad, endCallBack) {
       let num = 0, sum = 0
+      if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(cell => [])
       this.cells.forEach((prize, index) => {
         // 初始化
         prize.col = prize.col || 1
         prize.row = prize.row || 1
-        prize.imgs && prize.imgs.forEach(imgInfo => {
+        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
           sum++
           if (isUpdateImg) {
             const imgObj = new Image()
-            imgInfo.imgObj = imgObj
+            this.cellImgs[index][i] = imgObj
             imgObj.src = imgInfo.src
             imgObj.onload = () => {
               num++
-              imgOnLoad.call(this, imgInfo)
+              imgOnLoad.call(this, imgInfo, imgObj)
               if (sum === num) endCallBack.call(this)
             }
           } else {
             num++
-            imgOnLoad.call(this, imgInfo)
+            imgOnLoad.call(this, imgInfo, this.cellImgs[index][i])
             if (sum === num) endCallBack.call(this)
           }
         })
@@ -255,9 +256,9 @@ export default {
         ctx.shadowOffsetY = 0
         ctx.shadowBlur = 0
         // 绘制图片
-        prize.imgs && prize.imgs.forEach(imgInfo => {
+        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
           ctx.drawImage(
-            imgInfo.imgObj,
+            this.cellImgs[index][i],
             x + this.getOffsetX(imgInfo.trueWidth),
             y + this.getHeight(imgInfo.top),
             imgInfo.trueWidth,
@@ -265,7 +266,7 @@ export default {
           )
         })
         // 绘制文字
-        prize.font.forEach(font => {
+        prize.font && prize.font.forEach(font => {
           String(font.text).split('\n').forEach((line, index) => {
             ctx.beginPath()
             ctx.font = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)

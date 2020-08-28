@@ -381,6 +381,13 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH }, {
 
 /***/ }),
 
+/***/ "1422":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "14c3":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1746,17 +1753,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "6d04":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("9129");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "6eeb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2327,13 +2323,6 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
   return object;
 };
 
-
-/***/ }),
-
-/***/ "9129":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -5512,6 +5501,17 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
 
 /***/ }),
 
+/***/ "e817":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1422");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "e893":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6189,12 +6189,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=5efb7b0f&scoped=true&
-var LuckyGridvue_type_template_id_5efb7b0f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var LuckyGridvue_type_template_id_5efb7b0f_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=52e24066&scoped=true&
+var LuckyGridvue_type_template_id_52e24066_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
+var LuckyGridvue_type_template_id_52e24066_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=5efb7b0f&scoped=true&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=52e24066&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -6611,6 +6611,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 
 
+
 //
 //
 //
@@ -6692,7 +6693,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       // 速度
       prizeArea: {},
       // 奖品区域几何信息
-      cells: []
+      cells: [],
+      cellImgs: []
     };
   },
   watch: {
@@ -6814,7 +6816,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                   _this.draw(); // 点击按钮开始, 这里不能使用 addEventListener
 
 
-                  canvas.onmousedown = function (e) {
+                  if (_this.button) canvas.onmousedown = function (e) {
                     var _this$getGeometricPro = _this.getGeometricProperty([_this.button.x, _this.button.y]),
                         _this$getGeometricPro2 = _slicedToArray(_this$getGeometricPro, 2),
                         x = _this$getGeometricPro2[0],
@@ -6826,9 +6828,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                   };
                 };
 
-                imgOnLoad = function imgOnLoad(imgInfo) {
-                  var imgObj = imgInfo.imgObj; // 根据配置的样式计算图片的真实宽高
-
+                imgOnLoad = function imgOnLoad(imgInfo, imgObj) {
+                  // 根据配置的样式计算图片的真实宽高
                   if (imgInfo.width && imgInfo.height) {
                     // 如果宽度和高度都填写了, 就如实计算
                     imgInfo.trueWidth = _this.getWidth(imgInfo.width);
@@ -6872,26 +6873,29 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
       var num = 0,
           sum = 0;
+      if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(function (cell) {
+        return [];
+      });
       this.cells.forEach(function (prize, index) {
         // 初始化
         prize.col = prize.col || 1;
         prize.row = prize.row || 1;
-        prize.imgs && prize.imgs.forEach(function (imgInfo) {
+        prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
           sum++;
 
           if (isUpdateImg) {
             var imgObj = new Image();
-            imgInfo.imgObj = imgObj;
+            _this2.cellImgs[index][i] = imgObj;
             imgObj.src = imgInfo.src;
 
             imgObj.onload = function () {
               num++;
-              imgOnLoad.call(_this2, imgInfo);
+              imgOnLoad.call(_this2, imgInfo, imgObj);
               if (sum === num) endCallBack.call(_this2);
             };
           } else {
             num++;
-            imgOnLoad.call(_this2, imgInfo);
+            imgOnLoad.call(_this2, imgInfo, _this2.cellImgs[index][i]);
             if (sum === num) endCallBack.call(_this2);
           }
         });
@@ -6955,11 +6959,11 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 0; // 绘制图片
 
-        prize.imgs && prize.imgs.forEach(function (imgInfo) {
-          ctx.drawImage(imgInfo.imgObj, x + _this3.getOffsetX(imgInfo.trueWidth), y + _this3.getHeight(imgInfo.top), imgInfo.trueWidth, imgInfo.trueHeight);
+        prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
+          ctx.drawImage(_this3.cellImgs[index][i], x + _this3.getOffsetX(imgInfo.trueWidth), y + _this3.getHeight(imgInfo.top), imgInfo.trueWidth, imgInfo.trueHeight);
         }); // 绘制文字
 
-        prize.font.forEach(function (font) {
+        prize.font && prize.font.forEach(function (font) {
           String(font.text).split('\n').forEach(function (line, index) {
             ctx.beginPath();
             ctx.font = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
@@ -7107,8 +7111,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=5efb7b0f&scoped=true&lang=css&
-var LuckyGridvue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css_ = __webpack_require__("6d04");
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=52e24066&scoped=true&lang=css&
+var LuckyGridvue_type_style_index_0_id_52e24066_scoped_true_lang_css_ = __webpack_require__("e817");
 
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
 
@@ -7121,11 +7125,11 @@ var LuckyGridvue_type_style_index_0_id_5efb7b0f_scoped_true_lang_css_ = __webpac
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_5efb7b0f_scoped_true_render,
-  LuckyGridvue_type_template_id_5efb7b0f_scoped_true_staticRenderFns,
+  LuckyGridvue_type_template_id_52e24066_scoped_true_render,
+  LuckyGridvue_type_template_id_52e24066_scoped_true_staticRenderFns,
   false,
   null,
-  "5efb7b0f",
+  "52e24066",
   null
   
 )

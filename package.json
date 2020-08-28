@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "docs:dev": "vuepress dev vuepress",
+    "docs:build": "vuepress build vuepress",
     "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
   "keywords": [
@@ -12,5 +14,8 @@
     "九宫格抽奖"
   ],
   "author": "ldq <17778888138@189.cn>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "vuepress": "^1.5.4"
+  }
 }
