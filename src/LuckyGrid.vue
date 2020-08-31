@@ -17,7 +17,8 @@ export default {
           if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
           return true
         })
-      }
+      },
+      default: () => []
     },
     // 奖品
     prizes: {
@@ -29,7 +30,8 @@ export default {
           if (!item.hasOwnProperty('y')) return console.error(`prizes[${index}]缺少 y 属性`)
           return true
         })
-      }
+      },
+      default: () => []
     },
     // 按钮
     button: {
