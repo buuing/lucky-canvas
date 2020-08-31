@@ -97,7 +97,7 @@ export default {
         fontStyle: '16px sans-serif',
         textAlign: 'center',
         background: '#fff',
-        shadow: '0 8 1 #ebf1f4'
+        shadow: ''
       }
       // 传入的样式进行覆盖
       for (let key in this.defaultStyle) {

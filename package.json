@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docs:dev": "vuepress dev vuepress",
+    "docs": "vuepress dev vuepress",
     "docs:build": "vuepress build vuepress",
     "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
