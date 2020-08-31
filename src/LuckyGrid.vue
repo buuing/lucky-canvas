@@ -94,7 +94,7 @@ export default {
         gutter: 5,
         radius: 20,
         fontColor: '#DF424B',
-        fontStyle: '18px sans-serif',
+        fontStyle: '16px sans-serif',
         textAlign: 'center',
         background: '#fff',
         shadow: '0 8 1 #ebf1f4'
@@ -268,13 +268,14 @@ export default {
           )
         })
         // 绘制文字
-        prize.font && prize.font.forEach(font => {
+        prize.fonts && prize.fonts.forEach(font => {
           String(font.text).split('\n').forEach((line, index) => {
             ctx.beginPath()
-            ctx.font = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
+            const style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
+            ctx.font = style
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
             const width = ctx.measureText(line).width
-            ctx.fillText(line, x + this.getOffsetX(width), y + this.getHeight(font.top) + index * (font.lineHeight || 0))
+            ctx.fillText(line, x + this.getOffsetX(width), y + this.getHeight(font.top) + index * this.getLength(font.lineHeight || style.split(' ')[0]))
           })
         })
       })
