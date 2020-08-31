@@ -140,7 +140,7 @@ export default {
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
-        this.blockData.push([x, y, w, h, block.radius, block.background])
+        this.blockData.push([x, y, w, h, block.radius || 0, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
