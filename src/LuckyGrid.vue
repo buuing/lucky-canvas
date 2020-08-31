@@ -1,6 +1,6 @@
 <template>
-  <div class="ldq-luck">
-    <canvas id="canvas"></canvas>
+  <div ref="luckDraw">
+    <canvas></canvas>
   </div>
 </template>
 
@@ -129,8 +129,8 @@ export default {
      */
     async init (isUpdateImg) {
       const { _defaultStyle } = this
-      const box = document.querySelector('.ldq-luck')
-      const canvas = document.querySelector('#canvas')
+      const box = this.$refs.luckDraw
+      const canvas = this.$refs.luckDraw.childNodes[0]
       this.boxWidth = canvas.width = box.offsetWidth
       this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
@@ -398,9 +398,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.ldq-luck {
-  position: relative;
-}
-</style>
