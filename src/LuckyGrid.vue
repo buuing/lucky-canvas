@@ -74,15 +74,15 @@ export default {
     }
   },
   watch: {
-    'blocks': {
-      handler () { this.init() },
+    prizes: {
+      handler () { this.init('prizes') },
       deep: true,
     },
-    'prizes': {
-      handler () { this.init() },
+    button: {
+      handler () { this.init('button') },
       deep: true,
     },
-    'button': {
+    blocks: {
       handler () { this.init() },
       deep: true,
     },
@@ -119,8 +119,8 @@ export default {
     }
   },
   mounted () {
-    this.init(true)
-    window.addEventListener('resize', this.init.bind(this, true))
+    this.init('mounted')
+    window.addEventListener('resize', this.init.bind(this, 'resize'))
   },
   methods: {
     /**
@@ -128,6 +128,7 @@ export default {
      * @param { boolean } isUpdateImg 是否需要重新加载图片
      */
     async init (isUpdateImg) {
+      console.log('init', isUpdateImg)
       const { _defaultStyle } = this
       const box = this.$refs.luckDraw
       const canvas = this.$refs.luckDraw.childNodes[0]
@@ -193,12 +194,13 @@ export default {
      */
     syncLoadImg (isUpdateImg, imgOnLoad, endCallBack) {
       let num = 0, sum = 0
-      if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(cell => [])
+      // if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(cell => [])
       this.cells.forEach((prize, index) => {
         // 初始化
         prize.col = prize.col || 1
         prize.row = prize.row || 1
-        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
+        if (isUpdateImg) this.cellImgs[index] = []
+        prize.imgs.length && prize.imgs.forEach((imgInfo, i) => {
           sum++
           if (isUpdateImg) {
             const imgObj = new Image()
@@ -258,7 +260,7 @@ export default {
         ctx.shadowOffsetY = 0
         ctx.shadowBlur = 0
         // 绘制图片
-        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
+        prize.imgs.length && prize.imgs.forEach((imgInfo, i) => {
           ctx.drawImage(
             this.cellImgs[index][i],
             x + this.getOffsetX(imgInfo.trueWidth, prize.col),
@@ -268,7 +270,7 @@ export default {
           )
         })
         // 绘制文字
-        prize.fonts && prize.fonts.forEach(font => {
+        prize.fonts.length && prize.fonts.forEach(font => {
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.beginPath()
             const style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
