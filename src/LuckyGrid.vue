@@ -161,20 +161,20 @@ export default {
           this.$emit('start', e)
         }
       }
-      const imgOnLoad = (imgInfo, imgObj) => {
+      const imgOnLoad = (imgInfo, imgObj, prize) => {
         // 根据配置的样式计算图片的真实宽高
         if (imgInfo.width && imgInfo.height) {
           // 如果宽度和高度都填写了, 就如实计算
-          imgInfo.trueWidth = this.getWidth(imgInfo.width)
-          imgInfo.trueHeight = this.getHeight(imgInfo.height)
+          imgInfo.trueWidth = this.getWidth(imgInfo.width, prize.col)
+          imgInfo.trueHeight = this.getHeight(imgInfo.height, prize.row)
         } else if (imgInfo.width && !imgInfo.height) {
           // 如果只填写了宽度, 没填写高度
-          imgInfo.trueWidth = this.getWidth(imgInfo.width)
+          imgInfo.trueWidth = this.getWidth(imgInfo.width, prize.col)
           // 那高度就随着宽度进行等比缩放
           imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width)
         } else if (!imgInfo.width && imgInfo.height) {
           // 如果只填写了宽度, 没填写高度
-          imgInfo.trueHeight = this.getHeight(imgInfo.height)
+          imgInfo.trueHeight = this.getHeight(imgInfo.height, prize.row)
           // 那宽度就随着高度进行等比缩放
           imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height)
         } else {
@@ -206,12 +206,12 @@ export default {
             imgObj.src = imgInfo.src
             imgObj.onload = () => {
               num++
-              imgOnLoad.call(this, imgInfo, imgObj)
+              imgOnLoad.call(this, imgInfo, imgObj, prize)
               if (sum === num) endCallBack.call(this)
             }
           } else {
             num++
-            imgOnLoad.call(this, imgInfo, this.cellImgs[index][i])
+            imgOnLoad.call(this, imgInfo, this.cellImgs[index][i], prize)
             if (sum === num) endCallBack.call(this)
           }
         })
@@ -350,10 +350,12 @@ export default {
       return res
     },
     // 转换并获取宽度
-    getWidth (width) {
+    getWidth (width, col = 1) {
       if (isExpectType(width, 'number')) return width
       if (isExpectType(width, 'string')) {
-        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '')
+        return width.includes('%')
+          ? (this.cellWidth * col + this._defaultStyle.gutter * (col - 1)) * width.slice(0, -1) / 100
+          : ~~width.replace(/px/g, '')
       }
       return 0
     },
