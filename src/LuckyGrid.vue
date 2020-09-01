@@ -261,21 +261,26 @@ export default {
         prize.imgs && prize.imgs.forEach((imgInfo, i) => {
           ctx.drawImage(
             this.cellImgs[index][i],
-            x + this.getOffsetX(imgInfo.trueWidth),
-            y + this.getHeight(imgInfo.top),
+            x + this.getOffsetX(imgInfo.trueWidth, prize.col),
+            y + this.getHeight(imgInfo.top, prize.row),
             imgInfo.trueWidth,
             imgInfo.trueHeight
           )
         })
         // 绘制文字
         prize.fonts && prize.fonts.forEach(font => {
-          String(font.text).split('\n').forEach((line, index) => {
+          String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.beginPath()
             const style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
             ctx.font = style
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
             const width = ctx.measureText(line).width
-            ctx.fillText(line, x + this.getOffsetX(width), y + this.getHeight(font.top) + index * this.getLength(font.lineHeight || style.split(' ')[0]))
+            const lineHeight = font.lineHeight || style.split(' ')[0]
+            ctx.fillText(
+              line,
+              x + this.getOffsetX(width, prize.col),
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * this.getLength(lineHeight)
+            )
           })
         })
       })
@@ -329,7 +334,7 @@ export default {
       window.requestAnimationFrame(this.slowDown)
     },
     /**
-     * 计算奖品格子的集合属性
+     * 计算奖品格子的几何属性
      * @param { array } [...矩阵坐标, col, row]
      * @return { array } [...真实坐标, width, height]
      */
@@ -353,10 +358,12 @@ export default {
       return 0
     },
     // 转换并获取高度
-    getHeight (height) {
+    getHeight (height, row = 1) {
       if (isExpectType(height, 'number')) return height
       if (isExpectType(height, 'string')) {
-        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '')
+        return height.includes('%')
+          ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100
+          : ~~height.replace(/px/g, '')
       }
       return 0
     },
@@ -369,8 +376,8 @@ export default {
       return 0
     },
     // 获取相对(居中)X坐标
-    getOffsetX (width) {
-      return (this.cellWidth - width) / 2
+    getOffsetX (width, col = 1) {
+      return (this.cellWidth * col + this._defaultStyle.gutter * (col - 1) - width) / 2
     },
     // 设置速度
     setSpeed () {
