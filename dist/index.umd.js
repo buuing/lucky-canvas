@@ -381,13 +381,6 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH }, {
 
 /***/ }),
 
-/***/ "1422":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "14c3":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5501,17 +5494,6 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
 
 /***/ }),
 
-/***/ "e817":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1422");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckyGrid_vue_vue_type_style_index_0_id_52e24066_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
 /***/ "e893":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6189,12 +6171,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=52e24066&scoped=true&
-var LuckyGridvue_type_template_id_52e24066_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var LuckyGridvue_type_template_id_52e24066_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"ldq-luck"},[_c('canvas',{attrs:{"id":"canvas"}})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=3a278900&
+var LuckyGridvue_type_template_id_3a278900_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw"},[_c('canvas')])}
+var LuckyGridvue_type_template_id_3a278900_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=52e24066&scoped=true&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=3a278900&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -6630,6 +6612,9 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
           if (!item.background) console.error("blocks[".concat(index, "]\u7F3A\u5C11 background \u5C5E\u6027"));
           return true;
         });
+      },
+      default: function _default() {
+        return [];
       }
     },
     // 奖品
@@ -6642,6 +6627,9 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
           if (!item.hasOwnProperty('y')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 y \u5C5E\u6027"));
           return true;
         });
+      },
+      default: function _default() {
+        return [];
       }
     },
     // 按钮
@@ -6724,10 +6712,10 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         gutter: 5,
         radius: 20,
         fontColor: '#DF424B',
-        fontStyle: '18px sans-serif',
+        fontStyle: '16px sans-serif',
         textAlign: 'center',
         background: '#fff',
-        shadow: '0 8 1 #ebf1f4'
+        shadow: ''
       }; // 传入的样式进行覆盖
 
       for (var key in this.defaultStyle) {
@@ -6770,8 +6758,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
             switch (_context.prev = _context.next) {
               case 0:
                 _defaultStyle = _this._defaultStyle;
-                box = document.querySelector('.ldq-luck');
-                canvas = document.querySelector('#canvas');
+                box = _this.$refs.luckDraw;
+                canvas = _this.$refs.luckDraw.childNodes[0];
                 _this.boxWidth = canvas.width = box.offsetWidth;
                 _this.boxHeight = canvas.height = box.offsetHeight;
                 _this.ctx = canvas.getContext('2d'); // 把按钮放到奖品里面
@@ -6793,7 +6781,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                       paddingLeft = _computePadding.paddingLeft,
                       paddingRight = _computePadding.paddingRight;
 
-                  _this.blockData.push([x, y, w, h, block.radius, block.background]);
+                  _this.blockData.push([x, y, w, h, block.radius || 0, block.background]);
 
                   return {
                     x: x + paddingLeft,
@@ -6828,20 +6816,20 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
                   };
                 };
 
-                imgOnLoad = function imgOnLoad(imgInfo, imgObj) {
+                imgOnLoad = function imgOnLoad(imgInfo, imgObj, prize) {
                   // 根据配置的样式计算图片的真实宽高
                   if (imgInfo.width && imgInfo.height) {
                     // 如果宽度和高度都填写了, 就如实计算
-                    imgInfo.trueWidth = _this.getWidth(imgInfo.width);
-                    imgInfo.trueHeight = _this.getHeight(imgInfo.height);
+                    imgInfo.trueWidth = _this.getWidth(imgInfo.width, prize.col);
+                    imgInfo.trueHeight = _this.getHeight(imgInfo.height, prize.row);
                   } else if (imgInfo.width && !imgInfo.height) {
                     // 如果只填写了宽度, 没填写高度
-                    imgInfo.trueWidth = _this.getWidth(imgInfo.width); // 那高度就随着宽度进行等比缩放
+                    imgInfo.trueWidth = _this.getWidth(imgInfo.width, prize.col); // 那高度就随着宽度进行等比缩放
 
                     imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width);
                   } else if (!imgInfo.width && imgInfo.height) {
                     // 如果只填写了宽度, 没填写高度
-                    imgInfo.trueHeight = _this.getHeight(imgInfo.height); // 那宽度就随着高度进行等比缩放
+                    imgInfo.trueHeight = _this.getHeight(imgInfo.height, prize.row); // 那宽度就随着高度进行等比缩放
 
                     imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height);
                   } else {
@@ -6890,12 +6878,12 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
             imgObj.onload = function () {
               num++;
-              imgOnLoad.call(_this2, imgInfo, imgObj);
+              imgOnLoad.call(_this2, imgInfo, imgObj, prize);
               if (sum === num) endCallBack.call(_this2);
             };
           } else {
             num++;
-            imgOnLoad.call(_this2, imgInfo, _this2.cellImgs[index][i]);
+            imgOnLoad.call(_this2, imgInfo, _this2.cellImgs[index][i], prize);
             if (sum === num) endCallBack.call(_this2);
           }
         });
@@ -6960,16 +6948,18 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         ctx.shadowBlur = 0; // 绘制图片
 
         prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
-          ctx.drawImage(_this3.cellImgs[index][i], x + _this3.getOffsetX(imgInfo.trueWidth), y + _this3.getHeight(imgInfo.top), imgInfo.trueWidth, imgInfo.trueHeight);
+          ctx.drawImage(_this3.cellImgs[index][i], x + _this3.getOffsetX(imgInfo.trueWidth, prize.col), y + _this3.getHeight(imgInfo.top, prize.row), imgInfo.trueWidth, imgInfo.trueHeight);
         }); // 绘制文字
 
-        prize.font && prize.font.forEach(function (font) {
-          String(font.text).split('\n').forEach(function (line, index) {
+        prize.fonts && prize.fonts.forEach(function (font) {
+          String(font.text).split('\n').forEach(function (line, lineIndex) {
             ctx.beginPath();
-            ctx.font = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
+            var style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
+            ctx.font = style;
             ctx.fillStyle = isActive && _activeStyle.fontColor ? _activeStyle.fontColor : font.color || _defaultStyle.fontColor;
             var width = ctx.measureText(line).width;
-            ctx.fillText(line, x + _this3.getOffsetX(width), y + _this3.getHeight(font.top) + index * (font.lineHeight || 0));
+            var lineHeight = font.lineHeight || style.split(' ')[0];
+            ctx.fillText(line, x + _this3.getOffsetX(width, prize.col), y + _this3.getHeight(font.top, prize.row) + (lineIndex + 1) * _this3.getLength(lineHeight));
           });
         });
       });
@@ -7034,7 +7024,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     },
 
     /**
-     * 计算奖品格子的集合属性
+     * 计算奖品格子的几何属性
      * @param { array } [...矩阵坐标, col, row]
      * @return { array } [...真实坐标, width, height]
      */
@@ -7051,20 +7041,22 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     },
     // 转换并获取宽度
     getWidth: function getWidth(width) {
+      var col = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(width, 'number')) return width;
 
       if (isExpectType(width, 'string')) {
-        return width.includes('%') ? this.cellWidth * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '');
+        return width.includes('%') ? (this.cellWidth * col + this._defaultStyle.gutter * (col - 1)) * width.slice(0, -1) / 100 : ~~width.replace(/px/g, '');
       }
 
       return 0;
     },
     // 转换并获取高度
     getHeight: function getHeight(height) {
+      var row = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(height, 'number')) return height;
 
       if (isExpectType(height, 'string')) {
-        return height.includes('%') ? this.cellHeight * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '');
+        return height.includes('%') ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100 : ~~height.replace(/px/g, '');
       }
 
       return 0;
@@ -7081,7 +7073,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     },
     // 获取相对(居中)X坐标
     getOffsetX: function getOffsetX(width) {
-      return (this.cellWidth - width) / 2;
+      var col = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      return (this.cellWidth * col + this._defaultStyle.gutter * (col - 1) - width) / 2;
     },
     // 设置速度
     setSpeed: function setSpeed() {
@@ -7111,11 +7104,7 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=style&index=0&id=52e24066&scoped=true&lang=css&
-var LuckyGridvue_type_style_index_0_id_52e24066_scoped_true_lang_css_ = __webpack_require__("e817");
-
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
-
 
 
 
@@ -7125,11 +7114,11 @@ var LuckyGridvue_type_style_index_0_id_52e24066_scoped_true_lang_css_ = __webpac
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_52e24066_scoped_true_render,
-  LuckyGridvue_type_template_id_52e24066_scoped_true_staticRenderFns,
+  LuckyGridvue_type_template_id_3a278900_render,
+  LuckyGridvue_type_template_id_3a278900_staticRenderFns,
   false,
   null,
-  "52e24066",
+  null,
   null
   
 )
