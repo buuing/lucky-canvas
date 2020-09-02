@@ -6162,12 +6162,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=3a278900&
-var LuckyGridvue_type_template_id_3a278900_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw"},[_c('canvas')])}
-var LuckyGridvue_type_template_id_3a278900_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5d682bc7-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=d7e4d202&
+var LuckyGridvue_type_template_id_d7e4d202_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw"},[_c('canvas')])}
+var LuckyGridvue_type_template_id_d7e4d202_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=3a278900&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=d7e4d202&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -6584,7 +6584,6 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 
 
-
 //
 //
 //
@@ -6677,19 +6676,19 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     };
   },
   watch: {
-    'blocks': {
+    prizes: {
       handler: function handler() {
-        this.init();
+        this.init('prizes');
       },
       deep: true
     },
-    'prizes': {
+    button: {
       handler: function handler() {
-        this.init();
+        this.init('button');
       },
       deep: true
     },
-    'button': {
+    blocks: {
       handler: function handler() {
         this.init();
       },
@@ -6730,8 +6729,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     }
   },
   mounted: function mounted() {
-    this.init(true);
-    window.addEventListener('resize', this.init.bind(this, true));
+    this.init('mounted');
+    window.addEventListener('resize', this.init.bind(this, 'resize'));
   },
   methods: {
     /**
@@ -6851,15 +6850,14 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       var _this2 = this;
 
       var num = 0,
-          sum = 0;
-      if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(function (cell) {
-        return [];
-      });
+          sum = 0; // if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(cell => [])
+
       this.cells.forEach(function (prize, index) {
         // 初始化
         prize.col = prize.col || 1;
         prize.row = prize.row || 1;
-        prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
+        if (isUpdateImg) _this2.cellImgs[index] = [];
+        prize.imgs.length && prize.imgs.forEach(function (imgInfo, i) {
           sum++;
 
           if (isUpdateImg) {
@@ -6938,11 +6936,11 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         ctx.shadowOffsetY = 0;
         ctx.shadowBlur = 0; // 绘制图片
 
-        prize.imgs && prize.imgs.forEach(function (imgInfo, i) {
+        prize.imgs.length && prize.imgs.forEach(function (imgInfo, i) {
           ctx.drawImage(_this3.cellImgs[index][i], x + _this3.getOffsetX(imgInfo.trueWidth, prize.col), y + _this3.getHeight(imgInfo.top, prize.row), imgInfo.trueWidth, imgInfo.trueHeight);
         }); // 绘制文字
 
-        prize.fonts && prize.fonts.forEach(function (font) {
+        prize.fonts.length && prize.fonts.forEach(function (font) {
           String(font.text).split('\n').forEach(function (line, lineIndex) {
             ctx.beginPath();
             var style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.style || _defaultStyle.fontStyle;
@@ -7105,8 +7103,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_3a278900_render,
-  LuckyGridvue_type_template_id_3a278900_staticRenderFns,
+  LuckyGridvue_type_template_id_d7e4d202_render,
+  LuckyGridvue_type_template_id_d7e4d202_staticRenderFns,
   false,
   null,
   null,

@@ -128,7 +128,6 @@ export default {
      * @param { boolean } isUpdateImg 是否需要重新加载图片
      */
     async init (isUpdateImg) {
-      console.log('init', isUpdateImg)
       const { _defaultStyle } = this
       const box = this.$refs.luckDraw
       const canvas = this.$refs.luckDraw.childNodes[0]
