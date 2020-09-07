@@ -71,6 +71,7 @@ export default {
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
       cellImgs: [],
+      animationId: 0,
     }
   },
   watch: {
@@ -120,7 +121,7 @@ export default {
   },
   mounted () {
     this.init('mounted')
-    window.addEventListener('resize', this.init.bind(this, 'resize'))
+    window.addEventListener('resize', this.init.bind(this))
   },
   methods: {
     /**
@@ -134,9 +135,14 @@ export default {
       this.boxWidth = canvas.width = box.offsetWidth
       this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
+      // 初始化状态
+      this.canPlay = true
+      this.currIndex = this.currIndex % 8 >> 0
+      this.prizeIndex = undefined
+      cancelAnimationFrame(this.animationId)
       // 把按钮放到奖品里面
       this.cells = [...this.prizes, { ...this.button, index: null }]
-      // 计算所有边框信息
+      // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
@@ -259,7 +265,7 @@ export default {
         ctx.shadowOffsetY = 0
         ctx.shadowBlur = 0
         // 绘制图片
-        prize.imgs.length && prize.imgs.forEach((imgInfo, i) => {
+        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
           ctx.drawImage(
             this.cellImgs[index][i],
             x + this.getOffsetX(imgInfo.trueWidth, prize.col),
@@ -269,7 +275,7 @@ export default {
           )
         })
         // 绘制文字
-        prize.fonts.length && prize.fonts.forEach(font => {
+        prize.fonts && prize.fonts.forEach(font => {
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.beginPath()
             const style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
@@ -312,7 +318,7 @@ export default {
       if (this.speed < 0.4 && this.prizeIndex === undefined) this.speed += 0.002
       this.currIndex += this.speed
       this.draw()
-      window.requestAnimationFrame(this.run)
+      this.animationId = window.requestAnimationFrame(this.run)
     },
     // 对外暴露: 缓慢停止方法
     stop (index) {
@@ -321,7 +327,7 @@ export default {
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown () {
       if (this.speed < 0.025) {
-        if (this.prizeIndex === this.currIndex % 8 >> 0) {
+        if (this.prizeIndex == this.currIndex % 8 >> 0) {
           this.speed = 0
           this.canPlay = true
           this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
