@@ -146,7 +146,7 @@ Vue.use(LuckDraw)
 
 <br />
 
-### 中奖标记的默认样式 - activeStyle
+### 中奖标记的样式 - activeStyle
 
 <br />
 

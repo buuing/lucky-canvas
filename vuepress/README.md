@@ -5,42 +5,42 @@
   :prizes="[
     {
       index: 0, x: 0, y: 0,
-      font: [{ text: '1元现金红包', top: '85%' }],
+      fonts: [{ text: '1元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/0.png'), width: '50%', top: '10%' }]
     },
     {
       index: 1, x: 1, y: 0,
-      font: [{ text: '100元现金红包', top: '85%' }],
+      fonts: [{ text: '100元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/1.png'), width: '50%', top: '10%' }]
     },
     {
       index: 2, x: 2, y: 0,
-      font: [{ text: '0.5元现金红包', top: '85%' }],
+      fonts: [{ text: '0.5元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/2.png'), width: '50%', top: '10%' }]
     },
     {
       index: 3, x: 2, y: 1,
-      font: [{ text: '2元现金红包', top: '85%' }],
+      fonts: [{ text: '2元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/3.png'), width: '50%', top: '10%' }]
     },
     {
       index: 4, x: 2, y: 2,
-      font: [{ text: '10元现金红包', top: '85%' }],
+      fonts: [{ text: '10元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/4.png'), width: '50%', top: '10%' }]
     },
     {
       index: 5, x: 1, y: 2,
-      font: [{ text: '50元现金红包', top: '85%' }],
+      fonts: [{ text: '50元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/5.png'), width: '50%', top: '10%' }]
     },
     {
       index: 6, x: 0, y: 2,
-      font: [{ text: '0.3元现金红包', top: '85%' }],
+      fonts: [{ text: '0.3元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/6.png'), width: '50%', top: '10%' }]
     },
     {
       index: 7, x: 0, y: 1,
-      font: [{ text: '5元现金红包', top: '85%' }],
+      fonts: [{ text: '5元现金红包', top: '85%' }],
       imgs: [{ src: $withBase('/img/7.png'), width: '50%', top: '10%' }]
     },
   ]"
