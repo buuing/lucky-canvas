@@ -66,21 +66,66 @@ export default {
       ctx: null,
       canPlay: true, // 是否可以开始
       currIndex: 0, // 当前index累加
-      prizeIndex: undefined, // 中奖索引
+      prizeFlag: undefined, // 中奖索引标识
       speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
-      cellImgs: [],
+      cellImgs: new Array(this.cols * this.rows).fill().map(_ => []),
       animationId: 0,
     }
   },
   watch: {
     prizes: {
-      handler () { this.init('prizes') },
+      handler (newData, oldData) {
+        // 通过对比新旧src的变化, 对图片进行定向更新
+        const willUpdate = []
+        // 首次渲染时oldData为undefined
+        if (!oldData) willUpdate = newData.map(prize => prize.imgs)
+        // 此时新值一定存在
+        else if (newData) newData.forEach((newPrize, prizeIndex) => {
+          let prizeImgs = []
+          const oldPrize = oldData[prizeIndex]
+          // 如果旧奖品不存在
+          if (!oldPrize) prizeImgs = newPrize.imgs
+          // 新奖品有图片才能进行对比
+          else if (newPrize.imgs) newPrize.imgs.forEach((newImg, imgIndex) => {
+            const oldImg = oldPrize.imgs[imgIndex]
+            // 如果旧值不存在
+            if (!oldImg) prizeImgs[imgIndex] = newImg
+            // 如果缓存中没有图片
+            else if (!this.cellImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg
+            // 如果新值和旧值的src不相等
+            else if (newImg.src !== oldImg.src) prizeImgs[imgIndex] = newImg
+          })
+          willUpdate[prizeIndex] = prizeImgs
+        })
+        this.init(willUpdate)
+      },
       deep: true,
     },
     button: {
-      handler () { this.init('button') },
+      handler (newData, oldData) {
+        // 通过对比新旧src的变化, 对图片进行定向更新
+        const willUpdate = []
+        const btnIndex = this.cols * this.rows
+        // 首次渲染时, oldData不存在
+        if (!oldData || !oldData.imgs) willUpdate[btnIndex - 1] = newData.imgs
+        // 如果新值存在img, 才能进行对比
+        else if (newData.imgs) {
+          const btnImg = []
+          newData.imgs.forEach((newImg, imgIndex) => {
+            const oldImg = oldData.imgs[imgIndex]
+            // 如果旧值不存在
+            if (!oldImg) btnImg[imgIndex] = newImg
+            // 如果缓存中没有图片
+            else if (!this.cellImgs[btnIndex - 1][imgIndex]) btnImg[imgIndex] = newImg
+            // 如果新值和旧值的src不相等
+            else if (newImg.src !== oldImg.src) btnImg[imgIndex] = newImg
+          })
+          willUpdate[btnIndex - 1] = btnImg
+        }
+        return this.init(willUpdate)
+      },
       deep: true,
     },
     blocks: {
@@ -120,15 +165,15 @@ export default {
     }
   },
   mounted () {
-    this.init('mounted')
+    this.init()
     window.addEventListener('resize', this.init.bind(this))
   },
   methods: {
     /**
      * 初始化canvas抽奖
-     * @param { boolean } isUpdateImg 是否需要重新加载图片
+     * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
      */
-    async init (isUpdateImg) {
+    async init (willUpdateImgs) {
       const { _defaultStyle } = this
       const box = this.$refs.luckDraw
       const canvas = this.$refs.luckDraw.childNodes[0]
@@ -138,10 +183,15 @@ export default {
       // 初始化状态
       this.canPlay = true
       this.currIndex = this.currIndex % 8 >> 0
-      this.prizeIndex = undefined
+      this.prizeFlag = undefined
       cancelAnimationFrame(this.animationId)
       // 把按钮放到奖品里面
-      this.cells = [...this.prizes, { ...this.button, index: null }]
+      this.cells = [...this.prizes]
+      this.cells[this.cols * this.rows - 1] = { ...this.button, index: null }
+      this.cells.forEach(prize => {
+        prize.col = prize.col || 1
+        prize.row = prize.row || 1
+      })
       // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
@@ -167,63 +217,60 @@ export default {
           this.$emit('start', e)
         }
       }
-      const imgOnLoad = (imgInfo, imgObj, prize) => {
-        // 根据配置的样式计算图片的真实宽高
-        if (imgInfo.width && imgInfo.height) {
-          // 如果宽度和高度都填写了, 就如实计算
-          imgInfo.trueWidth = this.getWidth(imgInfo.width, prize.col)
-          imgInfo.trueHeight = this.getHeight(imgInfo.height, prize.row)
-        } else if (imgInfo.width && !imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          imgInfo.trueWidth = this.getWidth(imgInfo.width, prize.col)
-          // 那高度就随着宽度进行等比缩放
-          imgInfo.trueHeight = imgObj.height * (imgInfo.trueWidth / imgObj.width)
-        } else if (!imgInfo.width && imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          imgInfo.trueHeight = this.getHeight(imgInfo.height, prize.row)
-          // 那宽度就随着高度进行等比缩放
-          imgInfo.trueWidth = imgObj.width * (imgInfo.trueHeight / imgObj.height)
-        } else {
-          // 如果没有配置宽高, 则使用图片本身的宽高
-          imgInfo.trueWidth = imgObj.width
-          imgInfo.trueHeight = imgObj.height
-        }
-      }
-      this.syncLoadImg(isUpdateImg, imgOnLoad, endCallBack)
-    },
-    /**
-     * 同步加载图片函数
-     * @param { boolean } isUpdateImg 是否需要重新加载图片
-     * @param { Function } imgOnLoad 单个图片加载完毕回调
-     * @param { Function } endCallBack 所有图片全部加载完毕回调
-     */
-    syncLoadImg (isUpdateImg, imgOnLoad, endCallBack) {
+      // 同步加载图片
       let num = 0, sum = 0
-      // if (isUpdateImg) this.cellImgs = new Array(this.cells.length).fill().map(cell => [])
-      this.cells.forEach((prize, index) => {
-        // 初始化
-        prize.col = prize.col || 1
-        prize.row = prize.row || 1
-        if (isUpdateImg) this.cellImgs[index] = []
-        prize.imgs.length && prize.imgs.forEach((imgInfo, i) => {
+      willUpdateImgs && willUpdateImgs.forEach((imgs, cellIndex) => {
+        if (!imgs) return false
+        imgs.forEach((imgInfo, imgIndex) => {
           sum++
-          if (isUpdateImg) {
-            const imgObj = new Image()
-            this.cellImgs[index][i] = imgObj
-            imgObj.src = imgInfo.src
-            imgObj.onload = () => {
-              num++
-              imgOnLoad.call(this, imgInfo, imgObj, prize)
-              if (sum === num) endCallBack.call(this)
-            }
-          } else {
+          this.loadAndCacheImg(cellIndex, imgIndex, () => {
             num++
-            imgOnLoad.call(this, imgInfo, this.cellImgs[index][i], prize)
             if (sum === num) endCallBack.call(this)
-          }
+          })
         })
       })
       if (!sum) endCallBack.call(this)
+    },
+    /**
+     * 单独加载某一张图片并计算其实际渲染宽高
+     * @param { number } prizeIndex 奖品索引
+     * @param { number } imgIndex 奖品图片索引
+     * @param { Function } callBack 图片加载完毕回调
+     */
+    loadAndCacheImg (prizeIndex, imgIndex, callBack) {
+      const prize = this.cells[prizeIndex]
+      if (!prize) return false
+      const imgInfo = prize.imgs[imgIndex]
+      let imgObj = new Image()
+      if (!this.cellImgs[prizeIndex]) this.cellImgs[prizeIndex] = []
+      this.cellImgs[prizeIndex][imgIndex] = { img: imgObj }
+      imgObj.src = imgInfo.src
+      imgObj.onload = () => {
+        const cellImg = this.cellImgs[prizeIndex][imgIndex]
+        if (!cellImg) return false
+        // 根据配置的样式计算图片的真实宽高
+        if (imgInfo.width && imgInfo.height) {
+          // 如果宽度和高度都填写了, 就如实计算
+          cellImg.trueWidth = this.getWidth(imgInfo.width, prize.col)
+          cellImg.trueHeight = this.getHeight(imgInfo.height, prize.row)
+        } else if (imgInfo.width && !imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          cellImg.trueWidth = this.getWidth(imgInfo.width, prize.col)
+          // 那高度就随着宽度进行等比缩放
+          cellImg.trueHeight = imgObj.height * (cellImg.trueWidth / imgObj.width)
+        } else if (!imgInfo.width && imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          cellImg.trueHeight = this.getHeight(imgInfo.height, prize.row)
+          // 那宽度就随着高度进行等比缩放
+          cellImg.trueWidth = imgObj.width * (cellImg.trueHeight / imgObj.height)
+        } else {
+          // 如果没有配置宽高, 则使用图片本身的宽高
+          cellImg.trueWidth = imgObj.width
+          cellImg.trueHeight = imgObj.height
+        }
+        // 最后触发回调
+        callBack.call(this)
+      }
     },
     // 绘制九宫格抽奖
     draw () {
@@ -236,9 +283,9 @@ export default {
         roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, color))
       })
       // 绘制所有格子
-      this.cells.forEach((prize, index) => {
+      this.cells.forEach((prize, cellIndex) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
-        const isActive = index === this.currIndex % 8 >> 0
+        const isActive = cellIndex === this.currIndex % 8 >> 0
         // 处理阴影
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
@@ -265,13 +312,15 @@ export default {
         ctx.shadowOffsetY = 0
         ctx.shadowBlur = 0
         // 绘制图片
-        prize.imgs && prize.imgs.forEach((imgInfo, i) => {
-          ctx.drawImage(
-            this.cellImgs[index][i],
-            x + this.getOffsetX(imgInfo.trueWidth, prize.col),
+        prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
+          if (!this.cellImgs[cellIndex]) return false
+          const cellImg = this.cellImgs[cellIndex][imgIndex]
+          cellImg && ctx.drawImage(
+            cellImg.img,
+            x + this.getOffsetX(cellImg.trueWidth, prize.col),
             y + this.getHeight(imgInfo.top, prize.row),
-            imgInfo.trueWidth,
-            imgInfo.trueHeight
+            cellImg.trueWidth,
+            cellImg.trueHeight
           )
         })
         // 绘制文字
@@ -305,29 +354,29 @@ export default {
     // 对外暴露: 开始抽奖方法
     play () {
       if (!this.canPlay) return false
-      this.prizeIndex = undefined
+      this.prizeFlag = undefined
       this.canPlay = false
       this.setSpeed()
       this.run()
     },
     // 实际开始执行方法
     run () {
-      if (this.prizeIndex == this.currIndex % 8 >> 0) {
+      if (this.prizeFlag == this.currIndex % 8 >> 0) {
         return this.slowDown()
       }
-      if (this.speed < 0.4 && this.prizeIndex === undefined) this.speed += 0.002
+      if (this.speed < 0.4 && this.prizeFlag === undefined) this.speed += 0.002
       this.currIndex += this.speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
     // 对外暴露: 缓慢停止方法
     stop (index) {
-      this.prizeIndex = index
+      this.prizeFlag = index
     },
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown () {
       if (this.speed < 0.025) {
-        if (this.prizeIndex == this.currIndex % 8 >> 0) {
+        if (this.prizeFlag == this.currIndex % 8 >> 0) {
           this.speed = 0
           this.canPlay = true
           this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
