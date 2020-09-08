@@ -162,16 +162,6 @@ export default {
       }
       return style
     },
-    _blocks () {
-      const newData = []
-      this.blocks.forEach(block => {
-        newData.push({
-          ...block,
-          radius: block.radius * this.dpr || 0
-        })
-      })
-      return newData
-    }
   },
   mounted () {
     this.init()
@@ -209,9 +199,9 @@ export default {
       })
       // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
-      this.prizeArea = this._blocks.reduce(({x, y, w, h}, block) => {
+      this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
-        this.blockData.push([x, y, w, h, block.radius, block.background])
+        this.blockData.push([x, y, w, h, block.radius * dpr, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -234,16 +224,19 @@ export default {
       }
       // 同步加载图片
       let num = 0, sum = 0
-      isExpectType(willUpdateImgs, 'array') && willUpdateImgs.forEach((imgs, cellIndex) => {
-        if (!imgs) return false
-        imgs.forEach((imgInfo, imgIndex) => {
-          sum++
-          this.loadAndCacheImg(cellIndex, imgIndex, () => {
-            num++
-            if (sum === num) endCallBack.call(this)
+      if (isExpectType(willUpdateImgs, 'array')) {
+        this.draw() // 先画一次防止闪烁, 因为加载图片是异步的
+        willUpdateImgs.forEach((imgs, cellIndex) => {
+          if (!imgs) return false
+          imgs.forEach((imgInfo, imgIndex) => {
+            sum++
+            this.loadAndCacheImg(cellIndex, imgIndex, () => {
+              num++
+              if (sum === num) endCallBack.call(this)
+            })
           })
         })
-      })
+      }
       if (!sum) endCallBack.call(this)
     },
     /**
