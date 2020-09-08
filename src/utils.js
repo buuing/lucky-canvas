@@ -1,11 +1,14 @@
+// 设备像素比 - 用于压缩canvas保持清晰度
+export const dpr = window.devicePixelRatio || 2
+
 /**
  * 判断是否是期望的类型
  * @param { any } param 将要判断的变量
- * @param { string } type 期望的的类型
+ * @param { ...string } types 期望的类型
  * @return { boolean } 返回期望是否正确
  */
-export const isExpectType = (param, type) => {
-  return Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type
+export const isExpectType = (param, ...types) => {
+  return types.some(type => Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type)
 }
 
 /**
@@ -13,7 +16,7 @@ export const isExpectType = (param, type) => {
  * @return { object }
  */
 export const computePadding = obj => {
-  let padding = obj.padding.replace(/px/g, '').split(' ').map(n => ~~n) || [0],
+  let padding = obj.padding.replace(/px/g, '').split(' ').map(n => n * dpr) || [0],
     paddingTop = 0,
     paddingBottom = 0,
     paddingLeft = 0,
@@ -38,13 +41,14 @@ export const computePadding = obj => {
       paddingRight = padding[3]
   }
   // 检查是否单独传入值, 并且不是0
-  const isEffective = key => obj[key] || obj[key] === 0
-  return {
-    paddingTop: isEffective('paddingTop') ? obj.paddingTop : paddingTop,
-    paddingBottom: isEffective('paddingBottom') ? obj.paddingBottom : paddingBottom,
-    paddingLeft: isEffective('paddingLeft') ? obj.paddingLeft : paddingLeft,
-    paddingRight: isEffective('paddingRight') ? obj.paddingRight : paddingRight
+  const res = { paddingTop, paddingBottom, paddingLeft, paddingRight }
+  for (let key in res) {
+    // 是否含有这个属性, 并且是数字或字符串
+    res[key] = obj.hasOwnProperty(key) && isExpectType(obj[key], 'string', 'number')
+      ? String(obj[key]).replace(/px/g, '') * dpr
+      : res[key]
   }
+  return res
 }
 
 // 绘制圆角矩形

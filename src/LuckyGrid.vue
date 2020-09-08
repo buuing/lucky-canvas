@@ -8,19 +8,7 @@
 import { roundRect, isExpectType, computePadding, getLinearGradient } from './utils.js'
 export default {
   props: {
-    // 边框
-    blocks: {
-      type: Array,
-      validator: function (blocks) {
-        return blocks.every((item, index) => {
-          if (!item.padding) return console.error(`blocks[${index}]缺少 padding 属性`)
-          if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
-          return true
-        })
-      },
-      default: () => []
-    },
-    // 奖品
+    // 奖品 (该属性被watch监听)
     prizes: {
       type: Array,
       validator: function (prizes) {
@@ -33,7 +21,7 @@ export default {
       },
       default: () => []
     },
-    // 按钮
+    // 按钮 (该属性被watch监听)
     button: {
       type: Object,
       validator: function (button) {
@@ -42,36 +30,49 @@ export default {
         return true
       }
     },
-    // 横向等分成 cols 个格子
-    cols: { type: Number, default: 3 },
-    // 纵向等分成 rows 个格子
-    rows: { type: Number, default: 3 },
-    // 格子的默认样式
+    // 边框 (该属性会在computed里面进行修正)
+    blocks: {
+      type: Array,
+      validator: function (blocks) {
+        return blocks.every((item, index) => {
+          if (!item.padding) return console.error(`blocks[${index}]缺少 padding 属性`)
+          if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
+          return true
+        })
+      },
+      default: () => []
+    },
+    // 格子的默认样式 (该属性会在computed里面进行修正)
     defaultStyle: {
       type: Object,
       default () { // 默认配置在computed里面: _defaultStyle
         return {}
       }
     },
-    // 中奖标记样式
+    // 中奖标记样式 (该属性会在computed里面进行修正)
     activeStyle: {
       type: Object,
       default () { // 默认配置在computed里面: _activeStyle
         return {}
       }
-    }
+    },
+    // 横向等分成 cols 个格子
+    cols: { type: Number, default: 3 },
+    // 纵向等分成 rows 个格子
+    rows: { type: Number, default: 3 },
   },
   data () {
     return {
-      ctx: null,
+      dpr: window.devicePixelRatio || 2, // 设备像素比
+      ctx: null, // 画布
       canPlay: true, // 是否可以开始
       currIndex: 0, // 当前index累加
       prizeFlag: undefined, // 中奖索引标识
-      speed: 0, // 速度
       prizeArea: {}, // 奖品区域几何信息
       cells: [],
       cellImgs: new Array(this.cols * this.rows).fill().map(_ => []),
       animationId: 0,
+      speed: 0, // 速度
     }
   },
   watch: {
@@ -106,10 +107,9 @@ export default {
     button: {
       handler (newData, oldData) {
         // 通过对比新旧src的变化, 对图片进行定向更新
-        const willUpdate = []
-        const btnIndex = this.cols * this.rows
+        const willUpdate = [], btnIndex = this.cols * this.rows - 1
         // 首次渲染时, oldData不存在
-        if (!oldData || !oldData.imgs) willUpdate[btnIndex - 1] = newData.imgs
+        if (!oldData || !oldData.imgs) willUpdate[btnIndex] = newData.imgs
         // 如果新值存在img, 才能进行对比
         else if (newData.imgs) {
           const btnImg = []
@@ -118,18 +118,14 @@ export default {
             // 如果旧值不存在
             if (!oldImg) btnImg[imgIndex] = newImg
             // 如果缓存中没有图片
-            else if (!this.cellImgs[btnIndex - 1][imgIndex]) btnImg[imgIndex] = newImg
+            else if (!this.cellImgs[btnIndex][imgIndex]) btnImg[imgIndex] = newImg
             // 如果新值和旧值的src不相等
             else if (newImg.src !== oldImg.src) btnImg[imgIndex] = newImg
           })
-          willUpdate[btnIndex - 1] = btnImg
+          willUpdate[btnIndex] = btnImg
         }
         return this.init(willUpdate)
       },
-      deep: true,
-    },
-    blocks: {
-      handler () { this.init() },
       deep: true,
     },
   },
@@ -149,6 +145,9 @@ export default {
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
+      // 根据dpr计算实际显示效果
+      style.radius *= this.dpr
+      style.gutter *= this.dpr
       return style
     },
     _activeStyle () {
@@ -162,6 +161,16 @@ export default {
         style[key] = this.activeStyle[key]
       }
       return style
+    },
+    _blocks () {
+      const newData = []
+      this.blocks.forEach(block => {
+        newData.push({
+          ...block,
+          radius: block.radius * this.dpr || 0
+        })
+      })
+      return newData
     }
   },
   mounted () {
@@ -174,12 +183,18 @@ export default {
      * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
      */
     async init (willUpdateImgs) {
-      const { _defaultStyle } = this
+      const { dpr, _defaultStyle } = this
       const box = this.$refs.luckDraw
       const canvas = this.$refs.luckDraw.childNodes[0]
-      this.boxWidth = canvas.width = box.offsetWidth
-      this.boxHeight = canvas.height = box.offsetHeight
       this.ctx = canvas.getContext('2d')
+      this.boxWidth = canvas.width = box.offsetWidth * dpr
+      this.boxHeight = canvas.height = box.offsetHeight * dpr
+      // 根据dpr缩放canvas, 并处理位移
+      const transferLength = len => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
+      canvas.style = `transform: scale(${1 / dpr}) translate(
+        ${-transferLength(this.boxWidth)}%,
+        ${-transferLength(this.boxHeight)}%
+      )`
       // 初始化状态
       this.canPlay = true
       this.currIndex = this.currIndex % 8 >> 0
@@ -194,9 +209,9 @@ export default {
       })
       // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
-      this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
+      this.prizeArea = this._blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
-        this.blockData.push([x, y, w, h, block.radius || 0, block.background])
+        this.blockData.push([x, y, w, h, block.radius, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -219,7 +234,7 @@ export default {
       }
       // 同步加载图片
       let num = 0, sum = 0
-      willUpdateImgs && willUpdateImgs.forEach((imgs, cellIndex) => {
+      isExpectType(willUpdateImgs, 'array') && willUpdateImgs.forEach((imgs, cellIndex) => {
         if (!imgs) return false
         imgs.forEach((imgInfo, imgIndex) => {
           sum++
@@ -274,7 +289,7 @@ export default {
     },
     // 绘制九宫格抽奖
     draw () {
-      const { ctx, _defaultStyle, _activeStyle } = this
+      const { ctx, dpr, _defaultStyle, _activeStyle } = this
       // 清空画布
       ctx.fillStyle = 'rgba(255, 255, 255, 0)'
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
@@ -290,7 +305,7 @@ export default {
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
           .split(',')[0].split(' ') // 防止有人声明多个阴影, 截取第一个阴影
-          .map((n, i) => i < 3 ? ~~n : n) // 把数组的前三个转化成数字
+          .map((n, i) => i < 3 ? n * dpr : n) // 把数组的前三个值*像素比
         // 绘制阴影
         if (shadow.length === 4) {
           ctx.shadowColor = shadow[3]
@@ -303,7 +318,7 @@ export default {
         }
         roundRect(
           ctx, x, y, width, height,
-          prize.radius || this._defaultStyle.radius,
+          isExpectType(prize.radius, 'number') ? prize.radius * dpr : _defaultStyle.radius,
           this.handleBackground(x, y, width, height, prize.background, isActive)
         )
         // 清空阴影
@@ -327,15 +342,15 @@ export default {
         prize.fonts && prize.fonts.forEach(font => {
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.beginPath()
-            const style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
-            ctx.font = style
+            let style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
+            ctx.font = style = style.replace(/^(\d+)/, res => res * dpr)
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
             const width = ctx.measureText(line).width
-            const lineHeight = font.lineHeight || style.split(' ')[0]
+            const lineHeight = this.getLength(font.lineHeight || style.split(' ')[0])
             ctx.fillText(
               line,
               x + this.getOffsetX(width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * this.getLength(lineHeight)
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * lineHeight
             )
           })
         })
@@ -407,21 +422,21 @@ export default {
     },
     // 转换并获取宽度
     getWidth (width, col = 1) {
-      if (isExpectType(width, 'number')) return width
+      if (isExpectType(width, 'number')) return width * this.dpr
       if (isExpectType(width, 'string')) {
         return width.includes('%')
           ? (this.cellWidth * col + this._defaultStyle.gutter * (col - 1)) * width.slice(0, -1) / 100
-          : ~~width.replace(/px/g, '')
+          : width.replace(/px/g, '') * this.dpr
       }
       return 0
     },
     // 转换并获取高度
     getHeight (height, row = 1) {
-      if (isExpectType(height, 'number')) return height
+      if (isExpectType(height, 'number')) return height * this.dpr
       if (isExpectType(height, 'string')) {
         return height.includes('%')
           ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100
-          : ~~height.replace(/px/g, '')
+          : height.replace(/px/g, '') * this.dpr
       }
       return 0
     },
@@ -429,7 +444,7 @@ export default {
     getLength (length) {
       if (isExpectType(length, 'number')) return length
       if (isExpectType(length, 'string')) {
-        return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '')
+        return length.includes('%') ? length.slice(0, -1) / 100 : length.replace(/px/g, '')
       }
       return 0
     },
