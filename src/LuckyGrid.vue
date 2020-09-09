@@ -1,5 +1,5 @@
 <template>
-  <div ref="luckDraw">
+  <div ref="luckDraw" style="overflow: hidden">
     <canvas></canvas>
   </div>
 </template>
@@ -79,7 +79,7 @@ export default {
     prizes: {
       handler (newData, oldData) {
         // 通过对比新旧src的变化, 对图片进行定向更新
-        const willUpdate = []
+        let willUpdate = []
         // 首次渲染时oldData为undefined
         if (!oldData) willUpdate = newData.map(prize => prize.imgs)
         // 此时新值一定存在
@@ -107,7 +107,7 @@ export default {
     button: {
       handler (newData, oldData) {
         // 通过对比新旧src的变化, 对图片进行定向更新
-        const willUpdate = [], btnIndex = this.cols * this.rows - 1
+        let willUpdate = [], btnIndex = this.cols * this.rows - 1
         // 首次渲染时, oldData不存在
         if (!oldData || !oldData.imgs) willUpdate[btnIndex] = newData.imgs
         // 如果新值存在img, 才能进行对比
@@ -164,7 +164,11 @@ export default {
     },
   },
   mounted () {
-    this.init()
+    // 收集首次渲染的图片
+    let willUpdate = []
+    this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
+    this.button && (willUpdate[this.cols * this.rows - 1] = this.button.imgs)
+    this.init(willUpdate)
     window.addEventListener('resize', this.init.bind(this))
   },
   methods: {
@@ -175,6 +179,7 @@ export default {
     async init (willUpdateImgs) {
       const { dpr, _defaultStyle } = this
       const box = this.$refs.luckDraw
+      if (!box) return false
       const canvas = this.$refs.luckDraw.childNodes[0]
       this.ctx = canvas.getContext('2d')
       this.boxWidth = canvas.width = box.offsetWidth * dpr
