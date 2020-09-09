@@ -1,8 +1,10 @@
 .DS_Store
 node_modules
 /dist
+yarn.lock
 package-lock.json
 vuepress/dist
+
 # local env files
 .env.local
 .env.*.local
