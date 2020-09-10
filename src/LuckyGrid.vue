@@ -78,7 +78,6 @@ export default {
   watch: {
     prizes: {
       handler (newData, oldData) {
-        // 通过对比新旧src的变化, 对图片进行定向更新
         let willUpdate = []
         // 首次渲染时oldData为undefined
         if (!oldData) willUpdate = newData.map(prize => prize.imgs)
@@ -100,13 +99,12 @@ export default {
           })
           willUpdate[prizeIndex] = prizeImgs
         })
-        this.init(willUpdate)
+        return this.init(willUpdate)
       },
       deep: true,
     },
     button: {
       handler (newData, oldData) {
-        // 通过对比新旧src的变化, 对图片进行定向更新
         let willUpdate = [], btnIndex = this.cols * this.rows - 1
         // 首次渲染时, oldData不存在
         if (!oldData || !oldData.imgs) willUpdate[btnIndex] = newData.imgs
@@ -344,11 +342,11 @@ export default {
             ctx.font = style = style.replace(/^(\d+)/, res => res * dpr)
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
             const width = ctx.measureText(line).width
-            const lineHeight = this.getLength(font.lineHeight || style.split(' ')[0])
+            const lineHeight = this.getLength(font.lineHeight) * dpr || style.split(' ')[0]
             ctx.fillText(
               line,
               x + this.getOffsetX(width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * lineHeight
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * this.getLength(lineHeight)
             )
           })
         })
