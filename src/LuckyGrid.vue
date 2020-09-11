@@ -57,9 +57,9 @@ export default {
       }
     },
     // 横向等分成 cols 个格子
-    cols: { type: Number, default: 3 },
+    cols: { type: Number | String, default: 3 },
     // 纵向等分成 rows 个格子
-    rows: { type: Number, default: 3 },
+    rows: { type: Number | String, default: 3 },
   },
   data () {
     return {
@@ -190,21 +190,21 @@ export default {
       )`
       // 初始化状态
       this.canPlay = true
-      this.currIndex = this.currIndex % 8 >> 0
+      this.currIndex = this.currIndex % this.prizes.length >> 0
       this.prizeFlag = undefined
       cancelAnimationFrame(this.animationId)
       // 把按钮放到奖品里面
       this.cells = [...this.prizes]
-      this.cells[this.cols * this.rows - 1] = { ...this.button, index: null }
-      this.cells.forEach(prize => {
-        prize.col = prize.col || 1
-        prize.row = prize.row || 1
+      if (this.button) this.cells[this.cols * this.rows - 1] = { ...this.button, index: null }
+      this.cells.forEach(cell => {
+        cell.col = cell.col || 1
+        cell.row = cell.row || 1
       })
       // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
-        this.blockData.push([x, y, w, h, block.radius * dpr, block.background])
+        this.blockData.push([x, y, w, h, block.radius ? block.radius * dpr : 0, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -296,7 +296,7 @@ export default {
       // 绘制所有格子
       this.cells.forEach((prize, cellIndex) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
-        const isActive = cellIndex === this.currIndex % 8 >> 0
+        const isActive = cellIndex === this.currIndex % this.prizes.length >> 0
         // 处理阴影
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
@@ -372,7 +372,7 @@ export default {
     },
     // 实际开始执行方法
     run () {
-      if (this.prizeFlag == this.currIndex % 8 >> 0) {
+      if (this.prizeFlag == this.currIndex % this.prizes.length >> 0) {
         return this.slowDown()
       }
       if (this.speed < 0.4 && this.prizeFlag === undefined) this.speed += 0.002
@@ -387,10 +387,10 @@ export default {
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown () {
       if (this.speed < 0.025) {
-        if (this.prizeFlag == this.currIndex % 8 >> 0) {
+        if (this.prizeFlag == this.currIndex % this.prizes.length >> 0) {
           this.speed = 0
           this.canPlay = true
-          this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % 8 >> 0)})
+          this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % this.prizes.length >> 0)})
           return false
         }
       } else {
