@@ -6,7 +6,9 @@ sidebar: auto
 
 ## 安装
 
-`npm i vue-luck-draw`
+使用 npm 安装：`npm i vue-luck-draw`
+
+使用 yarn 安装：`yarn add vue-luck-draw`
 
 ## 使用
 
@@ -32,7 +34,11 @@ Vue.use(LuckDraw)
 
 ## 配置项
 
-### 边框 - blocks
+### 格子布局（属性）- cols & rows
+
+<br />
+
+### 边框（属性）- blocks
 
 - <ldq-describe name="blocks?: Array<object>" mean="" />
   - <ldq-describe name="padding: string" mean="内边距" desc="与 css 中 padding 使用方式一样" />
@@ -70,14 +76,14 @@ Vue.use(LuckDraw)
 />
 ```
 
-### 奖品格子 - prizes
+### 奖品格子（属性）- prizes
 
 - <ldq-describe name="prizes?: Array<object>" mean="奖品列表" />
   - <ldq-describe name="index: number" mean="奖品索引" desc="必须从 0 开始表示第几个格子, 中奖标识按照升序进行游走" />
   - <ldq-describe name="x: number" mean="相对坐标x" desc="如果是标准的 3*3 宫格，那 x 的范围是 0 ~ 2" />
   - <ldq-describe name="y: number" mean="相对坐标y" desc="如果是标准的 3*3 宫格，那 y 的范围是 0 ~ 2" />
-  - <ldq-describe name="col?: number" mean="横向合并格子" desc="用来实现异型格子, 默认为 1" />
-  - <ldq-describe name="row?: number" mean="纵向合并格子" desc="用来实现异型格子, 默认为 1" />
+  - <ldq-describe name="col?: number" mean="横向合并格子" desc="用来横向合并单元格，默认为 1" />
+  - <ldq-describe name="row?: number" mean="纵向合并格子" desc="用来纵向合并单元格，默认为 1" />
   - <ldq-describe name="radius?: number" mean="格子圆角" desc="可继承 defaultStyle 圆角，默认为 20" />
   - <ldq-describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
   - <ldq-describe name="background?: string" mean="格子背景色" desc="可继承 defaultStyle 背景色，默认为 '#fff'" />
@@ -189,10 +195,10 @@ Vue.use(LuckDraw)
     />
   </template>
   <template v-slot:text>
-    <li>跟文字一样也是默认居中并可以引入多个，在<code>imgs</code>数组里配置</li>
+    <li>在<code>imgs</code>数组里配置，跟文字一样也是默认居中并可以引入多个</li>
     <li><code>width</code>和<code>height</code>属性可以设置：50 | '50px' | '50%'</li>
-    <li>建议只设置<code>width</code>或<code>height</code>，这样可以实现等比缩放，不然会像2号格子那样导致图片被拉伸</li>
     <li>由于1号格子的图片没有设置宽或高，则会渲染图片的实际大小</li>
+    <li>建议只设置<code>width</code>或<code>height</code>，这样可以实现等比缩放，不然会像2号格子那样导致图片被拉伸</li>
   </template>
 </Exhibition>
 
@@ -206,17 +212,17 @@ Vue.use(LuckDraw)
     {
       index: 0, x: 0, y: 0,
       fonts: [{ text: '0号格子', top: '70%' }],
-      imgs: [{ src: $withBase('/img/1.png'), width: '50%', top: '10%' }]
+      imgs: [{ src: require('/img/1.png'), width: '50%', top: '10%' }]
     },
     {
       index: 1, x: 1, y: 0,
       fonts: [{ text: '1号格子', top: '5%' }],
-      imgs: [{ src: $withBase('/img/1.png'), top: '20%' }]
+      imgs: [{ src: require('/img/1.png'), top: '20%' }]
     },
     {
       index: 2, x: 0, y: 1,
       fonts: [{ text: '2号格子', top: '70%' }],
-      imgs: [{ src: $withBase('/img/1.png'), width: '100%', height: '50%', top: '0%' }]
+      imgs: [{ src: require('/img/1.png'), width: '100%', height: '50%', top: '0%' }]
     },
   ]"
 />
@@ -255,16 +261,17 @@ Vue.use(LuckDraw)
 </Exhibition>
 
 ```vue
+<!-- 左边3宫格 -->
 <LuckyGrid
   style="width: 200px; height: 200px; float: left"
   :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
   :prizes="[
     { index: 0, x: 0, y: 0, col: 3 },
-    { index: 1, x: 1, y: 1, col: 2, row: 2 },
-    { index: 2, x: 0, y: 1, row: 2 }
+    { index: 1, x: 0, y: 1, row: 2 },
+    { index: 2, x: 1, y: 1, col: 2, row: 2 }
   ]"
 />
-<!--  -->
+<!-- 右边4宫格 -->
 <LuckyGrid
   style="width: 200px; height: 200px; float: left; margin-left: 10px"
   :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
@@ -279,18 +286,115 @@ Vue.use(LuckDraw)
 
 <br />
 
-### 按钮格子 - button
+### 按钮格子（属性）- button
+
+**实际上`奖品格子`的属性与`按钮格子`的属性相差无几，只有两个区别：1.奖品列表有多个所以是个数组，而抽奖按钮只有一个所以是个对象；2.抽奖按钮不需要`index`属性，也就是中奖标识！**
+
+- <ldq-describe name="button?: object" mean="抽奖按钮" />
+  - <ldq-describe name="x: number" mean="相对坐标x" desc="如果是标准的 3*3 宫格，那 x 的范围是 0 ~ 2" />
+  - <ldq-describe name="y: number" mean="相对坐标y" desc="如果是标准的 3*3 宫格，那 y 的范围是 0 ~ 2" />
+  - <ldq-describe name="col?: number" mean="横向合并格子" desc="用来横向合并单元格，默认为 1" />
+  - <ldq-describe name="row?: number" mean="纵向合并格子" desc="用来纵向合并单元格，默认为 1" />
+  - <ldq-describe name="radius?: number" mean="格子圆角" desc="可继承 defaultStyle 圆角，默认为 20" />
+  - <ldq-describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
+  - <ldq-describe name="background?: string" mean="格子背景色" desc="可继承 defaultStyle 背景色，默认为 '#fff'" />
+
+  - <ldq-describe name="fonts?: Array<object>" mean="文字列表" />
+    - <ldq-describe name="text: string" mean="字体内容" desc="可以使用 \n 用来换行" />
+    - <ldq-describe name="color?: string" mean="字体颜色" />
+    - <ldq-describe name="top?: string" mean="距离顶部的高度" desc="书写格式为：20 | '20px' | '20%'，默认为 0" />
+    - <ldq-describe name="style?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 '16px sans-serif'" />
+    - <ldq-describe name="lineHeight?: string" mean="字体行高" desc="默认使用字体样式中的字体大小" />
+
+  - <ldq-describe name="imgs?: Array<object>" mean="图片列表" />
+    - <ldq-describe name="src: string" mean="图片路径" />
+    - <ldq-describe name="top?: string" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
+    - <ldq-describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
+    - <ldq-describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
+
+> 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
+
+<Exhibition>
+  <template v-slot:header>
+    button - 示例1：绘制抽奖按钮
+  </template>
+  <template v-slot:code>
+    <LuckyGrid
+      style="width: 200px; height: 200px"
+      :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
+      :prizes="[
+        {
+          index: 0, x: 0, y: 0, col: 2,
+          fonts: [{ text: '一年的好运', top: '20px' }]
+        },
+        {
+          index: 1, x: 2, y: 0, row: 2,
+          fonts: [{ text: '升\n职\n加\n薪', lineHeight: '18px', top: '25px' }]
+        },
+        {
+          index: 2, x: 1, y: 2, col: 2,
+          fonts: [{ text: '今年无bug', top: '20px' }]
+        },
+        {
+          index: 3, x: 0, y: 1, row: 2,
+          fonts: [{ text: '转\n角\n遇\n到\n爱', lineHeight: '18px', top: '12px' }]
+        }
+      ]"
+      :button="{
+        x: 1, y: 1, radius: 10,
+        imgs: [{ src: $withBase('/img/button.png'), width: '75%', top: '20%' }]
+      }"
+    />
+  </template>
+  <template v-slot:text>
+    <li>别点了，没用的</li>
+    <li>点击抽奖按钮会触发<code>@start</code>回调函数，这样设计是为了方便你在里面请求接口，或执行一些其他抽奖前的逻辑</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyGrid
+  style="width: 200px; height: 200px"
+  :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
+  :prizes="[
+    {
+      index: 0, x: 0, y: 0, col: 2,
+      fonts: [{ text: '一年的好运', top: '20px' }]
+    },
+    {
+      index: 1, x: 2, y: 0, row: 2,
+      fonts: [{ text: '升\n职\n加\n薪', lineHeight: '18px', top: '25px' }]
+    },
+    {
+      index: 2, x: 1, y: 2, col: 2,
+      fonts: [{ text: '今年无bug', top: '20px' }]
+    },
+    {
+      index: 3, x: 0, y: 1, row: 2,
+      fonts: [{ text: '转\n角\n遇\n到\n爱', lineHeight: '18px', top: '12px' }]
+    }
+  ]"
+  :button="{
+    x: 1, y: 1, radius: 10,
+    imgs: [{ src: require('/img/button.png'), width: '75%', top: '20%' }]
+  }"
+/>
+```
 
 <br />
 
-### 格子的默认样式 - defaultStyle
+### 格子默认样式（属性）- defaultStyle
 
 <br />
 
-### 中奖标记的样式 - activeStyle
+### 中奖标记样式（属性）- activeStyle
 
 <br />
 
-### 格子布局 - cols & rows
+### 开始抽奖前（回调函数）- strat
 
-<br />
+### 抽奖结束后（回调函数）- end
+
+### 开始抽奖（方法）- play
+
+### 缓慢停止抽奖（方法）- stop
