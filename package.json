@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "docs": "vuepress dev vuepress",
-    "docs:build": "vuepress build vuepress",
+    "build:docs": "vuepress build vuepress",
     "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
   "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖"],

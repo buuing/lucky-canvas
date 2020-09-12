@@ -1,6 +1,3 @@
-// 设备像素比 - 用于压缩canvas保持清晰度
-export const dpr = window.devicePixelRatio || 2
-
 /**
  * 判断是否是期望的类型
  * @param { any } param 将要判断的变量
@@ -16,7 +13,7 @@ export const isExpectType = (param, ...types) => {
  * @return { object }
  */
 export const computePadding = obj => {
-  let padding = obj.padding.replace(/px/g, '').split(' ').map(n => n * dpr) || [0],
+  let padding = obj.padding.replace(/px/g, '').split(' ').map(n => ~~n) || [0],
     paddingTop = 0,
     paddingBottom = 0,
     paddingLeft = 0,
@@ -45,10 +42,10 @@ export const computePadding = obj => {
   for (let key in res) {
     // 是否含有这个属性, 并且是数字或字符串
     res[key] = obj.hasOwnProperty(key) && isExpectType(obj[key], 'string', 'number')
-      ? String(obj[key]).replace(/px/g, '') * dpr
+      ? ~~String(obj[key]).replace(/px/g, '')
       : res[key]
   }
-  return res
+  return [paddingTop, paddingBottom, paddingLeft, paddingRight]
 }
 
 // 绘制圆角矩形

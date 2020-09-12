@@ -65,7 +65,7 @@ export default {
   },
   data () {
     return {
-      dpr: window.devicePixelRatio || 2, // 设备像素比
+      dpr: 2, // 设备像素比
       ctx: null, // 画布
       canPlay: true, // 是否可以开始
       currIndex: 0, // 当前index累加
@@ -168,6 +168,7 @@ export default {
     },
   },
   mounted () {
+    this.dpr = window.devicePixelRatio || 2
     // 收集首次渲染的图片
     let willUpdate = []
     this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
@@ -210,7 +211,7 @@ export default {
       // 计算所有边框信息, 并获取奖品区域
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
-        const { paddingTop, paddingBottom, paddingLeft, paddingRight } = computePadding(block)
+        const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block).map(n => n * dpr)
         this.blockData.push([x, y, w, h, block.radius ? block.radius * dpr : 0, block.background])
         return {
           x: x + paddingLeft,
