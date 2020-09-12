@@ -131,12 +131,15 @@ export default {
     },
   },
   computed: {
+    prizeIndex () {
+      return this.currIndex % this.prizes.length >> 0
+    },
     _defaultStyle () {
       // 默认样式
       let style = {
         gutter: 5,
         radius: 20,
-        fontColor: '#DF424B',
+        fontColor: '#000',
         fontStyle: '16px sans-serif',
         textAlign: 'center',
         background: '#fff',
@@ -193,7 +196,7 @@ export default {
       )`
       // 初始化状态
       this.canPlay = true
-      this.currIndex = this.currIndex % this.prizes.length >> 0
+      this.currIndex = this.prizeIndex
       this.prizeFlag = undefined
       clearInterval(this.timer)
       cancelAnimationFrame(this.animationId)
@@ -302,7 +305,7 @@ export default {
       // 绘制所有格子
       this.cells.forEach((prize, cellIndex) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
-        const isActive = cellIndex === this.currIndex % this.prizes.length >> 0
+        const isActive = prize.index === this.prizeIndex
         // 处理阴影
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
@@ -379,7 +382,7 @@ export default {
     },
     // 实际开始执行方法
     run () {
-      if (this.prizeFlag == this.currIndex % this.prizes.length >> 0) {
+      if (this.prizeFlag == this.prizeIndex) {
         return this.slowDown()
       }
       if (this.speed < 0.4 && this.prizeFlag === undefined) this.speed += 0.002
@@ -394,10 +397,10 @@ export default {
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown () {
       if (this.speed < 0.025) {
-        if (this.prizeFlag == this.currIndex % this.prizes.length >> 0) {
+        if (this.prizeFlag == this.prizeIndex) {
           this.speed = 0
           this.canPlay = true
-          this.$emit('end', {...this.prizes.find(prize => prize.index === this.currIndex % this.prizes.length >> 0)})
+          this.$emit('end', {...this.prizes.find(prize => prize.index === this.prizeIndex)})
           return false
         }
       } else {
