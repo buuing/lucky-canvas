@@ -8,19 +8,19 @@ module.exports = {
       { text: '欢迎大家来 github 帮我点星', link: 'https://github.com/buuing/vue-luck-draw' }
     ],
     sidebar: [
-    //   {
-    //     title: '大转盘抽奖',
-    //     path: '/lucky-wheel/',
-    //     collapsable: false,
-    //     sidebarDepth: 3
-    //   },
-    //   {
-    //     title: '九宫格抽奖',
-    //     path: '/lucky-grid/',
-    //     collapsable: false,
-    //     sidebarDepth: 3,
-    //     children: []
-    //   }
+      {
+        title: '大转盘抽奖',
+        path: '/lucky-wheel/',
+        collapsable: false,
+        sidebarDepth: 3
+      },
+      {
+        title: '九宫格抽奖@2.0.8',
+        path: '/lucky-grid/',
+        collapsable: false,
+        sidebarDepth: 3,
+        children: []
+      }
     ]
   }
 }

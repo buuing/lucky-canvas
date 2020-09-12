@@ -54,12 +54,21 @@ export default {
     font-weight: 600;
   }
   .box-text li {
-    margin: 10px 0 10px 0;
+    margin: 10px 0;
   }
   .box-text li:first-child {
     margin-top: 0;
   }
   .box-text li:last-child {
+    margin-bottom: 0;
+  }
+  .box-text p {
+    margin: 15px 0;
+  }
+  .box-text p:first-child {
+    margin-top: 0;
+  }
+  .box-text p:last-child {
     margin-bottom: 0;
   }
   .box-header {
