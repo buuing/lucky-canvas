@@ -60,6 +60,8 @@ export default {
     cols: { type: Number | String, default: 3 },
     // 纵向等分成 rows 个格子
     rows: { type: Number | String, default: 3 },
+    // demo演示开启中奖标识自动游走
+    demo: { type: Boolean, default: false },
   },
   data () {
     return {
@@ -72,6 +74,7 @@ export default {
       cells: [],
       cellImgs: new Array(this.cols * this.rows).fill().map(_ => []),
       animationId: 0,
+      timer: 0, // 游走定时器
       speed: 0, // 速度
     }
   },
@@ -192,6 +195,7 @@ export default {
       this.canPlay = true
       this.currIndex = this.currIndex % this.prizes.length >> 0
       this.prizeFlag = undefined
+      clearInterval(this.timer)
       cancelAnimationFrame(this.animationId)
       // 把按钮放到奖品里面
       this.cells = [...this.prizes]
@@ -218,6 +222,8 @@ export default {
       const endCallBack = () => {
         // 开始首次渲染
         this.draw()
+        // 中奖标识开始游走
+        this.demo && this.walk()
         // 点击按钮开始, 这里不能使用 addEventListener
         if (this.button) canvas.onmousedown = e => {
           const [x, y] = this.getGeometricProperty([this.button.x, this.button.y])
@@ -364,6 +370,7 @@ export default {
     },
     // 对外暴露: 开始抽奖方法
     play () {
+      clearInterval(this.timer)
       if (!this.canPlay) return false
       this.prizeFlag = undefined
       this.canPlay = false
@@ -453,13 +460,13 @@ export default {
       this.speed = 0.2
     },
     // 增加中奖标识自动游走
-    // walk () {
-    //   clearInterval(this.timer)
-    //   this.timer = setInterval(() => {
-    //     this.currIndex += 1
-    //     this.draw()
-    //   }, 1300)
-    // },
+    walk () {
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        this.currIndex += 1
+        this.draw()
+      }, 1300)
+    },
     // 绘制灯带
     // drawLamp () {
     //   this.ctx.beginPath()
