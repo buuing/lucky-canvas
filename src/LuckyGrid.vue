@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { roundRect, isExpectType, computePadding, getLinearGradient } from './utils.js'
+import { roundRect, isExpectType, computePadding, getLinearGradient, getLength } from './utils.js'
 export default {
   props: {
     // 奖品 (该属性被watch监听)
@@ -181,7 +181,7 @@ export default {
      * 初始化canvas抽奖
      * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
      */
-    async init (willUpdateImgs) {
+    init (willUpdateImgs) {
       const { dpr, _defaultStyle } = this
       const box = this.$refs.luckDraw
       if (!box) return false
@@ -352,11 +352,11 @@ export default {
             ctx.font = style = style.replace(/^(\d+)/, res => res * dpr)
             ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
             const width = ctx.measureText(line).width
-            const lineHeight = this.getLength(font.lineHeight) * dpr || style.split(' ')[0]
+            const lineHeight = getLength(font.lineHeight) * dpr || style.split(' ')[0]
             ctx.fillText(
               line,
               x + this.getOffsetX(width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * this.getLength(lineHeight)
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(lineHeight)
             )
           })
         })
@@ -444,14 +444,6 @@ export default {
         return height.includes('%')
           ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100
           : height.replace(/px/g, '') * this.dpr
-      }
-      return 0
-    },
-    // 转换并获取长度
-    getLength (length) {
-      if (isExpectType(length, 'number')) return length
-      if (isExpectType(length, 'string')) {
-        return length.includes('%') ? length.slice(0, -1) / 100 : length.replace(/px/g, '')
       }
       return 0
     },

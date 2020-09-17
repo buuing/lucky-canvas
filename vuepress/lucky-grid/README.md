@@ -3,8 +3,9 @@
 
 ## 安装
 
-> 使用 npm 安装：`npm i vue-luck-draw`  
-使用 yarn 安装：`yarn add vue-luck-draw`
+**使用 npm 安装：`npm i vue-luck-draw`**
+
+**使用 yarn 安装：`yarn add vue-luck-draw`**
 
 ## 使用
 
@@ -481,10 +482,10 @@ Vue.use(LuckDraw)
       :demo="true"
       :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
       :prizes="[
-        { index: 1, x: 0, y: 0, fonts: [{ text: '1元', top: '40%' }] },
-        { index: 4, x: 1, y: 0, fonts: [{ text: '2元', top: '40%' }] },
-        { index: 3, x: 1, y: 1, fonts: [{ text: '3元', top: '40%' }] },
-        { index: 2, x: 0, y: 1, fonts: [{ text: '4元', top: '40%' }] }
+        { index: 0, x: 0, y: 0, fonts: [{ text: '1元', top: '40%' }] },
+        { index: 1, x: 0, y: 1, fonts: [{ text: '4元', top: '40%' }] },
+        { index: 2, x: 1, y: 1, fonts: [{ text: '3元', top: '40%' }] },
+        { index: 3, x: 1, y: 0, fonts: [{ text: '2元', top: '40%' }] }
       ]"
       :button="{ x: 2, y: 2, fonts: [{ text: '抽奖', top: '40%' }] }"
       :activeStyle="{
@@ -504,16 +505,15 @@ Vue.use(LuckDraw)
 ```vue
 <LuckyGrid
   style="width: 200px; height: 200px"
-  rows="2"
-  cols="2"
   :demo="true"
   :blocks="[{ padding: '5px', background: '#ff4a4c', radius: 10 }]"
   :prizes="[
-    { index: 0, x: 0, y: 0, fonts: [{ text: '0元', top: '40%' }] },
-    { index: 1, x: 1, y: 0, fonts: [{ text: '1元', top: '40%' }] },
-    { index: 2, x: 0, y: 1, fonts: [{ text: '2元', top: '40%' }] }
+    { index: 0, x: 0, y: 0, fonts: [{ text: '1元', top: '40%' }] },
+    { index: 1, x: 0, y: 1, fonts: [{ text: '4元', top: '40%' }] },
+    { index: 2, x: 1, y: 1, fonts: [{ text: '3元', top: '40%' }] },
+    { index: 3, x: 1, y: 0, fonts: [{ text: '2元', top: '40%' }] }
   ]"
-  :button="{ x: 1, y: 1, fonts: [{ text: '抽奖', top: '40%' }] }"
+  :button="{ x: 2, y: 2, fonts: [{ text: '抽奖', top: '40%' }] }"
   :activeStyle="{
     fontColor: '#ff4a4c',
     background: 'pink',
