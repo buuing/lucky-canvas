@@ -10,31 +10,15 @@ export default {
   props: {
     blocks: {
       type: Array,
-      default: () => [
-        { padding: '4px', background: '#ede7c9' },
-        { padding: '20px', background: '#b01c2c' },
-        { padding: '4px', background: '#ede7c9' },
-      ]
+      default: () => []
     },
     prizes: {
       type: Array,
-      default: () => [
-        { fonts: [{ text: '0' }], background: '#135458', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '1' }], background: '#b01c2c', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '2' }], background: '#135458', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '3' }], background: '#b01c2c', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '4' }], background: '#135458', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '5' }], background: '#b01c2c', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '6' }], background: '#135458', top: '10%', lineHeight: '35px' },
-        { fonts: [{ text: '7' }], background: '#b01c2c', top: '10%', lineHeight: '35px' }
-      ]
+      default: () => []
     },
     buttons: {
       type: Array,
-      default: () => [
-        { radius: '50px', background: '#ede7c9' },
-        { radius: '45px', background: '#b21d30' },
-      ]
+      default: () => []
     },
     defaultStyle: {
       type: Object,
@@ -46,23 +30,30 @@ export default {
   data () {
     return {
       ctx: null,
-      canPlay: true,
-      rotateDeg: 0,
-      prizesMiddleDeg: []
+      canPlay: true, // 是否可以开始游戏
+      speed: 0, // 旋转速度
+      prizeFlag: undefined, // 中奖的索引
+      animationId: null, // 帧动画id
+      Radius: 0, // 大转盘半径
+      prizeRadius: 0, // 奖品区域半径
+      maxBtnRadius: 0, // 最大的按钮半径
+      rotateDeg: 0, // 旋转的角度
+      prizeDeg: 360 / this.prizes.length, // 单个奖品的角度 (8个奖品就是45度)
     }
   },
   computed: {
     _defaultStyle () {
       const style = {
-        fontSize: '30px',
+        fontSize: '24px',
         fontColor: '#fff',
         fontStyle: 'STHeiti, SimHei',
         prizeGutter: '0px',
       }
-      style.lineHeight = style.fontSize
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
+      style.fontSize = getLength(style.fontSize) * this.dpr + 'px'
+      if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
     }
   },
@@ -78,6 +69,7 @@ export default {
       if (!box) return false
       const canvas = this.$refs.luckDraw.childNodes[0]
       this.ctx = canvas.getContext('2d')
+      const ctx = this.ctx
       canvas.width = canvas.height = box.offsetWidth * dpr
       this.Radius = canvas.width / 2
       // 根据dpr缩放canvas, 并处理位移
@@ -87,29 +79,31 @@ export default {
         ${-transferLength(this.Radius)}%
       )`
       // 设置坐标点
-      this.ctx.translate(this.Radius, this.Radius)
-      // 给buttons进行排序
-      
+      ctx.translate(this.Radius, this.Radius)
       // 开始绘制
       this.draw()
       canvas.addEventListener('click', e => {
+        ctx.translate(-this.Radius, -this.Radius)
+        ctx.beginPath()
+        ctx.arc(0, 0, this.maxBtnRadius, 0, 7, false)
+        if (!ctx.isPointInPath(e.offsetX - this.Radius, e.offsetY - this.Radius)) return false
+        ctx.translate(this.Radius, this.Radius)
         this.$emit('start', e)
       })
     },
     draw () {
       const { ctx, dpr, _defaultStyle } = this
       // 清空画布
-      this.ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
+      ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
       // 绘制blocks边框
       this.prizeRadius = this.blocks.reduce((radius, block) => {
         ctx.beginPath()
         ctx.fillStyle = block.background
         ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
         ctx.fill()
-        return radius - getLength(block.padding)
+        return radius - getLength(block.padding.split(' ')[0]) * dpr
       }, this.Radius)
-      // 计算奖品的角度
-      this.prizeDeg = 360 / this.prizes.length
+      // 计算奖品弧度和起始弧度
       let prizeRadian = getAngle(this.prizeDeg)
       let start = getAngle(-90 + this.rotateDeg)
       // 绘制prizes奖品区域
@@ -135,7 +129,7 @@ export default {
             ctx.fillText(
               line,
               this.getOffsetX(ctx.measureText(line).width),
-              this.getHeight(prize.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight)
+              this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight)
             )
           })
         })
@@ -145,16 +139,19 @@ export default {
       })
       // 绘制按钮
       this.buttons.forEach((btn, btnIndex) => {
+        let radius = this.getHeight(btn.radius)
+        this.maxBtnRadius = Math.max(this.maxBtnRadius, radius)
         ctx.beginPath()
         ctx.fillStyle = btn.background
-        ctx.arc(0, 0, this.getHeight(btn.radius), 0, Math.PI * 2, false)
+        ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
         ctx.fill()
+        if (!btn.pointer) return false
         // 绘制指针
         ctx.beginPath()
         ctx.fillStyle = btn.background
-        ctx.moveTo(-this.getHeight(btn.radius) / 2, 0)
-        ctx.lineTo(this.getHeight(btn.radius) / 2, 0)
-        ctx.lineTo(0, -this.getHeight(btn.radius) * 2)
+        ctx.moveTo(-radius, 0)
+        ctx.lineTo(radius, 0)
+        ctx.lineTo(0, -radius * 2)
         ctx.closePath()
         ctx.fill()
       })
@@ -174,7 +171,7 @@ export default {
           && this.rotateDeg % 360 < this.prizeFlag * this.prizeDeg + this.prizeDeg
         ) return this.slowDown()
       }
-      if (this.speed < 15) this.speed += 0.1
+      if (this.speed < 20) this.speed += 0.1
       this.rotateDeg += this.speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
@@ -204,10 +201,10 @@ export default {
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
     getHeight (length) {
-      if (isExpectType(length, 'number')) return length
+      if (isExpectType(length, 'number')) return length * this.dpr
       if (isExpectType(length, 'string')) return length.includes('%')
         ? length.slice(0, -1) / 100 * this.prizeRadius
-        : ~~length.replace(/px/g, '')
+        : length.replace(/px/g, '') * this.dpr
       return 0
     },
     // 获取相对(居中)X坐标
