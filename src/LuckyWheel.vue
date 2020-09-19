@@ -30,15 +30,18 @@ export default {
   data () {
     return {
       ctx: null,
-      canPlay: true, // 是否可以开始游戏
-      speed: 0, // 旋转速度
-      prizeFlag: undefined, // 中奖的索引
-      animationId: null, // 帧动画id
-      Radius: 0, // 大转盘半径
-      prizeRadius: 0, // 奖品区域半径
-      maxBtnRadius: 0, // 最大的按钮半径
-      rotateDeg: 0, // 旋转的角度
-      prizeDeg: 360 / this.prizes.length, // 单个奖品的角度 (8个奖品就是45度)
+      canPlay: true,             // 是否可以开始游戏
+      speed: 0,                  // 旋转速度
+      prizeFlag: undefined,      // 中奖的索引
+      animationId: null,         // 帧动画id
+      Radius: 0,                 // 大转盘半径
+      prizeDeg: 360,             // 奖品区域的角度
+      prizeRadian: 0,            // 奖品区域的弧度
+      prizeRadius: 0,            // 奖品区域的半径
+      maxBtnRadius: 0,           // 最大的按钮半径
+      rotateDeg: 0,              // 旋转的角度
+      prizeImgs: [],             // 奖品图片缓存
+      buttonImgs: [],            // 按钮图片缓存
     }
   },
   computed: {
@@ -55,15 +58,51 @@ export default {
       style.fontSize = getLength(style.fontSize) * this.dpr + 'px'
       if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
-    }
+    },
+  },
+  watch: {
+    prizes: {
+      handler (newData, oldData) {
+        let willUpdate = []
+        // 首次渲染时oldData为undefined
+        if (!oldData) willUpdate = newData.map(prize => prize.imgs)
+        // 此时新值一定存在
+        else if (newData) newData.forEach((newPrize, prizeIndex) => {
+          let prizeImgs = []
+          const oldPrize = oldData[prizeIndex]
+          // 如果旧奖品不存在
+          if (!oldPrize) prizeImgs = newPrize.imgs
+          // 新奖品有图片才能进行对比
+          else if (newPrize.imgs) newPrize.imgs.forEach((newImg, imgIndex) => {
+            const oldImg = oldPrize.imgs[imgIndex]
+            // 如果旧值不存在
+            if (!oldImg) prizeImgs[imgIndex] = newImg
+            // 如果缓存中没有图片
+            else if (!this.prizeImgs[prizeIndex] || !this.prizeImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg
+            // 如果新值和旧值的src不相等
+            else if (newImg.src !== oldImg.src) prizeImgs[imgIndex] = newImg
+          })
+          willUpdate[prizeIndex] = prizeImgs
+        })
+        return this.init(willUpdate)
+      },
+      deep: true
+    },
   },
   mounted () {
     this.dpr = window.devicePixelRatio || 2
-    this.init()
+    // 收集首次渲染的图片
+    let willUpdate = []
+    this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
+    this.init(willUpdate)
     window.addEventListener('resize', this.init.bind(this))
   },
   methods: {
-    init () {
+    /**
+     * 初始化canvas抽奖
+     * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
+     */
+    init (willUpdateImgs) {
       const { dpr } = this
       const box = this.$refs.luckDraw
       if (!box) return false
@@ -80,21 +119,78 @@ export default {
       )`
       // 设置坐标点
       ctx.translate(this.Radius, this.Radius)
-      // 开始绘制
-      this.draw()
-      canvas.addEventListener('click', e => {
-        ctx.translate(-this.Radius, -this.Radius)
-        ctx.beginPath()
-        ctx.arc(0, 0, this.maxBtnRadius, 0, 7, false)
-        if (!ctx.isPointInPath(e.offsetX - this.Radius, e.offsetY - this.Radius)) return false
-        ctx.translate(this.Radius, this.Radius)
-        this.$emit('start', e)
-      })
+      const endCallBack = () => {
+        // 开始绘制
+        this.draw()
+        canvas.addEventListener('click', e => {
+          ctx.beginPath()
+          ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2, false)
+          if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false
+          this.$emit('start', e)
+        })
+      }
+      // 同步加载图片
+      let num = 0, sum = 0
+      if (isExpectType(willUpdateImgs, 'array')) {
+        this.draw() // 先画一次防止闪烁, 因为加载图片是异步的
+        willUpdateImgs.forEach((imgs, cellIndex) => {
+          if (!imgs) return false
+          imgs.forEach((imgInfo, imgIndex) => {
+            sum++
+            this.loadAndCacheImg(cellIndex, imgIndex, () => {
+              num++
+              if (sum === num) endCallBack.call(this)
+            })
+          })
+        })
+      }
+      if (!sum) endCallBack.call(this)
+    },
+    /**
+     * 单独加载某一张图片并计算其实际渲染宽高
+     * @param { number } prizeIndex 奖品索引
+     * @param { number } imgIndex 奖品图片索引
+     * @param { Function } callBack 图片加载完毕回调
+     */
+    loadAndCacheImg (prizeIndex, imgIndex, callBack) {
+      const prize = this.prizes[prizeIndex]
+      if (!prize) return false
+      const imgInfo = prize.imgs[imgIndex]
+      let imgObj = new Image()
+      if (!this.prizeImgs[prizeIndex]) this.prizeImgs[prizeIndex] = []
+      this.prizeImgs[prizeIndex][imgIndex] = { img: imgObj }
+      imgObj.src = imgInfo.src
+      imgObj.onload = () => {
+        const currImg = this.prizeImgs[prizeIndex][imgIndex]
+        if (!currImg) return false
+        // 根据配置的样式计算图片的真实宽高
+        if (imgInfo.width && imgInfo.height) {
+          // 如果宽度和高度都填写了, 就如实计算
+          currImg.trueWidth = this.getWidth(imgInfo.width)
+          currImg.trueHeight = this.getHeight(imgInfo.height)
+        } else if (imgInfo.width && !imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          currImg.trueWidth = this.getWidth(imgInfo.width)
+          // 那高度就随着宽度进行等比缩放
+          currImg.trueHeight = imgObj.height * (currImg.trueWidth / imgObj.width)
+        } else if (!imgInfo.width && imgInfo.height) {
+          // 如果只填写了宽度, 没填写高度
+          currImg.trueHeight = this.getHeight(imgInfo.height)
+          // 那宽度就随着高度进行等比缩放
+          currImg.trueWidth = imgObj.width * (currImg.trueHeight / imgObj.height)
+        } else {
+          // 如果没有配置宽高, 则使用图片本身的宽高
+          currImg.trueWidth = imgObj.width
+          currImg.trueHeight = imgObj.height
+        }
+        // 最后触发回调
+        callBack.call(this)
+      }
     },
     draw () {
       const { ctx, dpr, _defaultStyle } = this
       // 清空画布
-      ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
+      ctx.clearRect(-this.Radius * 2, -this.Radius * 2, this.Radius * 2, this.Radius * 2)
       // 绘制blocks边框
       this.prizeRadius = this.blocks.reduce((radius, block) => {
         ctx.beginPath()
@@ -103,36 +199,39 @@ export default {
         ctx.fill()
         return radius - getLength(block.padding.split(' ')[0]) * dpr
       }, this.Radius)
-      // 计算奖品弧度和起始弧度
-      let prizeRadian = getAngle(this.prizeDeg)
+      // 计算起始弧度
+      this.prizeDeg = 360 / this.prizes.length
+      this.prizeRadian = getAngle(this.prizeDeg)
       let start = getAngle(-90 + this.rotateDeg)
       // 绘制prizes奖品区域
-      this.prizes.forEach((prize, index) => {
+      this.prizes.forEach((prize, prizeIndex) => {
         // 计算当前奖品区域中间坐标点
-        let currMiddleDeg = start + index * prizeRadian
+        let currMiddleDeg = start + prizeIndex * this.prizeRadian
         // 绘制背景
         ctx.beginPath()
         ctx.fillStyle = prize.background
         ctx.moveTo(0, 0)
-        ctx.arc(0, 0, this.prizeRadius, currMiddleDeg - prizeRadian / 2, currMiddleDeg + prizeRadian / 2, false)
+        ctx.arc(0, 0, this.prizeRadius, currMiddleDeg - this.prizeRadian / 2, currMiddleDeg + this.prizeRadian / 2, false)
         ctx.fill()
         // 计算临时坐标并旋转文字
         let x = Math.cos(currMiddleDeg) * this.prizeRadius
         let y = Math.sin(currMiddleDeg) * this.prizeRadius
         ctx.translate(x, y)
         ctx.rotate(currMiddleDeg + getAngle(90))
-        // 逐行绘制文字
-        prize.fonts && prize.fonts.forEach(font => {
-          String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.fillStyle = _defaultStyle.fontColor
-            ctx.font = _defaultStyle.fontSize + ' ' + _defaultStyle.fontStyle
-            ctx.fillText(
-              line,
-              this.getOffsetX(ctx.measureText(line).width),
-              this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight)
-            )
-          })
+        // 绘制图片
+        prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
+          if (!this.prizeImgs[prizeIndex]) return false
+          const prizeImg = this.prizeImgs[prizeIndex][imgIndex]
+          prizeImg && ctx.drawImage(
+            prizeImg.img,
+            this.getOffsetX(prizeImg.trueWidth),
+            this.getHeight(imgInfo.top),
+            prizeImg.trueWidth,
+            prizeImg.trueHeight
+          )
         })
+        // 逐行绘制文字
+        this.drawFont(prize.fonts)
         // 修正旋转角度和原点坐标
         ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(90))
         ctx.translate(-x, -y)
@@ -140,20 +239,40 @@ export default {
       // 绘制按钮
       this.buttons.forEach((btn, btnIndex) => {
         let radius = this.getHeight(btn.radius)
+        // 绘制背景颜色
         this.maxBtnRadius = Math.max(this.maxBtnRadius, radius)
         ctx.beginPath()
         ctx.fillStyle = btn.background
         ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
         ctx.fill()
-        if (!btn.pointer) return false
         // 绘制指针
-        ctx.beginPath()
-        ctx.fillStyle = btn.background
-        ctx.moveTo(-radius, 0)
-        ctx.lineTo(radius, 0)
-        ctx.lineTo(0, -radius * 2)
-        ctx.closePath()
-        ctx.fill()
+        if (btn.pointer) {
+          ctx.beginPath()
+          ctx.fillStyle = btn.background
+          ctx.moveTo(-radius, 0)
+          ctx.lineTo(radius, 0)
+          ctx.lineTo(0, -radius * 2)
+          ctx.closePath()
+          ctx.fill()
+        }
+        // 绘制文字
+        this.drawFont(btn.fonts)
+      })
+    },
+    // 绘制文字
+    drawFont (fonts) {
+      if (!fonts) return false
+      const { ctx, _defaultStyle } = this
+      fonts.forEach(font => {
+        String(font.text).split('\n').forEach((line, lineIndex) => {
+          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
+          ctx.font = `${font.fontSize || _defaultStyle.fontSize} ${font.fontStyle || _defaultStyle.fontStyle}`
+          ctx.fillText(
+            line,
+            this.getOffsetX(ctx.measureText(line).width),
+            this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight)
+          )
+        })
       })
     },
     play () {
@@ -200,6 +319,15 @@ export default {
       this.draw()
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
+    // 获取相对宽度
+    getWidth (width) {
+      if (isExpectType(width, 'number')) return width * this.dpr
+      if (isExpectType(width, 'string')) return width.includes('%')
+        ? width.slice(0, -1) / 100 * this.prizeRadian * this.prizeRadius
+        : width.replace(/px/g, '') * this.dpr
+      return 0
+    },
+    // 获取相对高度
     getHeight (length) {
       if (isExpectType(length, 'number')) return length * this.dpr
       if (isExpectType(length, 'string')) return length.includes('%')
