@@ -41,7 +41,7 @@ export default {
       maxBtnRadius: 0,           // 最大的按钮半径
       rotateDeg: 0,              // 旋转的角度
       prizeImgs: [],             // 奖品图片缓存
-      buttonImgs: [],            // 按钮图片缓存
+      btnImgs: [],               // 按钮图片缓存
     }
   },
   computed: {
@@ -78,7 +78,7 @@ export default {
             // 如果旧值不存在
             if (!oldImg) prizeImgs[imgIndex] = newImg
             // 如果缓存中没有图片
-            else if (!this.prizeImgs[prizeIndex] || !this.prizeImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg
+            else if (!this.prizeImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg
             // 如果新值和旧值的src不相等
             else if (newImg.src !== oldImg.src) prizeImgs[imgIndex] = newImg
           })
@@ -88,12 +88,40 @@ export default {
       },
       deep: true
     },
+    buttons: {
+      handler (newData, oldData) {
+        let willUpdate = []
+        // 首次渲染时oldData为undefined
+        if (!oldData) willUpdate = newData.map(btn => btn.imgs)
+        // 此时新值一定存在
+        else if (newData) newData.forEach((newBtn, btnIndex) => {
+          let btnImgs = []
+          const oldBtn = oldData[btnIndex]
+          // 如果旧奖品不存在
+          if (!oldBtn) btnImgs = newBtn.imgs
+          // 新奖品有图片才能进行对比
+          else if (newBtn.imgs) newBtn.imgs.forEach((newImg, imgIndex) => {
+            const oldImg = oldBtn.imgs[imgIndex]
+            // 如果旧值不存在
+            if (!oldImg) btnImgs[imgIndex] = newImg
+            // 如果缓存中没有图片
+            else if (!this.btnImgs[btnIndex][imgIndex]) btnImgs[imgIndex] = newImg
+            // 如果新值和旧值的src不相等
+            else if (newImg.src !== oldImg.src) btnImgs[imgIndex] = newImg
+          })
+          willUpdate[btnIndex] = btnImgs
+        })
+        return this.init([...new Array(this.prizes.length).fill(), ...willUpdate])
+      },
+      deep: true
+    }
   },
   mounted () {
     this.dpr = window.devicePixelRatio || 2
     // 收集首次渲染的图片
     let willUpdate = []
     this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
+    this.buttons && (willUpdate.push(...this.buttons.map(btn => btn.imgs)))
     this.init(willUpdate)
     window.addEventListener('resize', this.init.bind(this))
   },
@@ -148,20 +176,29 @@ export default {
     },
     /**
      * 单独加载某一张图片并计算其实际渲染宽高
-     * @param { number } prizeIndex 奖品索引
+     * @param { number } cellIndex 奖品索引
      * @param { number } imgIndex 奖品图片索引
      * @param { Function } callBack 图片加载完毕回调
      */
-    loadAndCacheImg (prizeIndex, imgIndex, callBack) {
-      const prize = this.prizes[prizeIndex]
-      if (!prize) return false
-      const imgInfo = prize.imgs[imgIndex]
+    loadAndCacheImg (cellIndex, imgIndex, callBack) {
+      // 先判断index是奖品图片还是按钮图片, 并修正index的值
+      const isPrize = cellIndex < this.prizes.length
+      const cellName = isPrize ? 'prizes' : 'buttons'
+      const imgName = isPrize ? 'prizeImgs' : 'btnImgs'
+      cellIndex = isPrize ? cellIndex : cellIndex - this.prizes.length
+      // 获取图片信息
+      const cell = this[cellName][cellIndex]
+      if (!cell) return false
+      const imgInfo = cell.imgs[imgIndex]
+      if (!imgInfo) return false
+      // 创建图片
       let imgObj = new Image()
-      if (!this.prizeImgs[prizeIndex]) this.prizeImgs[prizeIndex] = []
-      this.prizeImgs[prizeIndex][imgIndex] = { img: imgObj }
+      if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
+      // 创建缓存
+      this[imgName][cellIndex][imgIndex] = { img: imgObj }
       imgObj.src = imgInfo.src
       imgObj.onload = () => {
-        const currImg = this.prizeImgs[prizeIndex][imgIndex]
+        const currImg = this[imgName][cellIndex][imgIndex]
         if (!currImg) return false
         // 根据配置的样式计算图片的真实宽高
         if (imgInfo.width && imgInfo.height) {
@@ -255,6 +292,18 @@ export default {
           ctx.closePath()
           ctx.fill()
         }
+          // 绘制图片
+        btn.imgs && btn.imgs.forEach((imgInfo, imgIndex) => {
+          if (!this.btnImgs[btnIndex]) return false
+          const btnImg = this.btnImgs[btnIndex][imgIndex]
+          btnImg && ctx.drawImage(
+            btnImg.img,
+            this.getOffsetX(btnImg.trueWidth),
+            this.getHeight(imgInfo.top),
+            btnImg.trueWidth,
+            btnImg.trueHeight
+          )
+        })
         // 绘制文字
         this.drawFont(btn.fonts)
       })
@@ -305,8 +354,6 @@ export default {
           cancelAnimationFrame(this.animationId)
           this.speed = 0
           this.canPlay = true
-          console.log(this.prizes)
-          console.log(this.prizes.find((prize, index) => index === this.prizeFlag))
           this.$emit('end', {...this.prizes.find((prize, index) => index === this.prizeFlag)})
           return false
         }
