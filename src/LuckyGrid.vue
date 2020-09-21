@@ -13,7 +13,6 @@ export default {
       type: Array,
       validator: function (prizes) {
         return prizes.every((item, index) => {
-          if (!item.hasOwnProperty('index')) return console.error(`prizes[${index}]缺少 index 属性`)
           if (!item.hasOwnProperty('x')) return console.error(`prizes[${index}]缺少 x 属性`)
           if (!item.hasOwnProperty('y')) return console.error(`prizes[${index}]缺少 y 属性`)
           return true
@@ -138,9 +137,10 @@ export default {
       // 默认样式
       let style = {
         gutter: 5,
-        radius: 20,
+        borderRadius: 20,
         fontColor: '#000',
-        fontStyle: '16px sans-serif',
+        fontSize: '18px',
+        fontStyle: 'sans-serif, STHeiti, SimHei',
         textAlign: 'center',
         background: '#fff',
         shadow: ''
@@ -150,8 +150,9 @@ export default {
         style[key] = this.defaultStyle[key]
       }
       // 根据dpr计算实际显示效果
-      style.radius *= this.dpr
+      style.borderRadius *= this.dpr
       style.gutter *= this.dpr
+      if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
     },
     _activeStyle () {
@@ -212,7 +213,7 @@ export default {
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block).map(n => n * dpr)
-        this.blockData.push([x, y, w, h, block.radius ? block.radius * dpr : 0, block.background])
+        this.blockData.push([x, y, w, h, block.borderRadius ? block.borderRadius * dpr : 0, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -300,13 +301,13 @@ export default {
       ctx.fillStyle = 'rgba(255, 255, 255, 0)'
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
       // 绘制所有边框
-      this.blockData.forEach(([x, y, w, h, r, color]) => {
-        roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, color))
+      this.blockData.forEach(([x, y, w, h, r, background]) => {
+        roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, background))
       })
       // 绘制所有格子
       this.cells.forEach((prize, cellIndex) => {
         let [x, y, width, height] = this.getGeometricProperty([prize.x, prize.y, prize.col, prize.row])
-        const isActive = prize.index === this.prizeIndex
+        const isActive = cellIndex === this.prizeIndex
         // 处理阴影
         const shadow = (isActive ? _activeStyle.shadow : (prize.shadow || _defaultStyle.shadow))
           .replace(/px/g, '') // 清空px字符串
@@ -324,7 +325,7 @@ export default {
         }
         roundRect(
           ctx, x, y, width, height,
-          isExpectType(prize.radius, 'number') ? prize.radius * dpr : _defaultStyle.radius,
+          isExpectType(prize.borderRadius, 'number') ? prize.borderRadius * dpr : _defaultStyle.borderRadius,
           this.handleBackground(x, y, width, height, prize.background, isActive)
         )
         // 清空阴影
@@ -348,15 +349,14 @@ export default {
         prize.fonts && prize.fonts.forEach(font => {
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.beginPath()
-            let style = (isActive && _activeStyle.fontStyle) ? _activeStyle.fontStyle : (font.style || _defaultStyle.fontStyle)
-            ctx.font = style = style.replace(/^(\d+)/, res => res * dpr)
-            ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.color || _defaultStyle.fontColor)
-            const width = ctx.measureText(line).width
-            const lineHeight = getLength(font.lineHeight) * dpr || style.split(' ')[0]
+            let style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : (font.fontStyle || _defaultStyle.fontStyle)
+            let size = isActive && _activeStyle.fontSize ? getLength(_activeStyle.fontSize) : getLength(font.fontSize || _defaultStyle.fontSize)
+            ctx.font = size * dpr + 'px ' + style
+            ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
             ctx.fillText(
               line,
-              x + this.getOffsetX(width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(lineHeight)
+              x + this.getOffsetX(ctx.measureText(line).width, prize.col),
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
             )
           })
         })
@@ -401,7 +401,7 @@ export default {
         if (this.prizeFlag == this.prizeIndex) {
           this.speed = 0
           this.canPlay = true
-          this.$emit('end', {...this.prizes.find(prize => prize.index === this.prizeIndex)})
+          this.$emit('end', {...this.prizes.find((prize, index) => index === this.prizeIndex)})
           return false
         }
       } else {

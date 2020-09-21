@@ -47,15 +47,15 @@ export default {
   computed: {
     _defaultStyle () {
       const style = {
-        fontSize: '24px',
-        fontColor: '#fff',
-        fontStyle: 'STHeiti, SimHei',
+        fontSize: '18px',
+        fontColor: '#000',
+        fontStyle: 'sans-serif, STHeiti, SimHei',
+        background: '#fff',
         prizeGutter: '0px',
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
-      style.fontSize = getLength(style.fontSize) * this.dpr + 'px'
       if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
     },
@@ -97,8 +97,8 @@ export default {
         else if (newData) newData.forEach((newBtn, btnIndex) => {
           let btnImgs = []
           const oldBtn = oldData[btnIndex]
-          // 如果旧奖品不存在
-          if (!oldBtn) btnImgs = newBtn.imgs
+          // 如果旧奖品不存在或旧奖品的图片不存在
+          if (!oldBtn || !oldBtn.imgs) btnImgs = newBtn.imgs
           // 新奖品有图片才能进行对比
           else if (newBtn.imgs) newBtn.imgs.forEach((newImg, imgIndex) => {
             const oldImg = oldBtn.imgs[imgIndex]
@@ -200,19 +200,21 @@ export default {
       imgObj.onload = () => {
         const currImg = this[imgName][cellIndex][imgIndex]
         if (!currImg) return false
+        const computedWidth = isPrize ? this.prizeRadian * this.prizeRadius : this.getHeight(cell.radius) * 2
+        const computedHeight = isPrize ? this.prizeRadius - this.maxBtnRadius : this.getHeight(cell.radius) * 2
         // 根据配置的样式计算图片的真实宽高
         if (imgInfo.width && imgInfo.height) {
           // 如果宽度和高度都填写了, 就如实计算
-          currImg.trueWidth = this.getWidth(imgInfo.width)
-          currImg.trueHeight = this.getHeight(imgInfo.height)
+          currImg.trueWidth = this.getWidth(imgInfo.width, computedWidth)
+          currImg.trueHeight = this.getHeight(imgInfo.height, computedHeight)
         } else if (imgInfo.width && !imgInfo.height) {
           // 如果只填写了宽度, 没填写高度
-          currImg.trueWidth = this.getWidth(imgInfo.width)
+          currImg.trueWidth = this.getWidth(imgInfo.width, computedWidth)
           // 那高度就随着宽度进行等比缩放
           currImg.trueHeight = imgObj.height * (currImg.trueWidth / imgObj.width)
         } else if (!imgInfo.width && imgInfo.height) {
           // 如果只填写了宽度, 没填写高度
-          currImg.trueHeight = this.getHeight(imgInfo.height)
+          currImg.trueHeight = this.getHeight(imgInfo.height, computedHeight)
           // 那宽度就随着高度进行等比缩放
           currImg.trueWidth = imgObj.width * (currImg.trueHeight / imgObj.height)
         } else {
@@ -246,7 +248,7 @@ export default {
         let currMiddleDeg = start + prizeIndex * this.prizeRadian
         // 绘制背景
         ctx.beginPath()
-        ctx.fillStyle = prize.background
+        ctx.fillStyle = prize.background || _defaultStyle.background
         ctx.moveTo(0, 0)
         ctx.arc(0, 0, this.prizeRadius, currMiddleDeg - this.prizeRadian / 2, currMiddleDeg + this.prizeRadian / 2, false)
         ctx.fill()
@@ -311,15 +313,15 @@ export default {
     // 绘制文字
     drawFont (fonts) {
       if (!fonts) return false
-      const { ctx, _defaultStyle } = this
+      const { ctx, dpr, _defaultStyle } = this
       fonts.forEach(font => {
         String(font.text).split('\n').forEach((line, lineIndex) => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${font.fontSize || _defaultStyle.fontSize} ${font.fontStyle || _defaultStyle.fontStyle}`
+          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           ctx.fillText(
             line,
             this.getOffsetX(ctx.measureText(line).width),
-            this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight)
+            this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
           )
         })
       })
@@ -367,18 +369,18 @@ export default {
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
     // 获取相对宽度
-    getWidth (width) {
-      if (isExpectType(width, 'number')) return width * this.dpr
-      if (isExpectType(width, 'string')) return width.includes('%')
-        ? width.slice(0, -1) / 100 * this.prizeRadian * this.prizeRadius
-        : width.replace(/px/g, '') * this.dpr
+    getWidth (length, width = this.prizeRadian * this.prizeRadius) {
+      if (isExpectType(length, 'number')) return length * this.dpr
+      if (isExpectType(length, 'string')) return length.includes('%')
+        ? length.slice(0, -1) / 100 * width
+        : length.replace(/px/g, '') * this.dpr
       return 0
     },
     // 获取相对高度
-    getHeight (length) {
+    getHeight (length, height = this.prizeRadius) {
       if (isExpectType(length, 'number')) return length * this.dpr
       if (isExpectType(length, 'string')) return length.includes('%')
-        ? length.slice(0, -1) / 100 * this.prizeRadius
+        ? length.slice(0, -1) / 100 * height
         : length.replace(/px/g, '') * this.dpr
       return 0
     },

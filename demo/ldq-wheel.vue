@@ -1,29 +1,64 @@
 <template>
   <LuckyWheel
-    style="width: 300px; height: 500px"
+    style="width: 300px; height: 300px"
     ref="LuckyWheel"
     :defaultStyle="{
       fontColor: '#d64737',
-      fontSize: '20px'
+      fontSize: '14px'
     }"
     :blocks="[
-      { padding: '15px', background: '#d64737' }
+      { padding: '13px', background: '#d64737' }
     ]"
     :buttons="[
-      { radius: '30%', background: '#d64737' },
-      { radius: '27%', background: '#fff' },
-      { radius: '24%', background: '#f6c66f', pointer: true },
-      { radius: '18%', background: '#ffdea0' }
+      { radius: '50px', background: '#d64737' },
+      { radius: '45px', background: '#fff' },
+      { radius: '41px', background: '#f6c66f', pointer: true },
+      {
+        radius: '35px', background: '#ffdea0',
+        imgs: [{ src: require('./img/button.png'), width: '65%', top: '-13%' }]
+      }
     ]"
     :prizes="[
-      { fonts: [{ text: '0.88元\n红包', top: '10%' }], background: '#f8d384' },
-      { fonts: [{ text: '10元\n红包', top: '10%' }], background: '#f9e3bb' },
-      { fonts: [{ text: '88元\n红包', top: '10%' }], background: '#f8d384' },
-      { fonts: [{ text: '100元\n红包', top: '10%' }], background: '#f9e3bb' },
-      { fonts: [{ text: '188元\n红包', top: '10%' }], background: '#f8d384' },
-      { fonts: [{ text: '666元\n红包', top: '10%' }], background: '#f9e3bb' },
-      { fonts: [{ text: '888元\n红包', top: '10%' }], background: '#f8d384' },
-      { fonts: [{ text: '999元\n红包', top: '10%' }], background: '#f9e3bb' },
+      {
+        background: '#f8d384',
+        fonts: [{ text: '1元红包', top: '8%' }],
+        imgs:[{ src: require('./img/0.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f9e3bb',
+        fonts: [{ text: '100元红包', top: '8%' }],
+        imgs:[{ src: require('./img/1.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f8d384',
+        fonts: [{ text: '0.5元红包', top: '8%' }],
+        imgs:[{ src: require('./img/2.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f9e3bb',
+        fonts: [{ text: '2元红包', top: '8%' }],
+        imgs:[{ src: require('./img/3.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f8d384',
+        fonts: [{ text: '10元红包', top: '8%' }],
+        imgs:[{ src: require('./img/4.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f9e3bb',
+        fonts: [{ text: '50元红包', top: '8%' }],
+        imgs:[{ src: require('./img/5.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f8d384',
+        fonts: [{ text: '0.3元红包', top: '8%' }],
+        imgs:[{ src: require('./img/6.png'), width: '30%', top: '25%' }],
+      },
+      {
+        background: '#f9e3bb',
+        fonts: [{ text: '5元红包', top: '8%' }],
+        imgs:[{ src: require('./img/7.png'), width: '30%', top: '25%' }],
+      },
     ]"
     @start="startCallBack"
     @end="endCallBack"

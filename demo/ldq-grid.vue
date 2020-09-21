@@ -5,15 +5,15 @@
     :prizes="prizes"
     :button="btnConfig"
     :blocks="[
-      { padding: '15px', background: '#ffc27a', radius: 28 },
-      { padding: '4px', background: '#ff4a4c', radius: 23 },
-      { padding: '4px', background: '#ff625b', radius: 20 },
+      { padding: '15px', background: '#ffc27a', borderRadius: 28 },
+      { padding: '4px', background: '#ff4a4c', borderRadius: 23 },
+      { padding: '4px', background: '#ff625b', borderRadius: 20 },
     ]"
     :defaultStyle="{
       gutter: 5,
-      radius: 15,
+      borderRadius: 15,
       fontColor: '#DF424B',
-      fontStyle: '14px sans-serif',
+      fontSize: '14px',
       textAlign: 'center',
       background: '#fff',
       shadow: '0 5 1 #ebf1f4'
@@ -42,10 +42,10 @@ export default {
       return {
         x: 1,
         y: 1,
-        background: "linear-gradient(270deg, #FFDCB8, #FDC689)",
-        shadow: "0 5 1 #e89b4f",
+        background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
+        shadow: '0 5 1 #e89b4f',
         fonts: [
-          { text: `${this.luckyNum} 次`, color: "#fff", top: "73%", style: "12px sans-serif" },
+          { text: `${this.luckyNum} 次`, fontColor: '#fff', top: '70%', fontSize: '12px' },
         ],
         imgs: [
           { src: require('./img/button.png'), width: '65%', top: '13%' },
