@@ -3,6 +3,8 @@
 
 > https://100px.net/vue-luck-draw
 
+<br />
+
 ## 安装
 
 **使用 npm 安装：`npm i vue-luck-draw`**
