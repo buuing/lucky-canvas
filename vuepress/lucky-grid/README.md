@@ -41,8 +41,8 @@
   style="width: 200px; height: 200px"
   :blocks="[
     { padding: '30px 10px', background: '#ffc27a' },
-    { padding: '10px 30px', background: '#ff4a4c', borderRadius: 10 },
-    { padding: '10px', background: '#ff625b', borderRadius: Infinity },
+    { padding: '10px', paddingRight: '90px', background: '#ff4a4c' },
+    { padding: '0px', background: '#fff' }
   ]"
 />
 ```

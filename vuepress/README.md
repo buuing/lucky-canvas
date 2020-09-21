@@ -14,7 +14,7 @@
 
 ### 方式1: 通过 import 引入
 
-找到 `main.js` 引入插件并 `use`
+找到 `main.js` 引入插件并 `use`, 可实现全局引入`<LuckyWheel /> 和 <LuckyGrid />`两个组件
 
 ```js
 import LuckDraw from 'vue-luck-draw'
@@ -22,7 +22,7 @@ import LuckDraw from 'vue-luck-draw'
 Vue.use(LuckDraw)
 ```
 
-然后在组件内使用`<LuckyWheel />大转盘组件`或`<LuckyGrid />九宫格组件`
+然后在 vue 模板里面就可以开始使用了
 
 ```vue
 <template>
@@ -74,6 +74,8 @@ Vue.use(LuckDraw)
 <br />
 
 ## 演示 Demo
+
+> 点击可抽奖...
 
 <div style="display: flex; justify-content: space-around; margin-top: 30px">
   <div>
