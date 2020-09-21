@@ -24,5 +24,6 @@ module.exports = {
         collapsable: false,
       }
     ]
-  }
+  },
+  base: '/vue-luck-draw/',
 }
