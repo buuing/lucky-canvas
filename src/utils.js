@@ -85,31 +85,39 @@ export const roundRect = (ctx, x, y, w, h, r, color) => {
  * 创建线性渐变色
  */
 export const getLinearGradient = (ctx, x, y, w, h, background) => {
-  const context = /linear-gradient\((.+)\)/.exec(background)[1]
+  let context = /linear-gradient\((.+)\)/.exec(background)[1]
     .split(',') // 根据逗号分割
     .map(text => text.trim()) // 去除两边空格
   let deg = context.shift(), direction
   // 通过起始点和角度计算渐变终点的坐标点, 这里感谢泽宇大神提醒我使用勾股定理....
-  if (deg.includes('deg')) {
-    deg = deg.slice(0, -3) % 360
-    // 根据4个象限定义起点坐标, 根据45度划分8个区域计算终点坐标
-    const getLenOfTanDeg = deg => Math.tan(deg / 180 * Math.PI)
-    if (deg >= 0 && deg < 45) direction = [x, y + h, x + w, y + h - w * getLenOfTanDeg(deg - 0)]
-    else if (deg >= 45 && deg < 90) direction = [x, y + h, (x + w) - h * getLenOfTanDeg(deg - 45), y]
-    else if (deg >= 90 && deg < 135) direction = [x + w, y + h, (x + w) - h * getLenOfTanDeg(deg - 90), y]
-    else if (deg >= 135 && deg < 180) direction = [x + w, y + h, x, y + w * getLenOfTanDeg(deg - 135)]
-    else if (deg >= 180 && deg < 225) direction = [x + w, y, x, y + w * getLenOfTanDeg(deg - 180)]
-    else if (deg >= 225 && deg < 270) direction = [x + w, y, x + h * getLenOfTanDeg(deg - 225), y + h]
-    else if (deg >= 270 && deg < 315) direction = [x, y, x + h * getLenOfTanDeg(deg - 270), y + h]
-    else if (deg >= 315 && deg < 360) direction = [x, y, x + w, y + h - w * getLenOfTanDeg(deg - 315)]
-  }
-  // 创建四个简单的方向坐标
-  else if (deg.includes('top')) direction = [x, y + h, x, y]
-  else if (deg.includes('bottom')) direction = [x, y, x, y + h]
-  else if (deg.includes('left')) direction = [x + w, y, x, y]
-  else if (deg.includes('right')) direction = [x, y, x + w, y]
+  if (deg.includes('right')) deg = '0deg'
+  else if (deg.includes('top')) deg = '90deg'
+  else if (deg.includes('left')) deg = '180deg'
+  else if (deg.includes('bottom')) deg = '270deg'
+  let index = deg.indexOf('deg')
+  if (index < 0) return console.warn('渐变色角度参数错误')
+  deg = deg.slice(0, index) % 360
+  const center = [x + w / 2, y + h / 2]
+  console.log('deg',deg, center)
+  // 根据4个象限定义起点坐标, 根据45度划分8个区域计算终点坐标
+  const getLenOfTanDeg = deg => Math.tan(deg / 180 * Math.PI)
+  if (deg >= 0 && deg < 45) direction = [x, y + h, x + w, y + h - w * getLenOfTanDeg(deg - 0)]
+  else if (deg >= 45 && deg < 90) direction = [x, y + h, (x + w) - h * getLenOfTanDeg(deg - 45), y]
+  else if (deg >= 90 && deg < 135) direction = [x + w, y + h, (x + w) - h * getLenOfTanDeg(deg - 90), y]
+  else if (deg >= 135 && deg < 180) direction = [x + w, y + h, x, y + w * getLenOfTanDeg(deg - 135)]
+  else if (deg >= 180 && deg < 225) direction = [x + w, y, x, y + w * getLenOfTanDeg(deg - 180)]
+  else if (deg >= 225 && deg < 270) direction = [x + w, y, x + h * getLenOfTanDeg(deg - 225), y + h]
+  else if (deg >= 270 && deg < 315) direction = [x, y, x + h * getLenOfTanDeg(deg - 270), y + h]
+  else if (deg >= 315 && deg < 360) direction = [x, y, x + w, y + h - w * getLenOfTanDeg(deg - 315)]
+
   // 创建线性渐变必须使用整数坐标
+ctx.beginPath()
+ctx.strokeStyle = '#000'
+ctx.moveTo(direction[0], direction[1])
+ctx.lineTo(direction[2], direction[3])
+ctx.stroke()
   const gradient = ctx.createLinearGradient(...direction.map(n => n >> 0))
+  context = ['rgba(0,0,0,0.5)', 'rgba(255,255,255,0.5)']
   return context.reduce((gradient, item, index) => {
     const info = item.split(' ')
     if (info.length === 1) gradient.addColorStop(index, info[0])
