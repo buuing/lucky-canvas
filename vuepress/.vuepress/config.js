@@ -9,6 +9,11 @@ module.exports = {
     sidebarDepth: 3,
     sidebar: [
       {
+        title: '演示 Demo',
+        path: '/lucky-demo/',
+        collapsable: false,
+      },
+      {
         title: '安装 & 使用',
         path: '/',
         collapsable: false,

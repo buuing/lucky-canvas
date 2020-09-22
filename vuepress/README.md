@@ -14,7 +14,7 @@
 
 ### 方式1: 通过 import 引入
 
-找到 `main.js` 引入插件并 `use`, 可实现全局引入`<LuckyWheel /> 和 <LuckyGrid />`两个组件
+找到 `main.js` 引入插件并 `use`, 可实现全局引入`<LuckyWheel />`和`<LuckyGrid />`两个组件
 
 ```js
 import LuckDraw from 'vue-luck-draw'
@@ -72,16 +72,3 @@ Vue.use(LuckDraw)
 ```
 
 <br />
-
-## 演示 Demo
-
-> 点击可抽奖...
-
-<div style="display: flex; justify-content: space-around; margin-top: 30px">
-  <div>
-    <demo-ldq-wheel />
-  </div>
-  <div>
-    <demo-ldq-grid />
-  </div>
-</div>
