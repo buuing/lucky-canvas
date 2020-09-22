@@ -263,36 +263,48 @@ export default {
       const prize = this.cells[prizeIndex]
       if (!prize) return false
       const imgInfo = prize.imgs[imgIndex]
-      let imgObj = new Image()
       if (!this.cellImgs[prizeIndex]) this.cellImgs[prizeIndex] = []
-      this.cellImgs[prizeIndex][imgIndex] = { img: imgObj }
-      imgObj.src = imgInfo.src
-      imgObj.onload = () => {
-        const cellImg = this.cellImgs[prizeIndex][imgIndex]
-        if (!cellImg) return false
-        // 根据配置的样式计算图片的真实宽高
-        if (imgInfo.width && imgInfo.height) {
-          // 如果宽度和高度都填写了, 就如实计算
-          cellImg.trueWidth = this.getWidth(imgInfo.width, prize.col)
-          cellImg.trueHeight = this.getHeight(imgInfo.height, prize.row)
-        } else if (imgInfo.width && !imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          cellImg.trueWidth = this.getWidth(imgInfo.width, prize.col)
-          // 那高度就随着宽度进行等比缩放
-          cellImg.trueHeight = imgObj.height * (cellImg.trueWidth / imgObj.width)
-        } else if (!imgInfo.width && imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          cellImg.trueHeight = this.getHeight(imgInfo.height, prize.row)
-          // 那宽度就随着高度进行等比缩放
-          cellImg.trueWidth = imgObj.width * (cellImg.trueHeight / imgObj.height)
-        } else {
-          // 如果没有配置宽高, 则使用图片本身的宽高
-          cellImg.trueWidth = imgObj.width
-          cellImg.trueHeight = imgObj.height
-        }
-        // 最后触发回调
-        callBack.call(this)
+      // 加载 defaultImg 默认图片
+      let defaultImg = new Image()
+      this.cellImgs[prizeIndex][imgIndex] = { defaultImg }
+      defaultImg.src = imgInfo.src
+      let num = 0, sum = 1
+      defaultImg.onload = () => {
+        num++
+        num === sum && callBack.call(this)
       }
+      // 如果有 activeImg 则多加载一张
+      if (!imgInfo.activeSrc) return false
+      sum++
+      let activeImg = new Image()
+      this.cellImgs[prizeIndex][imgIndex].activeImg = activeImg
+      activeImg.src = imgInfo.activeSrc
+      activeImg.onload = () => {
+        num++
+        num === sum && callBack.call(this)
+      }
+    },
+    computedWidthAndHeight (imgObj, imgInfo, prize) {
+      // 根据配置的样式计算图片的真实宽高
+      if (!imgInfo.width && !imgInfo.height) {
+        // 如果没有配置宽高, 则使用图片本身的宽高
+        return [imgObj.width, imgObj.height]
+      } else if (imgInfo.width && !imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        let trueWidth = this.getWidth(imgInfo.width, prize.col)
+        // 那高度就随着宽度进行等比缩放
+        return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
+      } else if (!imgInfo.width && imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        let trueHeight = this.getHeight(imgInfo.height, prize.row)
+        // 那宽度就随着高度进行等比缩放
+        return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
+      }
+      // 如果宽度和高度都填写了, 就分别计算
+      return [
+        this.getWidth(imgInfo.width, prize.col),
+        this.getHeight(imgInfo.height, prize.row)
+      ]
     },
     // 绘制九宫格抽奖
     draw () {
@@ -337,12 +349,15 @@ export default {
         prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.cellImgs[cellIndex]) return false
           const cellImg = this.cellImgs[cellIndex][imgIndex]
-          cellImg && ctx.drawImage(
-            cellImg.img,
-            x + this.getOffsetX(cellImg.trueWidth, prize.col),
+          if (!cellImg) return false
+          const renderImg = (isActive && cellImg.activeImg) || cellImg.defaultImg
+          const [trueWidth, trueHeight] = this.computedWidthAndHeight(renderImg, imgInfo, prize)
+          ctx.drawImage(
+            renderImg,
+            x + this.getOffsetX(trueWidth, prize.col),
             y + this.getHeight(imgInfo.top, prize.row),
-            cellImg.trueWidth,
-            cellImg.trueHeight
+            trueWidth,
+            trueHeight
           )
         })
         // 绘制文字
