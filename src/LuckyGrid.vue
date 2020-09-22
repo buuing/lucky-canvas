@@ -150,7 +150,7 @@ export default {
         style[key] = this.defaultStyle[key]
       }
       // 根据dpr计算实际显示效果
-      style.borderRadius *= this.dpr
+      style.borderRadius = getLength(style.borderRadius) * this.dpr
       style.gutter *= this.dpr
       if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
@@ -213,7 +213,7 @@ export default {
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block).map(n => n * dpr)
-        this.blockData.push([x, y, w, h, block.borderRadius ? block.borderRadius * dpr : 0, block.background])
+        this.blockData.push([x, y, w, h, block.borderRadius ? getLength(block.borderRadius) * dpr : 0, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -325,7 +325,7 @@ export default {
         }
         roundRect(
           ctx, x, y, width, height,
-          isExpectType(prize.borderRadius, 'number') ? prize.borderRadius * dpr : _defaultStyle.borderRadius,
+          prize.borderRadius ? getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius,
           this.handleBackground(x, y, width, height, prize.background, isActive)
         )
         // 清空阴影
