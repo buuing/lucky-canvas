@@ -9,10 +9,9 @@
   - <Describe name="padding: string" mean="内边距" desc="边框必须是等宽的, 所以 padding 只能输入一个值" :isRequire="true" />
   - <Describe name="background: string" mean="背景颜色" desc="可填写16进制颜色哈希值或 rgba" :isRequire="true" />
 
+### 如何绘制边框
+
 <Exhibition>
-  <template v-slot:header>
-    blocks - 示例1：如何绘制边框
-  </template>
   <template v-slot:code>
     <LuckyWheel
       style="width: 200px; height: 200px"
@@ -66,10 +65,9 @@
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
+### 如何设置奖品
+
 <Exhibition>
-  <template v-slot:header>
-    prizes - 示例1：如何设置奖品
-  </template>
   <template v-slot:code>
     <LuckyWheel
       style="width: 200px; height: 200px"
@@ -104,10 +102,9 @@
 />
 ```
 
+### 如何配置图片
+
 <Exhibition>
-  <template v-slot:header>
-    prizes - 示例2：如何配置图片
-  </template>
   <template v-slot:code>
     <LuckyWheel
       style="width: 200px; height: 200px"
@@ -167,10 +164,9 @@
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
+### 如何配置按钮
+
 <Exhibition>
-  <template v-slot:header>
-    buttons - 示例1：如何配置按钮
-  </template>
   <template v-slot:code>
     <LuckyWheel
       style="width: 200px; height: 200px"
@@ -227,10 +223,9 @@
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
 
+### 关于默认样式
+
 <Exhibition>
-  <template v-slot:header>
-    defaultStyle - 示例1：关于默认样式
-  </template>
   <template v-slot:code>
     <LuckyWheel
       style="width: 200px; height: 200px"
@@ -287,12 +282,11 @@
 - <Describe name="play()" mean="开始抽奖" desc="调用该方法时，游戏才会开始, 没有参数" />
 - <Describe name="stop(index)" mean="缓慢停止抽奖" desc="调用该方法时，才会缓慢停止, 参数是中奖的索引" />
 
+### 点击按钮开始抽奖
+
 <Exhibition>
-  <template v-slot:header>
-    点击按钮开始抽奖
-  </template>
   <template v-slot:code>
-    <demo-ldq-wheel />
+    <demo-ymc-wheel />
   </template>
   <template v-slot:text>
     <p>正常的流程是：</p>

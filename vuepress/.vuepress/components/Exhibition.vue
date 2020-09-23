@@ -1,8 +1,6 @@
 <template>
   <div class="box" ref="box">
-    <h3 class="box-header">
-      <slot name="header" />
-    </h3>
+    <div ref="header" class="box-header"></div>
     <div class="box-code">
       <slot name="code" />
     </div>
@@ -19,6 +17,9 @@ export default {
   mounted () {
     let prev = null
     Array.from(this.$refs.box.parentNode.children).some(node => {
+      if (node === this.$refs.box && prev.nodeName === 'H3') {
+        this.$refs.header.appendChild(prev)
+      }
       if (prev === this.$refs.box) {
         this.$refs.footer.appendChild(node)
         node.style.borderRadius = 0
@@ -73,11 +74,16 @@ export default {
   }
   .box-header {
     width: 100%;
-    padding: 15px;
+    padding: 20px 25px;
     margin: 0;
     border-bottom: 1px solid #ebebeb;
     font-size: 18px;
     font-weight: 700;
+  }
+  /deep/ .box-header h3 {
+    margin: 0;
+    padding-top: 6rem;
+    margin-top: -6rem
   }
   .box-footer {
     width: 100%;
