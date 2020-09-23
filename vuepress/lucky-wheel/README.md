@@ -56,7 +56,7 @@
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体大小，默认为 '22px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
-    - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，但依然可以使用 \n 换行" />
+    - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
@@ -99,6 +99,65 @@
     { fonts: [{ text: '0' }], background: '#f8d384' },
     { fonts: [{ text: '1', top: '20px' }], background: '#f9e3bb' },
     { fonts: [{ text: '2', top: '100%' }], background: '#fff' }
+  ]"
+/>
+```
+
+### 关于文字换行
+
+<Exhibition>
+  <template v-slot:code>
+    <LuckyWheel
+      style="width: 200px; height: 200px"
+      :blocks="[
+        { padding: '10px', background: '#d64737' },
+      ]"
+      :prizes="[
+        {
+          fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10 }],
+          background: '#f8d384'
+        },
+        {
+          background: '#f9e3bb'
+        },
+        {
+          fonts: [{ text: '这一段文字不会自动换行', top: 20, wordWrap: false }],
+          background: '#f8d384'
+        },
+        {
+          background: '#f9e3bb'
+        }
+      ]"
+    />
+  </template>
+  <template v-slot:text>
+    <li>注意：<code>v3.0.1</code>的文字换行算法有问题，会出现吞字现象，升级即可解决该问题</li>
+    <li>由于奖品是一个扇形区域，顶部的圆弧宽度计算困难，建议搭配<code>top</code>属性向下挤一部分</li>
+    <li><code>wordWrap</code>属性用来控制该段文字是否换行，默认为 true，但等于 false 时依然可以使用<code>\n</code>来换行</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyWheel
+  style="width: 200px; height: 200px"
+  :blocks="[
+    { padding: '10px', background: '#d64737' },
+  ]"
+  :prizes="[
+    {
+      fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10 }],
+      background: '#f8d384'
+    },
+    {
+      background: '#f9e3bb'
+    },
+    {
+      fonts: [{ text: '这一段文字不会自动换行', top: 20, wordWrap: false }],
+      background: '#f8d384'
+    },
+    {
+      background: '#f9e3bb'
+    }
   ]"
 />
 ```
@@ -216,12 +275,11 @@
 
 > 如果你觉得写一堆重复的数据很烦的话，那你可以在这里进行统一的管理，其中包括`奖品`和`抽奖按钮`，在没有配置的情况下都会继承这里的属性
 
-- <Describe name="defaultStyle?: object" mean="格子默认样式" />
+- <Describe name="default-style?: object" mean="格子默认样式" />
   - <Describe name="fontColor?: string" mean="字体颜色" desc="默认是 '#000' 黑色" />
   - <Describe name="fontSize?: string" mean="字体大小(px)" desc="默认是 '18px'" />
   - <Describe name="fontStyle?: string" mean="字体样式" desc="默认是 'sans-serif'" />
   - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
-  - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，但依然可以使用 \n 换行" />
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
 
@@ -242,7 +300,7 @@
         { fonts: [{ text: '4' }], background: '#f8d384' },
         { fonts: [{ text: '5' }] },
       ]"
-      :defaultStyle="{
+      :default-style="{
         fontColor: 'red',
         fontSize: '30px',
         background: 'pink'
@@ -269,7 +327,7 @@
     { fonts: [{ text: '4' }], background: '#f8d384' },
     { fonts: [{ text: '5' }] },
   ]"
-  :defaultStyle="{
+  :default-style="{
     fontColor: 'red',
     fontSize: '30px',
     background: 'pink'
