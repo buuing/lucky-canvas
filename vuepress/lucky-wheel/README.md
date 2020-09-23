@@ -56,6 +56,7 @@
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体大小，默认为 '22px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
+    - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，但依然可以使用 \n 换行" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
@@ -220,6 +221,7 @@
   - <Describe name="fontSize?: string" mean="字体大小(px)" desc="默认是 '18px'" />
   - <Describe name="fontStyle?: string" mean="字体样式" desc="默认是 'sans-serif'" />
   - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
+  - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，但依然可以使用 \n 换行" />
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
 

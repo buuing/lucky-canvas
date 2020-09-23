@@ -307,7 +307,17 @@ export default {
           )
         })
         // 绘制文字
-        this.drawFont(btn.fonts, 1)
+        btn.fonts && btn.fonts.forEach(font => {
+          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
+          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          String(font.text).split('\n').forEach((line, lineIndex) => {
+            ctx.fillText(
+              line,
+              this.getOffsetX(ctx.measureText(line).width),
+              this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+            )
+          })
+        })
       })
     },
     // 绘制文字
