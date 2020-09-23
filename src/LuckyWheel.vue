@@ -307,23 +307,40 @@ export default {
           )
         })
         // 绘制文字
-        this.drawFont(btn.fonts)
+        this.drawFont(btn.fonts, 1)
       })
     },
     // 绘制文字
-    drawFont (fonts) {
+    drawFont (fonts, btn) {
       if (!fonts) return false
       const { ctx, dpr, _defaultStyle } = this
       fonts.forEach(font => {
-        String(font.text).split('\n').forEach((line, lineIndex) => {
-          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
-          ctx.fillText(
-            line,
-            this.getOffsetX(ctx.measureText(line).width),
-            this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
-          )
-        })
+        // 临时增加文字换行代码, 稍后对代码进行优化
+        ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
+        ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+        let lines = [], text = String(font.text)
+        if (font.text.includes('\n') || btn) lines = text.split('\n')
+        else {
+          // 临时代码
+          let str = ''
+          for (let i = 0; i < text.length; i++) {
+            str += text[i]
+            let currWidth = ctx.measureText(str).width
+            let lineIndex = lines.length + 1
+            let maxW = 2 * Math.tan(this.prizeRadian / 2) * (this.prizeRadius - (this.getHeight(font.top) + lineIndex * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr))
+            console.log({str,currWidth: currWidth,maxW})
+            if (currWidth >= maxW - 30) {
+              lines.push(str.slice(0, -1))
+              str = text[i]
+            }
+          }
+          if (!lines.length) lines.push(text)
+        }
+        lines.forEach((line, lineIndex) => ctx.fillText(
+          line,
+          this.getOffsetX(ctx.measureText(line).width),
+          this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+        ))
       })
     },
     play () {
