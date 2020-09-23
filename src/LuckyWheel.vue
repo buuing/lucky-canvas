@@ -25,7 +25,7 @@ export default {
       default: () => {
         return {}
       }
-    }
+    },
   },
   data () {
     return {
@@ -242,6 +242,14 @@ export default {
       this.prizeDeg = 360 / this.prizes.length
       this.prizeRadian = getAngle(this.prizeDeg)
       let start = getAngle(-90 + this.rotateDeg)
+      // 计算文字横坐标
+      const getFontX = (line) => {
+        return this.getOffsetX(ctx.measureText(line).width)
+      }
+      // 计算文字纵坐标
+      const getFontY = (font, lineIndex) => {
+        return this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+      }
       // 绘制prizes奖品区域
       this.prizes.forEach((prize, prizeIndex) => {
         // 计算当前奖品区域中间坐标点
@@ -270,7 +278,29 @@ export default {
           )
         })
         // 逐行绘制文字
-        this.drawFont(prize.fonts)
+        prize.fonts && prize.fonts.forEach(font => {
+          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
+          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          let lines = [], text = String(font.text)
+          if (font.wordWrap === false) lines = text.split('\n')
+          else {
+            let str = ''
+            for (let i = 0; i < text.length; i++) {
+              str += text[i]
+              let currWidth = ctx.measureText(str).width
+              let maxWidth = (this.prizeRadius - getFontY(font, lines.length)) * Math.tan(this.prizeRadian / 2) * 2
+              if (currWidth > maxWidth - 10) {
+                lines.push(str.slice(0, -1))
+                str = text[i]
+              }
+            }
+            if (str) lines.push(str)
+            if (!lines.length) lines.push(text)
+          }
+          lines.forEach((line, lineIndex) => {
+            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
+          })
+        })
         // 修正旋转角度和原点坐标
         ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(90))
         ctx.translate(-x, -y)
@@ -294,7 +324,7 @@ export default {
           ctx.closePath()
           ctx.fill()
         }
-          // 绘制图片
+        // 绘制按钮图片
         btn.imgs && btn.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.btnImgs[btnIndex]) return false
           const btnImg = this.btnImgs[btnIndex][imgIndex]
@@ -306,51 +336,14 @@ export default {
             btnImg.trueHeight
           )
         })
-        // 绘制文字
+        // 绘制按钮文字
         btn.fonts && btn.fonts.forEach(font => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.fillText(
-              line,
-              this.getOffsetX(ctx.measureText(line).width),
-              this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
-            )
+            ctx.fillText( line, getFontX(line), getFontY(font, lineIndex))
           })
         })
-      })
-    },
-    // 绘制文字
-    drawFont (fonts, btn) {
-      if (!fonts) return false
-      const { ctx, dpr, _defaultStyle } = this
-      fonts.forEach(font => {
-        // 临时增加文字换行代码, 稍后对代码进行优化
-        ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-        ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
-        let lines = [], text = String(font.text)
-        if (font.text.includes('\n') || btn) lines = text.split('\n')
-        else {
-          // 临时代码
-          let str = ''
-          for (let i = 0; i < text.length; i++) {
-            str += text[i]
-            let currWidth = ctx.measureText(str).width
-            let lineIndex = lines.length + 1
-            let maxW = 2 * Math.tan(this.prizeRadian / 2) * (this.prizeRadius - (this.getHeight(font.top) + lineIndex * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr))
-            console.log({str,currWidth: currWidth,maxW})
-            if (currWidth >= maxW - 30) {
-              lines.push(str.slice(0, -1))
-              str = text[i]
-            }
-          }
-          if (!lines.length) lines.push(text)
-        }
-        lines.forEach((line, lineIndex) => ctx.fillText(
-          line,
-          this.getOffsetX(ctx.measureText(line).width),
-          this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
-        ))
       })
     },
     play () {
