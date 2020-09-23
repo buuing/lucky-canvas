@@ -55,12 +55,12 @@ Vue.use(LuckDraw)
 ```html
 <div id="app">
   <!-- 大转盘抽奖 -->
-  <LuckyWheel
+  <lucky-wheel
     style="width: 200px; height: 200px"
     ...你的配置
   />
   <!-- 九宫格抽奖 -->
-  <LuckyGrid
+  <lucky-grid
     style="width: 200px; height: 200px"
     ...你的配置
   />

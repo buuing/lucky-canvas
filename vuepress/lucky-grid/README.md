@@ -48,7 +48,7 @@
 
 ## 奖品 - prizes
 
-> 奖品列表是一个数组，item里面有三个必须的参数：`x`、`y`、`index`
+> 奖品列表是一个数组，item里面有两个必须的参数：`x`、`y` 来控制这个格子的显示坐标
 
 - <Describe name="prizes?: Array<object>" mean="奖品列表" />
 
@@ -67,6 +67,7 @@
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体样式，默认为 '18px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认使用字体样式中的字体大小" />
+    - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
@@ -456,7 +457,7 @@
 
 > 如果你觉得写一堆重复的数据很烦的话，那你可以在这里进行统一的管理，其中包括`奖品`和`抽奖按钮`，在没有配置的情况下都会继承这里的属性
 
-- <Describe name="defaultStyle?: object" mean="格子默认样式" />
+- <Describe name="default-style?: object" mean="格子默认样式" />
   - <Describe name="gutter?: number" mean="格子之间的间距" desc="默认等于 5" />
   - <Describe name="borderRadius?: string | number" mean="格子圆角" desc="默认等于 20" />
   - <Describe name="fontColor?: string" mean="字体颜色" />
@@ -482,7 +483,7 @@
         { x: 0, y: 1, fonts: [{ text: '2元', top: '35%' }] }
       ]"
       :button="{ x: 1, y: 1, fonts: [{ text: '抽奖', top: '35%' }] }"
-      :defaultStyle="{
+      :default-style="{
         gutter: 20,
         borderRadius: 8,
         fontColor: '#DF424B',
@@ -513,7 +514,7 @@
     { x: 0, y: 1, fonts: [{ text: '2元', top: '35%' }] }
   ]"
   :button="{ x: 1, y: 1, fonts: [{ text: '抽奖', top: '35%' }] }"
-  :defaultStyle="{
+  :default-style="{
     gutter: 20,
     borderRadius: 8,
     fontColor: '#DF424B',

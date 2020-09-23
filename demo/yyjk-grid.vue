@@ -9,7 +9,7 @@
       { padding: '4px', background: '#ff4a4c', borderRadius: 23 },
       { padding: '4px', background: '#ff625b', borderRadius: 20 },
     ]"
-    :defaultStyle="{
+    :default-style="{
       gutter: 5,
       borderRadius: 15,
       fontColor: '#DF424B',

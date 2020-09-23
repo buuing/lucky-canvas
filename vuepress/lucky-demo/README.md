@@ -13,7 +13,7 @@
   <LuckyWheel
     style="width: 300px; height: 300px"
     ref="LuckyWheel"
-    :defaultStyle="{
+    :default-style="{
       fontColor: '#d64737',
       fontSize: '14px'
     }"
@@ -112,7 +112,7 @@ export default {
       { padding: '4px', background: '#ff4a4c', borderRadius: 23 },
       { padding: '4px', background: '#ff625b', borderRadius: 20 },
     ]"
-    :defaultStyle="{
+    :default-style="{
       gutter: 5,
       borderRadius: 15,
       fontColor: '#DF424B',
@@ -224,7 +224,7 @@ export default {
       ]
     }"
     :prizes="prizes"
-    :defaultStyle="{
+    :default-style="{
       background: '#ffefd6',
       borderRadius: '5px',
       fontColor: '#755c28',

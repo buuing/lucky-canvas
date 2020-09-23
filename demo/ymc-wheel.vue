@@ -2,7 +2,7 @@
   <LuckyWheel
     style="width: 310px; height: 310px"
     ref="LuckyWheel"
-    :defaultStyle="{
+    :default-style="{
       fontColor: '#d64737',
       fontSize: '14px'
     }"

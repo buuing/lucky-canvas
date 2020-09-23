@@ -15,7 +15,7 @@
       ]
     }"
     :prizes="prizes"
-    :defaultStyle="{
+    :default-style="{
       background: '#ffefd6',
       borderRadius: '5px',
       fontColor: '#755c28',
