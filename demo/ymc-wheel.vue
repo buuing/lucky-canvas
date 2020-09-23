@@ -1,6 +1,6 @@
 <template>
   <LuckyWheel
-    style="width: 300px; height: 300px"
+    style="width: 310px; height: 310px"
     ref="LuckyWheel"
     :defaultStyle="{
       fontColor: '#d64737',

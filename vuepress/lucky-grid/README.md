@@ -14,10 +14,9 @@
   - <Describe name="paddingLeft: string | number" mean="左边距" desc="优先级大于 padding" />
   - <Describe name="paddingRight: string | number" mean="右边距" desc="优先级大于 padding" />
 
+### 如何绘制边框
+
 <Exhibition>
-  <template v-slot:header>
-    blocks - 示例1：如何绘制边框
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -71,16 +70,16 @@
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
+    - <Describe name="activeSrc?: string" mean="图片路径" desc="当中奖标记处于当前格子时, 将替换显示图片" />
     - <Describe name="top?: string" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
     - <Describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
     - <Describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
+### 配置简单格子
+
 <Exhibition>
-  <template v-slot:header>
-    prizes - 示例1：配置简单格子
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -139,10 +138,9 @@
 />
 ```
 
+### 关于如何配置图片
+
 <Exhibition>
-  <template v-slot:header>
-    prizes - 示例2：关于如何配置图片
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -202,10 +200,103 @@
 />
 ```
 
+### 关于 activeSrc 的妙用
+
 <Exhibition>
-  <template v-slot:header>
-    prizes - 示例3：使用 col 和 row 合并格子
+  <template v-slot:code>
+    <LuckyGrid
+      style="width: 200px; height: 200px"
+      rows="2"
+      cols="2"
+      :demo="true"
+      :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
+      :prizes="[
+        {
+          x: 0, y: 0,
+          imgs: [{
+            width: '60%', top: '15%',
+            src: $withBase('/img/1.png'),
+            activeSrc: $withBase('/img/0.png')
+          }]
+        },
+        {
+          x: 1, y: 0,
+          imgs: [{
+            width: '60%', top: '15%',
+            src: $withBase('/img/1.png'),
+            activeSrc: $withBase('/img/0.png')
+          }]
+        },
+        {
+          x: 1, y: 1,
+          imgs: [{
+            width: '60%', top: '15%',
+            src: $withBase('/img/1.png'),
+            activeSrc: $withBase('/img/0.png')
+          }]
+        },
+        {
+          x: 0, y: 1,
+          imgs: [{
+            width: '60%', top: '15%',
+            src: $withBase('/img/1.png'),
+            activeSrc: $withBase('/img/0.png')
+          }]
+        },
+      ]"
+    />
   </template>
+  <template v-slot:text>
+    <li>中奖标记游走时，对于当前格子内如果存在<code>activeSrc</code>属性，就会临时替换该图片，当中奖标记离开后，图片就会还原</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyGrid
+  style="width: 200px; height: 200px"
+  rows="2"
+  cols="2"
+  :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
+  :prizes="[
+    {
+      x: 0, y: 0,
+      imgs: [{
+        width: '60%', top: '15%',
+        src: require('/img/1.png'),
+        activeSrc: require('/img/0.png')
+      }]
+    },
+    {
+      x: 1, y: 0,
+      imgs: [{
+        width: '60%', top: '15%',
+        src: require('/img/1.png'),
+        activeSrc: require('/img/0.png')
+      }]
+    },
+    {
+      x: 1, y: 1,
+      imgs: [{
+        width: '60%', top: '15%',
+        src: require('/img/1.png'),
+        activeSrc: require('/img/0.png')
+      }]
+    },
+    {
+      x: 0, y: 1,
+      imgs: [{
+        width: '60%', top: '15%',
+        src: require('/img/1.png'),
+        activeSrc: require('/img/0.png')
+      }]
+    },
+  ]"
+/>
+```
+
+### 使用 col 和 row 合并格子
+
+<Exhibition>
   <template v-slot:code>
     <!-- 左边3宫格 -->
     <LuckyGrid
@@ -290,10 +381,10 @@
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
+
+### 绘制抽奖按钮
+
 <Exhibition>
-  <template v-slot:header>
-    button - 示例1：绘制抽奖按钮
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -375,10 +466,9 @@
   - <Describe name="background?: string" mean="格子的背景颜色" desc="默认是 '#fff' 白色" />
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
 
+### 配置默认样式
+
 <Exhibition>
-  <template v-slot:header>
-    defaultStyle - 示例1：配置默认样式
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -449,10 +539,9 @@
   - <Describe name="background?: string" mean="格子的背景颜色" desc="默认是 '#ffce98' 橘黄色" />
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
 
+### 配置中奖标记样式
+
 <Exhibition>
-  <template v-slot:header>
-    activeStyle - 示例1：配置中奖标记样式
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
@@ -507,10 +596,9 @@
 - <Describe name="rows?: string | number" mean="设置布局有几行" desc="默认为 3" />
 - <Describe name="cols?: string | number" mean="设置布局有几列" desc="默认为 3" />
 
+### 如果我有十个奖品
+
 <Exhibition>
-  <template v-slot:header>
-    rows & cols - 示例1：如果我有十个奖品
-  </template>
   <template v-slot:code>
     <LuckyGrid
       style="width: 265px; height: 200px"
@@ -571,12 +659,11 @@
 - <Describe name="play()" mean="开始抽奖" desc="调用该方法时，游戏才会开始, 没有参数" />
 - <Describe name="stop(index)" mean="缓慢停止抽奖" desc="调用该方法时，才会缓慢停止, 参数是中奖的索引" />
 
+### 点击按钮开始抽奖
+
 <Exhibition>
-  <template v-slot:header>
-    点击按钮开始抽奖
-  </template>
   <template v-slot:code>
-    <demo-ldq-grid />
+    <demo-yyjk-grid />
   </template>
   <template v-slot:text>
     <p>正常的流程是：</p>

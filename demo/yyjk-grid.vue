@@ -1,6 +1,6 @@
 <template>
   <LuckyGrid
-    style="width: 300px; height: 300px"
+    style="width: 310px; height: 310px"
     ref="LuckDraw"
     :prizes="prizes"
     :button="btnConfig"

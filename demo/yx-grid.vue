@@ -1,17 +1,17 @@
 <template>
   <LuckyGrid
-    style="width: 350px; height: 370px"
+    style="width: 310px; height: 330px"
     ref="LuckDraw"
     :blocks="[
       { padding: '1px', background: '#e2cea3', borderRadius: '13px' },
       { padding: '5px 0px', background: '#f3ecdc', borderRadius: '13px' },
       { padding: '1px', background: '#e2cea3', borderRadius: '8px' },
-      { padding: '20px 15px', background: '#fffcf5', borderRadius: '8px' },
+      { padding: '15px 10px', background: '#fffcf5', borderRadius: '8px' },
     ]"
     :button="{
       x: 1, y: 1, background: 'rgba(0, 0, 0, 0)',
       imgs: [
-        { src: require('./img/yx/btn.png'), width: '90%', top: '7%' }
+        { src: require('./img/yx/btn.png'), width: '90%', top: '5%' }
       ]
     }"
     :prizes="prizes"
@@ -74,7 +74,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
