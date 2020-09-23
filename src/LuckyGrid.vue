@@ -362,12 +362,27 @@ export default {
         })
         // 绘制文字
         prize.fonts && prize.fonts.forEach(font => {
-          String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.beginPath()
-            let style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : (font.fontStyle || _defaultStyle.fontStyle)
-            let size = isActive && _activeStyle.fontSize ? getLength(_activeStyle.fontSize) : getLength(font.fontSize || _defaultStyle.fontSize)
-            ctx.font = size * dpr + 'px ' + style
-            ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
+          let style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : (font.fontStyle || _defaultStyle.fontStyle)
+          let size = isActive && _activeStyle.fontSize ? getLength(_activeStyle.fontSize) : getLength(font.fontSize || _defaultStyle.fontSize)
+          ctx.font = size * dpr + 'px ' + style
+          ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
+          let lines = [], text = String(font.text)
+          if (font.wordWrap === false) lines = text.split('\n')
+          else {
+            let str = ''
+            for (let i = 0; i < text.length; i++) {
+              str += text[i]
+              let currWidth = ctx.measureText(str).width
+              let maxWidth = this.getWidth('100%', prize.col)
+              if (currWidth > maxWidth - 10) {
+                lines.push(str.slice(0, -1))
+                str = text[i]
+              }
+            }
+            if (str) lines.push(str)
+            if (!lines.length) lines.push(text)
+          }
+          lines.forEach((line, lineIndex) => {
             ctx.fillText(
               line,
               x + this.getOffsetX(ctx.measureText(line).width, prize.col),
