@@ -52,6 +52,7 @@ export default {
         fontStyle: 'sans-serif, STHeiti, SimHei',
         background: '#fff',
         prizeGutter: '0px',
+        wordWrap: true,
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
@@ -281,8 +282,8 @@ export default {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
-          if (font.wordWrap === false) lines = text.split('\n')
-          else {
+
+          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
             let str = ''
             for (let i = 0; i < text.length; i++) {
               str += text[i]
@@ -295,6 +296,8 @@ export default {
             }
             if (str) lines.push(str)
             if (!lines.length) lines.push(text)
+          } else {
+            lines = text.split('\n')
           }
           lines.forEach((line, lineIndex) => {
             ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
