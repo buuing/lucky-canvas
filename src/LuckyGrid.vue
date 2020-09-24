@@ -233,6 +233,7 @@ export default {
         if (this.button) canvas.onmousedown = e => {
           const [x, y] = this.getGeometricProperty([this.button.x, this.button.y])
           if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
+          if (!this.canPlay) return false
           this.$emit('start', e)
         }
       }

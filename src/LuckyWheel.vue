@@ -154,6 +154,7 @@ export default {
           ctx.beginPath()
           ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2, false)
           if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false
+          if (!this.canPlay) return false
           this.$emit('start', e)
         })
       }
