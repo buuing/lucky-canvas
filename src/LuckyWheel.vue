@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { isExpectType, getAngle, getLength } from './utils.js'
+import { isExpectType, getAngle, getLength, removeEnter } from './utils.js'
 export default {
   props: {
     blocks: {
@@ -282,8 +282,8 @@ export default {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
-
           if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
               str += text[i]

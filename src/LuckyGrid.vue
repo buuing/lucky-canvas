@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { roundRect, isExpectType, computePadding, getLinearGradient, getLength } from './utils.js'
+import { roundRect, isExpectType, computePadding, getLinearGradient, getLength, removeEnter } from './utils.js'
 export default {
   props: {
     // 奖品 (该属性被watch监听)
@@ -370,6 +370,7 @@ export default {
           ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
           let lines = [], text = String(font.text)
           if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
               str += text[i]
