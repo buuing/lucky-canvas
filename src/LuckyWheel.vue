@@ -154,13 +154,14 @@ export default {
       const endCallBack = () => {
         // 开始绘制
         this.draw()
-        canvas.addEventListener('click', e => {
+        // 防止多次绑定点击事件
+        canvas.onmousedown = e => {
           ctx.beginPath()
           ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2, false)
           if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false
           if (!this.canPlay) return false
           this.$emit('start', e)
-        })
+        }
       }
       // 同步加载图片
       let num = 0, sum = 0
