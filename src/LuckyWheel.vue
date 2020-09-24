@@ -77,8 +77,10 @@ export default {
             const oldImg = oldPrize.imgs[imgIndex]
             // 如果旧值不存在
             if (!oldImg) prizeImgs[imgIndex] = newImg
-            // 如果缓存中没有图片
-            else if (!this.prizeImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg
+            // 如果缓存中没有奖品或图片
+            else if (!this.prizeImgs[prizeIndex] || !this.prizeImgs[prizeIndex][imgIndex]) {
+              prizeImgs[imgIndex] = newImg
+            }
             // 如果新值和旧值的src不相等
             else if (newImg.src !== oldImg.src) prizeImgs[imgIndex] = newImg
           })
@@ -104,8 +106,10 @@ export default {
             const oldImg = oldBtn.imgs[imgIndex]
             // 如果旧值不存在
             if (!oldImg) btnImgs[imgIndex] = newImg
-            // 如果缓存中没有图片
-            else if (!this.btnImgs[btnIndex][imgIndex]) btnImgs[imgIndex] = newImg
+            // 如果缓存中没有按钮或图片
+            else if (!this.btnImgs[btnIndex] || !this.btnImgs[btnIndex][imgIndex]) {
+              btnImgs[imgIndex] = newImg
+            }
             // 如果新值和旧值的src不相等
             else if (newImg.src !== oldImg.src) btnImgs[imgIndex] = newImg
           })

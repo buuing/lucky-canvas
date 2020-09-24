@@ -3356,35 +3356,6 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
-/***/ "8985":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("42ce");
-var defineProperty = __webpack_require__("18a1").f;
-
-var FunctionPrototype = Function.prototype;
-var FunctionPrototypeToString = FunctionPrototype.toString;
-var nameRE = /^\s*function ([^ (]*)/;
-var NAME = 'name';
-
-// Function instances `.name` property
-// https://tc39.github.io/ecma262/#sec-function-instances-name
-if (DESCRIPTORS && !(NAME in FunctionPrototype)) {
-  defineProperty(FunctionPrototype, NAME, {
-    configurable: true,
-    get: function () {
-      try {
-        return FunctionPrototypeToString.call(this).match(nameRE)[1];
-      } catch (error) {
-        return '';
-      }
-    }
-  });
-}
-
-
-/***/ }),
-
 /***/ "8cc4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5945,534 +5916,9 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6e036232-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=4a2c4c20&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{staticClass:"ldq-luck",attrs:{"id":"canvas"}})}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"69854b70-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=295f708b&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
 var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=4a2c4c20&
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.fill.js
-var es_array_fill = __webpack_require__("30c0");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.for-each.js
-var es_array_for_each = __webpack_require__("0ec0");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.map.js
-var es_array_map = __webpack_require__("c40d");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("8985");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__("832b");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.regexp.exec.js
-var es_regexp_exec = __webpack_require__("74f3");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.string.split.js
-var es_string_split = __webpack_require__("c3d3");
-
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __webpack_require__("7909");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js&
-
-
-
-
-
-
-
-
-//
-//
-//
-//
-/* harmony default export */ var LuckDrawvue_type_script_lang_js_ = ({
-  data: function data() {
-    return {
-      canvas: '',
-      ctx: '',
-      startRadian: 0,
-      // 初始角度
-      canBeClick: true,
-      // 控制抽奖进行中不让再抽奖
-      currIndex: this.value
-    };
-  },
-  props: {
-    async: {
-      type: Boolean,
-      default: false
-    },
-    // 开启异步抽奖
-    value: {
-      type: Number,
-      default: 0
-    },
-    // 中奖的索引
-    awards: {
-      type: Array,
-      default: []
-    },
-    // 奖品数组
-    rate: {
-      type: Number,
-      default: 80
-    },
-    // 转盘速率
-    radius: {
-      type: Number,
-      default: 180
-    },
-    // 转盘半径
-    textFontSize: {
-      type: String,
-      default: '13px'
-    },
-    // 文字大小
-    lineHeight: {
-      type: Number,
-      default: 20
-    },
-    // 文字行高
-    textColor: {
-      type: String,
-      default: '#d64737'
-    },
-    // 文字颜色
-    textMargin: {
-      type: Number,
-      default: 30
-    },
-    // 文字距离边框距离
-    textPadding: {
-      type: Number,
-      default: 0
-    },
-    // 文字补偿宽度
-    btnFontSize: {
-      type: String,
-      default: '26px'
-    },
-    // 按钮文字大小
-    btnColor: {
-      type: String,
-      default: '#d64737'
-    },
-    // 按钮文件颜色
-    btnBorderColor1: {
-      type: String,
-      default: '#d64737'
-    },
-    // 按钮外边框颜色
-    btnBorderColor2: {
-      type: String,
-      default: '#fff'
-    },
-    // 按钮内边框颜色
-    btnBorderColor3: {
-      type: String,
-      default: '#f6c66f'
-    },
-    // 按钮指针颜色
-    btnBgColor: {
-      type: String,
-      default: '#ffdea0'
-    },
-    // 按钮背景颜色
-    btnText: {
-      type: String,
-      default: '抽奖'
-    },
-    // 按钮内容
-    btnRadius: {
-      type: Number,
-      default: 60
-    },
-    // 按钮半径
-    borderColor: {
-      type: String,
-      default: '#d64737'
-    } // 边框颜色
-
-  },
-  watch: {
-    value: function value(val) {
-      this.currIndex = val;
-    }
-  },
-  mounted: function mounted() {
-    this.initCanvas();
-  },
-  methods: {
-    /**
-     * 初始化转盘
-     */
-    initCanvas: function initCanvas() {
-      this.canvas = document.querySelector('#canvas');
-      this.ctx = canvas.getContext('2d');
-      this.canvas.width = this.radius * 2;
-      this.canvas.height = this.radius * 2;
-      this.render();
-      this.startRotate();
-    },
-
-    /**
-     * 处理文字换行
-     */
-    getLineTextList: function getLineTextList(ctx, text, maxLineWidth) {
-      maxLineWidth += this.textPadding;
-      var wordList = text.split(''),
-          tempLine = '',
-          lineList = [];
-
-      for (var i = 0; i < wordList.length; i++) {
-        if (ctx.measureText(tempLine).width >= maxLineWidth) {
-          lineList.push(tempLine);
-          maxLineWidth -= ctx.measureText(text[0]).width;
-          tempLine = '';
-        }
-
-        tempLine += wordList[i];
-      }
-
-      lineList.push(tempLine);
-      return lineList;
-    },
-
-    /**
-     * 绘制转盘
-     */
-    drawPanel: function drawPanel() {
-      var ctx = this.ctx;
-      var startRadian = this.startRadian;
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.borderColor; // 根据我们设定的初始角度来绘制转盘
-
-      ctx.arc(this.radius, this.radius, this.radius, startRadian, Math.PI * 2 + startRadian, false);
-      ctx.fill();
-      ctx.restore();
-    },
-
-    /**
-     * 绘制奖品
-     */
-    drawPrizeBlock: function drawPrizeBlock() {
-      var _this = this;
-
-      var ctx = this.ctx;
-      var awards = this.awards; // 根据初始角度来绘制奖品块
-
-      var startRadian = this.startRadian;
-      var RadianGap = Math.PI * 2 / awards.length;
-      var endRadian = startRadian + RadianGap;
-
-      for (var i = 0; i < awards.length; i++) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = awards[i].color || (i % 2 == 0 ? '#f8d384' : '#f9e3bb');
-        ctx.moveTo(this.radius, this.radius);
-        ctx.arc(this.radius, this.radius, this.radius - 20, startRadian, endRadian, false);
-        ctx.fill();
-        ctx.restore();
-        ctx.save();
-        ctx.fillStyle = this.textColor;
-        ctx.font = "".concat(this.textFontSize, " Arial");
-        ctx.translate(this.radius + Math.cos(startRadian + RadianGap / 2) * (this.radius - this.textMargin), this.radius + Math.sin(startRadian + RadianGap / 2) * (this.radius - this.textMargin));
-        ctx.rotate(startRadian + RadianGap / 2 + Math.PI / 2);
-        this.getLineTextList(ctx, awards[i].name, 70).forEach(function (line, index) {
-          ctx.fillText(line, -ctx.measureText(line).width / 2, ++index * _this.lineHeight);
-        });
-        ctx.restore();
-        startRadian += RadianGap;
-        endRadian += RadianGap;
-      }
-    },
-    // 将canvas再window中的坐标点转化为canvas中的坐标点
-    windowToCanvas: function windowToCanvas(canvas, e) {
-      // getBoundingClientRect这个方法返回html元素的大小及其相对于视口的位置
-      var canvasPostion = canvas.getBoundingClientRect(),
-          x = e.clientX,
-          y = e.clientY;
-      return {
-        x: x - canvasPostion.left,
-        y: y - canvasPostion.top
-      };
-    },
-    play: function play(index, e) {
-      // 开始游戏的方法
-      var dom = document.querySelector('.ldq-luck');
-      var canvas = this.canvas;
-      var ctx = this.ctx;
-      if (index < 0 || index >= this.awards.length) console.error('该索引的奖品不存在!');
-      if (!this.canBeClick || index < 0 || index >= this.awards.length) return false;
-      this.currIndex = index;
-      this.canBeClick = false;
-      var loc = e ? this.windowToCanvas(canvas, e) : {
-        // 模拟点击坐标
-        x: dom.offsetWidth / 2,
-        y: dom.offsetHeight / 2
-      };
-      ctx.beginPath();
-      ctx.arc(this.radius, this.radius, 50, 0, Math.PI * 2, false);
-
-      if (ctx.isPointInPath(loc.x, loc.y)) {
-        this.$emit('start'); // 每次点击抽奖，都将初始化角度重置
-
-        this.startRadian = -Math.floor(Math.random() * 180); // distance是计算出的将指定奖品旋转到指针处需要旋转的角度距离，distanceToStop下面会又说明
-
-        var distance = this.distanceToStop();
-        this.rotatePanel(distance);
-      } else {
-        this.canBeClick = true;
-      }
-    },
-    // 初始化
-    startRotate: function startRotate() {
-      var _this2 = this;
-
-      var canvas = this.canvas;
-      var ctx = this.ctx;
-      var canvasStyle = canvas.getAttribute('style');
-      this.render();
-
-      if (this.async) {
-        canvas.addEventListener('mousedown', function (e) {
-          return _this2.$emit('before-start');
-        });
-      } else {
-        canvas.addEventListener('mousedown', function (e) {
-          return _this2.play(_this2.currIndex, e);
-        });
-      }
-
-      canvas.addEventListener('mousemove', function (e) {
-        var loc = _this2.windowToCanvas(canvas, e);
-
-        ctx.beginPath();
-        ctx.arc(_this2.radius, _this2.radius, 30, 0, Math.PI * 2, false);
-
-        if (ctx.isPointInPath(loc.x, loc.y)) {
-          canvas.setAttribute('style', "cursor: pointer;".concat(canvasStyle));
-        } else {
-          canvas.setAttribute('style', canvasStyle);
-        }
-      });
-    },
-    // 处理旋转的关键方法
-    rotatePanel: function rotatePanel(distance) {
-      // 这里用一个很简单的缓动函数来计算每次绘制需要改变的角度，这样可以达到一个转盘从块到慢的渐变的过程
-      var changeRadian = (distance - this.startRadian) / this.rate;
-      this.startRadian += changeRadian; // 当最后的目标距离与startRadian之间的差距低于0.05时，就默认奖品抽完了，可以继续抽下一个了。
-
-      if (distance - this.startRadian <= 0.05) {
-        this.$emit('input', this.currIndex);
-        this.$emit('end', this.currIndex);
-        return this.canBeClick = true;
-      }
-
-      this.render();
-      window.requestAnimationFrame(this.rotatePanel.bind(this, distance));
-    },
-    // 绘制按钮，以及按钮上start的文字
-    drawButton: function drawButton() {
-      var ctx = this.ctx;
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnBorderColor1;
-      ctx.arc(this.radius, this.radius, this.btnRadius, 0, Math.PI * 2, false);
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnBorderColor2;
-      ctx.arc(this.radius, this.radius, this.btnRadius - 5, 0, Math.PI * 2, false);
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnBorderColor3;
-      ctx.arc(this.radius, this.radius, this.btnRadius - 10, 0, Math.PI * 2, false);
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnBorderColor3;
-      ctx.moveTo(this.radius - this.btnRadius / 2, this.radius - this.btnRadius / 2 - 5);
-      ctx.lineTo(this.radius, this.radius - this.btnRadius - 25);
-      ctx.lineTo(this.radius + this.btnRadius / 2, this.radius - this.btnRadius / 2 - 5);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnBgColor;
-      ctx.arc(this.radius, this.radius, this.btnRadius - 20, 0, Math.PI * 2, false);
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.fillStyle = this.btnColor;
-      ctx.font = "".concat(this.btnFontSize, " Arial");
-      ctx.translate(this.radius, this.radius);
-      ctx.fillText(this.btnText, -ctx.measureText(this.btnText).width / 2, 8);
-      ctx.restore();
-    },
-    distanceToStop: function distanceToStop() {
-      var _this3 = this;
-
-      // middleDegrees为奖品块的中间角度（最终停留都是以中间角度进行计算的）距离初始的startRadian的距离，distance就是当前奖品跑到指针位置要转动的距离。
-      var middleDegrees = 0,
-          distance = 0; // 映射出每个奖品的middleDegrees
-
-      var awardsToDegreesList = this.awards.map(function (data, index) {
-        var awardRadian = Math.PI * 2 / _this3.awards.length;
-        return awardRadian * index + (awardRadian * (index + 1) - awardRadian * index) / 2;
-      }); // 此次抽奖应该中的奖品
-
-      var currentPrizeIndex = this.currIndex;
-      middleDegrees = awardsToDegreesList[currentPrizeIndex]; // 因为指针是垂直向上的，相当坐标系的Math.PI/2,所以这里要进行判断来移动角度
-
-      distance = Math.PI * 3 / 2 - middleDegrees;
-      distance = distance > 0 ? distance : Math.PI * 2 + distance; // 这里额外加上后面的值，是为了让转盘多转动几圈，看上去更像是在抽奖
-
-      return distance + Math.PI * 10;
-    },
-    render: function render() {
-      this.drawPanel();
-      this.drawPrizeBlock();
-      this.drawButton();
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_LuckDrawvue_type_script_lang_js_ = (LuckDrawvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue
-
-
-
-
-
-/* normalize component */
-
-var component = normalizeComponent(
-  src_LuckDrawvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6e036232-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=295f708b&
-var LuckyGridvue_type_template_id_295f708b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_295f708b_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=295f708b&
@@ -6483,11 +5929,20 @@ var es_array_concat = __webpack_require__("8cf0");
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.every.js
 var es_array_every = __webpack_require__("5d2d");
 
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.fill.js
+var es_array_fill = __webpack_require__("30c0");
+
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__("f02a");
 
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.for-each.js
+var es_array_for_each = __webpack_require__("0ec0");
+
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__("bebd");
+
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("c40d");
 
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.reduce.js
 var es_array_reduce = __webpack_require__("f2ad");
@@ -6495,11 +5950,23 @@ var es_array_reduce = __webpack_require__("f2ad");
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.slice.js
 var es_array_slice = __webpack_require__("7dc2");
 
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("832b");
+
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__("74f3");
+
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.string.includes.js
 var es_string_includes = __webpack_require__("a6bb");
 
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.string.replace.js
 var es_string_replace = __webpack_require__("8679");
+
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.string.split.js
+var es_string_split = __webpack_require__("c3d3");
+
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/web.dom-collections.for-each.js
+var web_dom_collections_for_each = __webpack_require__("7909");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
 function _arrayWithHoles(arr) {
@@ -6567,7 +6034,7 @@ var es_array_from = __webpack_require__("a630");
 var modules_es_array_slice = __webpack_require__("fb6a");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var modules_es_function_name = __webpack_require__("b0c0");
+var es_function_name = __webpack_require__("b0c0");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.to-string.js
 var es_regexp_to_string = __webpack_require__("25f0");
@@ -7514,6 +6981,106 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
 
 
@@ -7522,10 +7089,10 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 /* normalize component */
 
-var LuckyGrid_component = normalizeComponent(
+var component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_295f708b_render,
-  LuckyGridvue_type_template_id_295f708b_staticRenderFns,
+  render,
+  staticRenderFns,
   false,
   null,
   null,
@@ -7533,13 +7100,13 @@ var LuckyGrid_component = normalizeComponent(
   
 )
 
-/* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6e036232-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=2dc3e9ca&
-var LuckyWheelvue_type_template_id_2dc3e9ca_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_2dc3e9ca_staticRenderFns = []
+/* harmony default export */ var LuckyGrid = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"69854b70-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=0c6cf446&
+var LuckyWheelvue_type_template_id_0c6cf446_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_0c6cf446_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=2dc3e9ca&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=0c6cf446&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -7656,8 +7223,10 @@ var LuckyWheelvue_type_template_id_2dc3e9ca_staticRenderFns = []
             else if (newPrize.imgs) newPrize.imgs.forEach(function (newImg, imgIndex) {
                 var oldImg = oldPrize.imgs[imgIndex]; // 如果旧值不存在
 
-                if (!oldImg) prizeImgs[imgIndex] = newImg; // 如果缓存中没有图片
-                else if (!_this.prizeImgs[prizeIndex][imgIndex]) prizeImgs[imgIndex] = newImg; // 如果新值和旧值的src不相等
+                if (!oldImg) prizeImgs[imgIndex] = newImg; // 如果缓存中没有奖品或图片
+                else if (!_this.prizeImgs[prizeIndex] || !_this.prizeImgs[prizeIndex][imgIndex]) {
+                    prizeImgs[imgIndex] = newImg;
+                  } // 如果新值和旧值的src不相等
                   else if (newImg.src !== oldImg.src) prizeImgs[imgIndex] = newImg;
               });
             willUpdate[prizeIndex] = prizeImgs;
@@ -7683,8 +7252,10 @@ var LuckyWheelvue_type_template_id_2dc3e9ca_staticRenderFns = []
             else if (newBtn.imgs) newBtn.imgs.forEach(function (newImg, imgIndex) {
                 var oldImg = oldBtn.imgs[imgIndex]; // 如果旧值不存在
 
-                if (!oldImg) btnImgs[imgIndex] = newImg; // 如果缓存中没有图片
-                else if (!_this2.btnImgs[btnIndex][imgIndex]) btnImgs[imgIndex] = newImg; // 如果新值和旧值的src不相等
+                if (!oldImg) btnImgs[imgIndex] = newImg; // 如果缓存中没有按钮或图片
+                else if (!_this2.btnImgs[btnIndex] || !_this2.btnImgs[btnIndex][imgIndex]) {
+                    btnImgs[imgIndex] = newImg;
+                  } // 如果新值和旧值的src不相等
                   else if (newImg.src !== oldImg.src) btnImgs[imgIndex] = newImg;
               });
             willUpdate[btnIndex] = btnImgs;
@@ -8028,8 +7599,8 @@ var LuckyWheelvue_type_template_id_2dc3e9ca_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_2dc3e9ca_render,
-  LuckyWheelvue_type_template_id_2dc3e9ca_staticRenderFns,
+  LuckyWheelvue_type_template_id_0c6cf446_render,
+  LuckyWheelvue_type_template_id_0c6cf446_staticRenderFns,
   false,
   null,
   null,
@@ -8042,9 +7613,7 @@ var LuckyWheel_component = normalizeComponent(
 
 
 
-
 var src_install = function install(Vue, options) {
-  Vue.component('LuckDraw', LuckDraw);
   Vue.component('LuckyGrid', LuckyGrid);
   Vue.component('LuckyWheel', LuckyWheel);
 };
