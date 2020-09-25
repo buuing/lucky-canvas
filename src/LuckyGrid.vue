@@ -376,7 +376,7 @@ export default {
             for (let i = 0; i < text.length; i++) {
               str += text[i]
               let currWidth = ctx.measureText(str).width
-              let maxWidth = this.getWidth(_defaultStyle.lengthLimit, prize.col)
+              let maxWidth = this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, prize.col)
               if (currWidth > maxWidth) {
                 lines.push(str.slice(0, -1))
                 str = text[i]

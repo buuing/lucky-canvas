@@ -290,7 +290,7 @@ export default {
               str += text[i]
               let currWidth = ctx.measureText(str).width
               let maxWidth = (this.prizeRadius - getFontY(font, lines.length)) * Math.tan(this.prizeRadian / 2) * 2
-              if (currWidth > this.getWidth(_defaultStyle.lengthLimit, maxWidth)) {
+              if (currWidth > this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
               }
