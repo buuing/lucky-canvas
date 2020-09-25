@@ -15,6 +15,18 @@ export default {
         return prizes.every((item, index) => {
           if (!item.hasOwnProperty('x')) return console.error(`prizes[${index}]缺少 x 属性`)
           if (!item.hasOwnProperty('y')) return console.error(`prizes[${index}]缺少 y 属性`)
+          if (item.fonts) {
+            if (!item.fonts.every((font, fontIndex) => {
+              if (!font.hasOwnProperty('text')) return console.error(`prizes[${index}].fonts[${fontIndex}]缺少 text 属性`)
+              return true
+            })) return false
+          }
+          if (item.imgs) {
+            if (!item.imgs.every((img, imgIndex) => {
+              if (!img.hasOwnProperty('src')) return console.error(`prizes[${index}].imgs[${imgIndex}]缺少 src 属性`)
+              return true
+            })) return false
+          }
           return true
         })
       },
@@ -26,10 +38,22 @@ export default {
       validator: function (button) {
         if (!button.hasOwnProperty('x')) return console.error(`button对象缺少 x 属性`)
         if (!button.hasOwnProperty('y')) return console.error(`button对象缺少 y 属性`)
+        if (button.fonts) {
+          if (!button.fonts.every((font, fontIndex) => {
+            if (!font.hasOwnProperty('text')) return console.error(`button.fonts[${fontIndex}]缺少 text 属性`)
+            return true
+          })) return false
+        }
+        if (button.imgs) {
+          if (!button.imgs.every((img, imgIndex) => {
+            if (!img.hasOwnProperty('src')) return console.error(`button.imgs[${imgIndex}]缺少 src 属性`)
+            return true
+          })) return false
+        }
         return true
       }
     },
-    // 边框 (该属性会在computed里面进行修正)
+    // 边框 (该属性被watch监听)
     blocks: {
       type: Array,
       validator: function (blocks) {
@@ -128,6 +152,12 @@ export default {
       },
       deep: true,
     },
+    blocks: {
+      handler () {
+        this.init()
+      },
+      deep: true,
+    }
   },
   computed: {
     prizeIndex () {
