@@ -145,6 +145,7 @@ export default {
         background: '#fff',
         shadow: '',
         wordWrap: true,
+        lengthLimit: '90%',
       }
       // 传入的样式进行覆盖
       for (let key in this.defaultStyle) {
@@ -375,8 +376,8 @@ export default {
             for (let i = 0; i < text.length; i++) {
               str += text[i]
               let currWidth = ctx.measureText(str).width
-              let maxWidth = this.getWidth('100%', prize.col)
-              if (currWidth > maxWidth - 10) {
+              let maxWidth = this.getWidth(_defaultStyle.lengthLimit, prize.col)
+              if (currWidth > maxWidth) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
               }

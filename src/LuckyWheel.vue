@@ -53,6 +53,7 @@ export default {
         background: '#fff',
         prizeGutter: '0px',
         wordWrap: true,
+        lengthLimit: '90%',
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
@@ -289,7 +290,7 @@ export default {
               str += text[i]
               let currWidth = ctx.measureText(str).width
               let maxWidth = (this.prizeRadius - getFontY(font, lines.length)) * Math.tan(this.prizeRadian / 2) * 2
-              if (currWidth > maxWidth - 10) {
+              if (currWidth > this.getWidth(_defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
               }
