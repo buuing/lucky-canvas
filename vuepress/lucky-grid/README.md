@@ -14,7 +14,7 @@
   - <Describe name="paddingLeft: string | number" mean="左边距" desc="优先级大于 padding" />
   - <Describe name="paddingRight: string | number" mean="右边距" desc="优先级大于 padding" />
 
-### 如何绘制边框
+### 关于绘制边框
 
 <Exhibition>
   <template v-slot:code>
@@ -62,23 +62,24 @@
 
   - <Describe name="fonts?: Array<object>" mean="文字列表" />
     - <Describe name="text: string" mean="字体内容" desc="可以使用 \n 用来换行" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="书写格式为：20 | '20px' | '20%'，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="fontColor?: string" mean="字体颜色" />
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体样式，默认为 '18px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认使用字体样式中的字体大小" />
     - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
+    - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
     - <Describe name="activeSrc?: string" mean="图片路径" desc="当中奖标记处于当前格子时, 将替换显示图片" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
     - <Describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
-### 配置简单格子
+### 关于配置格子
 
 <Exhibition>
   <template v-slot:code>
@@ -138,7 +139,53 @@
 />
 ```
 
-### 关于如何配置图片
+### 关于文字自动换行
+
+<Exhibition>
+  <template v-slot:code>
+    <LuckyGrid
+      style="width: 200px; height: 200px"
+      rows="2"
+      cols="2"
+      :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
+      :prizes="[
+        {
+          x: 0, y: 0,
+          fonts: [{ text: '这个格子会自动换行' }]
+        },
+        {
+          x: 0, y: 1,
+          fonts: [{ text: '这个格子\n是\n手动换行', wordWrap: false }]
+        },
+      ]"
+    />
+  </template>
+  <template v-slot:text>
+    <li>默认情况下<code>wordWrap</code>等于 true ，格子中的文字开启自动换行，或者你也可以让它等于 false ，然后使用<code>\n</code>手动进行换行，该属性也会继承<code>defaultStyle</code>中的<code>wordWrap</code>，便于全局修改</li>
+    <li><code>lengthLimit</code>属性用来控制自动换行的最大宽度，默认为'90%'</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyGrid
+  style="width: 200px; height: 200px"
+  rows="2"
+  cols="2"
+  :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
+  :prizes="[
+    {
+      x: 0, y: 0,
+      fonts: [{ text: '这个格子会自动换行' }]
+    },
+    {
+      x: 0, y: 1,
+      fonts: [{ text: '这个格子\n是\n手动换行', wordWrap: false }]
+    },
+  ]"
+/>
+```
+
+### 关于配置图片
 
 <Exhibition>
   <template v-slot:code>
@@ -367,22 +414,24 @@
 
   - <Describe name="fonts?: Array<object>" mean="文字列表" />
     - <Describe name="text: string" mean="字体内容" desc="可以使用 \n 用来换行" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="书写格式为：20 | '20px' | '20%'，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="fontColor?: string" mean="字体颜色" />
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体样式，默认为 '18px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
+    - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
+    - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
     - <Describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
 
-### 绘制抽奖按钮
+### 关于配置按钮
 
 <Exhibition>
   <template v-slot:code>
@@ -439,8 +488,9 @@
   - <Describe name="background?: string" mean="格子的背景颜色" desc="默认是 '#fff' 白色" />
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
   - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
+  - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
 
-### 配置默认样式
+### 关于默认样式
 
 <Exhibition>
   <template v-slot:code>
@@ -513,7 +563,7 @@
   - <Describe name="background?: string" mean="格子的背景颜色" desc="默认是 '#ffce98' 橘黄色" />
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
 
-### 配置中奖标记样式
+### 关于中奖标记样式
 
 <Exhibition>
   <template v-slot:code>

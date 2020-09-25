@@ -11,7 +11,7 @@
 ```vue
 <template>
   <LuckyWheel
-    style="width: 300px; height: 300px"
+    style="width: 310px; height: 310px"
     ref="LuckyWheel"
     :default-style="{
       fontColor: '#d64737',
@@ -20,6 +20,7 @@
     :blocks="[
       { padding: '13px', background: '#d64737' }
     ]"
+    :prizes="prizes"
     :buttons="[
       { radius: '50px', background: '#d64737' },
       { radius: '45px', background: '#fff' },
@@ -29,59 +30,34 @@
         imgs: [{ src: require('./img/button.png'), width: '65%', top: '-13%' }]
       }
     ]"
-    :prizes="[
-      {
-        background: '#f8d384',
-        fonts: [{ text: '1元红包', top: '8%' }],
-        imgs:[{ src: require('./img/0.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f9e3bb',
-        fonts: [{ text: '100元红包', top: '8%' }],
-        imgs:[{ src: require('./img/1.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f8d384',
-        fonts: [{ text: '0.5元红包', top: '8%' }],
-        imgs:[{ src: require('./img/2.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f9e3bb',
-        fonts: [{ text: '2元红包', top: '8%' }],
-        imgs:[{ src: require('./img/3.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f8d384',
-        fonts: [{ text: '10元红包', top: '8%' }],
-        imgs:[{ src: require('./img/4.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f9e3bb',
-        fonts: [{ text: '50元红包', top: '8%' }],
-        imgs:[{ src: require('./img/5.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f8d384',
-        fonts: [{ text: '0.3元红包', top: '8%' }],
-        imgs:[{ src: require('./img/6.png'), width: '30%', top: '25%' }],
-      },
-      {
-        background: '#f9e3bb',
-        fonts: [{ text: '5元红包', top: '8%' }],
-        imgs:[{ src: require('./img/7.png'), width: '30%', top: '25%' }],
-      },
-    ]"
     @start="startCallBack"
     @end="endCallBack"
-  ></LuckyWheel>
+  />
 </template>
 
 <script>
 export default {
   data () {
-    return {}
+    return {
+      prizes: []
+    }
+  },
+  mounted () {
+    this.getPrizesList()
   },
   methods: {
+    getPrizesList () {
+      this.prizes = []
+      let data = ['1元红包', '100元红包', '0.5元红包', '2元红包', '10元红包', '50元红包', '0.3元红包', '5元红包']
+      data.forEach((item, index) => {
+        this.prizes.push({
+          title: item,
+          background: index % 2 ? '#f9e3bb' : '#f8d384',
+          fonts: [{ text: item, top: '8%' }],
+          imgs:[{ src: require(`./img/${index}.png`), width: '30%', top: '25%' }],
+        })
+      })
+    },
     startCallBack () {
       this.$refs.LuckyWheel.play()
       setTimeout(() => {
@@ -89,7 +65,7 @@ export default {
       }, 3000)
     },
     endCallBack (prize) {
-      alert(`恭喜你获得${prize.fonts[0].text}`)
+      alert(`恭喜你获得${prize.title}`)
     },
   }
 }

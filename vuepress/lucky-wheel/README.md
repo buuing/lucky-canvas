@@ -9,7 +9,7 @@
   - <Describe name="padding: string" mean="内边距" desc="边框必须是等宽的, 所以 padding 只能输入一个值" :isRequire="true" />
   - <Describe name="background: string" mean="背景颜色" desc="可填写16进制颜色哈希值或 rgba" :isRequire="true" />
 
-### 如何绘制边框
+### 关于绘制边框
 
 <Exhibition>
   <template v-slot:code>
@@ -51,22 +51,23 @@
 
   - <Describe name="fonts?: Array<object>" mean="文字列表" />
     - <Describe name="text: string" mean="字体内容" desc="可以使用 \n 用来换行" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="书写格式为：20 | '20px' | '20%'，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="fontColor?: string" mean="字体颜色" desc="可继承 defaultStyle 字体颜色，默认为 '#000'" />
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体大小，默认为 '22px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
     - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
     - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
+    - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="可以写 20px 也可以是 20%，默认为 0" />
     - <Describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
     - <Describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
-### 如何设置奖品
+### 关于设置奖品
 
 <Exhibition>
   <template v-slot:code>
@@ -103,7 +104,7 @@
 />
 ```
 
-### 关于文字换行
+### 关于奖品文字换行
 
 <Exhibition>
   <template v-slot:code>
@@ -114,7 +115,7 @@
       ]"
       :prizes="[
         {
-          fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10 }],
+          fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10, lengthLimit: '80%' }],
           background: '#f8d384'
         },
         {
@@ -131,9 +132,9 @@
     />
   </template>
   <template v-slot:text>
-    <li>注意：<code>v3.0.1</code>的文字换行算法有问题，会出现吞字现象，升级即可解决该问题</li>
     <li>由于奖品是一个扇形区域，顶部的圆弧宽度计算困难，建议搭配<code>top</code>属性向下挤一部分</li>
     <li><code>wordWrap</code>属性用来控制该段文字是否换行，默认为 true，但等于 false 时依然可以使用<code>\n</code>来换行</li>
+    <li><code>lengthLimit</code>属性用来控制自动换行的最大宽度，默认为'90%'</li>
   </template>
 </Exhibition>
 
@@ -145,7 +146,7 @@
   ]"
   :prizes="[
     {
-      fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10 }],
+      fonts: [{ text: '当文字超长之后就会自动进行换行', top: 10, lengthLimit: '80%' }],
       background: '#f8d384'
     },
     {
@@ -162,7 +163,7 @@
 />
 ```
 
-### 如何配置图片
+### 关于配置图片
 
 <Exhibition>
   <template v-slot:code>
@@ -210,7 +211,7 @@
 
   - <Describe name="fonts?: Array<object>" mean="文字列表" />
     - <Describe name="text: string" mean="字体内容" desc="可以使用 \n 用来换行" :isRequire="true" />
-    - <Describe name="top?: string" mean="距离顶部的高度" desc="书写格式为：20 | '20px' | '20%'，默认为 0" />
+    - <Describe name="top?: string | number" mean="距离顶部的高度" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="fontColor?: string" mean="字体颜色" desc="可继承 defaultStyle 字体颜色，默认为 '#000'" />
     - <Describe name="fontSize?: string" mean="字体大小(px)" desc="可继承 defaultStyle 字体大小，默认为 '22px'" />
     - <Describe name="fontStyle?: string" mean="字体样式" desc="可继承 defaultStyle 字体样式，默认为 'sans-serif'" />
@@ -218,13 +219,13 @@
 
   - <Describe name="imgs?: Array<object>" mean="图片列表" />
     - <Describe name="src: string" mean="图片路径" :isRequire="true" />
-    - <Describe name="top?: string" mean="离圆心的距离" desc="可以写 20px 也可以是 20%，默认为 0" />
+    - <Describe name="top?: string | number" mean="离圆心的距离" desc="格式为：20 | '20px' | '20%'，默认为 0" />
     - <Describe name="width?: string" mean="图片宽度" desc="关于图片宽高有四种可能" />
     - <Describe name="height?: string" mean="图片高度" desc="关于图片宽高有四种可能" />
 
 1.宽高都未设置：则使用图片原大小；2.有宽度无高度：则高度随着宽度等比缩放；3.有高度无宽度：则宽度随着高度等比缩放；4.既有宽度也有高度：则图片宽高均等于设置的值（会被拉伸）
 
-### 如何配置按钮
+### 关于配置按钮
 
 <Exhibition>
   <template v-slot:code>
@@ -271,6 +272,60 @@
 />
 ```
 
+### 关于按钮文字换行
+
+<Exhibition>
+  <template v-slot:code>
+    <LuckyWheel
+      style="width: 200px; height: 200px"
+      :blocks="[
+        { padding: '10px', background: '#d64737' },
+        { padding: '0px', background: '#fff' },
+      ]"
+      :buttons="[
+        { radius: '40px', background: '#d64737' },
+        { radius: '35px', background: '#f6c66f', pointer: true },
+        {
+          radius: '30px',
+          background: '#fff',
+          fonts: [
+            { text: '开始\n抽奖', top: '-20px' },
+            { text: '这是按钮文字', top: '20px' }
+          ]
+        }
+      ]"
+    />
+  </template>
+  <template v-slot:text>
+    <li>按钮文字不会自动换行，没有<code>wordWrap</code>和<code>lengthLimit</code>属性</li>
+    <li>如果文字超出了按钮区域，你可以使用<code>\n</code>进行手动换行</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyWheel
+  style="width: 200px; height: 200px"
+  :blocks="[
+    { padding: '10px', background: '#d64737' },
+    { padding: '0px', background: '#fff' },
+  ]"
+  :buttons="[
+    { radius: '40px', background: '#d64737' },
+    { radius: '35px', background: '#f6c66f', pointer: true },
+    {
+      radius: '30px',
+      background: '#fff',
+      fonts: [
+        { text: '开始\n抽奖', top: '-20px' },
+        { text: '这是按钮文字', top: '20px' }
+      ]
+    }
+  ]"
+/>
+```
+
+<br />
+
 ## 默认样式 - defaultStyle
 
 > 如果你觉得写一堆重复的数据很烦的话，那你可以在这里进行统一的管理，其中包括`奖品`和`抽奖按钮`，在没有配置的情况下都会继承这里的属性
@@ -283,6 +338,7 @@
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
   - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
+  - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
 
 ### 关于默认样式
 
