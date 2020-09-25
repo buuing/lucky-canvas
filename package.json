@@ -1,6 +1,6 @@
 {
   "name": "vue-luck-draw",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build:docs": "vuepress build vuepress --dest ./docs/",
     "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
-  "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖"],
+  "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖", "抽奖插件", "web抽奖", "移动端抽奖", "canvas抽奖"],
   "author": "ldq <17778888138@189.cn>",
   "license": "ISC",
   "devDependencies": {

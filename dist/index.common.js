@@ -102,6 +102,32 @@ module.exports = String(test) === '[object z]';
 
 /***/ }),
 
+/***/ "02cb":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("79c6");
+var IndexedObject = __webpack_require__("d8e1");
+var toIndexedObject = __webpack_require__("cd2c");
+var arrayMethodIsStrict = __webpack_require__("a457");
+
+var nativeJoin = [].join;
+
+var ES3_STRINGS = IndexedObject != Object;
+var STRICT_METHOD = arrayMethodIsStrict('join', ',');
+
+// `Array.prototype.join` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.join
+$({ target: 'Array', proto: true, forced: ES3_STRINGS || !STRICT_METHOD }, {
+  join: function join(separator) {
+    return nativeJoin.call(toIndexedObject(this), separator === undefined ? ',' : separator);
+  }
+});
+
+
+/***/ }),
+
 /***/ "0366":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1530,6 +1556,17 @@ module.exports = !fails(function () {
   return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
 });
 
+
+/***/ }),
+
+/***/ "432b":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ccee");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -3347,6 +3384,32 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
+/***/ "8995":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("79c6");
+var $filter = __webpack_require__("8799").filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__("cdfc");
+var arrayMethodUsesToLength = __webpack_require__("b480");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "8cc4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4825,6 +4888,13 @@ module.exports = function (key, value) {
 
 /***/ }),
 
+/***/ "ccee":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "cd2c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5907,12 +5977,163 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1342c843&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"box"},[_c('p',[_vm._v("请使用<luckyWheel /> 或 <luckyGrid />组件")]),_c('p',[_vm._v("新增图片引入机制")]),_c('p',[_vm._v("新增自动根据dpr优化清晰度")]),_c('p',[_vm._v("新增九宫格抽奖")]),_c('p',[_c('a',{attrs:{"href":"https://100px.net/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("官方文档")]),_vm._v(" | "),_c('a',{attrs:{"href":"https://github.com/buuing/vue-luck-draw/issues?luckDraw","target":"_blank"}},[_vm._v("bug 反馈")]),_vm._v(" | "),_c('a',{attrs:{"href":"https://github.com/buuing/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("github 地址")])])])}]
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1342c843&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var LuckDrawvue_type_script_lang_js_ = ({});
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_LuckDrawvue_type_script_lang_js_ = (LuckDrawvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=style&index=0&id=08c098ea&scoped=true&lang=css&
+var LuckDrawvue_type_style_index_0_id_08c098ea_scoped_true_lang_css_ = __webpack_require__("432b");
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue
+
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_LuckDrawvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "08c098ea",
+  null
+  
+)
+
+/* harmony default export */ var LuckDraw = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=53bd7496&
+var LuckyGridvue_type_template_id_53bd7496_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_53bd7496_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=53bd7496&
 
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("8cf0");
@@ -6173,6 +6394,12 @@ function _nonIterableSpread() {
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.filter.js
+var modules_es_array_filter = __webpack_require__("8995");
+
+// EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.join.js
+var es_array_join = __webpack_require__("02cb");
+
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.some.js
 var es_array_some = __webpack_require__("d47b");
 
@@ -6186,6 +6413,8 @@ var modules_es_regexp_to_string = __webpack_require__("551f");
 var es_string_trim = __webpack_require__("291b");
 
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/utils.js
+
+
 
 
 
@@ -6229,6 +6458,12 @@ var getLength = function getLength(length) {
 
 var getAngle = function getAngle(deg) {
   return Math.PI / 180 * deg;
+}; // 移除\n
+
+var removeEnter = function removeEnter(str) {
+  return [].filter.call(str, function (s) {
+    return s !== '\n';
+  }).join('');
 };
 /**
  * 通过padding计算
@@ -6523,7 +6758,9 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         fontStyle: 'sans-serif, STHeiti, SimHei',
         textAlign: 'center',
         background: '#fff',
-        shadow: ''
+        shadow: '',
+        wordWrap: true,
+        lengthLimit: '90%'
       }; // 传入的样式进行覆盖
 
       for (var key in this.defaultStyle) {
@@ -6814,16 +7051,18 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
           ctx.fillStyle = isActive && _activeStyle.fontColor ? _activeStyle.fontColor : font.fontColor || _defaultStyle.fontColor;
           var lines = [],
               text = String(font.text);
-          if (font.wordWrap === false) lines = text.split('\n');else {
+
+          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text);
             var str = '';
 
             for (var i = 0; i < text.length; i++) {
               str += text[i];
               var currWidth = ctx.measureText(str).width;
 
-              var maxWidth = _this5.getWidth('100%', prize.col);
+              var maxWidth = _this5.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, prize.col);
 
-              if (currWidth > maxWidth - 10) {
+              if (currWidth > maxWidth) {
                 lines.push(str.slice(0, -1));
                 str = text[i];
               }
@@ -6831,7 +7070,10 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
             if (str) lines.push(str);
             if (!lines.length) lines.push(text);
+          } else {
+            lines = text.split('\n');
           }
+
           lines.forEach(function (line, lineIndex) {
             ctx.fillText(line, x + _this5.getOffsetX(ctx.measureText(line).width, prize.col), y + _this5.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr);
           });
@@ -6973,106 +7215,6 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 });
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_LuckyGridvue_type_script_lang_js_ = (LuckyGridvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue
 
 
@@ -7081,10 +7223,10 @@ function normalizeComponent (
 
 /* normalize component */
 
-var component = normalizeComponent(
+var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
+  LuckyGridvue_type_template_id_53bd7496_render,
+  LuckyGridvue_type_template_id_53bd7496_staticRenderFns,
   false,
   null,
   null,
@@ -7092,15 +7234,16 @@ var component = normalizeComponent(
   
 )
 
-/* harmony default export */ var LuckyGrid = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=1209ae7d&
-var LuckyWheelvue_type_template_id_1209ae7d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
+/* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=bbde0b90&
+var LuckyWheelvue_type_template_id_bbde0b90_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=1209ae7d&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=bbde0b90&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
+
 
 
 
@@ -7186,7 +7329,9 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
         fontColor: '#000',
         fontStyle: 'sans-serif, STHeiti, SimHei',
         background: '#fff',
-        prizeGutter: '0px'
+        prizeGutter: '0px',
+        wordWrap: true,
+        lengthLimit: '90%'
       };
 
       for (var key in this.defaultStyle) {
@@ -7358,40 +7503,32 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
       var imgObj = new Image();
       if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []; // 创建缓存
 
-      this[imgName][cellIndex][imgIndex] = {
-        img: imgObj
-      };
+      this[imgName][cellIndex][imgIndex] = imgObj;
       imgObj.src = imgInfo.src;
 
       imgObj.onload = function () {
-        var currImg = _this4[imgName][cellIndex][imgIndex];
-        if (!currImg) return false;
-        var computedWidth = isPrize ? _this4.prizeRadian * _this4.prizeRadius : _this4.getHeight(cell.radius) * 2;
-        var computedHeight = isPrize ? _this4.prizeRadius - _this4.maxBtnRadius : _this4.getHeight(cell.radius) * 2; // 根据配置的样式计算图片的真实宽高
-
-        if (imgInfo.width && imgInfo.height) {
-          // 如果宽度和高度都填写了, 就如实计算
-          currImg.trueWidth = _this4.getWidth(imgInfo.width, computedWidth);
-          currImg.trueHeight = _this4.getHeight(imgInfo.height, computedHeight);
-        } else if (imgInfo.width && !imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          currImg.trueWidth = _this4.getWidth(imgInfo.width, computedWidth); // 那高度就随着宽度进行等比缩放
-
-          currImg.trueHeight = imgObj.height * (currImg.trueWidth / imgObj.width);
-        } else if (!imgInfo.width && imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          currImg.trueHeight = _this4.getHeight(imgInfo.height, computedHeight); // 那宽度就随着高度进行等比缩放
-
-          currImg.trueWidth = imgObj.width * (currImg.trueHeight / imgObj.height);
-        } else {
-          // 如果没有配置宽高, 则使用图片本身的宽高
-          currImg.trueWidth = imgObj.width;
-          currImg.trueHeight = imgObj.height;
-        } // 最后触发回调
-
-
-        callBack.call(_this4);
+        return callBack.call(_this4);
       };
+    },
+    computedWidthAndHeight: function computedWidthAndHeight(imgObj, imgInfo, computedWidth, computedHeight) {
+      // 根据配置的样式计算图片的真实宽高
+      if (!imgInfo.width && !imgInfo.height) {
+        // 如果没有配置宽高, 则使用图片本身的宽高
+        return [imgObj.width, imgObj.height];
+      } else if (imgInfo.width && !imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        var trueWidth = this.getWidth(imgInfo.width, computedWidth); // 那高度就随着宽度进行等比缩放
+
+        return [trueWidth, imgObj.height * (trueWidth / imgObj.width)];
+      } else if (!imgInfo.width && imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        var trueHeight = this.getHeight(imgInfo.height, computedHeight); // 那宽度就随着高度进行等比缩放
+
+        return [imgObj.width * (trueHeight / imgObj.height), trueHeight];
+      } // 如果宽度和高度都填写了, 就如实计算
+
+
+      return [this.getWidth(imgInfo.width, computedWidth), this.getHeight(imgInfo.height, computedHeight)];
     },
     draw: function draw() {
       var _this5 = this;
@@ -7444,7 +7581,14 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
         prize.imgs && prize.imgs.forEach(function (imgInfo, imgIndex) {
           if (!_this5.prizeImgs[prizeIndex]) return false;
           var prizeImg = _this5.prizeImgs[prizeIndex][imgIndex];
-          prizeImg && ctx.drawImage(prizeImg.img, _this5.getOffsetX(prizeImg.trueWidth), _this5.getHeight(imgInfo.top), prizeImg.trueWidth, prizeImg.trueHeight);
+          if (!prizeImg) return console.error('错误273: 没有奖品图片');
+
+          var _this5$computedWidthA = _this5.computedWidthAndHeight(prizeImg, imgInfo, _this5.prizeRadian * _this5.prizeRadius, _this5.prizeRadius - _this5.maxBtnRadius),
+              _this5$computedWidthA2 = _slicedToArray(_this5$computedWidthA, 2),
+              trueWidth = _this5$computedWidthA2[0],
+              trueHeight = _this5$computedWidthA2[1];
+
+          ctx.drawImage(prizeImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top), trueWidth, trueHeight);
         }); // 逐行绘制文字
 
         prize.fonts && prize.fonts.forEach(function (font) {
@@ -7452,7 +7596,9 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
           ctx.font = "".concat(getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
           var lines = [],
               text = String(font.text);
-          if (font.wordWrap === false) lines = text.split('\n');else {
+
+          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text);
             var str = '';
 
             for (var i = 0; i < text.length; i++) {
@@ -7460,7 +7606,7 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
               var currWidth = ctx.measureText(str).width;
               var maxWidth = (_this5.prizeRadius - getFontY(font, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2;
 
-              if (currWidth > maxWidth - 10) {
+              if (currWidth > _this5.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1));
                 str = text[i];
               }
@@ -7468,7 +7614,10 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
 
             if (str) lines.push(str);
             if (!lines.length) lines.push(text);
+          } else {
+            lines = text.split('\n');
           }
+
           lines.forEach(function (line, lineIndex) {
             ctx.fillText(line, getFontX(line), getFontY(font, lineIndex));
           });
@@ -7502,7 +7651,15 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
         btn.imgs && btn.imgs.forEach(function (imgInfo, imgIndex) {
           if (!_this5.btnImgs[btnIndex]) return false;
           var btnImg = _this5.btnImgs[btnIndex][imgIndex];
-          btnImg && ctx.drawImage(btnImg.img, _this5.getOffsetX(btnImg.trueWidth), _this5.getHeight(imgInfo.top), btnImg.trueWidth, btnImg.trueHeight);
+          if (!btnImg) return console.error('错误339: 没有按钮图片'); // 计算图片真实宽高
+
+          var _this5$computedWidthA3 = _this5.computedWidthAndHeight(btnImg, imgInfo, _this5.getHeight(btn.radius) * 2, _this5.getHeight(btn.radius) * 2),
+              _this5$computedWidthA4 = _slicedToArray(_this5$computedWidthA3, 2),
+              trueWidth = _this5$computedWidthA4[0],
+              trueHeight = _this5$computedWidthA4[1]; // 绘制图片
+
+
+          ctx.drawImage(btnImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top), trueWidth, trueHeight);
         }); // 绘制按钮文字
 
         btn.fonts && btn.fonts.forEach(function (font) {
@@ -7593,8 +7750,8 @@ var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_1209ae7d_render,
-  LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns,
+  LuckyWheelvue_type_template_id_bbde0b90_render,
+  LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns,
   false,
   null,
   null,
@@ -7607,7 +7764,9 @@ var LuckyWheel_component = normalizeComponent(
 
 
 
+
 var src_install = function install(Vue, options) {
+  Vue.component('LuckDraw', LuckDraw);
   Vue.component('LuckyGrid', LuckyGrid);
   Vue.component('LuckyWheel', LuckyWheel);
 };
