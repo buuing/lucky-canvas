@@ -6137,12 +6137,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=53bd7496&
-var LuckyGridvue_type_template_id_53bd7496_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_53bd7496_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0df951e5&
+var LuckyGridvue_type_template_id_0df951e5_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_0df951e5_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=53bd7496&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0df951e5&
 
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("8cf0");
@@ -6614,6 +6614,21 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
         return prizes.every(function (item, index) {
           if (!item.hasOwnProperty('x')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 x \u5C5E\u6027"));
           if (!item.hasOwnProperty('y')) return console.error("prizes[".concat(index, "]\u7F3A\u5C11 y \u5C5E\u6027"));
+
+          if (item.fonts) {
+            if (!item.fonts.every(function (font, fontIndex) {
+              if (!font.hasOwnProperty('text')) return console.error("prizes[".concat(index, "].fonts[").concat(fontIndex, "]\u7F3A\u5C11 text \u5C5E\u6027"));
+              return true;
+            })) return false;
+          }
+
+          if (item.imgs) {
+            if (!item.imgs.every(function (img, imgIndex) {
+              if (!img.hasOwnProperty('src')) return console.error("prizes[".concat(index, "].imgs[").concat(imgIndex, "]\u7F3A\u5C11 src \u5C5E\u6027"));
+              return true;
+            })) return false;
+          }
+
           return true;
         });
       },
@@ -6627,10 +6642,25 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
       validator: function validator(button) {
         if (!button.hasOwnProperty('x')) return console.error("button\u5BF9\u8C61\u7F3A\u5C11 x \u5C5E\u6027");
         if (!button.hasOwnProperty('y')) return console.error("button\u5BF9\u8C61\u7F3A\u5C11 y \u5C5E\u6027");
+
+        if (button.fonts) {
+          if (!button.fonts.every(function (font, fontIndex) {
+            if (!font.hasOwnProperty('text')) return console.error("button.fonts[".concat(fontIndex, "]\u7F3A\u5C11 text \u5C5E\u6027"));
+            return true;
+          })) return false;
+        }
+
+        if (button.imgs) {
+          if (!button.imgs.every(function (img, imgIndex) {
+            if (!img.hasOwnProperty('src')) return console.error("button.imgs[".concat(imgIndex, "]\u7F3A\u5C11 src \u5C5E\u6027"));
+            return true;
+          })) return false;
+        }
+
         return true;
       }
     },
-    // 边框 (该属性会在computed里面进行修正)
+    // 边框 (该属性被watch监听)
     blocks: {
       type: Array,
       validator: function validator(blocks) {
@@ -6749,6 +6779,12 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
             willUpdate[btnIndex] = btnImg;
           }
         return this.init(willUpdate);
+      },
+      deep: true
+    },
+    blocks: {
+      handler: function handler() {
+        this.init();
       },
       deep: true
     }
@@ -7234,8 +7270,8 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_53bd7496_render,
-  LuckyGridvue_type_template_id_53bd7496_staticRenderFns,
+  LuckyGridvue_type_template_id_0df951e5_render,
+  LuckyGridvue_type_template_id_0df951e5_staticRenderFns,
   false,
   null,
   null,
@@ -7244,14 +7280,16 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=bbde0b90&
-var LuckyWheelvue_type_template_id_bbde0b90_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=463012b0&
+var LuckyWheelvue_type_template_id_463012b0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_463012b0_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=bbde0b90&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=463012b0&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
+
+
 
 
 
@@ -7279,18 +7317,61 @@ var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
   props: {
     blocks: {
       type: Array,
+      validator: function validator(blocks) {
+        return blocks.every(function (item, index) {
+          if (!item.padding) return console.error("blocks[".concat(index, "]\u7F3A\u5C11 padding \u5C5E\u6027"));
+          if (!item.background) console.error("blocks[".concat(index, "]\u7F3A\u5C11 background \u5C5E\u6027"));
+          return true;
+        });
+      },
       default: function _default() {
         return [];
       }
     },
     prizes: {
       type: Array,
+      validator: function validator(prizes) {
+        return prizes.every(function (item, index) {
+          if (item.fonts) {
+            if (!item.fonts.every(function (font, fontIndex) {
+              if (!font.hasOwnProperty('text')) return console.error("prizes[".concat(index, "].fonts[").concat(fontIndex, "]\u7F3A\u5C11 text \u5C5E\u6027"));
+              return true;
+            })) return false;
+          }
+
+          if (item.imgs) {
+            if (!item.imgs.every(function (img, imgIndex) {
+              if (!img.hasOwnProperty('src')) return console.error("prizes[".concat(index, "].imgs[").concat(imgIndex, "]\u7F3A\u5C11 src \u5C5E\u6027"));
+              return true;
+            })) return false;
+          }
+
+          return true;
+        });
+      },
       default: function _default() {
         return [];
       }
     },
     buttons: {
       type: Array,
+      validator: function validator(button) {
+        if (button.fonts) {
+          if (!button.fonts.every(function (font, fontIndex) {
+            if (!font.hasOwnProperty('text')) return console.error("button.fonts[".concat(fontIndex, "]\u7F3A\u5C11 text \u5C5E\u6027"));
+            return true;
+          })) return false;
+        }
+
+        if (button.imgs) {
+          if (!button.imgs.every(function (img, imgIndex) {
+            if (!img.hasOwnProperty('src')) return console.error("button.imgs[".concat(imgIndex, "]\u7F3A\u5C11 src \u5C5E\u6027"));
+            return true;
+          })) return false;
+        }
+
+        return true;
+      },
       default: function _default() {
         return [];
       }
@@ -7407,6 +7488,12 @@ var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
             willUpdate[btnIndex] = btnImgs;
           });
         return this.init([].concat(_toConsumableArray(new Array(this.prizes.length).fill()), _toConsumableArray(willUpdate)));
+      },
+      deep: true
+    },
+    blocks: {
+      handler: function handler() {
+        this.init();
       },
       deep: true
     }
@@ -7627,7 +7714,9 @@ var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
             lines = text.split('\n');
           }
 
-          lines.forEach(function (line, lineIndex) {
+          lines.filter(function (line) {
+            return !!line;
+          }).forEach(function (line, lineIndex) {
             ctx.fillText(line, getFontX(line), getFontY(font, lineIndex));
           });
         }); // 修正旋转角度和原点坐标
@@ -7759,8 +7848,8 @@ var LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_bbde0b90_render,
-  LuckyWheelvue_type_template_id_bbde0b90_staticRenderFns,
+  LuckyWheelvue_type_template_id_463012b0_render,
+  LuckyWheelvue_type_template_id_463012b0_staticRenderFns,
   false,
   null,
   null,
