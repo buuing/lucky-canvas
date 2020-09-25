@@ -6,7 +6,6 @@
 export default {
   mounted () {
     const nodes = Array.from(document.querySelector('.sidebar-links').children)
-    console.log(document.querySelector('.sidebar-links').children)
     const dfs = (nodes, lev = 1) => {
       if (!nodes) return false
       for (let node of nodes) {

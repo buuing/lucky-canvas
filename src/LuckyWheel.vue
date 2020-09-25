@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { isExpectType, getAngle, getLength } from './utils.js'
+import { isExpectType, getAngle, getLength, removeEnter } from './utils.js'
 export default {
   props: {
     blocks: {
@@ -52,6 +52,7 @@ export default {
         fontStyle: 'sans-serif, STHeiti, SimHei',
         background: '#fff',
         prizeGutter: '0px',
+        wordWrap: true,
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
@@ -201,36 +202,31 @@ export default {
       let imgObj = new Image()
       if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
       // 创建缓存
-      this[imgName][cellIndex][imgIndex] = { img: imgObj }
+      this[imgName][cellIndex][imgIndex] = imgObj
       imgObj.src = imgInfo.src
-      imgObj.onload = () => {
-        const currImg = this[imgName][cellIndex][imgIndex]
-        if (!currImg) return false
-        const computedWidth = isPrize ? this.prizeRadian * this.prizeRadius : this.getHeight(cell.radius) * 2
-        const computedHeight = isPrize ? this.prizeRadius - this.maxBtnRadius : this.getHeight(cell.radius) * 2
-        // 根据配置的样式计算图片的真实宽高
-        if (imgInfo.width && imgInfo.height) {
-          // 如果宽度和高度都填写了, 就如实计算
-          currImg.trueWidth = this.getWidth(imgInfo.width, computedWidth)
-          currImg.trueHeight = this.getHeight(imgInfo.height, computedHeight)
-        } else if (imgInfo.width && !imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          currImg.trueWidth = this.getWidth(imgInfo.width, computedWidth)
-          // 那高度就随着宽度进行等比缩放
-          currImg.trueHeight = imgObj.height * (currImg.trueWidth / imgObj.width)
-        } else if (!imgInfo.width && imgInfo.height) {
-          // 如果只填写了宽度, 没填写高度
-          currImg.trueHeight = this.getHeight(imgInfo.height, computedHeight)
-          // 那宽度就随着高度进行等比缩放
-          currImg.trueWidth = imgObj.width * (currImg.trueHeight / imgObj.height)
-        } else {
-          // 如果没有配置宽高, 则使用图片本身的宽高
-          currImg.trueWidth = imgObj.width
-          currImg.trueHeight = imgObj.height
-        }
-        // 最后触发回调
-        callBack.call(this)
+      imgObj.onload = () => callBack.call(this)
+    },
+    computedWidthAndHeight (imgObj, imgInfo, computedWidth, computedHeight) {
+      // 根据配置的样式计算图片的真实宽高
+      if (!imgInfo.width && !imgInfo.height) {
+        // 如果没有配置宽高, 则使用图片本身的宽高
+        return [imgObj.width, imgObj.height]
+      } else if (imgInfo.width && !imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        let trueWidth = this.getWidth(imgInfo.width, computedWidth)
+        // 那高度就随着宽度进行等比缩放
+        return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
+      } else if (!imgInfo.width && imgInfo.height) {
+        // 如果只填写了宽度, 没填写高度
+        let trueHeight = this.getHeight(imgInfo.height, computedHeight)
+        // 那宽度就随着高度进行等比缩放
+        return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
       }
+      // 如果宽度和高度都填写了, 就如实计算
+      return [
+        this.getWidth(imgInfo.width, computedWidth),
+        this.getHeight(imgInfo.height, computedHeight)
+      ]
     },
     draw () {
       const { ctx, dpr, _defaultStyle } = this
@@ -275,21 +271,19 @@ export default {
         prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.prizeImgs[prizeIndex]) return false
           const prizeImg = this.prizeImgs[prizeIndex][imgIndex]
-          prizeImg && ctx.drawImage(
-            prizeImg.img,
-            this.getOffsetX(prizeImg.trueWidth),
-            this.getHeight(imgInfo.top),
-            prizeImg.trueWidth,
-            prizeImg.trueHeight
+          if (!prizeImg) return console.error('错误273: 没有奖品图片')
+          const [trueWidth, trueHeight] = this.computedWidthAndHeight(
+            prizeImg, imgInfo, this.prizeRadian * this.prizeRadius, this.prizeRadius - this.maxBtnRadius
           )
+          ctx.drawImage(prizeImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
         })
         // 逐行绘制文字
         prize.fonts && prize.fonts.forEach(font => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
-          if (font.wordWrap === false) lines = text.split('\n')
-          else {
+          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
               str += text[i]
@@ -302,6 +296,8 @@ export default {
             }
             if (str) lines.push(str)
             if (!lines.length) lines.push(text)
+          } else {
+            lines = text.split('\n')
           }
           lines.forEach((line, lineIndex) => {
             ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
@@ -334,13 +330,13 @@ export default {
         btn.imgs && btn.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.btnImgs[btnIndex]) return false
           const btnImg = this.btnImgs[btnIndex][imgIndex]
-          btnImg && ctx.drawImage(
-            btnImg.img,
-            this.getOffsetX(btnImg.trueWidth),
-            this.getHeight(imgInfo.top),
-            btnImg.trueWidth,
-            btnImg.trueHeight
+          if (!btnImg) return console.error('错误339: 没有按钮图片')
+          // 计算图片真实宽高
+          const [trueWidth, trueHeight] = this.computedWidthAndHeight(
+            btnImg, imgInfo, this.getHeight(btn.radius) * 2, this.getHeight(btn.radius) * 2
           )
+          // 绘制图片
+          ctx.drawImage(btnImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
         })
         // 绘制按钮文字
         btn.fonts && btn.fonts.forEach(font => {

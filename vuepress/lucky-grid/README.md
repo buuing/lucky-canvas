@@ -90,24 +90,23 @@
       :prizes="[
         {
           x: 0, y: 0,
-          fonts: [{ text: '0号\n格子', fontSize: '24px', top: 0 }],
+          fonts: [{ text: '0号格子', fontSize: '20px', top: 0 }],
         },
         {
           x: 1, y: 0,
-          fonts: [{ text: '1号\n格子', fontSize: '24px', top: '100%' }],
+          fonts: [{ text: '1号格子', fontSize: '20px', top: '100%' }],
         },
         {
           x: 0, y: 1,
           borderRadius: Infinity,
           background: 'pink',
-          fonts: [{ text: '2号\n格子', fontSize: '24px', top: '20%' }],
+          fonts: [{ text: '2号格子', fontSize: '20px', top: '20%' }],
         }
       ]"
     />
   </template>
   <template v-slot:text>
     <li>格子的文字默认居中</li>
-    <li>文字可以使用<code>\n</code>来换行，注意不要写成<code>/n</code>，否则不生效</li>
     <li>关于<code>x</code>和<code>y</code>：计算机的坐标系位于左上角</li>
     <li>关于<code>top</code>属性：你可以把格子想象成带有<code>绝对定位</code>, 由于1号格子的文字<code>top: '100%'</code>，所以文字会超出格子</li>
     <li>关于<code>background</code>属性：普通格子的背景色默认是<code>#fff</code>，但中奖标识会默认停在0号格子的位置，所以0号格子的背景色是橘黄色</li>
@@ -123,17 +122,17 @@
   :prizes="[
     {
       x: 0, y: 0,
-      fonts: [{ text: '0号\n格子', fontSize: '24px', top: 0 }],
+      fonts: [{ text: '0号格子', fontSize: '20px', top: 0 }],
     },
     {
       x: 1, y: 0,
-      fonts: [{ text: '1号\n格子', fontSize: '24px', top: '100%' }],
+      fonts: [{ text: '1号格子', fontSize: '20px', top: '100%' }],
     },
     {
       x: 0, y: 1,
       borderRadius: Infinity,
       background: 'pink',
-      fonts: [{ text: '2号\n格子', fontSize: '24px', top: '20%' }],
+      fonts: [{ text: '2号格子', fontSize: '20px', top: '20%' }],
     }
   ]"
 />
@@ -391,62 +390,35 @@
       style="width: 200px; height: 200px"
       :demo="true"
       :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
-      :prizes="[
-        {
-          x: 0, y: 0, col: 2,
-          fonts: [{ text: '一年的好运', top: '20px' }]
-        },
-        {
-          x: 2, y: 0, row: 2,
-          fonts: [{ text: '升\n职\n加\n薪', lineHeight: '18px', top: '25px' }]
-        },
-        {
-          x: 1, y: 2, col: 2,
-          fonts: [{ text: '今年无bug', top: '20px' }]
-        },
-        {
-          x: 0, y: 1, row: 2,
-          fonts: [{ text: '转\n角\n遇\n到\n爱', lineHeight: '18px', top: '12px' }]
-        }
-      ]"
       :button="{
         x: 1, y: 1, borderRadius: 10,
-        imgs: [{ src: $withBase('/img/button.png'), width: '75%', top: '20%' }]
+        imgs: [{
+          src: $withBase('/img/button.png'),
+          width: '75%',
+          top: '20%'
+        }]
       }"
     />
   </template>
   <template v-slot:text>
-    <li>别点了，没用的</li>
-    <li>点击抽奖按钮会触发<code>@start</code>回调函数，这样设计是为了方便你在里面请求接口，或执行一些其他抽奖前的逻辑</li>
-    <li>所以目前为止还不能进行抽奖，这里也仅仅只是为了展示按钮如何配置</li>
+    <li>抽奖按钮和奖品格子配置基本一致</li>
+    <li>但是抽奖按钮只能充当于一个<code>button</code>按钮的作用，帮助你触发<code>start</code>的回调，所以具体的抽奖逻得由你自己来实现</li>
+    <li>实际上，你甚至可以选择不配置抽奖按钮，然后在外部自己用<code>dom</code>做一个抽奖按钮，然后调用<code>play</code>方法开始游戏也是可以的</li>
   </template>
 </Exhibition>
 
 ```vue
 <LuckyGrid
   style="width: 200px; height: 200px"
+  :demo="true"
   :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
-  :prizes="[
-    {
-      x: 0, y: 0, col: 2,
-      fonts: [{ text: '一年的好运', top: '20px' }]
-    },
-    {
-      x: 2, y: 0, row: 2,
-      fonts: [{ text: '升\n职\n加\n薪', lineHeight: '18px', top: '25px' }]
-    },
-    {
-      x: 1, y: 2, col: 2,
-      fonts: [{ text: '今年无bug', top: '20px' }]
-    },
-    {
-      x: 0, y: 1, row: 2,
-      fonts: [{ text: '转\n角\n遇\n到\n爱', lineHeight: '18px', top: '12px' }]
-    }
-  ]"
   :button="{
     x: 1, y: 1, borderRadius: 10,
-    imgs: [{ src: require('/img/button.png'), width: '75%', top: '20%' }]
+    imgs: [{
+      src: $withBase('/img/button.png'),
+      width: '75%',
+      top: '20%'
+    }]
   }"
 />
 ```
@@ -466,6 +438,7 @@
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="格子的背景颜色" desc="默认是 '#fff' 白色" />
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
+  - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
 
 ### 配置默认样式
 

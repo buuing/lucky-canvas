@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { roundRect, isExpectType, computePadding, getLinearGradient, getLength } from './utils.js'
+import { roundRect, isExpectType, computePadding, getLinearGradient, getLength, removeEnter } from './utils.js'
 export default {
   props: {
     // 奖品 (该属性被watch监听)
@@ -143,7 +143,8 @@ export default {
         fontStyle: 'sans-serif, STHeiti, SimHei',
         textAlign: 'center',
         background: '#fff',
-        shadow: ''
+        shadow: '',
+        wordWrap: true,
       }
       // 传入的样式进行覆盖
       for (let key in this.defaultStyle) {
@@ -368,8 +369,8 @@ export default {
           ctx.font = size * dpr + 'px ' + style
           ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
           let lines = [], text = String(font.text)
-          if (font.wordWrap === false) lines = text.split('\n')
-          else {
+          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+            text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
               str += text[i]
@@ -382,6 +383,8 @@ export default {
             }
             if (str) lines.push(str)
             if (!lines.length) lines.push(text)
+          } else {
+            lines = text.split('\n')
           }
           lines.forEach((line, lineIndex) => {
             ctx.fillText(

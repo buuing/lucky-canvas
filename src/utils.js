@@ -22,6 +22,11 @@ export const getAngle = deg => {
   return Math.PI / 180 * deg
 }
 
+// 移除\n
+export const removeEnter = str => {
+  return [].filter.call(str, s => s !== '\n').join('')
+}
+
 /**
  * 通过padding计算
  * @return { object }

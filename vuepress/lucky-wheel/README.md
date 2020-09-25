@@ -121,7 +121,7 @@
           background: '#f9e3bb'
         },
         {
-          fonts: [{ text: '这一段文字不会自动换行', top: 20, wordWrap: false }],
+          fonts: [{ text: '这段字不会自动换行', top: 20, wordWrap: false }],
           background: '#f8d384'
         },
         {
@@ -152,7 +152,7 @@
       background: '#f9e3bb'
     },
     {
-      fonts: [{ text: '这一段文字不会自动换行', top: 20, wordWrap: false }],
+      fonts: [{ text: '这段字不会自动换行', top: 20, wordWrap: false }],
       background: '#f8d384'
     },
     {
@@ -282,6 +282,7 @@
   - <Describe name="lineHeight?: string" mean="字体行高" desc="默认等于字体大小" />
   - <Describe name="textAlign?: string" mean="文字和图片的对其方式" desc="目前只能居中!" />
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
+  - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
 
 ### 关于默认样式
 
