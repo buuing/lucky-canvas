@@ -414,10 +414,11 @@ export default {
     },
     // 实际开始执行方法
     run () {
-      if (this.prizeFlag == this.prizeIndex) {
+      // 先完全旋转, 再停止
+      if (this.speed >= 0.4 && this.prizeFlag == this.prizeIndex) {
         return this.slowDown()
       }
-      if (this.speed < 0.4 && this.prizeFlag === undefined) this.speed += 0.002
+      if (this.speed < 0.4) this.speed += 0.002
       this.currIndex += this.speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)

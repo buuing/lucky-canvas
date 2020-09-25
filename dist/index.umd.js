@@ -5916,12 +5916,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=295f708b&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1342c843&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=295f708b&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1342c843&
 
 // EXTERNAL MODULE: ./src/components/vue-luck-draw/node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("8cf0");
@@ -6872,11 +6872,12 @@ var utils_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgr
     },
     // 实际开始执行方法
     run: function run() {
-      if (this.prizeFlag == this.prizeIndex) {
+      // 先完全旋转, 再停止
+      if (this.speed >= 0.4 && this.prizeFlag == this.prizeIndex) {
         return this.slowDown();
       }
 
-      if (this.speed < 0.4 && this.prizeFlag === undefined) this.speed += 0.002;
+      if (this.speed < 0.4) this.speed += 0.002;
       this.currIndex += this.speed;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.run);
@@ -7101,12 +7102,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=478c8170&
-var LuckyWheelvue_type_template_id_478c8170_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_478c8170_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b69e92ba-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=1209ae7d&
+var LuckyWheelvue_type_template_id_1209ae7d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=478c8170&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=1209ae7d&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -7531,7 +7532,8 @@ var LuckyWheelvue_type_template_id_478c8170_staticRenderFns = []
       this.run();
     },
     run: function run() {
-      if (this.prizeFlag !== undefined) {
+      // 让转盘先完全转起来再停止
+      if (this.speed >= 20 && this.prizeFlag !== undefined) {
         if (this.rotateDeg % 360 > this.prizeFlag * this.prizeDeg && this.rotateDeg % 360 < this.prizeFlag * this.prizeDeg + this.prizeDeg) return this.slowDown();
       }
 
@@ -7600,8 +7602,8 @@ var LuckyWheelvue_type_template_id_478c8170_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_478c8170_render,
-  LuckyWheelvue_type_template_id_478c8170_staticRenderFns,
+  LuckyWheelvue_type_template_id_1209ae7d_render,
+  LuckyWheelvue_type_template_id_1209ae7d_staticRenderFns,
   false,
   null,
   null,

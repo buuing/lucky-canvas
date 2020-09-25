@@ -361,7 +361,8 @@ export default {
       this.run()
     },
     run () {
-      if (this.prizeFlag !== undefined) {
+      // 让转盘先完全转起来再停止
+      if (this.speed >= 20 && this.prizeFlag !== undefined) {
         if (
           this.rotateDeg % 360 > this.prizeFlag * this.prizeDeg
           && this.rotateDeg % 360 < this.prizeFlag * this.prizeDeg + this.prizeDeg
