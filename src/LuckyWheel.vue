@@ -97,7 +97,6 @@ export default {
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
-      if (!style.lineHeight) style.lineHeight = style.fontSize
       return style
     },
   },
@@ -296,8 +295,11 @@ export default {
       }
       // 计算文字纵坐标
       const getFontY = (font, lineIndex) => {
-        return this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+        // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
+        const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
+        return this.getHeight(font.top) + (lineIndex + 1) * getLength(lineHeight) * dpr
       }
+      ctx.save()
       // 绘制prizes奖品区域
       this.prizes.forEach((prize, prizeIndex) => {
         // 计算当前奖品区域中间坐标点
@@ -353,6 +355,7 @@ export default {
         ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(90))
         ctx.translate(-x, -y)
       })
+      ctx.restore()
       // 绘制按钮
       this.buttons.forEach((btn, btnIndex) => {
         let radius = this.getHeight(btn.radius)
@@ -389,7 +392,7 @@ export default {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.fillText( line, getFontX(line), getFontY(font, lineIndex))
+            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
           })
         })
       })
