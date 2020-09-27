@@ -1,7 +1,7 @@
 
 ## 官方文档 & Demo演示
 
-> https://100px.net/vue-luck-draw
+> [https://100px.net/vue-luck-draw](https://100px.net/vue-luck-draw?github)
 
 <br />
 

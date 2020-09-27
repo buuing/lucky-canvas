@@ -5,7 +5,15 @@
 </template>
 
 <script>
-import { roundRect, isExpectType, computePadding, getLinearGradient, getLength, removeEnter } from './utils.js'
+import {
+  drawRoundRect,
+  isExpectType,
+  computePadding,
+  getLinearGradient,
+  getLength,
+  removeEnter,
+} from '@/utils.js'
+
 export default {
   props: {
     // 奖品 (该属性被watch监听)
@@ -347,7 +355,7 @@ export default {
       ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
       // 绘制所有边框
       this.blockData.forEach(([x, y, w, h, r, background]) => {
-        roundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, background))
+        drawRoundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, background))
       })
       // 绘制所有格子
       this.cells.forEach((prize, cellIndex) => {
@@ -368,7 +376,7 @@ export default {
           shadow[0] > 0 ? (width -= shadow[0]) : (width += shadow[0], x -= shadow[0])
           shadow[1] > 0 ? (height -= shadow[1]) : (height += shadow[1], y -= shadow[1])
         }
-        roundRect(
+        drawRoundRect(
           ctx, x, y, width, height,
           prize.borderRadius ? getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius,
           this.handleBackground(x, y, width, height, prize.background, isActive)

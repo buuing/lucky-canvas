@@ -5,7 +5,13 @@
 </template>
 
 <script>
-import { isExpectType, getAngle, getLength, removeEnter } from './utils.js'
+import {
+  isExpectType,
+  getAngle,
+  getLength,
+  removeEnter,
+} from '@/utils.js'
+
 export default {
   props: {
     blocks: {
