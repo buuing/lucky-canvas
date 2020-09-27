@@ -176,6 +176,7 @@ export default {
         shadow: '',
         wordWrap: true,
         lengthLimit: '90%',
+        speed: 20,
       }
       // 传入的样式进行覆盖
       for (let key in this.defaultStyle) {
@@ -448,12 +449,14 @@ export default {
     },
     // 实际开始执行方法
     run () {
+      const { speed, _defaultStyle } = this
+      const maxSpeed = _defaultStyle.speed / 40
       // 先完全旋转, 再停止
-      if (this.speed >= 0.4 && this.prizeFlag == this.prizeIndex) {
+      if (speed >= maxSpeed && this.prizeFlag == this.prizeIndex) {
         return this.slowDown()
       }
-      if (this.speed < 0.4) this.speed += 0.002
-      this.currIndex += this.speed
+      if (speed < maxSpeed) this.speed += 0.002
+      this.currIndex += speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },

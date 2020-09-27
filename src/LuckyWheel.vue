@@ -93,10 +93,12 @@ export default {
         prizeGutter: '0px',
         wordWrap: true,
         lengthLimit: '90%',
+        speed: 20,
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
+      style.speed = style.speed >> 0
       return style
     },
   },
@@ -406,20 +408,20 @@ export default {
       this.run()
     },
     run () {
+      let { speed, prizeFlag, prizeDeg, rotateDeg, _defaultStyle } = this
       // 让转盘先完全转起来再停止
-      if (this.speed >= 20 && this.prizeFlag !== undefined) {
+      if (speed >= _defaultStyle.speed && prizeFlag !== undefined) {
         if (
-          this.rotateDeg % 360 > this.prizeFlag * this.prizeDeg
-          && this.rotateDeg % 360 < this.prizeFlag * this.prizeDeg + this.prizeDeg
+          rotateDeg % 360 > prizeFlag * prizeDeg && rotateDeg % 360 < prizeFlag * prizeDeg + prizeDeg
         ) return this.slowDown()
       }
-      if (this.speed < 20) this.speed += 0.1
-      this.rotateDeg += this.speed
+      if (speed < _defaultStyle.speed) this.speed += 0.1
+      this.rotateDeg += speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
     stop (index) {
-      this.prizeFlag = index
+      this.prizeFlag = index % this.prizes.length
     },
     slowDown () {
       if (this.speed < 1) {
