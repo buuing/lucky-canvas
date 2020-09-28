@@ -176,6 +176,7 @@ export default {
         shadow: '',
         wordWrap: true,
         lengthLimit: '90%',
+        speed: 20,
       }
       // 传入的样式进行覆盖
       for (let key in this.defaultStyle) {
@@ -184,7 +185,7 @@ export default {
       // 根据dpr计算实际显示效果
       style.borderRadius = getLength(style.borderRadius) * this.dpr
       style.gutter *= this.dpr
-      if (!style.lineHeight) style.lineHeight = style.fontSize
+      style.speed = style.speed >> 0
       return style
     },
     _activeStyle () {
@@ -395,11 +396,22 @@ export default {
         })
         // 绘制文字
         prize.fonts && prize.fonts.forEach(font => {
-          let style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : (font.fontStyle || _defaultStyle.fontStyle)
-          let size = isActive && _activeStyle.fontSize ? getLength(_activeStyle.fontSize) : getLength(font.fontSize || _defaultStyle.fontSize)
+          // 字体样式
+          let style = isActive && _activeStyle.fontStyle
+            ? _activeStyle.fontStyle
+            : (font.fontStyle || _defaultStyle.fontStyle)
+          // 字体大小
+          let size = isActive && _activeStyle.fontSize
+            ? getLength(_activeStyle.fontSize)
+            : getLength(font.fontSize || _defaultStyle.fontSize)
+          // 字体行高
+          const lineHeight = isActive && _activeStyle.lineHeight
+            ? _activeStyle.lineHeight
+            : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
           ctx.font = size * dpr + 'px ' + style
           ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
           let lines = [], text = String(font.text)
+          // 计算文字换行
           if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
             text = removeEnter(text)
             let str = ''
@@ -421,7 +433,7 @@ export default {
             ctx.fillText(
               line,
               x + this.getOffsetX(ctx.measureText(line).width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(lineHeight) * dpr
             )
           })
         })
@@ -448,12 +460,14 @@ export default {
     },
     // 实际开始执行方法
     run () {
+      const { speed, _defaultStyle } = this
+      const maxSpeed = _defaultStyle.speed / 40
       // 先完全旋转, 再停止
-      if (this.speed >= 0.4 && this.prizeFlag == this.prizeIndex) {
+      if (speed >= maxSpeed && this.prizeFlag == this.prizeIndex) {
         return this.slowDown()
       }
-      if (this.speed < 0.4) this.speed += 0.002
-      this.currIndex += this.speed
+      if (speed < maxSpeed) this.speed += 0.002
+      this.currIndex += speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
