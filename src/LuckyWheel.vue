@@ -10,6 +10,7 @@ import {
   getAngle,
   getLength,
   removeEnter,
+  drawRadian,
   paramsValidator,
 } from '@/utils.js'
 
@@ -261,7 +262,7 @@ export default {
     draw () {
       const { ctx, dpr, _defaultStyle } = this
       // 清空画布
-      ctx.clearRect(-this.Radius * 2, -this.Radius * 2, this.Radius * 2, this.Radius * 2)
+      ctx.clearRect(-this.Radius, -this.Radius, this.Radius, this.Radius)
       // 绘制blocks边框
       this.prizeRadius = this.blocks.reduce((radius, block) => {
         ctx.beginPath()
@@ -293,7 +294,14 @@ export default {
         ctx.beginPath()
         ctx.fillStyle = prize.background || _defaultStyle.background
         ctx.moveTo(0, 0)
-        ctx.arc(0, 0, this.prizeRadius, currMiddleDeg - this.prizeRadian / 2, currMiddleDeg + this.prizeRadian / 2, false)
+        // ctx.arc(0, 0, this.prizeRadius, currMiddleDeg - this.prizeRadian / 2, currMiddleDeg + this.prizeRadian / 2, false)
+        const { x1, y1, x0, y0, x2, y2 } = drawRadian(
+          ctx, this.prizeRadius - 1,
+          currMiddleDeg - this.prizeRadian / 2,
+          currMiddleDeg + this.prizeRadian / 2,
+          false
+        )
+        ctx.closePath()
         ctx.fill()
         // 计算临时坐标并旋转文字
         let x = Math.cos(currMiddleDeg) * this.prizeRadius
