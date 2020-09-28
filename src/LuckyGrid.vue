@@ -12,6 +12,7 @@ import {
   getLinearGradient,
   getLength,
   removeEnter,
+  paramsValidator,
 } from '@/utils.js'
 
 export default {
@@ -19,23 +20,9 @@ export default {
     // 奖品 (该属性被watch监听)
     prizes: {
       type: Array,
-      validator: function (prizes) {
-        return prizes.every((item, index) => {
-          if (!item.hasOwnProperty('x')) return console.error(`prizes[${index}]缺少 x 属性`)
-          if (!item.hasOwnProperty('y')) return console.error(`prizes[${index}]缺少 y 属性`)
-          if (item.fonts) {
-            if (!item.fonts.every((font, fontIndex) => {
-              if (!font.hasOwnProperty('text')) return console.error(`prizes[${index}].fonts[${fontIndex}]缺少 text 属性`)
-              return true
-            })) return false
-          }
-          if (item.imgs) {
-            if (!item.imgs.every((img, imgIndex) => {
-              if (!img.hasOwnProperty('src')) return console.error(`prizes[${index}].imgs[${imgIndex}]缺少 src 属性`)
-              return true
-            })) return false
-          }
-          return true
+      validator (data) {
+        return paramsValidator({ prizes: data }, {
+          prizes: { x: 1, y: 1, imgs: { src: 1 }, fonts: { text: 1 } }
         })
       },
       default: () => []
@@ -43,32 +30,18 @@ export default {
     // 按钮 (该属性被watch监听)
     button: {
       type: Object,
-      validator: function (button) {
-        if (!button.hasOwnProperty('x')) return console.error(`button对象缺少 x 属性`)
-        if (!button.hasOwnProperty('y')) return console.error(`button对象缺少 y 属性`)
-        if (button.fonts) {
-          if (!button.fonts.every((font, fontIndex) => {
-            if (!font.hasOwnProperty('text')) return console.error(`button.fonts[${fontIndex}]缺少 text 属性`)
-            return true
-          })) return false
-        }
-        if (button.imgs) {
-          if (!button.imgs.every((img, imgIndex) => {
-            if (!img.hasOwnProperty('src')) return console.error(`button.imgs[${imgIndex}]缺少 src 属性`)
-            return true
-          })) return false
-        }
-        return true
-      }
+      validator (data) {
+        return paramsValidator({ button: [data] }, {
+          button: { x: 1, y: 1, imgs: { src: 1 }, fonts: { text: 1 } }
+        })
+      },
     },
     // 边框 (该属性被watch监听)
     blocks: {
       type: Array,
-      validator: function (blocks) {
-        return blocks.every((item, index) => {
-          if (!item.padding) return console.error(`blocks[${index}]缺少 padding 属性`)
-          if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
-          return true
+      validator (data) {
+        return paramsValidator({ blocks: data }, {
+          blocks: { padding: 1, background: 1 }
         })
       },
       default: () => []

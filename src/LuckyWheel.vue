@@ -10,58 +10,35 @@ import {
   getAngle,
   getLength,
   removeEnter,
+  paramsValidator,
 } from '@/utils.js'
 
 export default {
   props: {
     blocks: {
       type: Array,
-      validator: function (blocks) {
-        return blocks.every((item, index) => {
-          if (!item.padding) return console.error(`blocks[${index}]缺少 padding 属性`)
-          if (!item.background) console.error(`blocks[${index}]缺少 background 属性`)
-          return true
+      validator (data) {
+        return paramsValidator({ blocks: data }, {
+          blocks: { padding: 1, background: 1 }
         })
       },
       default: () => []
     },
     prizes: {
       type: Array,
-      validator: function (prizes) {
-        return prizes.every((item, index) => {
-          if (item.fonts) {
-            if (!item.fonts.every((font, fontIndex) => {
-              if (!font.hasOwnProperty('text')) return console.error(`prizes[${index}].fonts[${fontIndex}]缺少 text 属性`)
-              return true
-            })) return false
-          }
-          if (item.imgs) {
-            if (!item.imgs.every((img, imgIndex) => {
-              if (!img.hasOwnProperty('src')) return console.error(`prizes[${index}].imgs[${imgIndex}]缺少 src 属性`)
-              return true
-            })) return false
-          }
-          return true
+      validator (data) {
+        return paramsValidator({ prizes: data }, {
+          prizes: { fonts: { text: 1 }, imgs: { src: 1 } }
         })
       },
       default: () => []
     },
     buttons: {
       type: Array,
-      validator: function (button) {
-        if (button.fonts) {
-          if (!button.fonts.every((font, fontIndex) => {
-            if (!font.hasOwnProperty('text')) return console.error(`button.fonts[${fontIndex}]缺少 text 属性`)
-            return true
-          })) return false
-        }
-        if (button.imgs) {
-          if (!button.imgs.every((img, imgIndex) => {
-            if (!img.hasOwnProperty('src')) return console.error(`button.imgs[${imgIndex}]缺少 src 属性`)
-            return true
-          })) return false
-        }
-        return true
+      validator (data) {
+        return paramsValidator({ buttons: data }, {
+          buttons: { fonts: { text: 1 }, imgs: { src: 1 } }
+        })
       },
       default: () => []
     },
