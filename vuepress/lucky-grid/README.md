@@ -437,7 +437,6 @@
   <template v-slot:code>
     <LuckyGrid
       style="width: 200px; height: 200px"
-      :demo="true"
       :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
       :button="{
         x: 1, y: 1, borderRadius: 10,
@@ -459,7 +458,6 @@
 ```vue
 <LuckyGrid
   style="width: 200px; height: 200px"
-  :demo="true"
   :blocks="[{ padding: '5px', background: '#ff4a4c', borderRadius: 10 }]"
   :button="{
     x: 1, y: 1, borderRadius: 10,
@@ -489,6 +487,7 @@
   - <Describe name="shadow?: string" mean="格子阴影" desc="由 4 个值组成：1.水平位置、2.垂直位置、3.模糊度、4.阴影颜色" />
   - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
   - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
+  - <Describe name="speed?: number" mean="旋转速度" desc="临时增加速度配置，建议范围：10 ~ 30，默认为 20" />
 
 ### 关于默认样式
 

@@ -339,6 +339,7 @@
   - <Describe name="background?: string" mean="奖品区域背景颜色" desc="默认是 '#fff' 白色" />
   - <Describe name="wordWrap?: boolean" mean="文字自动换行" desc="默认为 true 开启，关闭时可以使用 \n 换行" />
   - <Describe name="lengthLimit?: string | number" mean="换行宽度限制" desc="格式为：90 | '90px' | '90%'，默认为 '90%'" />
+  - <Describe name="speed?: number" mean="旋转速度" desc="临时增加速度配置，建议范围：10 ~ 30，默认为 20" />
 
 ### 关于默认样式
 
