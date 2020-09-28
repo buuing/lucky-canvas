@@ -45,7 +45,7 @@ export default {
         background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
         shadow: '0 5 1 #e89b4f',
         fonts: [
-          { text: `${this.luckyNum} 次`, fontColor: '#fff', top: '70%', fontSize: '12px' },
+          { text: `${this.luckyNum} 次`, fontColor: '#fff', top: '73%', fontSize: '11px' },
         ],
         imgs: [
           { src: require('./img/button.png'), width: '65%', top: '13%' },

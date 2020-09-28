@@ -99,11 +99,12 @@ export default {
         prizeGutter: '0px',
         wordWrap: true,
         lengthLimit: '90%',
+        speed: 20,
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
-      if (!style.lineHeight) style.lineHeight = style.fontSize
+      style.speed = style.speed >> 0
       return style
     },
   },
@@ -302,8 +303,11 @@ export default {
       }
       // 计算文字纵坐标
       const getFontY = (font, lineIndex) => {
-        return this.getHeight(font.top) + (lineIndex + 1) * getLength(font.lineHeight || _defaultStyle.lineHeight) * dpr
+        // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
+        const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
+        return this.getHeight(font.top) + (lineIndex + 1) * getLength(lineHeight) * dpr
       }
+      ctx.save()
       // 绘制prizes奖品区域
       this.prizes.forEach((prize, prizeIndex) => {
         // 计算当前奖品区域中间坐标点
@@ -359,6 +363,7 @@ export default {
         ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(90))
         ctx.translate(-x, -y)
       })
+      ctx.restore()
       // 绘制按钮
       this.buttons.forEach((btn, btnIndex) => {
         let radius = this.getHeight(btn.radius)
@@ -395,7 +400,7 @@ export default {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.fillText( line, getFontX(line), getFontY(font, lineIndex))
+            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
           })
         })
       })
@@ -409,20 +414,20 @@ export default {
       this.run()
     },
     run () {
+      let { speed, prizeFlag, prizeDeg, rotateDeg, _defaultStyle } = this
       // 让转盘先完全转起来再停止
-      if (this.speed >= 20 && this.prizeFlag !== undefined) {
+      if (speed >= _defaultStyle.speed && prizeFlag !== undefined) {
         if (
-          this.rotateDeg % 360 > this.prizeFlag * this.prizeDeg
-          && this.rotateDeg % 360 < this.prizeFlag * this.prizeDeg + this.prizeDeg
+          rotateDeg % 360 > prizeFlag * prizeDeg && rotateDeg % 360 < prizeFlag * prizeDeg + prizeDeg
         ) return this.slowDown()
       }
-      if (this.speed < 20) this.speed += 0.1
-      this.rotateDeg += this.speed
+      if (speed < _defaultStyle.speed) this.speed += 0.1
+      this.rotateDeg += speed
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
     stop (index) {
-      this.prizeFlag = index
+      this.prizeFlag = index % this.prizes.length
     },
     slowDown () {
       if (this.speed < 1) {
