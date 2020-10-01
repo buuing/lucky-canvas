@@ -52,4 +52,7 @@ export default {
     border-radius: 50%;
     transform: translate(1rem, 1.05rem);
   }
+  .hidden {
+    display: none;
+  }
 </style>

@@ -6,14 +6,17 @@
 
 <script>
 import {
-  drawRoundRect,
   isExpectType,
-  computePadding,
-  getLinearGradient,
   getLength,
   removeEnter,
+  computePadding,
   paramsValidator,
-} from '@/utils.js'
+} from '../utils/index.js'
+
+import {
+  drawRoundRect,
+  getLinearGradient,
+} from '../utils/math.js'
 
 export default {
   props: {

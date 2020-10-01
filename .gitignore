@@ -2,7 +2,7 @@
 node_modules
 yarn.lock
 package-lock.json
-vuepress/.vuepress/dist
+.vuepress/dist
 dist/demo.html
 
 # local env files

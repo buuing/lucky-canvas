@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import yxGrid from '../../../../demo/yx-grid.vue'
+import yxGrid from '../../../examples/yx-grid.vue'
 export default {
   components: { yxGrid }
 }

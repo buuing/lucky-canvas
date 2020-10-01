@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import yyjkGrid from '../../../../demo/yyjk-grid.vue'
+import yyjkGrid from '../../../examples/yyjk-grid.vue'
 export default {
   components: { yyjkGrid }
 }

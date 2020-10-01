@@ -7,12 +7,15 @@
 <script>
 import {
   isExpectType,
-  getAngle,
   getLength,
   removeEnter,
-  drawSector,
   paramsValidator,
-} from '@/utils.js'
+} from '../utils/index.js'
+
+import {
+  getAngle,
+  drawSector,
+} from '../utils/math.js'
 
 export default {
   props: {
@@ -307,7 +310,7 @@ export default {
         prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.prizeImgs[prizeIndex]) return false
           const prizeImg = this.prizeImgs[prizeIndex][imgIndex]
-          if (!prizeImg) return console.error('错误273: 没有奖品图片')
+          if (!prizeImg) return console.error(`错误273: prizes[${prizeIndex}]没有奖品图片`)
           const [trueWidth, trueHeight] = this.computedWidthAndHeight(
             prizeImg, imgInfo, this.prizeRadian * this.prizeRadius, this.prizeRadius - this.maxBtnRadius
           )

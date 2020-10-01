@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ymcWheel from '../../../../demo/ymc-wheel.vue'
+import ymcWheel from '../../../examples/ymc-wheel.vue'
 export default {
   components: { ymcWheel }
 }
