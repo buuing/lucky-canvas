@@ -76,6 +76,7 @@ export default {
         fontSize: '18px',
         fontColor: '#000',
         fontStyle: 'sans-serif, STHeiti, SimHei',
+        fontDeg: 90,
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
@@ -86,6 +87,7 @@ export default {
         style[key] = this.defaultStyle[key]
       }
       style.speed = style.speed >> 0
+      [0, 90, 180, '0', '90', '180'].includes(style.fontDeg) && console.error('属性 fontDeg 配置错误')
       return style
     },
   },
@@ -305,7 +307,7 @@ export default {
         let x = Math.cos(currMiddleDeg) * this.prizeRadius
         let y = Math.sin(currMiddleDeg) * this.prizeRadius
         ctx.translate(x, y)
-        ctx.rotate(currMiddleDeg + getAngle(90))
+        ctx.rotate(currMiddleDeg + getAngle(_defaultStyle.fontDeg))
         // 绘制图片
         prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
           if (!this.prizeImgs[prizeIndex]) return false
@@ -321,7 +323,8 @@ export default {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
-          if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+          // 当文字角度等于90度, 并且wordWrap等于true时才计算换行
+          if (_defaultStyle.fontDeg == 90 && font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
             text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
@@ -339,11 +342,17 @@ export default {
             lines = text.split('\n')
           }
           lines.filter(line => !!line).forEach((line, lineIndex) => {
-            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
+            _defaultStyle.fontDeg == 90
+              ? ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
+              : ctx.fillText(
+                line,
+                _defaultStyle.fontDeg == 0 ? -ctx.measureText(line).width : 0,
+                ctx.measureText(line).actualBoundingBoxAscent / 2
+              )
           })
         })
         // 修正旋转角度和原点坐标
-        ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(90))
+        ctx.rotate(getAngle(360) - currMiddleDeg - getAngle(_defaultStyle.fontDeg))
         ctx.translate(-x, -y)
       })
       ctx.restore()
