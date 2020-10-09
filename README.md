@@ -4,7 +4,7 @@
 <h2 class="hidden">官方文档 & Demo演示</h2>
 
 <blockquote class="hidden">
-  <p><a href="https://100px.net/vue-luck-draw" rel="nofollow">https://100px.net/vue-luck-draw</a></p>
+  <p><a href="https://100px.net/vue-luck-draw?github" target="_black" rel="nofollow">https://100px.net/vue-luck-draw</a></p>
 </blockquote>
 
 <br />
