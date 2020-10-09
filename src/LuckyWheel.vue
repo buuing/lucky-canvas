@@ -87,7 +87,10 @@ export default {
         style[key] = this.defaultStyle[key]
       }
       style.speed = style.speed >> 0
-      [0, 90, 180, '0', '90', '180'].includes(style.fontDeg) && console.error('属性 fontDeg 配置错误')
+      if (![0, 90, 180, '0', '90', '180'].includes(style.fontDeg)) {
+        style.fontDeg = 90
+        console.error('属性 defaultStyle.fontDeg 配置错误')
+      }
       return style
     },
   },
@@ -316,7 +319,15 @@ export default {
           const [trueWidth, trueHeight] = this.computedWidthAndHeight(
             prizeImg, imgInfo, this.prizeRadian * this.prizeRadius, this.prizeRadius - this.maxBtnRadius
           )
-          ctx.drawImage(prizeImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
+          _defaultStyle.fontDeg == 90
+            ? ctx.drawImage(prizeImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
+            : ctx.drawImage(
+              prizeImg,
+              _defaultStyle.fontDeg == 0 ? -(this.getHeight(imgInfo.top) + trueWidth) : trueWidth,
+              this.getOffsetX(trueHeight),
+              trueWidth,
+              trueHeight
+            )
         })
         // 逐行绘制文字
         prize.fonts && prize.fonts.forEach(font => {
