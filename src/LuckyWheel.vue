@@ -335,7 +335,7 @@ export default {
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
           // 当文字角度等于90度, 并且wordWrap等于true时才计算换行
-          if (_defaultStyle.fontDeg == 90 && font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+          if (_defaultStyle.fontDeg == 90 && (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap)) {
             text = removeEnter(text)
             let str = ''
             for (let i = 0; i < text.length; i++) {
