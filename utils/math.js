@@ -37,14 +37,26 @@ export const drawRadian = (ctx, r, start, end, direction = true) => {
 
 // 绘制扇形
 export const drawSector = (ctx, minRadius, maxRadius, start, end, gutter, background) => {
+  if (!minRadius) minRadius = gutter
   let maxGutter = getAngle(90 / Math.PI / maxRadius * gutter)
-  let minGutter = minRadius ? getAngle(90 / Math.PI / minRadius * gutter) : 0
+  let minGutter = getAngle(90 / Math.PI / minRadius * gutter)
+  let maxStart = start + maxGutter
+  let maxEnd = end - maxGutter
+  let minStart = start + minGutter
+  let minEnd = end - minGutter
   ctx.beginPath()
   ctx.fillStyle = background
-  const [x1, y1] = getArcPointerByDeg(start + maxGutter, maxRadius)
-  ctx.moveTo(x1, y1)
-  drawRadian(ctx, maxRadius, start + maxGutter, end - maxGutter, true)
-  drawRadian(ctx, minRadius, start + minGutter, end - minGutter, false)
+  ctx.moveTo(...getArcPointerByDeg(maxStart, maxRadius))
+  drawRadian(ctx, maxRadius, maxStart, maxEnd, true)
+  // 如果 getter 比按钮短就绘制圆弧, 反之计算新的坐标点
+  if (minEnd > minStart)
+    drawRadian(ctx, minRadius, minStart, minEnd, false)
+  else ctx.lineTo(
+    ...getArcPointerByDeg(
+      (start + end) / 2,
+      gutter / 2 / Math.abs(Math.sin((start - end) / 2))
+    )
+  )
   ctx.closePath()
   ctx.fill()
 }
