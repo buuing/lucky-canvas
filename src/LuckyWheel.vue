@@ -357,7 +357,9 @@ export default {
               ? ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
               : ctx.fillText(
                 line,
-                _defaultStyle.fontDeg == 0 ? -ctx.measureText(line).width : 0,
+                _defaultStyle.fontDeg == 0
+                  ? -ctx.measureText(line).width - this.getHeight(font.top)
+                  : this.getHeight(font.top),
                 ctx.measureText(line).actualBoundingBoxAscent / 2
               )
           })
