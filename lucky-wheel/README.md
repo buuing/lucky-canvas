@@ -331,6 +331,7 @@
 > 如果你觉得写一堆重复的数据很烦的话，那你可以在这里进行统一的管理，其中包括`奖品`和`抽奖按钮`，在没有配置的情况下都会继承这里的属性
 
 - <Describe name="default-style?: object" mean="格子默认样式" />
+  - <Describe name="gutter?: string | number" mean="扇形之间的缝隙" desc="默认等于 0" />
   - <Describe name="fontColor?: string" mean="字体颜色" desc="默认是 '#000' 黑色" />
   - <Describe name="fontSize?: string" mean="字体大小(px)" desc="默认是 '18px'" />
   - <Describe name="fontStyle?: string" mean="字体样式" desc="默认是 'sans-serif'" />
@@ -392,6 +393,62 @@
   }"
 />
 ```
+
+### 关于奖品区域的缝隙
+
+<Exhibition>
+  <template v-slot:code>
+    <LuckyWheel
+      style="width: 200px; height: 200px"
+      :blocks="[
+        { padding: '10px', background: '#d64737' }
+      ]"
+      :prizes="[
+        { background: '#f8d384' },
+        { background: '#f9e3bb' },
+        { background: '#f8d384' },
+        { background: '#f9e3bb' },
+        { background: '#f8d384' },
+        { background: '#f9e3bb' },
+      ]"
+      :buttons="[
+        { radius: '30px', background: 'rgba(0, 0, 0, 0.1)' }
+      ]"
+      :default-style="{
+        gutter: '5px'
+      }"
+    />
+  </template>
+  <template v-slot:text>
+    <li><code>defaultStyle</code>中有一个<code>gutter</code>属性用来控制奖品扇形区域之间的缝隙，默认等于0</li>
+    <li>这个缝隙是等距的，不会随着角度的不同而产生弧度</li>
+  </template>
+</Exhibition>
+
+```vue
+<LuckyWheel
+  style="width: 200px; height: 200px"
+  :blocks="[
+    { padding: '10px', background: '#d64737' }
+  ]"
+  :prizes="[
+    { background: '#f8d384' },
+    { background: '#f9e3bb' },
+    { background: '#f8d384' },
+    { background: '#f9e3bb' },
+    { background: '#f8d384' },
+    { background: '#f9e3bb' },
+  ]"
+  :buttons="[
+    { radius: '30px', background: 'rgba(0, 0, 0, 0.1)' }
+  ]"
+  :default-style="{
+    gutter: '5px'
+  }"
+/>
+```
+
+<br />
 
 ## 回调 & 方法
 

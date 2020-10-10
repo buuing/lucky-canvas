@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[19],{411:function(n,e,t){"use strict";t.r(e);var l={components:{yxGrid:t(400).default}},r=t(40),s=Object(r.a)(l,(function(){var n=this.$createElement;return(this._self._c||n)("yxGrid")}),[],!1,null,null,null);e.default=s.exports}}]);
