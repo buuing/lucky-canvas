@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{401:function(t,n,e){"use strict";e.r(n);var s={components:{LuckyGrid:e(357).a}},c=e(40),i=Object(c.a)(s,(function(){var t=this.$createElement;return(this._self._c||t)("LuckyGrid",this._b({},"LuckyGrid",this.$attrs,!1))}),[],!1,null,null,null);n.default=i.exports}}]);

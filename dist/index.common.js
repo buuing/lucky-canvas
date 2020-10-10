@@ -4986,19 +4986,19 @@ var math_drawRadian = function drawRadian(ctx, r, start, end) {
 }; // 绘制扇形
 
 var math_drawSector = function drawSector(ctx, minRadius, maxRadius, start, end, gutter, background) {
+  if (!minRadius) minRadius = gutter;
   var maxGutter = getAngle(90 / Math.PI / maxRadius * gutter);
-  var minGutter = minRadius ? getAngle(90 / Math.PI / minRadius * gutter) : 0;
+  var minGutter = getAngle(90 / Math.PI / minRadius * gutter);
+  var maxStart = start + maxGutter;
+  var maxEnd = end - maxGutter;
+  var minStart = start + minGutter;
+  var minEnd = end - minGutter;
   ctx.beginPath();
   ctx.fillStyle = background;
+  ctx.moveTo.apply(ctx, _toConsumableArray(getArcPointerByDeg(maxStart, maxRadius)));
+  math_drawRadian(ctx, maxRadius, maxStart, maxEnd, true); // 如果 getter 比按钮短就绘制圆弧, 反之计算新的坐标点
 
-  var _getArcPointerByDeg5 = getArcPointerByDeg(start + maxGutter, maxRadius),
-      _getArcPointerByDeg6 = _slicedToArray(_getArcPointerByDeg5, 2),
-      x1 = _getArcPointerByDeg6[0],
-      y1 = _getArcPointerByDeg6[1];
-
-  ctx.moveTo(x1, y1);
-  math_drawRadian(ctx, maxRadius, start + maxGutter, end - maxGutter, true);
-  math_drawRadian(ctx, minRadius, start + minGutter, end - minGutter, false);
+  if (minEnd > minStart) math_drawRadian(ctx, minRadius, minStart, minEnd, false);else ctx.lineTo.apply(ctx, _toConsumableArray(getArcPointerByDeg((start + end) / 2, gutter / 2 / Math.abs(Math.sin((start - end) / 2)))));
   ctx.closePath();
   ctx.fill();
 }; // 绘制圆角矩形
