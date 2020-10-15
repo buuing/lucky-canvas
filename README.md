@@ -1,6 +1,44 @@
 
 <Empty />
 
+<div align="center">
+  <h1>vue-luck-draw 抽奖插件</h1>
+  <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
+  <p>
+    <a href="https://github.com/buuing/vue-luck-draw" target="_black">
+      <img src="https://img.shields.io/badge/github-buuing-brightgreen.svg" />
+    </a>
+    <a>
+      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw" />
+    </a>
+    <a>
+      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw" />
+    </a>
+    <a>
+      <img src="https://img.shields.io/npm/dt/vue-luck-draw" />
+    </a>
+    <a>
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/index.common.js" />
+    </a>
+  </p>
+  <p>
+    <a href="https://github.com/buuing" target="_black">
+      <img src="https://img.shields.io/badge/author-%20ldq%20-7289da.svg" />
+    </a>
+    <a href="https://github.com/LuckDraw/vue-luck-draw/blob/master/LICENSE" target="_black">
+      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw" />
+    </a>
+  </p>
+</div>
+
+
+
+
+
+
+
+<br />
+
 <h2 class="hidden">官方文档 & Demo演示</h2>
 
 <blockquote class="hidden">
