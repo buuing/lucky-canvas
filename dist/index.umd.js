@@ -4544,12 +4544,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=63aca863&
-var LuckyGridvue_type_template_id_63aca863_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_63aca863_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=14830fb4&
+var LuckyGridvue_type_template_id_14830fb4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_14830fb4_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=63aca863&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=14830fb4&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -4853,7 +4853,9 @@ var removeEnter = function removeEnter(str) {
   return [].filter.call(str, function (s) {
     return s !== '\n';
   }).join('');
-}; // 参数校验器
+}; // 获取设备像素比
+
+var utils_dpr = window.devicePixelRatio; // 参数校验器
 
 var paramsValidator = function paramsValidator(data) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -4948,7 +4950,7 @@ var getAngle = function getAngle(deg) {
 }; // 根据角度计算圆上的点
 
 var getArcPointerByDeg = function getArcPointerByDeg(deg, r) {
-  return [+(Math.cos(deg) * r).toFixed(8), +(Math.sin(deg) * r).toFixed(8)];
+  return [+(Math.cos(deg) * r).toFixed(1), +(Math.sin(deg) * r).toFixed(1)];
 }; // 根据点计算切线方程
 
 var getTangentByPointer = function getTangentByPointer(x, y) {
@@ -4988,8 +4990,18 @@ var math_drawRadian = function drawRadian(ctx, r, start, end) {
 
   var x0 = (b2 - b1) / (k1 - k2);
   var y0 = (k2 * b1 - k1 * b2) / (k2 - k1);
-  if (isNaN(x0)) x0 = Math.abs(x1) === r ? x1 : x2;
-  if (k1 === Infinity || k1 === -Infinity) y0 = k2 * x0 + b2;else if (k2 === Infinity || k2 === -Infinity) y0 = k1 * x0 + b1;
+
+  if (isNaN(x0)) {
+    Math.abs(x1) == r.toFixed(1) && (x0 = x1);
+    Math.abs(x2) == r.toFixed(1) && (x0 = x2);
+  }
+
+  if (k1 === Infinity || k1 === -Infinity) {
+    y0 = k2 * x0 + b2;
+  } else if (k2 === Infinity || k2 === -Infinity) {
+    y0 = k1 * x0 + b1;
+  }
+
   ctx.lineTo(x1, y1);
   ctx.arcTo(x0, y0, x2, y2, r);
 }; // 绘制扇形
@@ -5312,7 +5324,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     }
   },
   mounted: function mounted() {
-    this.dpr = window.devicePixelRatio || 2; // 收集首次渲染的图片
+    this.dpr = (window.devicePixelRatio || 2) * 1.3; // 收集首次渲染的图片
 
     var willUpdate = [];
     this.prizes && (willUpdate = this.prizes.map(function (prize) {
@@ -5756,8 +5768,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_63aca863_render,
-  LuckyGridvue_type_template_id_63aca863_staticRenderFns,
+  LuckyGridvue_type_template_id_14830fb4_render,
+  LuckyGridvue_type_template_id_14830fb4_staticRenderFns,
   false,
   null,
   null,
@@ -5766,12 +5778,12 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=baa3c660&
-var LuckyWheelvue_type_template_id_baa3c660_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_baa3c660_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=d334a1c2&
+var LuckyWheelvue_type_template_id_d334a1c2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_d334a1c2_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=baa3c660&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=d334a1c2&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -5983,7 +5995,7 @@ var LuckyWheelvue_type_template_id_baa3c660_staticRenderFns = []
   mounted: function mounted() {
     var _willUpdate;
 
-    this.dpr = window.devicePixelRatio || 2; // 收集首次渲染的图片
+    this.dpr = (window.devicePixelRatio || 2) * 1.3; // 收集首次渲染的图片
 
     var willUpdate = [];
     this.prizes && (willUpdate = this.prizes.map(function (prize) {
@@ -6335,8 +6347,8 @@ var LuckyWheelvue_type_template_id_baa3c660_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_baa3c660_render,
-  LuckyWheelvue_type_template_id_baa3c660_staticRenderFns,
+  LuckyWheelvue_type_template_id_d334a1c2_render,
+  LuckyWheelvue_type_template_id_d334a1c2_staticRenderFns,
   false,
   null,
   null,

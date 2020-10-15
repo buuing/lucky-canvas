@@ -1,6 +1,6 @@
 {
   "name": "vue-luck-draw",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   },
   "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖", "抽奖插件", "web抽奖", "移动端抽奖", "canvas抽奖"],
   "author": "ldq <17778888138@189.cn>",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "files": ["package.json", "dist", "index.js"]
 }
