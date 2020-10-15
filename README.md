@@ -2,6 +2,7 @@
 <Empty />
 
 <div align="center">
+  <img src="./.vuepress/logo.png" width="200" />
   <h1>vue-luck-draw 抽奖插件</h1>
   <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
   <p>
