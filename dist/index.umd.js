@@ -4544,12 +4544,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=14830fb4&
-var LuckyGridvue_type_template_id_14830fb4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_14830fb4_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&
+var LuckyGridvue_type_template_id_148c612b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_148c612b_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=14830fb4&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -5414,12 +5414,14 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
         _this3.demo && _this3.walk(); // 点击按钮开始, 这里不能使用 addEventListener
 
         if (_this3.button) canvas.onmousedown = function (e) {
-          var _this3$getGeometricPr = _this3.getGeometricProperty([_this3.button.x, _this3.button.y]),
-              _this3$getGeometricPr2 = _slicedToArray(_this3$getGeometricPr, 2),
+          var _this3$getGeometricPr = _this3.getGeometricProperty([_this3.button.x, _this3.button.y, _this3.button.col || 1, _this3.button.row || 1]),
+              _this3$getGeometricPr2 = _slicedToArray(_this3$getGeometricPr, 4),
               x = _this3$getGeometricPr2[0],
-              y = _this3$getGeometricPr2[1];
+              y = _this3$getGeometricPr2[1],
+              width = _this3$getGeometricPr2[2],
+              height = _this3$getGeometricPr2[3];
 
-          if (e.offsetX < x || e.offsetY < y || e.offsetX > x + _this3.cellWidth || e.offsetY > y + _this3.cellWidth) return false;
+          if (e.offsetX < x || e.offsetY < y || e.offsetX > x + width || e.offsetY > y + height) return false;
           if (!_this3.canPlay) return false;
 
           _this3.$emit('start', e);
@@ -5768,8 +5770,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_14830fb4_render,
-  LuckyGridvue_type_template_id_14830fb4_staticRenderFns,
+  LuckyGridvue_type_template_id_148c612b_render,
+  LuckyGridvue_type_template_id_148c612b_staticRenderFns,
   false,
   null,
   null,
