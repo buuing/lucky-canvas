@@ -186,7 +186,7 @@ export default {
     },
   },
   mounted () {
-    this.dpr = (window.devicePixelRatio || 2) * 2
+    this.dpr = (window.devicePixelRatio || 2) * 1.3
     // 收集首次渲染的图片
     let willUpdate = []
     this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
@@ -248,8 +248,13 @@ export default {
         this.demo && this.walk()
         // 点击按钮开始, 这里不能使用 addEventListener
         if (this.button) canvas.onmousedown = e => {
-          const [x, y] = this.getGeometricProperty([this.button.x, this.button.y])
-          if (e.offsetX < x || e.offsetY < y || e.offsetX > x + this.cellWidth || e.offsetY > y + this.cellWidth) return false
+          const [x, y, width, height] = this.getGeometricProperty([
+            this.button.x,
+            this.button.y,
+            this.button.col || 1,
+            this.button.row || 1
+          ])
+          if (e.offsetX < x || e.offsetY < y || e.offsetX > x + width || e.offsetY > y + height) return false
           if (!this.canPlay) return false
           this.$emit('start', e)
         }
