@@ -6,7 +6,7 @@ export const getAngle = deg => {
 
 // 根据角度计算圆上的点
 export const getArcPointerByDeg = (deg, r) => {
-  return [+(Math.cos(deg) * r).toFixed(8), +(Math.sin(deg) * r).toFixed(8)]
+  return [+(Math.cos(deg) * r).toFixed(1), +(Math.sin(deg) * r).toFixed(1)]
 }
 
 // 根据点计算切线方程
@@ -25,12 +25,16 @@ export const drawRadian = (ctx, r, start, end, direction = true) => {
   const [k2, b2] = getTangentByPointer(x2, y2)
   let x0 = (b2 - b1) / (k1 - k2)
   let y0 = (k2 * b1 - k1 * b2) / (k2 - k1)
-  if (isNaN(x0))
-    x0 = Math.abs(x1) === r ? x1 : x2
-  if (k1 === Infinity || k1 === -Infinity)
+  if (isNaN(x0)) {
+    Math.abs(x1) == r.toFixed(1) && (x0 = x1)
+    Math.abs(x2) == r.toFixed(1) && (x0 = x2)
+  }
+  if (k1 === Infinity || k1 === -Infinity) {
     y0 = k2 * x0 + b2
-  else if (k2 === Infinity || k2 === -Infinity)
+  }
+  else if (k2 === Infinity || k2 === -Infinity) {
     y0 = k1 * x0 + b1
+  }
   ctx.lineTo(x1, y1)
   ctx.arcTo(x0, y0, x2, y2, r)
 }
