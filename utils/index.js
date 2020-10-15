@@ -22,6 +22,9 @@ export const removeEnter = str => {
   return [].filter.call(str, s => s !== '\n').join('')
 }
 
+// 获取设备像素比
+export const dpr = window.devicePixelRatio
+
 // 参数校验器
 export const paramsValidator = (data, params = {}, msg = '') => {
   if (isExpectType(data, 'object')) data = [data]
