@@ -265,7 +265,7 @@ export default {
     draw () {
       const { ctx, dpr, _defaultStyle } = this
       // 清空画布
-      ctx.clearRect(-this.Radius, -this.Radius, this.Radius, this.Radius)
+      ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
       // 绘制blocks边框
       this.prizeRadius = this.blocks.reduce((radius, block) => {
         ctx.beginPath()
