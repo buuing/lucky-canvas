@@ -5,20 +5,25 @@
   <img src="./.vuepress/logo.png" width="200" />
   <h1>vue-luck-draw 抽奖插件</h1>
   <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
+  <p class="hidden">
+    <a href="https://github.com/LuckDraw/vue-luck-draw#readme">简体中文</a>
+    <!-- · -->
+    <!-- <a href="javascript: ;">English</a> -->
+  </p>
   <p>
     <a href="https://github.com/buuing/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/badge/github-buuing-brightgreen.svg" />
     </a>
-    <a>
+    <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw" />
     </a>
-    <a>
+    <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw" />
     </a>
-    <a>
+    <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/npm/dt/vue-luck-draw" />
     </a>
-    <a>
+    <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
       <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/index.common.js" />
     </a>
   </p>
