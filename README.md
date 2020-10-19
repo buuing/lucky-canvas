@@ -2,7 +2,7 @@
 <Empty />
 
 <div align="center">
-  <img src="./.vuepress/logo.png" width="200" />
+  <img src="./logo.png" width="200" />
   <h1>vue-luck-draw 抽奖插件</h1>
   <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
   <p class="hidden">
@@ -37,18 +37,12 @@
   </p>
 </div>
 
-
-
-
-
-
-
 <br />
 
 <h2 class="hidden">官方文档 & Demo演示</h2>
 
 <blockquote class="hidden">
-  <p><a href="https://100px.net/vue-luck-draw?github" target="_black" rel="nofollow">https://100px.net/vue-luck-draw</a></p>
+  <p><a href="https://100px.net?vue-luck-draw" target="_black" rel="nofollow">https://100px.net</a></p>
 </blockquote>
 
 <br />
@@ -123,3 +117,4 @@ Vue.use(LuckDraw)
 ```
 
 <br />
+
