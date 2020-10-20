@@ -4,6 +4,7 @@ yarn.lock
 package-lock.json
 .vuepress/dist
 dist/demo.html
+vue3/demo.html
 
 # local env files
 .env.local
