@@ -109,7 +109,7 @@ createApp(App).use(LuckDraw).mount('#app')
   />
 </div>
 <script src="./vue.min.js"></script>
-<script src="./index.umd.min.js"></script>
+<script src="./luckdraw.umd.min.js"></script>
 <script>
   new Vue({
     el: '#app'
