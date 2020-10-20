@@ -1,2 +1,1 @@
-require('./index.css')
-module.exports = require('./index.common.js')
+module.exports = require('./luckdraw.common.js')

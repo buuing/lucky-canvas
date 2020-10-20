@@ -1,14 +1,14 @@
 {
   "name": "vue-luck-draw",
-  "version": "3.1.4",
+  "version": "3.1.6",
   "description": "",
   "main": "index.js",
   "scripts": {
     "docs": "vuepress dev ./",
     "build:docs": "vuepress build ./ --dest ./docs/",
-    "package": "vue-cli-service build --target lib --name index --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
+    "package": "vue-cli-service build --target lib --name luckdraw --dest ./src/components/vue-luck-draw/dist/ ./src/components/vue-luck-draw/src/index.js"
   },
-  "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖", "抽奖插件", "web抽奖", "移动端抽奖", "canvas抽奖"],
+  "keywords": ["vue抽奖", "大转盘抽奖", "九宫格抽奖", "抽奖插件", "web抽奖", "移动端抽奖", "canvas抽奖", "vue3抽奖"],
   "author": "ldq <17778888138@189.cn>",
   "license": "BSD-3-Clause",
   "files": ["package.json", "dist", "vue3", "index.js"]

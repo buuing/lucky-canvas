@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["luckdraw"] = factory();
+	else
+		root["luckdraw"] = factory();
+})((typeof self !== 'undefined' ? self : this), function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -4777,7 +4786,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"370fe3d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"box"},[_c('p',[_vm._v("请使用<luckyWheel /> 或 <luckyGrid />组件")]),_c('p',[_vm._v("新增图片引入机制")]),_c('p',[_vm._v("新增自动根据dpr优化清晰度")]),_c('p',[_vm._v("新增九宫格抽奖")]),_c('p',[_c('a',{attrs:{"href":"https://100px.net/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("官方文档")]),_vm._v(" | "),_c('a',{attrs:{"href":"https://github.com/buuing/vue-luck-draw/issues?luckDraw","target":"_blank"}},[_vm._v("bug 反馈")]),_vm._v(" | "),_c('a',{attrs:{"href":"https://github.com/buuing/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("github 地址")])])])}]
 
@@ -4928,7 +4937,7 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"370fe3d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&
 var LuckyGridvue_type_template_id_148c612b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
 var LuckyGridvue_type_template_id_148c612b_staticRenderFns = []
 
@@ -6164,7 +6173,7 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0ed44288-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=8dbffac2&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"370fe3d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=8dbffac2&
 var LuckyWheelvue_type_template_id_8dbffac2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
 var LuckyWheelvue_type_template_id_8dbffac2_staticRenderFns = []
 
@@ -6899,3 +6908,4 @@ module.exports = NATIVE_SYMBOL
 /***/ })
 
 /******/ });
+});

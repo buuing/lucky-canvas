@@ -1,1 +1,1 @@
-module.exports = require('./dist/index.common.js')
+module.exports = require('./dist/luckdraw.common.js')
