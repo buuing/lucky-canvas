@@ -24,7 +24,7 @@
       <img src="https://img.shields.io/npm/dt/vue-luck-draw" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/index.common.js" />
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js" />
     </a>
   </p>
   <p>
@@ -47,24 +47,24 @@
 
 <br />
 
-## 安装
+## 在 vue 中使用
 
-**使用 npm 安装：`npm i vue-luck-draw`**
+### 方式 1：通过 import 引入
 
-**使用 yarn 安装：`yarn add vue-luck-draw`**
 
-<br />
-
-## 使用
-
-### 方式1: 通过 import 引入
+> 使用 npm 安装：`npm i vue-luck-draw`  
+> 使用 yarn 安装：`yarn add vue-luck-draw`
 
 找到 `main.js` 引入插件并 `use`
 
 ```js
+// vue2.x
 import LuckDraw from 'vue-luck-draw'
-
 Vue.use(LuckDraw)
+
+// vue3.x
+import LuckDraw from 'vue-luck-draw/vue3'
+createApp(App).use(LuckDraw).mount('#app')
 ```
 
 然后在组件内使用`<LuckyWheel />大转盘组件`或`<LuckyGrid />九宫格组件`
@@ -88,11 +88,12 @@ Vue.use(LuckDraw)
 
 <br />
 
-### 方式2: 通过 script 标签引入
+### 方式 2：通过 script 标签引入
 
-从下面的链接里下载一个叫`index.umd.min.js`的 js 文件, 然后使用 script 标签引入
+从下面的链接里下载一个叫`luckdraw.umd.min.js`的 js 文件, 然后使用 script 标签引入
 
-- 下载地址: [https://github.com/buuing/vue-luck-draw/tree/master/dist](https://github.com/buuing/vue-luck-draw/tree/master/dist)
+- vue2.x：[https://github.com/buuing/vue-luck-draw/tree/master/dist](https://github.com/buuing/vue-luck-draw/tree/master/dist)
+- vue3.x：[https://github.com/buuing/vue-luck-draw/tree/master/vue3](https://github.com/buuing/vue-luck-draw/tree/master/vue3)
 
 ```html
 <div id="app">
@@ -117,4 +118,3 @@ Vue.use(LuckDraw)
 ```
 
 <br />
-
