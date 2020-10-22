@@ -186,7 +186,9 @@ export default {
     },
   },
   mounted () {
-    this.dpr = (window.devicePixelRatio || 2) * 1.3
+    this.dpr = window.devicePixelRatio
+    this.dpr = ((!this.dpr || this.dpr < 2) ? 2 : this.dpr) * 1.3
+    window.dpr = this.dpr
     // 收集首次渲染的图片
     let willUpdate = []
     this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
@@ -333,8 +335,7 @@ export default {
     draw () {
       const { ctx, dpr, _defaultStyle, _activeStyle } = this
       // 清空画布
-      ctx.fillStyle = 'rgba(255, 255, 255, 0)'
-      ctx.fillRect(0, 0, this.boxWidth, this.boxWidth)
+      ctx.clearRect(0, 0, this.boxWidth, this.boxWidth)
       // 绘制所有边框
       this.blockData.forEach(([x, y, w, h, r, background]) => {
         drawRoundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, background))

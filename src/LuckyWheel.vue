@@ -156,7 +156,9 @@ export default {
     },
   },
   mounted () {
-    this.dpr = (window.devicePixelRatio || 2) * 1.3
+    this.dpr = window.devicePixelRatio
+    this.dpr = ((!this.dpr || this.dpr < 2) ? 2 : this.dpr) * 1.3
+    window.dpr = this.dpr
     // 收集首次渲染的图片
     let willUpdate = []
     this.prizes && (willUpdate = this.prizes.map(prize => prize.imgs))
