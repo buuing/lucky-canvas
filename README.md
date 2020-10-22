@@ -49,10 +49,15 @@
 
 ### 方式 1：通过 import 引入
 
-1. 首先安装包
+1. 首先安装插件
 
-> npm 安装：`npm i vue-luck-draw`  
-> yarn 安装：`yarn add vue-luck-draw`
+```shell
+# npm 安装：
+npm install vue-luck-draw
+
+# yarn 安装：
+yarn add vue-luck-draw
+```
 
 2. 然后找到 `main.js` 引入插件并 `use`
 
