@@ -249,7 +249,7 @@ export default {
         // 中奖标识开始游走
         this.demo && this.walk()
         // 点击按钮开始, 这里不能使用 addEventListener
-        if (this.button) canvas.onmousedown = e => {
+        if (this.button) canvas.onclick = e => {
           const [x, y, width, height] = this.getGeometricProperty([
             this.button.x,
             this.button.y,
