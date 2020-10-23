@@ -6,7 +6,7 @@ export const getAngle = deg => {
 
 // 根据角度计算圆上的点
 export const getArcPointerByDeg = (deg, r) => {
-  return [+(Math.cos(deg) * r).toFixed(1), +(Math.sin(deg) * r).toFixed(1)]
+  return [+(Math.cos(deg) * r).toFixed(8), +(Math.sin(deg) * r).toFixed(8)]
 }
 
 // 根据点计算切线方程
@@ -18,6 +18,17 @@ export const getTangentByPointer = (x, y) => {
 
 // 根据三点画圆弧
 export const drawRadian = (ctx, r, start, end, direction = true) => {
+  if (Math.abs(end - start).toFixed(8) >= getAngle(180).toFixed(8)) {
+    let middle = (end + start) / 2
+    if (direction) {
+      drawRadian(ctx, r, start, middle, direction, 1)
+      drawRadian(ctx, r, middle, end, direction, 1)
+    } else {
+      drawRadian(ctx, r, middle, end, direction, 1)
+      drawRadian(ctx, r, start, middle, direction, 1)
+    }
+    return false
+  }
   if (!direction) [start, end] = [end, start]
   const [x1, y1] = getArcPointerByDeg(start, r)
   const [x2, y2] = getArcPointerByDeg(end, r)
@@ -26,8 +37,8 @@ export const drawRadian = (ctx, r, start, end, direction = true) => {
   let x0 = (b2 - b1) / (k1 - k2)
   let y0 = (k2 * b1 - k1 * b2) / (k2 - k1)
   if (isNaN(x0)) {
-    Math.abs(x1) == r.toFixed(1) && (x0 = x1)
-    Math.abs(x2) == r.toFixed(1) && (x0 = x2)
+    Math.abs(x1) == r.toFixed(8) && (x0 = x1)
+    Math.abs(x2) == r.toFixed(8) && (x0 = x2)
   }
   if (k1 === Infinity || k1 === -Infinity) {
     y0 = k2 * x0 + b2
