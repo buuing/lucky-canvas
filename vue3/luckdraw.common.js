@@ -669,107 +669,6 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 /***/ }),
 
-/***/ "24fb":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
-module.exports = function (useSourceMap) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item, useSourceMap);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
-      }
-
-      return content;
-    }).join('');
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
-
-
-  list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
-
-  var cssMapping = item[3];
-
-  if (!cssMapping) {
-    return content;
-  }
-
-  if (useSourceMap && typeof btoa === 'function') {
-    var sourceMapping = toComment(cssMapping);
-    var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
-    });
-    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-  }
-
-  return [content].join('\n');
-} // Adapted from convert-source-map (MIT)
-
-
-function toComment(sourceMap) {
-  // eslint-disable-next-line no-undef
-  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
-  return "/*# ".concat(data, " */");
-}
-
-/***/ }),
-
 /***/ "2532":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1146,272 +1045,6 @@ $({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
     return $trim(this);
   }
 });
-
-
-/***/ }),
-
-/***/ "499e":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "default", function() { return /* binding */ addStylesClient; });
-
-// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/listToStyles.js
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/addStylesClient.js
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-function addStylesClient (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
 
 
 /***/ }),
@@ -2143,17 +1776,6 @@ module.exports = Object.create || function create(O, Properties) {
   return Properties === undefined ? result : defineProperties(result, Properties);
 };
 
-
-/***/ }),
-
-/***/ "7d8e":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ee37");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_LuckDraw_vue_vue_type_style_index_0_id_08c098ea_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- 
 
 /***/ }),
 
@@ -4672,35 +4294,6 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ "eb10":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".box[data-v-08c098ea]{background:#ff4a4c;border-radius:4px;text-align:center;padding:10px 20px}.box[data-v-08c098ea],a[data-v-08c098ea]{color:#eee}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "ee37":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("eb10");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__("499e").default
-var update = add("3c10ab5a", content, true, {"sourceMap":false,"shadowMode":false});
-
-/***/ }),
-
 /***/ "f5df":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4787,15 +4380,16 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&bindings={}
-
-
-var _withId = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withScopeId"])("data-v-08c098ea");
-
-Object(external_commonjs_vue_commonjs2_vue_root_Vue_["pushScopeId"])("data-v-08c098ea");
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&bindings={}
 
 var _hoisted_1 = {
-  class: "box"
+  style: {
+    "background": "#ff4a4c",
+    "border-radius": "4px",
+    "color": "#eee",
+    "text-align": "center",
+    "padding": "10px 20px"
+  }
 };
 
 var _hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("p", null, "请使用<luckyWheel /> 或 <luckyGrid />组件", -1);
@@ -4807,55 +4401,56 @@ var _hoisted_4 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vu
 var _hoisted_5 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("p", null, "新增九宫格抽奖", -1);
 
 var _hoisted_6 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("p", null, [/*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("a", {
+  style: {
+    "color": "#eee"
+  },
   href: "https://100px.net/vue-luck-draw?luckDraw",
   target: "_blank"
 }, "官方文档"), /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" | "), /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("a", {
+  style: {
+    "color": "#eee"
+  },
   href: "https://github.com/buuing/vue-luck-draw/issues?luckDraw",
   target: "_blank"
 }, "bug 反馈"), /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" | "), /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("a", {
+  style: {
+    "color": "#eee"
+  },
   href: "https://github.com/buuing/vue-luck-draw?luckDraw",
   target: "_blank"
 }, "github 地址")], -1);
 
-Object(external_commonjs_vue_commonjs2_vue_root_Vue_["popScopeId"])();
-
-var LuckDrawvue_type_template_id_08c098ea_scoped_true_bindings_render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", _hoisted_1, [_hoisted_2, _hoisted_3, _hoisted_4, _hoisted_5, _hoisted_6]);
-});
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=08c098ea&scoped=true&bindings={}
+}
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&bindings={}
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js
 /* harmony default export */ var LuckDrawvue_type_script_lang_js = ({});
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js
  
-// EXTERNAL MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=style&index=0&id=08c098ea&scoped=true&lang=css
-var LuckDrawvue_type_style_index_0_id_08c098ea_scoped_true_lang_css = __webpack_require__("7d8e");
-
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue
 
 
 
-
-
-LuckDrawvue_type_script_lang_js.render = LuckDrawvue_type_template_id_08c098ea_scoped_true_bindings_render
-LuckDrawvue_type_script_lang_js.__scopeId = "data-v-08c098ea"
+LuckDrawvue_type_script_lang_js.render = render
 
 /* harmony default export */ var LuckDraw = (LuckDrawvue_type_script_lang_js);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=4b504379&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
 
-var LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1 = {
+var LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1 = {
   ref: "luckDraw",
   style: {
     "overflow": "hidden"
   }
 };
 
-var LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
+var LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
 
-function LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1, [LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2], 512);
+function LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1, [LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2], 512);
 }
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=148c612b&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=4b504379&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -5256,7 +4851,7 @@ var getAngle = function getAngle(deg) {
 }; // 根据角度计算圆上的点
 
 var getArcPointerByDeg = function getArcPointerByDeg(deg, r) {
-  return [+(Math.cos(deg) * r).toFixed(1), +(Math.sin(deg) * r).toFixed(1)];
+  return [+(Math.cos(deg) * r).toFixed(8), +(Math.sin(deg) * r).toFixed(8)];
 }; // 根据点计算切线方程
 
 var getTangentByPointer = function getTangentByPointer(x, y) {
@@ -5267,6 +4862,20 @@ var getTangentByPointer = function getTangentByPointer(x, y) {
 
 var math_drawRadian = function drawRadian(ctx, r, start, end) {
   var direction = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+
+  if (Math.abs(end - start).toFixed(8) >= getAngle(180).toFixed(8)) {
+    var middle = (end + start) / 2;
+
+    if (direction) {
+      drawRadian(ctx, r, start, middle, direction, 1);
+      drawRadian(ctx, r, middle, end, direction, 1);
+    } else {
+      drawRadian(ctx, r, middle, end, direction, 1);
+      drawRadian(ctx, r, start, middle, direction, 1);
+    }
+
+    return false;
+  }
 
   if (!direction) {
     var _ref = [end, start];
@@ -5298,8 +4907,8 @@ var math_drawRadian = function drawRadian(ctx, r, start, end) {
   var y0 = (k2 * b1 - k1 * b2) / (k2 - k1);
 
   if (isNaN(x0)) {
-    Math.abs(x1) == r.toFixed(1) && (x0 = x1);
-    Math.abs(x2) == r.toFixed(1) && (x0 = x2);
+    Math.abs(x1) == r.toFixed(8) && (x0 = x1);
+    Math.abs(x2) == r.toFixed(8) && (x0 = x2);
   }
 
   if (k1 === Infinity || k1 === -Infinity) {
@@ -5624,7 +5233,9 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     }
   },
   mounted: function mounted() {
-    this.dpr = (window.devicePixelRatio || 2) * 1.3; // 收集首次渲染的图片
+    this.dpr = window.devicePixelRatio;
+    this.dpr = (!this.dpr || this.dpr < 2 ? 2 : this.dpr) * 1.3;
+    window.dpr = this.dpr; // 收集首次渲染的图片
 
     var willUpdate = [];
     this.prizes && (willUpdate = this.prizes.map(function (prize) {
@@ -5713,7 +5324,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
         _this3.demo && _this3.walk(); // 点击按钮开始, 这里不能使用 addEventListener
 
-        if (_this3.button) canvas.onmousedown = function (e) {
+        if (_this3.button) canvas.onclick = function (e) {
           var _this3$getGeometricPr = _this3.getGeometricProperty([_this3.button.x, _this3.button.y, _this3.button.col || 1, _this3.button.row || 1]),
               _this3$getGeometricPr2 = _slicedToArray(_this3$getGeometricPr, 4),
               x = _this3$getGeometricPr2[0],
@@ -5819,8 +5430,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
           _defaultStyle = this._defaultStyle,
           _activeStyle = this._activeStyle; // 清空画布
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0)';
-      ctx.fillRect(0, 0, this.boxWidth, this.boxWidth); // 绘制所有边框
+      ctx.clearRect(0, 0, this.boxWidth, this.boxWidth); // 绘制所有边框
 
       this.blockData.forEach(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 6),
@@ -5962,7 +5572,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     },
     // 对外暴露: 缓慢停止方法
     stop: function stop(index) {
-      this.prizeFlag = index;
+      this.prizeFlag = index % this.prizes.length;
     },
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown: function slowDown() {
@@ -6064,24 +5674,24 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 
 
-LuckyGridvue_type_script_lang_js.render = LuckyGridvue_type_template_id_148c612b_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render
+LuckyGridvue_type_script_lang_js.render = LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render
 
 /* harmony default export */ var LuckyGrid = (LuckyGridvue_type_script_lang_js);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=8dbffac2&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=64060f96&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
 
-var LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1 = {
+var LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1 = {
   ref: "luckDraw",
   style: {
     "overflow": "hidden"
   }
 };
 
-var LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
+var LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
 
-function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1, [LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2], 512);
+function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1, [LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2], 512);
 }
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=8dbffac2&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=64060f96&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js
 
@@ -6287,7 +5897,9 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
   mounted: function mounted() {
     var _willUpdate;
 
-    this.dpr = (window.devicePixelRatio || 2) * 1.3; // 收集首次渲染的图片
+    this.dpr = window.devicePixelRatio;
+    this.dpr = (!this.dpr || this.dpr < 2 ? 2 : this.dpr) * 1.3;
+    window.dpr = this.dpr; // 收集首次渲染的图片
 
     var willUpdate = [];
     this.prizes && (willUpdate = this.prizes.map(function (prize) {
@@ -6329,7 +5941,7 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
         _this3.draw(); // 防止多次绑定点击事件
 
 
-        canvas.onmousedown = function (e) {
+        canvas.onclick = function (e) {
           ctx.beginPath();
           ctx.arc(0, 0, _this3.maxBtnRadius, 0, Math.PI * 2, false);
           if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false;
@@ -6438,17 +6050,19 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
       }; // 计算文字纵坐标
 
 
-      var getFontY = function getFontY(font, lineIndex) {
+      var getFontY = function getFontY(font, height, lineIndex) {
         // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
         var lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize;
-        return _this5.getHeight(font.top) + (lineIndex + 1) * getLength(lineHeight) * dpr;
+        return _this5.getHeight(font.top, height) + (lineIndex + 1) * getLength(lineHeight) * dpr;
       };
 
       ctx.save(); // 绘制prizes奖品区域
 
       this.prizes.forEach(function (prize, prizeIndex) {
         // 计算当前奖品区域中间坐标点
-        var currMiddleDeg = start + prizeIndex * _this5.prizeRadian; // 绘制背景
+        var currMiddleDeg = start + prizeIndex * _this5.prizeRadian; // 奖品区域可见高度
+
+        var prizeHeight = _this5.prizeRadius - _this5.maxBtnRadius; // 绘制背景
 
         math_drawSector(ctx, _this5.maxBtnRadius, _this5.prizeRadius, currMiddleDeg - _this5.prizeRadian / 2, currMiddleDeg + _this5.prizeRadian / 2, getLength(_defaultStyle.gutter) * dpr, prize.background || _defaultStyle.background); // 计算临时坐标并旋转文字
 
@@ -6464,12 +6078,12 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
           var prizeImg = _this5.prizeImgs[prizeIndex][imgIndex];
           if (!prizeImg) return console.error("\u9519\u8BEF273: prizes[".concat(prizeIndex, "]\u6CA1\u6709\u5956\u54C1\u56FE\u7247"));
 
-          var _this5$computedWidthA = _this5.computedWidthAndHeight(prizeImg, imgInfo, _this5.prizeRadian * _this5.prizeRadius, _this5.prizeRadius - _this5.maxBtnRadius),
+          var _this5$computedWidthA = _this5.computedWidthAndHeight(prizeImg, imgInfo, _this5.prizeRadian * _this5.prizeRadius, prizeHeight),
               _this5$computedWidthA2 = _slicedToArray(_this5$computedWidthA, 2),
               trueWidth = _this5$computedWidthA2[0],
               trueHeight = _this5$computedWidthA2[1];
 
-          ctx.drawImage(prizeImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top), trueWidth, trueHeight);
+          ctx.drawImage(prizeImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top, prizeHeight), trueWidth, trueHeight);
         }); // 逐行绘制文字
 
         prize.fonts && prize.fonts.forEach(function (font) {
@@ -6485,7 +6099,7 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
             for (var i = 0; i < text.length; i++) {
               str += text[i];
               var currWidth = ctx.measureText(str).width;
-              var maxWidth = (_this5.prizeRadius - getFontY(font, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr;
+              var maxWidth = (_this5.prizeRadius - getFontY(font, prizeHeight, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr;
 
               if (currWidth > _this5.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1));
@@ -6502,7 +6116,7 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
           lines.filter(function (line) {
             return !!line;
           }).forEach(function (line, lineIndex) {
-            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex));
+            ctx.fillText(line, getFontX(line), getFontY(font, prizeHeight, lineIndex));
           });
         }); // 修正旋转角度和原点坐标
 
@@ -6543,14 +6157,14 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
               trueHeight = _this5$computedWidthA4[1]; // 绘制图片
 
 
-          ctx.drawImage(btnImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top), trueWidth, trueHeight);
+          ctx.drawImage(btnImg, _this5.getOffsetX(trueWidth), _this5.getHeight(imgInfo.top, radius), trueWidth, trueHeight);
         }); // 绘制按钮文字
 
         btn.fonts && btn.fonts.forEach(function (font) {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor;
           ctx.font = "".concat(getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
           String(font.text).split('\n').forEach(function (line, lineIndex) {
-            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex));
+            ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex));
           });
         });
       });
@@ -6633,7 +6247,7 @@ function LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_pr
 
 
 
-LuckyWheelvue_type_script_lang_js.render = LuckyWheelvue_type_template_id_8dbffac2_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render
+LuckyWheelvue_type_script_lang_js.render = LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render
 
 /* harmony default export */ var LuckyWheel = (LuckyWheelvue_type_script_lang_js);
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/index.js
