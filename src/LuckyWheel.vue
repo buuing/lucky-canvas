@@ -285,16 +285,18 @@ export default {
         return this.getOffsetX(ctx.measureText(line).width)
       }
       // 计算文字纵坐标
-      const getFontY = (font, lineIndex) => {
+      const getFontY = (font, height, lineIndex) => {
         // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
         const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-        return this.getHeight(font.top) + (lineIndex + 1) * getLength(lineHeight) * dpr
+        return this.getHeight(font.top, height) + (lineIndex + 1) * getLength(lineHeight) * dpr
       }
       ctx.save()
       // 绘制prizes奖品区域
       this.prizes.forEach((prize, prizeIndex) => {
         // 计算当前奖品区域中间坐标点
         let currMiddleDeg = start + prizeIndex * this.prizeRadian
+        // 奖品区域可见高度
+        let prizeHeight = this.prizeRadius - this.maxBtnRadius
         // 绘制背景
         drawSector(
           ctx, this.maxBtnRadius, this.prizeRadius,
@@ -314,9 +316,15 @@ export default {
           const prizeImg = this.prizeImgs[prizeIndex][imgIndex]
           if (!prizeImg) return console.error(`错误273: prizes[${prizeIndex}]没有奖品图片`)
           const [trueWidth, trueHeight] = this.computedWidthAndHeight(
-            prizeImg, imgInfo, this.prizeRadian * this.prizeRadius, this.prizeRadius - this.maxBtnRadius
+            prizeImg, imgInfo, this.prizeRadian * this.prizeRadius, prizeHeight
           )
-          ctx.drawImage(prizeImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
+          ctx.drawImage(
+            prizeImg,
+            this.getOffsetX(trueWidth),
+            this.getHeight(imgInfo.top, prizeHeight),
+            trueWidth,
+            trueHeight
+          )
         })
         // 逐行绘制文字
         prize.fonts && prize.fonts.forEach(font => {
@@ -329,7 +337,8 @@ export default {
             for (let i = 0; i < text.length; i++) {
               str += text[i]
               let currWidth = ctx.measureText(str).width
-              let maxWidth = (this.prizeRadius - getFontY(font, lines.length)) * Math.tan(this.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr
+              let maxWidth = (this.prizeRadius - getFontY(font, prizeHeight, lines.length))
+                * Math.tan(this.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr
               if (currWidth > this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
@@ -341,7 +350,7 @@ export default {
             lines = text.split('\n')
           }
           lines.filter(line => !!line).forEach((line, lineIndex) => {
-            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
+            ctx.fillText(line, getFontX(line), getFontY(font, prizeHeight, lineIndex))
           })
         })
         // 修正旋转角度和原点坐标
@@ -378,14 +387,14 @@ export default {
             btnImg, imgInfo, this.getHeight(btn.radius) * 2, this.getHeight(btn.radius) * 2
           )
           // 绘制图片
-          ctx.drawImage(btnImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top), trueWidth, trueHeight)
+          ctx.drawImage(btnImg, this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius), trueWidth, trueHeight)
         })
         // 绘制按钮文字
         btn.fonts && btn.fonts.forEach(font => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
           ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
-            ctx.fillText(line, getFontX(line), getFontY(font, lineIndex))
+            ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
           })
         })
       })

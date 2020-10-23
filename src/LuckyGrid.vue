@@ -463,7 +463,7 @@ export default {
     },
     // 对外暴露: 缓慢停止方法
     stop (index) {
-      this.prizeFlag = index
+      this.prizeFlag = index % this.prizes.length
     },
     // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
     slowDown () {
