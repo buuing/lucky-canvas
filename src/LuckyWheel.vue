@@ -7,7 +7,6 @@
 <script>
 import {
   isExpectType,
-  getLength,
   removeEnter,
   paramsValidator,
 } from '../utils/index.js'
@@ -68,6 +67,7 @@ export default {
       rotateDeg: 0,              // 旋转的角度
       prizeImgs: [],             // 奖品图片缓存
       btnImgs: [],               // 按钮图片缓存
+      htmlFontSize: 16,          // 根元素的字体大小 (适配rem)
     }
   },
   computed: {
@@ -75,7 +75,7 @@ export default {
       const style = {
         fontSize: '18px',
         fontColor: '#000',
-        fontStyle: 'sans-serif, STHeiti, SimHei',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
@@ -172,6 +172,7 @@ export default {
      * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
      */
     init (willUpdateImgs) {
+      this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2)
       const { dpr } = this
       const box = this.$refs.luckDraw
       if (!box) return false
@@ -274,7 +275,7 @@ export default {
         ctx.fillStyle = block.background
         ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
         ctx.fill()
-        return radius - getLength(block.padding.split(' ')[0]) * dpr
+        return radius - this.getLength(block.padding.split(' ')[0]) * dpr
       }, this.Radius)
       // 计算起始弧度
       this.prizeDeg = 360 / this.prizes.length
@@ -288,7 +289,7 @@ export default {
       const getFontY = (font, height, lineIndex) => {
         // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
         const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-        return this.getHeight(font.top, height) + (lineIndex + 1) * getLength(lineHeight) * dpr
+        return this.getHeight(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight) * dpr
       }
       ctx.save()
       // 绘制prizes奖品区域
@@ -302,7 +303,7 @@ export default {
           ctx, this.maxBtnRadius, this.prizeRadius,
           currMiddleDeg - this.prizeRadian / 2,
           currMiddleDeg + this.prizeRadian / 2,
-          getLength(_defaultStyle.gutter) * dpr,
+          this.getLength(_defaultStyle.gutter) * dpr,
           prize.background || _defaultStyle.background
         )
         // 计算临时坐标并旋转文字
@@ -329,7 +330,7 @@ export default {
         // 逐行绘制文字
         prize.fonts && prize.fonts.forEach(font => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          ctx.font = `${this.getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           let lines = [], text = String(font.text)
           if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
             text = removeEnter(text)
@@ -338,7 +339,7 @@ export default {
               str += text[i]
               let currWidth = ctx.measureText(str).width
               let maxWidth = (this.prizeRadius - getFontY(font, prizeHeight, lines.length))
-                * Math.tan(this.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr
+                * Math.tan(this.prizeRadian / 2) * 2 - this.getLength(_defaultStyle.gutter) * dpr
               if (currWidth > this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
@@ -392,7 +393,7 @@ export default {
         // 绘制按钮文字
         btn.fonts && btn.fonts.forEach(font => {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          ctx.font = `${this.getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
           })
@@ -442,21 +443,49 @@ export default {
       this.draw()
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
+    // 获取长度
+    getLength (length) {
+      if (isExpectType(length, 'number')) return length
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        clean: true
+      })
+      return 0
+    },
     // 获取相对宽度
     getWidth (length, width = this.prizeRadian * this.prizeRadius) {
       if (isExpectType(length, 'number')) return length * this.dpr
-      if (isExpectType(length, 'string')) return length.includes('%')
-        ? length.slice(0, -1) / 100 * width
-        : length.replace(/px/g, '') * this.dpr
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        denominator: width
+      })
       return 0
     },
     // 获取相对高度
     getHeight (length, height = this.prizeRadius) {
       if (isExpectType(length, 'number')) return length * this.dpr
-      if (isExpectType(length, 'string')) return length.includes('%')
-        ? length.slice(0, -1) / 100 * height
-        : length.replace(/px/g, '') * this.dpr
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        denominator: height
+      })
       return 0
+    },
+    // 转换单位
+    changeUnits (value, { denominator = 1, clean = false }) {
+      return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
+        switch (unit) {
+          case '%':
+            num *= (denominator / 100)
+            break
+          case 'px':
+            num *= 1
+            break
+          case 'rem':
+            num *= this.htmlFontSize
+            break
+          default:
+            num *= 1
+            break
+        }
+        return clean || unit === '%' ? num : num * this.dpr
+      }))
     },
     // 获取相对(居中)X坐标
     getOffsetX (width) {

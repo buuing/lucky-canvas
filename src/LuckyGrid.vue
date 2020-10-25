@@ -7,7 +7,6 @@
 <script>
 import {
   isExpectType,
-  getLength,
   removeEnter,
   computePadding,
   paramsValidator,
@@ -72,17 +71,18 @@ export default {
   },
   data () {
     return {
-      dpr: 2, // 设备像素比
-      ctx: null, // 画布
-      canPlay: true, // 是否可以开始
-      currIndex: 0, // 当前index累加
-      prizeFlag: undefined, // 中奖索引标识
-      prizeArea: {}, // 奖品区域几何信息
       cells: [],
       cellImgs: new Array(this.cols * this.rows).fill().map(_ => []),
-      animationId: 0,
-      timer: 0, // 游走定时器
-      speed: 0, // 速度
+      dpr: 2,                     // 设备像素比
+      ctx: null,                  // 画布
+      canPlay: true,              // 是否可以开始
+      currIndex: 0,               // 当前index累加
+      prizeFlag: undefined,       // 中奖索引标识
+      prizeArea: {},              // 奖品区域几何信息
+      animationId: 0,             // 帧动画id
+      timer: 0,                   // 游走定时器
+      speed: 0,                   // 速度
+      htmlFontSize: 16,           // 根元素的字体大小 (适配rem)
     }
   },
   watch: {
@@ -154,7 +154,7 @@ export default {
         borderRadius: 20,
         fontColor: '#000',
         fontSize: '18px',
-        fontStyle: 'sans-serif, STHeiti, SimHei',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
         textAlign: 'center',
         background: '#fff',
         shadow: '',
@@ -167,8 +167,8 @@ export default {
         style[key] = this.defaultStyle[key]
       }
       // 根据dpr计算实际显示效果
-      style.borderRadius = getLength(style.borderRadius) * this.dpr
-      style.gutter *= this.dpr
+      style.borderRadius = this.getLength(style.borderRadius) * this.dpr
+      style.gutter = this.getLength(style.gutter) * this.dpr
       style.speed = style.speed >> 0
       return style
     },
@@ -202,6 +202,7 @@ export default {
      * @param { Array<Array<img>> } willUpdateImgs 需要更新的图片
      */
     init (willUpdateImgs) {
+      this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2)
       const { dpr, _defaultStyle } = this
       const box = this.$refs.luckDraw
       if (!box) return false
@@ -232,7 +233,7 @@ export default {
       this.blockData = []
       this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
         const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block).map(n => n * dpr)
-        this.blockData.push([x, y, w, h, block.borderRadius ? getLength(block.borderRadius) * dpr : 0, block.background])
+        this.blockData.push([x, y, w, h, block.borderRadius ? this.getLength(block.borderRadius) * dpr : 0, block.background])
         return {
           x: x + paddingLeft,
           y: y + paddingTop,
@@ -361,7 +362,7 @@ export default {
         }
         drawRoundRect(
           ctx, x, y, width, height,
-          prize.borderRadius ? getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius,
+          prize.borderRadius ? this.getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius,
           this.handleBackground(x, y, width, height, prize.background, isActive)
         )
         // 清空阴影
@@ -392,8 +393,8 @@ export default {
             : (font.fontStyle || _defaultStyle.fontStyle)
           // 字体大小
           let size = isActive && _activeStyle.fontSize
-            ? getLength(_activeStyle.fontSize)
-            : getLength(font.fontSize || _defaultStyle.fontSize)
+            ? this.getLength(_activeStyle.fontSize)
+            : this.getLength(font.fontSize || _defaultStyle.fontSize)
           // 字体行高
           const lineHeight = isActive && _activeStyle.lineHeight
             ? _activeStyle.lineHeight
@@ -423,7 +424,7 @@ export default {
             ctx.fillText(
               line,
               x + this.getOffsetX(ctx.measureText(line).width, prize.col),
-              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(lineHeight) * dpr
+              y + this.getHeight(font.top, prize.row) + (lineIndex + 1) * this.getLength(lineHeight) * dpr
             )
           })
         })
@@ -497,25 +498,49 @@ export default {
       )
       return res
     },
+    // 获取长度
+    getLength (length) {
+      if (isExpectType(length, 'number')) return length
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        clean: true
+      })
+      return 0
+    },
     // 转换并获取宽度
     getWidth (width, col = 1) {
       if (isExpectType(width, 'number')) return width * this.dpr
-      if (isExpectType(width, 'string')) {
-        return width.includes('%')
-          ? (this.cellWidth * col + this._defaultStyle.gutter * (col - 1)) * width.slice(0, -1) / 100
-          : width.replace(/px/g, '') * this.dpr
-      }
+      if (isExpectType(width, 'string')) return this.changeUnits(width, {
+        denominator: this.cellWidth * col + this._defaultStyle.gutter * (col - 1)
+      })
       return 0
     },
     // 转换并获取高度
     getHeight (height, row = 1) {
       if (isExpectType(height, 'number')) return height * this.dpr
-      if (isExpectType(height, 'string')) {
-        return height.includes('%')
-          ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100
-          : height.replace(/px/g, '') * this.dpr
-      }
+      if (isExpectType(height, 'string')) return this.changeUnits(height, {
+        denominator: this.cellHeight * row + this._defaultStyle.gutter * (row - 1)
+      })
       return 0
+    },
+    // 转换单位
+    changeUnits (value, { denominator = 1, clean = false }) {
+      return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
+        switch (unit) {
+          case '%':
+            num *= (denominator / 100)
+            break
+          case 'px':
+            num *= 1
+            break
+          case 'rem':
+            num *= this.htmlFontSize
+            break
+          default:
+            num *= 1
+            break
+        }
+        return clean || unit === '%' ? num : num * this.dpr
+      }))
     },
     // 获取相对(居中)X坐标
     getOffsetX (width, col = 1) {

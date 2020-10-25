@@ -8,15 +8,6 @@ export const isExpectType = (param, ...types) => {
   return types.some(type => Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type)
 }
 
-// 转换并获取长度
-export const getLength = length => {
-  if (isExpectType(length, 'number')) return length
-  if (isExpectType(length, 'string')) {
-    return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '')
-  }
-  return 0
-}
-
 // 移除\n
 export const removeEnter = str => {
   return [].filter.call(str, s => s !== '\n').join('')
