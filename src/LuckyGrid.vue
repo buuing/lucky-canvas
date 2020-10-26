@@ -63,9 +63,9 @@ export default {
       }
     },
     // 横向等分成 cols 个格子
-    cols: { type: Number | String, default: 3 },
+    cols: { type: [String, Number], default: 3 },
     // 纵向等分成 rows 个格子
-    rows: { type: Number | String, default: 3 },
+    rows: { type: [String, Number], default: 3 },
     // demo演示开启中奖标识自动游走
     demo: { type: Boolean, default: false },
   },
