@@ -76,6 +76,7 @@ export default {
         fontSize: '18px',
         fontColor: '#000',
         fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
@@ -329,8 +330,12 @@ export default {
         })
         // 逐行绘制文字
         prize.fonts && prize.fonts.forEach(font => {
-          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${this.getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          let fontColor = font.fontColor || _defaultStyle.fontColor
+          let fontWeight = font.fontWeight || _defaultStyle.fontWeight
+          let fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
+          let fontStyle = font.fontStyle || _defaultStyle.fontStyle
+          ctx.fillStyle = fontColor
+          ctx.font = `${fontWeight} ${fontSize * dpr}px ${fontStyle}`
           let lines = [], text = String(font.text)
           if (font.hasOwnProperty('wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
             text = removeEnter(text)
@@ -392,8 +397,12 @@ export default {
         })
         // 绘制按钮文字
         btn.fonts && btn.fonts.forEach(font => {
-          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
-          ctx.font = `${this.getLength(font.fontSize || _defaultStyle.fontSize) * dpr}px ${font.fontStyle || _defaultStyle.fontStyle}`
+          let fontColor = font.fontColor || _defaultStyle.fontColor
+          let fontWeight = font.fontWeight || _defaultStyle.fontWeight
+          let fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
+          let fontStyle = font.fontStyle || _defaultStyle.fontStyle
+          ctx.fillStyle = fontColor
+          ctx.font = `${fontWeight} ${fontSize * dpr}px ${fontStyle}`
           String(font.text).split('\n').forEach((line, lineIndex) => {
             ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
           })

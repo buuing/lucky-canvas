@@ -155,6 +155,7 @@ export default {
         fontColor: '#000',
         fontSize: '18px',
         fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
         textAlign: 'center',
         background: '#fff',
         shadow: '',
@@ -391,6 +392,10 @@ export default {
           let style = isActive && _activeStyle.fontStyle
             ? _activeStyle.fontStyle
             : (font.fontStyle || _defaultStyle.fontStyle)
+          // 字体加粗
+          let fontWeight = isActive && _activeStyle.fontWeight
+            ? _activeStyle.fontWeight
+            : (font.fontWeight || _defaultStyle.fontWeight)
           // 字体大小
           let size = isActive && _activeStyle.fontSize
             ? this.getLength(_activeStyle.fontSize)
@@ -399,7 +404,7 @@ export default {
           const lineHeight = isActive && _activeStyle.lineHeight
             ? _activeStyle.lineHeight
             : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-          ctx.font = size * dpr + 'px ' + style
+          ctx.font = `${fontWeight} ${size * dpr}px ${style}`
           ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
           let lines = [], text = String(font.text)
           // 计算文字换行
