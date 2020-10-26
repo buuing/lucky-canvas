@@ -4436,21 +4436,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 LuckDrawvue_type_script_lang_js.render = render
 
 /* harmony default export */ var LuckDraw = (LuckDrawvue_type_script_lang_js);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=4b504379&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=c110d126&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","cells":"data","cellImgs":"data","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","animationId":"data","timer":"data","speed":"data","htmlFontSize":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getLength":"options","getWidth":"options","getHeight":"options","changeUnits":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
 
-var LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1 = {
+var LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1 = {
   ref: "luckDraw",
   style: {
     "overflow": "hidden"
   }
 };
 
-var LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
+var LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
 
-function LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1, [LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2], 512);
+function LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_1, [LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_hoisted_2], 512);
 }
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=4b504379&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","cells":"data","cellImgs":"data","animationId":"data","timer":"data","speed":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getWidth":"options","getHeight":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=c110d126&bindings={"prizes":"props","button":"props","blocks":"props","defaultStyle":"props","activeStyle":"props","cols":"props","rows":"props","demo":"props","cells":"data","cellImgs":"data","dpr":"data","ctx":"data","canPlay":"data","currIndex":"data","prizeFlag":"data","prizeArea":"data","animationId":"data","timer":"data","speed":"data","htmlFontSize":"data","prizeIndex":"options","_defaultStyle":"options","_activeStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","handleBackground":"options","play":"options","run":"options","stop":"options","slowDown":"options","getGeometricProperty":"options","getLength":"options","getWidth":"options","getHeight":"options","changeUnits":"options","getOffsetX":"options","setSpeed":"options","walk":"options"}
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -4722,8 +4722,6 @@ var es_array_some = __webpack_require__("45fc");
 
 
 
-
-
 /**
  * 判断是否是期望的类型
  * @param { any } param 将要判断的变量
@@ -4738,16 +4736,6 @@ var isExpectType = function isExpectType(param) {
   return types.some(function (type) {
     return Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type;
   });
-}; // 转换并获取长度
-
-var getLength = function getLength(length) {
-  if (isExpectType(length, 'number')) return length;
-
-  if (isExpectType(length, 'string')) {
-    return length.includes('%') ? length.slice(0, -1) / 100 : ~~length.replace(/px/g, '');
-  }
-
-  return 0;
 }; // 移除\n
 
 var removeEnter = function removeEnter(str) {
@@ -5107,6 +5095,10 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
   },
   data: function data() {
     return {
+      cells: [],
+      cellImgs: new Array(this.cols * this.rows).fill().map(function (_) {
+        return [];
+      }),
       dpr: 2,
       // 设备像素比
       ctx: null,
@@ -5119,14 +5111,13 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       // 中奖索引标识
       prizeArea: {},
       // 奖品区域几何信息
-      cells: [],
-      cellImgs: new Array(this.cols * this.rows).fill().map(function (_) {
-        return [];
-      }),
       animationId: 0,
+      // 帧动画id
       timer: 0,
       // 游走定时器
-      speed: 0 // 速度
+      speed: 0,
+      // 速度
+      htmlFontSize: 16 // 根元素的字体大小 (适配rem)
 
     };
   },
@@ -5199,7 +5190,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
         borderRadius: 20,
         fontColor: '#000',
         fontSize: '18px',
-        fontStyle: 'sans-serif, STHeiti, SimHei',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
         textAlign: 'center',
         background: '#fff',
         shadow: '',
@@ -5213,8 +5204,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       } // 根据dpr计算实际显示效果
 
 
-      style.borderRadius = getLength(style.borderRadius) * this.dpr;
-      style.gutter *= this.dpr;
+      style.borderRadius = this.getLength(style.borderRadius) * this.dpr;
+      style.gutter = this.getLength(style.gutter) * this.dpr;
       style.speed = style.speed >> 0;
       return style;
     },
@@ -5253,6 +5244,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     init: function init(willUpdateImgs) {
       var _this3 = this;
 
+      this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2);
       var dpr = this.dpr,
           _defaultStyle = this._defaultStyle;
       var box = this.$refs.luckDraw;
@@ -5299,7 +5291,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
             paddingLeft = _computePadding$map2[2],
             paddingRight = _computePadding$map2[3];
 
-        _this3.blockData.push([x, y, w, h, block.borderRadius ? getLength(block.borderRadius) * dpr : 0, block.background]);
+        _this3.blockData.push([x, y, w, h, block.borderRadius ? _this3.getLength(block.borderRadius) * dpr : 0, block.background]);
 
         return {
           x: x + paddingLeft,
@@ -5471,7 +5463,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
           shadow[1] > 0 ? height -= shadow[1] : (height += shadow[1], y -= shadow[1]);
         }
 
-        drawRoundRect(ctx, x, y, width, height, prize.borderRadius ? getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius, _this5.handleBackground(x, y, width, height, prize.background, isActive)); // 清空阴影
+        drawRoundRect(ctx, x, y, width, height, prize.borderRadius ? _this5.getLength(prize.borderRadius) * dpr : _defaultStyle.borderRadius, _this5.handleBackground(x, y, width, height, prize.background, isActive)); // 清空阴影
 
         ctx.shadowColor = 'rgba(255, 255, 255, 0)';
         ctx.shadowOffsetX = 0;
@@ -5496,7 +5488,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
           // 字体样式
           var style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.fontStyle || _defaultStyle.fontStyle; // 字体大小
 
-          var size = isActive && _activeStyle.fontSize ? getLength(_activeStyle.fontSize) : getLength(font.fontSize || _defaultStyle.fontSize); // 字体行高
+          var size = isActive && _activeStyle.fontSize ? _this5.getLength(_activeStyle.fontSize) : _this5.getLength(font.fontSize || _defaultStyle.fontSize); // 字体行高
 
           var lineHeight = isActive && _activeStyle.lineHeight ? _activeStyle.lineHeight : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize;
           ctx.font = size * dpr + 'px ' + style;
@@ -5527,7 +5519,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
           }
 
           lines.forEach(function (line, lineIndex) {
-            ctx.fillText(line, x + _this5.getOffsetX(ctx.measureText(line).width, prize.col), y + _this5.getHeight(font.top, prize.row) + (lineIndex + 1) * getLength(lineHeight) * dpr);
+            ctx.fillText(line, x + _this5.getOffsetX(ctx.measureText(line).width, prize.col), y + _this5.getHeight(font.top, prize.row) + (lineIndex + 1) * _this5.getLength(lineHeight) * dpr);
           });
         });
       });
@@ -5612,27 +5604,61 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       col && row && res.push(this.cellWidth * col + this._defaultStyle.gutter * (col - 1), this.cellHeight * row + this._defaultStyle.gutter * (row - 1));
       return res;
     },
+    // 获取长度
+    getLength: function getLength(length) {
+      if (isExpectType(length, 'number')) return length;
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        clean: true
+      });
+      return 0;
+    },
     // 转换并获取宽度
     getWidth: function getWidth(width) {
       var col = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(width, 'number')) return width * this.dpr;
-
-      if (isExpectType(width, 'string')) {
-        return width.includes('%') ? (this.cellWidth * col + this._defaultStyle.gutter * (col - 1)) * width.slice(0, -1) / 100 : width.replace(/px/g, '') * this.dpr;
-      }
-
+      if (isExpectType(width, 'string')) return this.changeUnits(width, {
+        denominator: this.cellWidth * col + this._defaultStyle.gutter * (col - 1)
+      });
       return 0;
     },
     // 转换并获取高度
     getHeight: function getHeight(height) {
       var row = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(height, 'number')) return height * this.dpr;
-
-      if (isExpectType(height, 'string')) {
-        return height.includes('%') ? (this.cellHeight * row + this._defaultStyle.gutter * (row - 1)) * height.slice(0, -1) / 100 : height.replace(/px/g, '') * this.dpr;
-      }
-
+      if (isExpectType(height, 'string')) return this.changeUnits(height, {
+        denominator: this.cellHeight * row + this._defaultStyle.gutter * (row - 1)
+      });
       return 0;
+    },
+    // 转换单位
+    changeUnits: function changeUnits(value, _ref6) {
+      var _this7 = this;
+
+      var _ref6$denominator = _ref6.denominator,
+          denominator = _ref6$denominator === void 0 ? 1 : _ref6$denominator,
+          _ref6$clean = _ref6.clean,
+          clean = _ref6$clean === void 0 ? false : _ref6$clean;
+      return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, function (value, num, unit) {
+        switch (unit) {
+          case '%':
+            num *= denominator / 100;
+            break;
+
+          case 'px':
+            num *= 1;
+            break;
+
+          case 'rem':
+            num *= _this7.htmlFontSize;
+            break;
+
+          default:
+            num *= 1;
+            break;
+        }
+
+        return clean || unit === '%' ? num : num * _this7.dpr;
+      }));
     },
     // 获取相对(居中)X坐标
     getOffsetX: function getOffsetX(width) {
@@ -5645,13 +5671,13 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     },
     // 增加中奖标识自动游走
     walk: function walk() {
-      var _this7 = this;
+      var _this8 = this;
 
       clearInterval(this.timer);
       this.timer = setInterval(function () {
-        _this7.currIndex += 1;
+        _this8.currIndex += 1;
 
-        _this7.draw();
+        _this8.draw();
       }, 1300);
     } // 绘制灯带
     // drawLamp () {
@@ -5674,27 +5700,26 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 
 
-LuckyGridvue_type_script_lang_js.render = LuckyGridvue_type_template_id_4b504379_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_cells_data_cellImgs_data_animationId_data_timer_data_speed_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getWidth_options_getHeight_options_getOffsetX_options_setSpeed_options_walk_options_render
+LuckyGridvue_type_script_lang_js.render = LuckyGridvue_type_template_id_c110d126_bindings_prizes_props_button_props_blocks_props_defaultStyle_props_activeStyle_props_cols_props_rows_props_demo_props_cells_data_cellImgs_data_dpr_data_ctx_data_canPlay_data_currIndex_data_prizeFlag_data_prizeArea_data_animationId_data_timer_data_speed_data_htmlFontSize_data_prizeIndex_options_defaultStyle_options_activeStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_handleBackground_options_play_options_run_options_stop_options_slowDown_options_getGeometricProperty_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_setSpeed_options_walk_options_render
 
 /* harmony default export */ var LuckyGrid = (LuckyGridvue_type_script_lang_js);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=64060f96&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=39bb2416&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","htmlFontSize":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getLength":"options","getWidth":"options","getHeight":"options","changeUnits":"options","getOffsetX":"options"}
 
-var LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1 = {
+var LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_hoisted_1 = {
   ref: "luckDraw",
   style: {
     "overflow": "hidden"
   }
 };
 
-var LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
+var LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])("canvas", null, null, -1);
 
-function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_1, [LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_hoisted_2], 512);
+function LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_hoisted_1, [LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_hoisted_2], 512);
 }
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=64060f96&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getWidth":"options","getHeight":"options","getOffsetX":"options"}
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=39bb2416&bindings={"blocks":"props","prizes":"props","buttons":"props","defaultStyle":"props","ctx":"data","canPlay":"data","speed":"data","prizeFlag":"data","animationId":"data","Radius":"data","prizeDeg":"data","prizeRadian":"data","prizeRadius":"data","maxBtnRadius":"data","rotateDeg":"data","prizeImgs":"data","btnImgs":"data","htmlFontSize":"data","_defaultStyle":"options","init":"options","loadAndCacheImg":"options","computedWidthAndHeight":"options","draw":"options","play":"options","run":"options","stop":"options","slowDown":"options","getLength":"options","getWidth":"options","getHeight":"options","changeUnits":"options","getOffsetX":"options"}
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js
-
 
 
 
@@ -5803,7 +5828,9 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
       // 旋转的角度
       prizeImgs: [],
       // 奖品图片缓存
-      btnImgs: [] // 按钮图片缓存
+      btnImgs: [],
+      // 按钮图片缓存
+      htmlFontSize: 16 // 根元素的字体大小 (适配rem)
 
     };
   },
@@ -5812,7 +5839,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
       var style = {
         fontSize: '18px',
         fontColor: '#000',
-        fontStyle: 'sans-serif, STHeiti, SimHei',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
@@ -5919,6 +5946,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
     init: function init(willUpdateImgs) {
       var _this3 = this;
 
+      this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2);
       var dpr = this.dpr;
       var box = this.$refs.luckDraw;
       if (!box) return false;
@@ -6038,7 +6066,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
         ctx.fillStyle = block.background;
         ctx.arc(0, 0, radius, 0, Math.PI * 2, false);
         ctx.fill();
-        return radius - getLength(block.padding.split(' ')[0]) * dpr;
+        return radius - _this5.getLength(block.padding.split(' ')[0]) * dpr;
       }, this.Radius); // 计算起始弧度
 
       this.prizeDeg = 360 / this.prizes.length;
@@ -6053,7 +6081,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
       var getFontY = function getFontY(font, height, lineIndex) {
         // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
         var lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize;
-        return _this5.getHeight(font.top, height) + (lineIndex + 1) * getLength(lineHeight) * dpr;
+        return _this5.getHeight(font.top, height) + (lineIndex + 1) * _this5.getLength(lineHeight) * dpr;
       };
 
       ctx.save(); // 绘制prizes奖品区域
@@ -6064,7 +6092,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
 
         var prizeHeight = _this5.prizeRadius - _this5.maxBtnRadius; // 绘制背景
 
-        math_drawSector(ctx, _this5.maxBtnRadius, _this5.prizeRadius, currMiddleDeg - _this5.prizeRadian / 2, currMiddleDeg + _this5.prizeRadian / 2, getLength(_defaultStyle.gutter) * dpr, prize.background || _defaultStyle.background); // 计算临时坐标并旋转文字
+        math_drawSector(ctx, _this5.maxBtnRadius, _this5.prizeRadius, currMiddleDeg - _this5.prizeRadian / 2, currMiddleDeg + _this5.prizeRadian / 2, _this5.getLength(_defaultStyle.gutter) * dpr, prize.background || _defaultStyle.background); // 计算临时坐标并旋转文字
 
         var x = Math.cos(currMiddleDeg) * _this5.prizeRadius;
 
@@ -6088,7 +6116,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
 
         prize.fonts && prize.fonts.forEach(function (font) {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor;
-          ctx.font = "".concat(getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
+          ctx.font = "".concat(_this5.getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
           var lines = [],
               text = String(font.text);
 
@@ -6099,7 +6127,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
             for (var i = 0; i < text.length; i++) {
               str += text[i];
               var currWidth = ctx.measureText(str).width;
-              var maxWidth = (_this5.prizeRadius - getFontY(font, prizeHeight, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - getLength(_defaultStyle.gutter) * dpr;
+              var maxWidth = (_this5.prizeRadius - getFontY(font, prizeHeight, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - _this5.getLength(_defaultStyle.gutter) * dpr;
 
               if (currWidth > _this5.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1));
@@ -6162,7 +6190,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
 
         btn.fonts && btn.fonts.forEach(function (font) {
           ctx.fillStyle = font.fontColor || _defaultStyle.fontColor;
-          ctx.font = "".concat(getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
+          ctx.font = "".concat(_this5.getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
           String(font.text).split('\n').forEach(function (line, lineIndex) {
             ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex));
           });
@@ -6221,19 +6249,61 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
       this.draw();
       this.animationId = window.requestAnimationFrame(this.slowDown);
     },
+    // 获取长度
+    getLength: function getLength(length) {
+      if (isExpectType(length, 'number')) return length;
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        clean: true
+      });
+      return 0;
+    },
     // 获取相对宽度
     getWidth: function getWidth(length) {
       var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.prizeRadian * this.prizeRadius;
       if (isExpectType(length, 'number')) return length * this.dpr;
-      if (isExpectType(length, 'string')) return length.includes('%') ? length.slice(0, -1) / 100 * width : length.replace(/px/g, '') * this.dpr;
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        denominator: width
+      });
       return 0;
     },
     // 获取相对高度
     getHeight: function getHeight(length) {
       var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.prizeRadius;
       if (isExpectType(length, 'number')) return length * this.dpr;
-      if (isExpectType(length, 'string')) return length.includes('%') ? length.slice(0, -1) / 100 * height : length.replace(/px/g, '') * this.dpr;
+      if (isExpectType(length, 'string')) return this.changeUnits(length, {
+        denominator: height
+      });
       return 0;
+    },
+    // 转换单位
+    changeUnits: function changeUnits(value, _ref) {
+      var _this7 = this;
+
+      var _ref$denominator = _ref.denominator,
+          denominator = _ref$denominator === void 0 ? 1 : _ref$denominator,
+          _ref$clean = _ref.clean,
+          clean = _ref$clean === void 0 ? false : _ref$clean;
+      return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, function (value, num, unit) {
+        switch (unit) {
+          case '%':
+            num *= denominator / 100;
+            break;
+
+          case 'px':
+            num *= 1;
+            break;
+
+          case 'rem':
+            num *= _this7.htmlFontSize;
+            break;
+
+          default:
+            num *= 1;
+            break;
+        }
+
+        return clean || unit === '%' ? num : num * _this7.dpr;
+      }));
     },
     // 获取相对(居中)X坐标
     getOffsetX: function getOffsetX(width) {
@@ -6247,7 +6317,7 @@ function LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_pr
 
 
 
-LuckyWheelvue_type_script_lang_js.render = LuckyWheelvue_type_template_id_64060f96_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getWidth_options_getHeight_options_getOffsetX_options_render
+LuckyWheelvue_type_script_lang_js.render = LuckyWheelvue_type_template_id_39bb2416_bindings_blocks_props_prizes_props_buttons_props_defaultStyle_props_ctx_data_canPlay_data_speed_data_prizeFlag_data_animationId_data_Radius_data_prizeDeg_data_prizeRadian_data_prizeRadius_data_maxBtnRadius_data_rotateDeg_data_prizeImgs_data_btnImgs_data_htmlFontSize_data_defaultStyle_options_init_options_loadAndCacheImg_options_computedWidthAndHeight_options_draw_options_play_options_run_options_stop_options_slowDown_options_getLength_options_getWidth_options_getHeight_options_changeUnits_options_getOffsetX_options_render
 
 /* harmony default export */ var LuckyWheel = (LuckyWheelvue_type_script_lang_js);
 // CONCATENATED MODULE: ./src/components/vue-luck-draw/src/index.js
