@@ -4370,7 +4370,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ec35d748-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"background":"#ff4a4c","border-radius":"4px","color":"#eee","text-align":"center","padding":"10px 20px"}},[_c('p',[_vm._v("请使用<luckyWheel /> 或 <luckyGrid />组件")]),_c('p',[_vm._v("新增图片引入机制")]),_c('p',[_vm._v("新增自动根据dpr优化清晰度")]),_c('p',[_vm._v("新增九宫格抽奖")]),_c('p',[_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://100px.net/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("官方文档")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw/issues?luckDraw","target":"_blank"}},[_vm._v("bug 反馈")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("github 地址")])])])}]
 
@@ -4517,12 +4517,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ec35d748-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=c110d126&
-var LuckyGridvue_type_template_id_c110d126_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_c110d126_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0dca28d0&
+var LuckyGridvue_type_template_id_0dca28d0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_0dca28d0_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=c110d126&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0dca28d0&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -5157,12 +5157,12 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     },
     // 横向等分成 cols 个格子
     cols: {
-      type: Number | String,
+      type: [String, Number],
       default: 3
     },
     // 纵向等分成 rows 个格子
     rows: {
-      type: Number | String,
+      type: [String, Number],
       default: 3
     },
     // demo演示开启中奖标识自动游走
@@ -5269,6 +5269,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
         fontColor: '#000',
         fontSize: '18px',
         fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
         textAlign: 'center',
         background: '#fff',
         shadow: '',
@@ -5564,12 +5565,14 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
         prize.fonts && prize.fonts.forEach(function (font) {
           // 字体样式
-          var style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.fontStyle || _defaultStyle.fontStyle; // 字体大小
+          var style = isActive && _activeStyle.fontStyle ? _activeStyle.fontStyle : font.fontStyle || _defaultStyle.fontStyle; // 字体加粗
+
+          var fontWeight = isActive && _activeStyle.fontWeight ? _activeStyle.fontWeight : font.fontWeight || _defaultStyle.fontWeight; // 字体大小
 
           var size = isActive && _activeStyle.fontSize ? _this5.getLength(_activeStyle.fontSize) : _this5.getLength(font.fontSize || _defaultStyle.fontSize); // 字体行高
 
           var lineHeight = isActive && _activeStyle.lineHeight ? _activeStyle.lineHeight : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize;
-          ctx.font = size * dpr + 'px ' + style;
+          ctx.font = "".concat(fontWeight, " ").concat(size * dpr, "px ").concat(style);
           ctx.fillStyle = isActive && _activeStyle.fontColor ? _activeStyle.fontColor : font.fontColor || _defaultStyle.fontColor;
           var lines = [],
               text = String(font.text); // 计算文字换行
@@ -5784,8 +5787,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_c110d126_render,
-  LuckyGridvue_type_template_id_c110d126_staticRenderFns,
+  LuckyGridvue_type_template_id_0dca28d0_render,
+  LuckyGridvue_type_template_id_0dca28d0_staticRenderFns,
   false,
   null,
   null,
@@ -5794,12 +5797,12 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"ec35d748-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=39bb2416&
-var LuckyWheelvue_type_template_id_39bb2416_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_39bb2416_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6ac657cb&
+var LuckyWheelvue_type_template_id_6ac657cb_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=39bb2416&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6ac657cb&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -5928,6 +5931,7 @@ var LuckyWheelvue_type_template_id_39bb2416_staticRenderFns = []
         fontSize: '18px',
         fontColor: '#000',
         fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
@@ -6203,8 +6207,14 @@ var LuckyWheelvue_type_template_id_39bb2416_staticRenderFns = []
         }); // 逐行绘制文字
 
         prize.fonts && prize.fonts.forEach(function (font) {
-          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor;
-          ctx.font = "".concat(_this5.getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
+          var fontColor = font.fontColor || _defaultStyle.fontColor;
+          var fontWeight = font.fontWeight || _defaultStyle.fontWeight;
+
+          var fontSize = _this5.getLength(font.fontSize || _defaultStyle.fontSize);
+
+          var fontStyle = font.fontStyle || _defaultStyle.fontStyle;
+          ctx.fillStyle = fontColor;
+          ctx.font = "".concat(fontWeight, " ").concat(fontSize * dpr, "px ").concat(fontStyle);
           var lines = [],
               text = String(font.text);
 
@@ -6277,8 +6287,14 @@ var LuckyWheelvue_type_template_id_39bb2416_staticRenderFns = []
         }); // 绘制按钮文字
 
         btn.fonts && btn.fonts.forEach(function (font) {
-          ctx.fillStyle = font.fontColor || _defaultStyle.fontColor;
-          ctx.font = "".concat(_this5.getLength(font.fontSize || _defaultStyle.fontSize) * dpr, "px ").concat(font.fontStyle || _defaultStyle.fontStyle);
+          var fontColor = font.fontColor || _defaultStyle.fontColor;
+          var fontWeight = font.fontWeight || _defaultStyle.fontWeight;
+
+          var fontSize = _this5.getLength(font.fontSize || _defaultStyle.fontSize);
+
+          var fontStyle = font.fontStyle || _defaultStyle.fontStyle;
+          ctx.fillStyle = fontColor;
+          ctx.font = "".concat(fontWeight, " ").concat(fontSize * dpr, "px ").concat(fontStyle);
           String(font.text).split('\n').forEach(function (line, lineIndex) {
             ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex));
           });
@@ -6411,8 +6427,8 @@ var LuckyWheelvue_type_template_id_39bb2416_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_39bb2416_render,
-  LuckyWheelvue_type_template_id_39bb2416_staticRenderFns,
+  LuckyWheelvue_type_template_id_6ac657cb_render,
+  LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns,
   false,
   null,
   null,
