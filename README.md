@@ -1,36 +1,36 @@
 
 <div align="center">
-  <img src="./logo.png" width="200" />
+  <img src="./logo.png" width="200" alt="logo" />
   <h1>vue-luck-draw 抽奖插件</h1>
   <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
-  <p class="hidden">
+  <!-- <p class="hidden">
     <a href="https://github.com/LuckDraw/vue-luck-draw#readme">简体中文</a>
-    <!-- · -->
-    <!-- <a href="javascript: ;">English</a> -->
-  </p>
+    ·
+    <a href="javascript: ;">English</a>
+  </p> -->
   <p>
-    <a href="https://github.com/buuing/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/badge/github-buuing-brightgreen.svg" />
-    </a>
-    <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw" />
-    </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw" />
+      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?&logo=github" alt="stars" />
+    </a>
+    <a href="https://github.com/LuckDraw/vue-luck-draw/network/members" target="_black">
+      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?logo=github" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dt/vue-luck-draw" />
+      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?&logo=npm" alt="version" />
+    </a>
+    <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
+      <img src="https://img.shields.io/npm/dt/vue-luck-draw?&logo=npm" alt="downloads" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js" />
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?&logo=npm" alt="size" />
     </a>
   </p>
   <p>
     <a href="https://github.com/buuing" target="_black">
-      <img src="https://img.shields.io/badge/author-%20ldq%20-7289da.svg" />
+      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github" alt="author" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw" />
+      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?&logo=github" alt="license" />
     </a>
   </p>
 </div>
@@ -40,7 +40,7 @@
 <h2 class="hidden">官方文档 & Demo演示</h2>
 
 <blockquote class="hidden">
-  <p><a href="https://100px.net?vue-luck-draw" target="_black" rel="nofollow">https://100px.net?vue-luck-draw</a></p>
+  <p><a href="https://100px.net?vue" target="_black" rel="nofollow">https://100px.net?vue</a></p>
 </blockquote>
 
 <br />
@@ -120,5 +120,3 @@ createApp(App).use(LuckDraw).mount('#app')
   })
 </script>
 ```
-
-<br />
