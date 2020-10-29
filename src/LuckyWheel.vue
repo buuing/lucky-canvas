@@ -60,11 +60,17 @@ export default {
         return {}
       }
     },
+    defaultConfig: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
   },
   data () {
     return {
       ctx: null,
-      canPlay: true,             // 是否可以开始游戏
+      startTime: 0,              // 游戏开始的时间戳
       speed: 0,                  // 旋转速度
       prizeFlag: undefined,      // 中奖的索引
       animationId: null,         // 帧动画id
@@ -77,7 +83,6 @@ export default {
       prizeImgs: [],             // 奖品图片缓存
       btnImgs: [],               // 按钮图片缓存
       htmlFontSize: 16,          // 根元素的字体大小 (适配rem)
-      startTime: 0,
     }
   },
   computed: {
@@ -91,14 +96,23 @@ export default {
         wordWrap: true,
         lengthLimit: '90%',
         gutter: '0px',
-        speed: 20,
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
       }
-      style.speed = style.speed >> 0
       return style
     },
+    _defaultConfig () {
+      const config = {
+        speed: 20,
+        rotateTime: 2500,
+        stopTime: 2500,
+      }
+      for (let key in this.defaultConfig) {
+        config[key] = this.defaultConfig[key]
+      }
+      return config
+    }
   },
   watch: {
     prizes: {
@@ -208,7 +222,7 @@ export default {
           ctx.beginPath()
           ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2, false)
           if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false
-          if (!this.canPlay) return false
+          if (this.startTime) return false
           this.$emit('start', e)
         }
       }
@@ -420,50 +434,45 @@ export default {
       })
     },
     play () {
-      if (!this.canPlay) return false
+      // 再次拦截, 因为play是可以异步调用的
+      if (this.startTime) return false
       cancelAnimationFrame(this.animationId)
-      this.prizeFlag = undefined
-      this.canPlay = false
-      this.speed = 0
       this.startTime = Date.now()
+      this.prizeFlag = undefined
+      this.speed = 0
       this.run()
-    },
-    run () {
-      let { speed, prizeFlag, prizeDeg, rotateDeg, _defaultStyle } = this
-      // 让转盘先完全转起来再停止
-      if (speed >= _defaultStyle.speed && prizeFlag !== undefined) {
-        if (
-          rotateDeg % 360 > prizeFlag * prizeDeg && rotateDeg % 360 < prizeFlag * prizeDeg + prizeDeg
-        ) return this.slowDown()
-      }
-      if (speed < _defaultStyle.speed) {
-        this.speed = easeIn(Date.now() - this.startTime, 0, _defaultStyle.speed, 2000)
-      }
-      this.rotateDeg = (this.rotateDeg + speed) % 360
-      this.draw()
-      this.animationId = window.requestAnimationFrame(this.run)
     },
     stop (index) {
       this.prizeFlag = index % this.prizes.length
     },
-    slowDown () {
-      // this.speed = easeOut(Date.now() - this.stopTime, 0, this._defaultStyle.speed, 1000)
-      if (this.speed < 1) {
-        let endDeg = 360 - this.prizeFlag * this.prizeDeg
-        if (Math.abs(this.rotateDeg % 360 - endDeg) <= 1) {
-          cancelAnimationFrame(this.animationId)
-          this.speed = 0
-          this.startTime = 0
-          this.canPlay = true
-          this.$emit('end', {...this.prizes.find((prize, index) => index === this.prizeFlag)})
-          return false
-        }
-      } else if (this.speed < 2) {
-        this.speed -= 0.02
-      } else {
-        this.speed -= 0.05
+    run () {
+      const { speed, prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
+      let interval = Date.now() - this.startTime
+      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+        // 记录开始停止的时间戳
+        this.endTime = Date.now()
+        // 记录开始停止的位置
+        this.stopDeg = rotateDeg
+        // 最终停止的角度
+        this.endDeg = 360 * 4 - prizeFlag * prizeDeg
+        cancelAnimationFrame(this.animationId)
+        return this.slowDown()
       }
-      this.rotateDeg += this.speed
+      this.speed = easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.rotateTime)
+      this.rotateDeg = (rotateDeg + speed) % 360
+      this.draw()
+      this.animationId = window.requestAnimationFrame(this.run)
+    },
+    slowDown () {
+      const { prizeFlag, endDeg, stopDeg, _defaultConfig } = this
+      let interval = Date.now() - this.endTime
+      if (interval >= _defaultConfig.stopTime) {
+        this.startTime = 0
+        this.$emit('end', {...this.prizes.find((prize, index) => index === prizeFlag)})
+        return cancelAnimationFrame(this.animationId)
+      }
+      let currDeg = easeOut(interval, stopDeg, endDeg - stopDeg, _defaultConfig.stopTime)
+      this.rotateDeg = currDeg % 360
       this.draw()
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
