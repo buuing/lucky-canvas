@@ -17,6 +17,15 @@ import {
   getLinearGradient,
 } from '../utils/math.js'
 
+const easeIn = (t, b, c, d) => {
+  if (t >= d) t = d
+  return c * (t /= d) * t + b
+}
+const easeOut = (t, b, c, d) => {
+  if (t >= d) t = d
+  return -c * (t /= d) * (t - 2) + b
+}
+
 export default {
   props: {
     // 奖品 (该属性被watch监听)
@@ -62,6 +71,13 @@ export default {
         return {}
       }
     },
+    // 默认配置 (该属性会在computed里面进行修正)
+    defaultConfig: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     // 横向等分成 cols 个格子
     cols: { type: [String, Number], default: 3 },
     // 纵向等分成 rows 个格子
@@ -84,6 +100,58 @@ export default {
       speed: 0,                   // 速度
       htmlFontSize: 16,           // 根元素的字体大小 (适配rem)
     }
+  },
+  computed: {
+    prizeIndex () {
+      return this.currIndex % this.prizes.length >> 0
+    },
+    _defaultStyle () {
+      // 默认样式
+      let style = {
+        gutter: 5,
+        borderRadius: 20,
+        fontColor: '#000',
+        fontSize: '18px',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
+        textAlign: 'center',
+        background: '#fff',
+        shadow: '',
+        wordWrap: true,
+        lengthLimit: '90%',
+      }
+      // 传入的样式进行覆盖
+      for (let key in this.defaultStyle) {
+        style[key] = this.defaultStyle[key]
+      }
+      // 根据dpr计算实际显示效果
+      style.borderRadius = this.getLength(style.borderRadius) * this.dpr
+      style.gutter = this.getLength(style.gutter) * this.dpr
+      return style
+    },
+    _activeStyle () {
+      // 默认样式
+      let style = {
+        background: '#ffce98',
+        shadow: ''
+      }
+      // 传入的样式进行覆盖
+      for (let key in this.activeStyle) {
+        style[key] = this.activeStyle[key]
+      }
+      return style
+    },
+    _defaultConfig () {
+      const config = {
+        speed: 20,
+        rotateTime: 2500,
+        stopTime: 2500,
+      }
+      for (let key in this.defaultConfig) {
+        config[key] = this.defaultConfig[key]
+      }
+      return config
+    },
   },
   watch: {
     prizes: {
@@ -142,49 +210,6 @@ export default {
       },
       deep: true,
     }
-  },
-  computed: {
-    prizeIndex () {
-      return this.currIndex % this.prizes.length >> 0
-    },
-    _defaultStyle () {
-      // 默认样式
-      let style = {
-        gutter: 5,
-        borderRadius: 20,
-        fontColor: '#000',
-        fontSize: '18px',
-        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
-        fontWeight: '400',
-        textAlign: 'center',
-        background: '#fff',
-        shadow: '',
-        wordWrap: true,
-        lengthLimit: '90%',
-        speed: 20,
-      }
-      // 传入的样式进行覆盖
-      for (let key in this.defaultStyle) {
-        style[key] = this.defaultStyle[key]
-      }
-      // 根据dpr计算实际显示效果
-      style.borderRadius = this.getLength(style.borderRadius) * this.dpr
-      style.gutter = this.getLength(style.gutter) * this.dpr
-      style.speed = style.speed >> 0
-      return style
-    },
-    _activeStyle () {
-      // 默认样式
-      let style = {
-        background: '#ffce98',
-        shadow: ''
-      }
-      // 传入的样式进行覆盖
-      for (let key in this.activeStyle) {
-        style[key] = this.activeStyle[key]
-      }
-      return style
-    },
   },
   mounted () {
     this.dpr = window.devicePixelRatio
@@ -454,10 +479,14 @@ export default {
       this.setSpeed()
       this.run()
     },
+    // 对外暴露: 缓慢停止方法
+    stop (index) {
+      this.prizeFlag = index % this.prizes.length
+    },
     // 实际开始执行方法
     run () {
-      const { speed, _defaultStyle } = this
-      const maxSpeed = _defaultStyle.speed / 40
+      const { speed, _defaultConfig } = this
+      const maxSpeed = _defaultConfig.speed / 40
       // 先完全旋转, 再停止
       if (speed >= maxSpeed && this.prizeFlag == this.prizeIndex) {
         return this.slowDown()
@@ -467,11 +496,7 @@ export default {
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
-    // 对外暴露: 缓慢停止方法
-    stop (index) {
-      this.prizeFlag = index % this.prizes.length
-    },
-    // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
+    // 缓慢停止的方法
     slowDown () {
       if (this.speed < 0.025) {
         if (this.prizeFlag == this.prizeIndex) {

@@ -112,7 +112,7 @@ export default {
         config[key] = this.defaultConfig[key]
       }
       return config
-    }
+    },
   },
   watch: {
     prizes: {
@@ -433,6 +433,7 @@ export default {
         })
       })
     },
+    // 对外暴露: 开始抽奖方法
     play () {
       // 再次拦截, 因为play是可以异步调用的
       if (this.startTime) return false
@@ -442,9 +443,11 @@ export default {
       this.speed = 0
       this.run()
     },
+    // 对外暴露: 缓慢停止方法
     stop (index) {
       this.prizeFlag = index % this.prizes.length
     },
+    // 实际开始执行方法
     run () {
       const { speed, prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
       let interval = Date.now() - this.startTime
@@ -463,6 +466,7 @@ export default {
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
+    // 缓慢停止的方法
     slowDown () {
       const { prizeFlag, endDeg, stopDeg, _defaultConfig } = this
       let interval = Date.now() - this.endTime
