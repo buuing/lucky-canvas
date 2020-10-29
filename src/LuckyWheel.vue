@@ -16,6 +16,15 @@ import {
   drawSector,
 } from '../utils/math.js'
 
+const easeIn = (t, b, c, d) => {
+  if (t >= d) t = d
+  return c * (t /= d) * t + b
+}
+const easeOut = (t, b, c, d) => {
+  if (t >= d) t = d
+  return -c * (t /= d) * (t - 2) + b
+}
+
 export default {
   props: {
     blocks: {
@@ -68,6 +77,7 @@ export default {
       prizeImgs: [],             // 奖品图片缓存
       btnImgs: [],               // 按钮图片缓存
       htmlFontSize: 16,          // 根元素的字体大小 (适配rem)
+      startTime: 0,
     }
   },
   computed: {
@@ -415,6 +425,7 @@ export default {
       this.prizeFlag = undefined
       this.canPlay = false
       this.speed = 0
+      this.startTime = Date.now()
       this.run()
     },
     run () {
@@ -425,8 +436,10 @@ export default {
           rotateDeg % 360 > prizeFlag * prizeDeg && rotateDeg % 360 < prizeFlag * prizeDeg + prizeDeg
         ) return this.slowDown()
       }
-      if (speed < _defaultStyle.speed) this.speed += 0.1
-      this.rotateDeg += speed
+      if (speed < _defaultStyle.speed) {
+        this.speed = easeIn(Date.now() - this.startTime, 0, _defaultStyle.speed, 2000)
+      }
+      this.rotateDeg = (this.rotateDeg + speed) % 360
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
@@ -434,11 +447,13 @@ export default {
       this.prizeFlag = index % this.prizes.length
     },
     slowDown () {
+      // this.speed = easeOut(Date.now() - this.stopTime, 0, this._defaultStyle.speed, 1000)
       if (this.speed < 1) {
         let endDeg = 360 - this.prizeFlag * this.prizeDeg
         if (Math.abs(this.rotateDeg % 360 - endDeg) <= 1) {
           cancelAnimationFrame(this.animationId)
           this.speed = 0
+          this.startTime = 0
           this.canPlay = true
           this.$emit('end', {...this.prizes.find((prize, index) => index === this.prizeFlag)})
           return false
