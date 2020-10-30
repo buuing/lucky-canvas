@@ -107,7 +107,6 @@ export default {
     _defaultStyle () {
       // 默认样式
       let style = {
-        gutter: 5,
         borderRadius: 20,
         fontColor: '#000',
         fontSize: '18px',
@@ -125,7 +124,6 @@ export default {
       }
       // 根据dpr计算实际显示效果
       style.borderRadius = this.getLength(style.borderRadius) * this.dpr
-      style.gutter = this.getLength(style.gutter) * this.dpr
       return style
     },
     _activeStyle () {
@@ -142,13 +140,15 @@ export default {
     },
     _defaultConfig () {
       const config = {
+        gutter: 5,
         speed: 20,
         rotateTime: 2500,
         stopTime: 2500,
       }
       for (let key in this.defaultConfig) {
-        config[key] = this.defaultConfig[key] >> 0
+        config[key] = this.defaultConfig[key]
       }
+      config.gutter = this.getLength(config.gutter) * this.dpr
       config.speed /= 40
       return config
     },
@@ -229,7 +229,7 @@ export default {
      */
     init (willUpdateImgs) {
       this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2)
-      const { dpr, _defaultStyle } = this
+      const { dpr, _defaultStyle, _defaultConfig } = this
       const box = this.$refs.luckDraw
       if (!box) return false
       const canvas = this.$refs.luckDraw.childNodes[0]
@@ -268,8 +268,8 @@ export default {
         }
       }, { x: 0, y: 0, w: this.boxWidth, h: this.boxHeight })
       // 计算单一奖品格子的宽度和高度
-      this.cellWidth = (this.prizeArea.w - _defaultStyle.gutter * (this.cols - 1)) / this.cols
-      this.cellHeight = (this.prizeArea.h - _defaultStyle.gutter * (this.rows - 1)) / this.rows
+      this.cellWidth = (this.prizeArea.w - _defaultConfig.gutter * (this.cols - 1)) / this.cols
+      this.cellHeight = (this.prizeArea.h - _defaultConfig.gutter * (this.rows - 1)) / this.rows
       const endCallBack = () => {
         // 开始首次渲染
         this.draw()
@@ -521,13 +521,14 @@ export default {
      * @return { array } [...真实坐标, width, height]
      */
     getGeometricProperty ([x, y, col, row]) {
+      const { _defaultConfig, cellWidth, cellHeight } = this
       let res = [
-        this.prizeArea.x + (this.cellWidth + this._defaultStyle.gutter) * x,
-        this.prizeArea.y + (this.cellHeight + this._defaultStyle.gutter) * y
+        this.prizeArea.x + (cellWidth + _defaultConfig.gutter) * x,
+        this.prizeArea.y + (cellHeight + _defaultConfig.gutter) * y
       ]
       col && row && res.push(
-        this.cellWidth * col + this._defaultStyle.gutter * (col - 1),
-        this.cellHeight * row + this._defaultStyle.gutter * (row - 1),
+        cellWidth * col + _defaultConfig.gutter * (col - 1),
+        cellHeight * row + _defaultConfig.gutter * (row - 1),
       )
       return res
     },
@@ -543,7 +544,7 @@ export default {
     getWidth (width, col = 1) {
       if (isExpectType(width, 'number')) return width * this.dpr
       if (isExpectType(width, 'string')) return this.changeUnits(width, {
-        denominator: this.cellWidth * col + this._defaultStyle.gutter * (col - 1)
+        denominator: this.cellWidth * col + this._defaultConfig.gutter * (col - 1)
       })
       return 0
     },
@@ -551,7 +552,7 @@ export default {
     getHeight (height, row = 1) {
       if (isExpectType(height, 'number')) return height * this.dpr
       if (isExpectType(height, 'string')) return this.changeUnits(height, {
-        denominator: this.cellHeight * row + this._defaultStyle.gutter * (row - 1)
+        denominator: this.cellHeight * row + this._defaultConfig.gutter * (row - 1)
       })
       return 0
     },
@@ -577,7 +578,7 @@ export default {
     },
     // 获取相对(居中)X坐标
     getOffsetX (width, col = 1) {
-      return (this.cellWidth * col + this._defaultStyle.gutter * (col - 1) - width) / 2
+      return (this.cellWidth * col + this._defaultConfig.gutter * (col - 1) - width) / 2
     },
     // 增加中奖标识自动游走
     walk () {

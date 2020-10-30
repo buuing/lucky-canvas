@@ -94,7 +94,6 @@ export default {
         background: '#fff',
         wordWrap: true,
         lengthLimit: '90%',
-        gutter: '0px',
       }
       for (let key in this.defaultStyle) {
         style[key] = this.defaultStyle[key]
@@ -103,12 +102,14 @@ export default {
     },
     _defaultConfig () {
       const config = {
+        gutter: '0px',
+        offsetDegree: 0,
         speed: 20,
         rotateTime: 2500,
         stopTime: 2500,
       }
       for (let key in this.defaultConfig) {
-        config[key] = this.defaultConfig[key] >> 0
+        config[key] = this.defaultConfig[key]
       }
       return config
     },
@@ -290,7 +291,7 @@ export default {
       ]
     },
     draw () {
-      const { ctx, dpr, _defaultStyle } = this
+      const { ctx, dpr, _defaultStyle, _defaultConfig } = this
       // 清空画布
       ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
       // 绘制blocks边框
@@ -304,7 +305,7 @@ export default {
       // 计算起始弧度
       this.prizeDeg = 360 / this.prizes.length
       this.prizeRadian = getAngle(this.prizeDeg)
-      let start = getAngle(-90 + this.rotateDeg)
+      let start = getAngle(-90 + this.rotateDeg + _defaultConfig.offsetDegree)
       // 计算文字横坐标
       const getFontX = (line) => {
         return this.getOffsetX(ctx.measureText(line).width)
@@ -327,7 +328,7 @@ export default {
           ctx, this.maxBtnRadius, this.prizeRadius,
           currMiddleDeg - this.prizeRadian / 2,
           currMiddleDeg + this.prizeRadian / 2,
-          this.getLength(_defaultStyle.gutter) * dpr,
+          this.getLength(_defaultConfig.gutter) * dpr,
           prize.background || _defaultStyle.background
         )
         // 计算临时坐标并旋转文字
@@ -367,7 +368,7 @@ export default {
               str += text[i]
               let currWidth = ctx.measureText(str).width
               let maxWidth = (this.prizeRadius - getFontY(font, prizeHeight, lines.length))
-                * Math.tan(this.prizeRadian / 2) * 2 - this.getLength(_defaultStyle.gutter) * dpr
+                * Math.tan(this.prizeRadian / 2) * 2 - this.getLength(_defaultConfig.gutter) * dpr
               if (currWidth > this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1))
                 str = text[i]
@@ -456,7 +457,7 @@ export default {
         // 记录开始停止的位置
         this.stopDeg = rotateDeg
         // 最终停止的角度
-        this.endDeg = 360 * 5 - prizeFlag * prizeDeg - rotateDeg
+        this.endDeg = 360 * 5 - prizeFlag * prizeDeg - rotateDeg - _defaultConfig.offsetDegree
         cancelAnimationFrame(this.animationId)
         return this.slowDown()
       }
