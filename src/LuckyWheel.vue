@@ -108,7 +108,7 @@ export default {
         stopTime: 2500,
       }
       for (let key in this.defaultConfig) {
-        config[key] = this.defaultConfig[key]
+        config[key] = this.defaultConfig[key] >> 0
       }
       return config
     },
