@@ -4379,12 +4379,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4b2e5d1a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=d73602d8&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"background":"#ff4a4c","border-radius":"4px","color":"#eee","text-align":"center","padding":"10px 20px"}},[_c('p',[_vm._v("请使用<luckyWheel /> 或 <luckyGrid />组件")]),_c('p',[_vm._v("新增图片引入机制")]),_c('p',[_vm._v("新增自动根据dpr优化清晰度")]),_c('p',[_vm._v("新增九宫格抽奖")]),_c('p',[_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://100px.net/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("官方文档")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw/issues?luckDraw","target":"_blank"}},[_vm._v("bug 反馈")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("github 地址")])])])}]
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticStyle:{"background":"#ff4a4c","border-radius":"4px","color":"#eee","text-align":"center","padding":"10px 20px"}},[_c('p',[_vm._v("请使用<luckyWheel /> 或 <luckyGrid />组件")]),_c('p',[_vm._v("新增图片引入机制")]),_c('p',[_vm._v("新增自动根据dpr优化清晰度")]),_c('p',[_vm._v("新增九宫格抽奖")]),_c('p',[_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://100px.net?luckDraw","target":"_blank"}},[_vm._v("官方文档")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw/issues?luckDraw","target":"_blank"}},[_vm._v("bug 反馈")]),_vm._v(" | "),_c('a',{staticStyle:{"color":"#eee"},attrs:{"href":"https://github.com/buuing/vue-luck-draw?luckDraw","target":"_blank"}},[_vm._v("github 地址")])])])}]
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=cf640d44&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=template&id=d73602d8&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckDraw.vue?vue&type=script&lang=js&
 //
@@ -4526,12 +4526,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0dca28d0&
-var LuckyGridvue_type_template_id_0dca28d0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyGridvue_type_template_id_0dca28d0_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4b2e5d1a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=95212b7a&
+var LuckyGridvue_type_template_id_95212b7a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyGridvue_type_template_id_95212b7a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=0dca28d0&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=95212b7a&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -5086,6 +5086,17 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 //
 
 
+
+var easeIn = function easeIn(t, b, c, d) {
+  if (t >= d) t = d;
+  return c * (t /= d) * t + b;
+};
+
+var easeOut = function easeOut(t, b, c, d) {
+  if (t >= d) t = d;
+  return -c * (t /= d) * (t - 2) + b;
+};
+
 /* harmony default export */ var LuckyGridvue_type_script_lang_js_ = ({
   props: {
     // 奖品 (该属性被watch监听)
@@ -5164,6 +5175,13 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
         return {};
       }
     },
+    // 默认配置 (该属性会在computed里面进行修正)
+    defaultConfig: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
     // 横向等分成 cols 个格子
     cols: {
       type: [String, Number],
@@ -5190,8 +5208,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       // 设备像素比
       ctx: null,
       // 画布
-      canPlay: true,
-      // 是否可以开始
+      startTime: 0,
+      // 游戏开始的时间戳
       currIndex: 0,
       // 当前index累加
       prizeFlag: undefined,
@@ -5202,11 +5220,66 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       // 帧动画id
       timer: 0,
       // 游走定时器
-      speed: 0,
-      // 速度
       htmlFontSize: 16 // 根元素的字体大小 (适配rem)
 
     };
+  },
+  computed: {
+    prizeIndex: function prizeIndex() {
+      return this.currIndex % this.prizes.length >> 0;
+    },
+    _defaultStyle: function _defaultStyle() {
+      // 默认样式
+      var style = {
+        borderRadius: 20,
+        fontColor: '#000',
+        fontSize: '18px',
+        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
+        fontWeight: '400',
+        textAlign: 'center',
+        background: '#fff',
+        shadow: '',
+        wordWrap: true,
+        lengthLimit: '90%'
+      }; // 传入的样式进行覆盖
+
+      for (var key in this.defaultStyle) {
+        style[key] = this.defaultStyle[key];
+      } // 根据dpr计算实际显示效果
+
+
+      style.borderRadius = this.getLength(style.borderRadius) * this.dpr;
+      return style;
+    },
+    _activeStyle: function _activeStyle() {
+      // 默认样式
+      var style = {
+        background: '#ffce98',
+        shadow: ''
+      }; // 传入的样式进行覆盖
+
+      for (var key in this.activeStyle) {
+        style[key] = this.activeStyle[key];
+      }
+
+      return style;
+    },
+    _defaultConfig: function _defaultConfig() {
+      var config = {
+        gutter: 5,
+        speed: 20,
+        rotateTime: 2500,
+        stopTime: 2500
+      };
+
+      for (var key in this.defaultConfig) {
+        config[key] = this.defaultConfig[key];
+      }
+
+      config.gutter = this.getLength(config.gutter) * this.dpr;
+      config.speed /= 40;
+      return config;
+    }
   },
   watch: {
     prizes: {
@@ -5266,51 +5339,6 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       deep: true
     }
   },
-  computed: {
-    prizeIndex: function prizeIndex() {
-      return this.currIndex % this.prizes.length >> 0;
-    },
-    _defaultStyle: function _defaultStyle() {
-      // 默认样式
-      var style = {
-        gutter: 5,
-        borderRadius: 20,
-        fontColor: '#000',
-        fontSize: '18px',
-        fontStyle: 'microsoft yahei ui,microsoft yahei,simsun,sans-serif',
-        fontWeight: '400',
-        textAlign: 'center',
-        background: '#fff',
-        shadow: '',
-        wordWrap: true,
-        lengthLimit: '90%',
-        speed: 20
-      }; // 传入的样式进行覆盖
-
-      for (var key in this.defaultStyle) {
-        style[key] = this.defaultStyle[key];
-      } // 根据dpr计算实际显示效果
-
-
-      style.borderRadius = this.getLength(style.borderRadius) * this.dpr;
-      style.gutter = this.getLength(style.gutter) * this.dpr;
-      style.speed = style.speed >> 0;
-      return style;
-    },
-    _activeStyle: function _activeStyle() {
-      // 默认样式
-      var style = {
-        background: '#ffce98',
-        shadow: ''
-      }; // 传入的样式进行覆盖
-
-      for (var key in this.activeStyle) {
-        style[key] = this.activeStyle[key];
-      }
-
-      return style;
-    }
-  },
   mounted: function mounted() {
     this.dpr = window.devicePixelRatio;
     this.dpr = (!this.dpr || this.dpr < 2 ? 2 : this.dpr) * 1.3;
@@ -5334,7 +5362,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
       this.htmlFontSize = getComputedStyle(window.document.documentElement).fontSize.slice(0, -2);
       var dpr = this.dpr,
-          _defaultStyle = this._defaultStyle;
+          _defaultStyle = this._defaultStyle,
+          _defaultConfig = this._defaultConfig;
       var box = this.$refs.luckDraw;
       if (!box) return false;
       var canvas = this.$refs.luckDraw.childNodes[0];
@@ -5348,7 +5377,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
       canvas.style = "transform: scale(".concat(1 / dpr, ") translate(\n        ").concat(-transferLength(this.boxWidth), "%,\n        ").concat(-transferLength(this.boxHeight), "%\n      )"); // 初始化状态
 
-      this.canPlay = true;
+      this.startTime = 0;
       this.currIndex = this.prizeIndex;
       this.prizeFlag = undefined;
       clearInterval(this.timer);
@@ -5394,8 +5423,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
         h: this.boxHeight
       }); // 计算单一奖品格子的宽度和高度
 
-      this.cellWidth = (this.prizeArea.w - _defaultStyle.gutter * (this.cols - 1)) / this.cols;
-      this.cellHeight = (this.prizeArea.h - _defaultStyle.gutter * (this.rows - 1)) / this.rows;
+      this.cellWidth = (this.prizeArea.w - _defaultConfig.gutter * (this.cols - 1)) / this.cols;
+      this.cellHeight = (this.prizeArea.h - _defaultConfig.gutter * (this.rows - 1)) / this.rows;
 
       var endCallBack = function endCallBack() {
         // 开始首次渲染
@@ -5413,7 +5442,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
               height = _this3$getGeometricPr2[3];
 
           if (e.offsetX < x || e.offsetY < y || e.offsetX > x + width || e.offsetY > y + height) return false;
-          if (!_this3.canPlay) return false;
+          if (_this3.startTime) return false;
 
           _this3.$emit('start', e);
         };
@@ -5630,52 +5659,61 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
     },
     // 对外暴露: 开始抽奖方法
     play: function play() {
+      if (this.startTime) return false;
       clearInterval(this.timer);
-      if (!this.canPlay) return false;
+      cancelAnimationFrame(this.animationId);
+      this.startTime = Date.now();
       this.prizeFlag = undefined;
-      this.canPlay = false;
-      this.setSpeed();
       this.run();
-    },
-    // 实际开始执行方法
-    run: function run() {
-      var speed = this.speed,
-          _defaultStyle = this._defaultStyle;
-      var maxSpeed = _defaultStyle.speed / 40; // 先完全旋转, 再停止
-
-      if (speed >= maxSpeed && this.prizeFlag == this.prizeIndex) {
-        return this.slowDown();
-      }
-
-      if (speed < maxSpeed) this.speed += 0.002;
-      this.currIndex += speed;
-      this.draw();
-      this.animationId = window.requestAnimationFrame(this.run);
     },
     // 对外暴露: 缓慢停止方法
     stop: function stop(index) {
       this.prizeFlag = index % this.prizes.length;
     },
-    // 这里用一个很low的缓慢停止, 欢迎各位大佬帮忙优化, 让他停的更自然一些
-    slowDown: function slowDown() {
-      var _this6 = this;
+    // 实际开始执行方法
+    run: function run() {
+      var currIndex = this.currIndex,
+          prizes = this.prizes,
+          prizeFlag = this.prizeFlag,
+          startTime = this.startTime,
+          _defaultConfig = this._defaultConfig;
+      var interval = Date.now() - startTime; // 先完全旋转, 再停止
 
-      if (this.speed < 0.025) {
-        if (this.prizeFlag == this.prizeIndex) {
-          this.speed = 0;
-          this.canPlay = true;
-          this.$emit('end', _objectSpread2({}, this.prizes.find(function (prize, index) {
-            return index === _this6.prizeIndex;
-          })));
-          return false;
-        }
-      } else {
-        this.speed -= 0.0015;
+      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+        // 记录开始停止的时间戳
+        this.endTime = Date.now(); // 记录开始停止的索引
+
+        this.stopIndex = currIndex; // 最终停止的索引
+
+        this.endIndex = prizes.length * 5 + prizeFlag - (currIndex >> 0);
+        cancelAnimationFrame(this.animationId);
+        return this.slowDown();
       }
 
-      this.currIndex += this.speed;
+      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.rotateTime)) % prizes.length;
       this.draw();
-      window.requestAnimationFrame(this.slowDown);
+      this.animationId = window.requestAnimationFrame(this.run);
+    },
+    // 缓慢停止的方法
+    slowDown: function slowDown() {
+      var prizes = this.prizes,
+          prizeFlag = this.prizeFlag,
+          stopIndex = this.stopIndex,
+          endIndex = this.endIndex,
+          _defaultConfig = this._defaultConfig;
+      var interval = Date.now() - this.endTime;
+
+      if (interval > _defaultConfig.stopTime) {
+        this.startTime = 0;
+        this.$emit('end', _objectSpread2({}, prizes.find(function (prize, index) {
+          return index === prizeFlag;
+        })));
+        return cancelAnimationFrame(this.animationId);
+      }
+
+      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.stopTime) % prizes.length;
+      this.draw();
+      this.animationId = window.requestAnimationFrame(this.slowDown);
     },
 
     /**
@@ -5690,8 +5728,11 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
           col = _ref5[2],
           row = _ref5[3];
 
-      var res = [this.prizeArea.x + (this.cellWidth + this._defaultStyle.gutter) * x, this.prizeArea.y + (this.cellHeight + this._defaultStyle.gutter) * y];
-      col && row && res.push(this.cellWidth * col + this._defaultStyle.gutter * (col - 1), this.cellHeight * row + this._defaultStyle.gutter * (row - 1));
+      var _defaultConfig = this._defaultConfig,
+          cellWidth = this.cellWidth,
+          cellHeight = this.cellHeight;
+      var res = [this.prizeArea.x + (cellWidth + _defaultConfig.gutter) * x, this.prizeArea.y + (cellHeight + _defaultConfig.gutter) * y];
+      col && row && res.push(cellWidth * col + _defaultConfig.gutter * (col - 1), cellHeight * row + _defaultConfig.gutter * (row - 1));
       return res;
     },
     // 获取长度
@@ -5707,7 +5748,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       var col = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(width, 'number')) return width * this.dpr;
       if (isExpectType(width, 'string')) return this.changeUnits(width, {
-        denominator: this.cellWidth * col + this._defaultStyle.gutter * (col - 1)
+        denominator: this.cellWidth * col + this._defaultConfig.gutter * (col - 1)
       });
       return 0;
     },
@@ -5716,13 +5757,13 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
       var row = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       if (isExpectType(height, 'number')) return height * this.dpr;
       if (isExpectType(height, 'string')) return this.changeUnits(height, {
-        denominator: this.cellHeight * row + this._defaultStyle.gutter * (row - 1)
+        denominator: this.cellHeight * row + this._defaultConfig.gutter * (row - 1)
       });
       return 0;
     },
     // 转换单位
     changeUnits: function changeUnits(value, _ref6) {
-      var _this7 = this;
+      var _this6 = this;
 
       var _ref6$denominator = _ref6.denominator,
           denominator = _ref6$denominator === void 0 ? 1 : _ref6$denominator,
@@ -5739,7 +5780,7 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
             break;
 
           case 'rem':
-            num *= _this7.htmlFontSize;
+            num *= _this6.htmlFontSize;
             break;
 
           default:
@@ -5747,27 +5788,23 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
             break;
         }
 
-        return clean || unit === '%' ? num : num * _this7.dpr;
+        return clean || unit === '%' ? num : num * _this6.dpr;
       }));
     },
     // 获取相对(居中)X坐标
     getOffsetX: function getOffsetX(width) {
       var col = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-      return (this.cellWidth * col + this._defaultStyle.gutter * (col - 1) - width) / 2;
-    },
-    // 设置速度
-    setSpeed: function setSpeed() {
-      this.speed = 0.2;
+      return (this.cellWidth * col + this._defaultConfig.gutter * (col - 1) - width) / 2;
     },
     // 增加中奖标识自动游走
     walk: function walk() {
-      var _this8 = this;
+      var _this7 = this;
 
       clearInterval(this.timer);
       this.timer = setInterval(function () {
-        _this8.currIndex += 1;
+        _this7.currIndex += 1;
 
-        _this8.draw();
+        _this7.draw();
       }, 1300);
     } // 绘制灯带
     // drawLamp () {
@@ -5796,8 +5833,8 @@ var math_getLinearGradient = function getLinearGradient(ctx, x, y, w, h, backgro
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_0dca28d0_render,
-  LuckyGridvue_type_template_id_0dca28d0_staticRenderFns,
+  LuckyGridvue_type_template_id_95212b7a_render,
+  LuckyGridvue_type_template_id_95212b7a_staticRenderFns,
   false,
   null,
   null,
@@ -5806,12 +5843,12 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"139a8df1-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6ac657cb&
-var LuckyWheelvue_type_template_id_6ac657cb_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
-var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4b2e5d1a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=2d22850b&
+var LuckyWheelvue_type_template_id_2d22850b_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckDraw",staticStyle:{"overflow":"hidden"}},[_c('canvas')])}
+var LuckyWheelvue_type_template_id_2d22850b_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6ac657cb&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=2d22850b&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -5837,6 +5874,17 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 //
 //
 
+
+
+var LuckyWheelvue_type_script_lang_js_easeIn = function easeIn(t, b, c, d) {
+  if (t >= d) t = d;
+  return c * (t /= d) * t + b;
+};
+
+var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
+  if (t >= d) t = d;
+  return -c * (t /= d) * (t - 2) + b;
+};
 
 /* harmony default export */ var LuckyWheelvue_type_script_lang_js_ = ({
   props: {
@@ -5901,15 +5949,19 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
       default: function _default() {
         return {};
       }
+    },
+    defaultConfig: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
     }
   },
   data: function data() {
     return {
       ctx: null,
-      canPlay: true,
-      // 是否可以开始游戏
-      speed: 0,
-      // 旋转速度
+      startTime: 0,
+      // 游戏开始的时间戳
       prizeFlag: undefined,
       // 中奖的索引
       animationId: null,
@@ -5943,17 +5995,29 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
         fontWeight: '400',
         background: '#fff',
         wordWrap: true,
-        lengthLimit: '90%',
-        gutter: '0px',
-        speed: 20
+        lengthLimit: '90%'
       };
 
       for (var key in this.defaultStyle) {
         style[key] = this.defaultStyle[key];
       }
 
-      style.speed = style.speed >> 0;
       return style;
+    },
+    _defaultConfig: function _defaultConfig() {
+      var config = {
+        gutter: '0px',
+        offsetDegree: 0,
+        speed: 20,
+        rotateTime: 2500,
+        stopTime: 2500
+      };
+
+      for (var key in this.defaultConfig) {
+        config[key] = this.defaultConfig[key];
+      }
+
+      return config;
     }
   },
   watch: {
@@ -6074,7 +6138,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
           ctx.beginPath();
           ctx.arc(0, 0, _this3.maxBtnRadius, 0, Math.PI * 2, false);
           if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return false;
-          if (!_this3.canPlay) return false;
+          if (_this3.startTime) return false;
 
           _this3.$emit('start', e);
         };
@@ -6158,7 +6222,8 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 
       var ctx = this.ctx,
           dpr = this.dpr,
-          _defaultStyle = this._defaultStyle; // 清空画布
+          _defaultStyle = this._defaultStyle,
+          _defaultConfig = this._defaultConfig; // 清空画布
 
       ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2); // 绘制blocks边框
 
@@ -6172,7 +6237,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 
       this.prizeDeg = 360 / this.prizes.length;
       this.prizeRadian = getAngle(this.prizeDeg);
-      var start = getAngle(-90 + this.rotateDeg); // 计算文字横坐标
+      var start = getAngle(-90 + this.rotateDeg + _defaultConfig.offsetDegree); // 计算文字横坐标
 
       var getFontX = function getFontX(line) {
         return _this5.getOffsetX(ctx.measureText(line).width);
@@ -6193,7 +6258,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 
         var prizeHeight = _this5.prizeRadius - _this5.maxBtnRadius; // 绘制背景
 
-        math_drawSector(ctx, _this5.maxBtnRadius, _this5.prizeRadius, currMiddleDeg - _this5.prizeRadian / 2, currMiddleDeg + _this5.prizeRadian / 2, _this5.getLength(_defaultStyle.gutter) * dpr, prize.background || _defaultStyle.background); // 计算临时坐标并旋转文字
+        math_drawSector(ctx, _this5.maxBtnRadius, _this5.prizeRadius, currMiddleDeg - _this5.prizeRadian / 2, currMiddleDeg + _this5.prizeRadian / 2, _this5.getLength(_defaultConfig.gutter) * dpr, prize.background || _defaultStyle.background); // 计算临时坐标并旋转文字
 
         var x = Math.cos(currMiddleDeg) * _this5.prizeRadius;
 
@@ -6234,7 +6299,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
             for (var i = 0; i < text.length; i++) {
               str += text[i];
               var currWidth = ctx.measureText(str).width;
-              var maxWidth = (_this5.prizeRadius - getFontY(font, prizeHeight, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - _this5.getLength(_defaultStyle.gutter) * dpr;
+              var maxWidth = (_this5.prizeRadius - getFontY(font, prizeHeight, lines.length)) * Math.tan(_this5.prizeRadian / 2) * 2 - _this5.getLength(_defaultConfig.gutter) * dpr;
 
               if (currWidth > _this5.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
                 lines.push(str.slice(0, -1));
@@ -6310,55 +6375,60 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
         });
       });
     },
+    // 对外暴露: 开始抽奖方法
     play: function play() {
-      if (!this.canPlay) return false;
+      // 再次拦截, 因为play是可以异步调用的
+      if (this.startTime) return false;
       cancelAnimationFrame(this.animationId);
+      this.startTime = Date.now();
       this.prizeFlag = undefined;
-      this.canPlay = false;
-      this.speed = 0;
       this.run();
     },
-    run: function run() {
-      var speed = this.speed,
-          prizeFlag = this.prizeFlag,
-          prizeDeg = this.prizeDeg,
-          rotateDeg = this.rotateDeg,
-          _defaultStyle = this._defaultStyle; // 让转盘先完全转起来再停止
-
-      if (speed >= _defaultStyle.speed && prizeFlag !== undefined) {
-        if (rotateDeg % 360 > prizeFlag * prizeDeg && rotateDeg % 360 < prizeFlag * prizeDeg + prizeDeg) return this.slowDown();
-      }
-
-      if (speed < _defaultStyle.speed) this.speed += 0.1;
-      this.rotateDeg += speed;
-      this.draw();
-      this.animationId = window.requestAnimationFrame(this.run);
-    },
+    // 对外暴露: 缓慢停止方法
     stop: function stop(index) {
       this.prizeFlag = index % this.prizes.length;
     },
-    slowDown: function slowDown() {
-      var _this6 = this;
+    // 实际开始执行方法
+    run: function run() {
+      var prizeFlag = this.prizeFlag,
+          prizeDeg = this.prizeDeg,
+          rotateDeg = this.rotateDeg,
+          _defaultConfig = this._defaultConfig;
+      var interval = Date.now() - this.startTime; // 先完全旋转, 再停止
 
-      if (this.speed < 1) {
-        var endDeg = 360 - this.prizeFlag * this.prizeDeg;
+      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+        // 记录开始停止的时间戳
+        this.endTime = Date.now(); // 记录开始停止的位置
 
-        if (Math.abs(this.rotateDeg % 360 - endDeg) <= 1) {
-          cancelAnimationFrame(this.animationId);
-          this.speed = 0;
-          this.canPlay = true;
-          this.$emit('end', _objectSpread2({}, this.prizes.find(function (prize, index) {
-            return index === _this6.prizeFlag;
-          })));
-          return false;
-        }
-      } else if (this.speed < 2) {
-        this.speed -= 0.02;
-      } else {
-        this.speed -= 0.05;
+        this.stopDeg = rotateDeg; // 最终停止的角度
+
+        this.endDeg = 360 * 5 - prizeFlag * prizeDeg - rotateDeg - _defaultConfig.offsetDegree;
+        cancelAnimationFrame(this.animationId);
+        return this.slowDown();
       }
 
-      this.rotateDeg += this.speed;
+      this.rotateDeg = (rotateDeg + LuckyWheelvue_type_script_lang_js_easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.rotateTime)) % 360;
+      this.draw();
+      this.animationId = window.requestAnimationFrame(this.run);
+    },
+    // 缓慢停止的方法
+    slowDown: function slowDown() {
+      var prizes = this.prizes,
+          prizeFlag = this.prizeFlag,
+          stopDeg = this.stopDeg,
+          endDeg = this.endDeg,
+          _defaultConfig = this._defaultConfig;
+      var interval = Date.now() - this.endTime;
+
+      if (interval >= _defaultConfig.stopTime) {
+        this.startTime = 0;
+        this.$emit('end', _objectSpread2({}, prizes.find(function (prize, index) {
+          return index === prizeFlag;
+        })));
+        return cancelAnimationFrame(this.animationId);
+      }
+
+      this.rotateDeg = LuckyWheelvue_type_script_lang_js_easeOut(interval, stopDeg, endDeg, _defaultConfig.stopTime) % 360;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.slowDown);
     },
@@ -6390,7 +6460,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
     },
     // 转换单位
     changeUnits: function changeUnits(value, _ref) {
-      var _this7 = this;
+      var _this6 = this;
 
       var _ref$denominator = _ref.denominator,
           denominator = _ref$denominator === void 0 ? 1 : _ref$denominator,
@@ -6407,7 +6477,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
             break;
 
           case 'rem':
-            num *= _this7.htmlFontSize;
+            num *= _this6.htmlFontSize;
             break;
 
           default:
@@ -6415,7 +6485,7 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
             break;
         }
 
-        return clean || unit === '%' ? num : num * _this7.dpr;
+        return clean || unit === '%' ? num : num * _this6.dpr;
       }));
     },
     // 获取相对(居中)X坐标
@@ -6436,8 +6506,8 @@ var LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_6ac657cb_render,
-  LuckyWheelvue_type_template_id_6ac657cb_staticRenderFns,
+  LuckyWheelvue_type_template_id_2d22850b_render,
+  LuckyWheelvue_type_template_id_2d22850b_staticRenderFns,
   false,
   null,
   null,
