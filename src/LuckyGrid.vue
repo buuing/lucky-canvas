@@ -91,13 +91,12 @@ export default {
       cellImgs: new Array(this.cols * this.rows).fill().map(_ => []),
       dpr: 2,                     // 设备像素比
       ctx: null,                  // 画布
-      canPlay: true,              // 是否可以开始
+      startTime: 0,               // 游戏开始的时间戳
       currIndex: 0,               // 当前index累加
       prizeFlag: undefined,       // 中奖索引标识
       prizeArea: {},              // 奖品区域几何信息
       animationId: 0,             // 帧动画id
       timer: 0,                   // 游走定时器
-      speed: 0,                   // 速度
       htmlFontSize: 16,           // 根元素的字体大小 (适配rem)
     }
   },
@@ -150,6 +149,7 @@ export default {
       for (let key in this.defaultConfig) {
         config[key] = this.defaultConfig[key]
       }
+      config.speed /= 40
       return config
     },
   },
@@ -243,7 +243,7 @@ export default {
         ${-transferLength(this.boxHeight)}%
       )`
       // 初始化状态
-      this.canPlay = true
+      this.startTime = 0
       this.currIndex = this.prizeIndex
       this.prizeFlag = undefined
       clearInterval(this.timer)
@@ -284,7 +284,7 @@ export default {
             this.button.row || 1
           ])
           if (e.offsetX < x || e.offsetY < y || e.offsetX > x + width || e.offsetY > y + height) return false
-          if (!this.canPlay) return false
+          if (this.startTime) return false
           this.$emit('start', e)
         }
       }
@@ -472,11 +472,11 @@ export default {
     },
     // 对外暴露: 开始抽奖方法
     play () {
+      if (this.startTime) return false
       clearInterval(this.timer)
-      if (!this.canPlay) return false
+      cancelAnimationFrame(this.animationId)
+      this.startTime = Date.now()
       this.prizeFlag = undefined
-      this.canPlay = false
-      this.setSpeed()
       this.run()
     },
     // 对外暴露: 缓慢停止方法
@@ -485,32 +485,35 @@ export default {
     },
     // 实际开始执行方法
     run () {
-      const { speed, _defaultConfig } = this
-      const maxSpeed = _defaultConfig.speed / 40
+      const { currIndex, prizes, prizeFlag, startTime, _defaultConfig } = this
+      let interval = Date.now() - startTime
       // 先完全旋转, 再停止
-      if (speed >= maxSpeed && this.prizeFlag == this.prizeIndex) {
+      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+        // 记录开始停止的时间戳
+        this.endTime = Date.now()
+        // 记录开始停止的索引
+        this.stopIndex = currIndex
+        // 最终停止的索引
+        this.endIndex = prizes.length * 5 + prizeFlag - (currIndex >> 0)
+        cancelAnimationFrame(this.animationId)
         return this.slowDown()
       }
-      if (speed < maxSpeed) this.speed += 0.002
-      this.currIndex += speed
+      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.rotateTime)) % prizes.length
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
     // 缓慢停止的方法
     slowDown () {
-      if (this.speed < 0.025) {
-        if (this.prizeFlag == this.prizeIndex) {
-          this.speed = 0
-          this.canPlay = true
-          this.$emit('end', {...this.prizes.find((prize, index) => index === this.prizeIndex)})
-          return false
-        }
-      } else {
-        this.speed -= 0.0015
+      const { prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
+      let interval = Date.now() - this.endTime
+      if (interval > _defaultConfig.stopTime) {
+        this.startTime = 0
+        this.$emit('end', {...prizes.find((prize, index) => index === prizeFlag)})
+        return cancelAnimationFrame(this.animationId)
       }
-      this.currIndex += this.speed
+      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.stopTime) % prizes.length
       this.draw()
-      window.requestAnimationFrame(this.slowDown)
+      this.animationId = window.requestAnimationFrame(this.slowDown)
     },
     /**
      * 计算奖品格子的几何属性
@@ -575,10 +578,6 @@ export default {
     // 获取相对(居中)X坐标
     getOffsetX (width, col = 1) {
       return (this.cellWidth * col + this._defaultStyle.gutter * (col - 1) - width) / 2
-    },
-    // 设置速度
-    setSpeed () {
-      this.speed = 0.2
     },
     // 增加中奖标识自动游走
     walk () {

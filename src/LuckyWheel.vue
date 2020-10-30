@@ -71,7 +71,6 @@ export default {
     return {
       ctx: null,
       startTime: 0,              // 游戏开始的时间戳
-      speed: 0,                  // 旋转速度
       prizeFlag: undefined,      // 中奖的索引
       animationId: null,         // 帧动画id
       Radius: 0,                 // 大转盘半径
@@ -440,7 +439,6 @@ export default {
       cancelAnimationFrame(this.animationId)
       this.startTime = Date.now()
       this.prizeFlag = undefined
-      this.speed = 0
       this.run()
     },
     // 对外暴露: 缓慢停止方法
@@ -449,34 +447,33 @@ export default {
     },
     // 实际开始执行方法
     run () {
-      const { speed, prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
+      const { prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
       let interval = Date.now() - this.startTime
+      // 先完全旋转, 再停止
       if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
         // 记录开始停止的时间戳
         this.endTime = Date.now()
         // 记录开始停止的位置
         this.stopDeg = rotateDeg
         // 最终停止的角度
-        this.endDeg = 360 * 4 - prizeFlag * prizeDeg
+        this.endDeg = 360 * 5 - prizeFlag * prizeDeg - rotateDeg
         cancelAnimationFrame(this.animationId)
         return this.slowDown()
       }
-      this.speed = easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.rotateTime)
-      this.rotateDeg = (rotateDeg + speed) % 360
+      this.rotateDeg = (rotateDeg + easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.rotateTime)) % 360
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
     // 缓慢停止的方法
     slowDown () {
-      const { prizeFlag, endDeg, stopDeg, _defaultConfig } = this
+      const { prizes, prizeFlag, stopDeg, endDeg, _defaultConfig } = this
       let interval = Date.now() - this.endTime
       if (interval >= _defaultConfig.stopTime) {
         this.startTime = 0
-        this.$emit('end', {...this.prizes.find((prize, index) => index === prizeFlag)})
+        this.$emit('end', {...prizes.find((prize, index) => index === prizeFlag)})
         return cancelAnimationFrame(this.animationId)
       }
-      let currDeg = easeOut(interval, stopDeg, endDeg - stopDeg, _defaultConfig.stopTime)
-      this.rotateDeg = currDeg % 360
+      this.rotateDeg = easeOut(interval, stopDeg, endDeg, _defaultConfig.stopTime) % 360
       this.draw()
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
