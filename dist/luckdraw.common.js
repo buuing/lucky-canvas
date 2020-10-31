@@ -5259,8 +5259,8 @@ var easeOut = function easeOut(t, b, c, d) {
       var config = {
         gutter: 5,
         speed: 20,
-        rotateTime: 2500,
-        stopTime: 2500
+        accelerationTime: 2500,
+        decelerationTime: 2500
       };
 
       for (var key in this.defaultConfig) {
@@ -5670,7 +5670,7 @@ var easeOut = function easeOut(t, b, c, d) {
           _defaultConfig = this._defaultConfig;
       var interval = Date.now() - startTime; // 先完全旋转, 再停止
 
-      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+      if (interval >= _defaultConfig.accelerationTime && prizeFlag !== undefined) {
         // 记录开始停止的时间戳
         this.endTime = Date.now(); // 记录开始停止的索引
 
@@ -5681,7 +5681,7 @@ var easeOut = function easeOut(t, b, c, d) {
         return this.slowDown();
       }
 
-      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.rotateTime)) % prizes.length;
+      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.accelerationTime)) % prizes.length;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.run);
     },
@@ -5694,7 +5694,7 @@ var easeOut = function easeOut(t, b, c, d) {
           _defaultConfig = this._defaultConfig;
       var interval = Date.now() - this.endTime;
 
-      if (interval > _defaultConfig.stopTime) {
+      if (interval > _defaultConfig.decelerationTime) {
         this.startTime = 0;
         this.$emit('end', _objectSpread2({}, prizes.find(function (prize, index) {
           return index === prizeFlag;
@@ -5702,7 +5702,7 @@ var easeOut = function easeOut(t, b, c, d) {
         return cancelAnimationFrame(this.animationId);
       }
 
-      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.stopTime) % prizes.length;
+      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.decelerationTime) % prizes.length;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.slowDown);
     },
@@ -6000,8 +6000,8 @@ var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
         gutter: '0px',
         offsetDegree: 0,
         speed: 20,
-        rotateTime: 2500,
-        stopTime: 2500
+        accelerationTime: 2500,
+        decelerationTime: 2500
       };
 
       for (var key in this.defaultConfig) {
@@ -6387,7 +6387,7 @@ var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
           _defaultConfig = this._defaultConfig;
       var interval = Date.now() - this.startTime; // 先完全旋转, 再停止
 
-      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+      if (interval >= _defaultConfig.accelerationTime && prizeFlag !== undefined) {
         // 记录开始停止的时间戳
         this.endTime = Date.now(); // 记录开始停止的位置
 
@@ -6398,7 +6398,7 @@ var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
         return this.slowDown();
       }
 
-      this.rotateDeg = (rotateDeg + LuckyWheelvue_type_script_lang_js_easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.rotateTime)) % 360;
+      this.rotateDeg = (rotateDeg + LuckyWheelvue_type_script_lang_js_easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.accelerationTime)) % 360;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.run);
     },
@@ -6411,7 +6411,7 @@ var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
           _defaultConfig = this._defaultConfig;
       var interval = Date.now() - this.endTime;
 
-      if (interval >= _defaultConfig.stopTime) {
+      if (interval >= _defaultConfig.decelerationTime) {
         this.startTime = 0;
         this.$emit('end', _objectSpread2({}, prizes.find(function (prize, index) {
           return index === prizeFlag;
@@ -6419,7 +6419,7 @@ var LuckyWheelvue_type_script_lang_js_easeOut = function easeOut(t, b, c, d) {
         return cancelAnimationFrame(this.animationId);
       }
 
-      this.rotateDeg = LuckyWheelvue_type_script_lang_js_easeOut(interval, stopDeg, endDeg, _defaultConfig.stopTime) % 360;
+      this.rotateDeg = LuckyWheelvue_type_script_lang_js_easeOut(interval, stopDeg, endDeg, _defaultConfig.decelerationTime) % 360;
       this.draw();
       this.animationId = window.requestAnimationFrame(this.slowDown);
     },

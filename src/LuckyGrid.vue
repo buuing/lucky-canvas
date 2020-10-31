@@ -142,8 +142,8 @@ export default {
       const config = {
         gutter: 5,
         speed: 20,
-        rotateTime: 2500,
-        stopTime: 2500,
+        accelerationTime: 2500,
+        decelerationTime: 2500,
       }
       for (let key in this.defaultConfig) {
         config[key] = this.defaultConfig[key]
@@ -488,7 +488,7 @@ export default {
       const { currIndex, prizes, prizeFlag, startTime, _defaultConfig } = this
       let interval = Date.now() - startTime
       // 先完全旋转, 再停止
-      if (interval >= _defaultConfig.rotateTime && prizeFlag !== undefined) {
+      if (interval >= _defaultConfig.accelerationTime && prizeFlag !== undefined) {
         // 记录开始停止的时间戳
         this.endTime = Date.now()
         // 记录开始停止的索引
@@ -498,7 +498,7 @@ export default {
         cancelAnimationFrame(this.animationId)
         return this.slowDown()
       }
-      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.rotateTime)) % prizes.length
+      this.currIndex = (currIndex + easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.accelerationTime)) % prizes.length
       this.draw()
       this.animationId = window.requestAnimationFrame(this.run)
     },
@@ -506,12 +506,12 @@ export default {
     slowDown () {
       const { prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
       let interval = Date.now() - this.endTime
-      if (interval > _defaultConfig.stopTime) {
+      if (interval > _defaultConfig.decelerationTime) {
         this.startTime = 0
         this.$emit('end', {...prizes.find((prize, index) => index === prizeFlag)})
         return cancelAnimationFrame(this.animationId)
       }
-      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.stopTime) % prizes.length
+      this.currIndex = easeOut(interval, stopIndex, endIndex, _defaultConfig.decelerationTime) % prizes.length
       this.draw()
       this.animationId = window.requestAnimationFrame(this.slowDown)
     },
