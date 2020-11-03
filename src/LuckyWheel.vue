@@ -209,8 +209,8 @@ export default {
       // 根据dpr缩放canvas, 并处理位移
       const transferLength = len => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
       canvas.style = `transform: scale(${1 / dpr}) translate(
-        ${-transferLength(this.Radius)}%,
-        ${-transferLength(this.Radius)}%
+        ${-transferLength(this.Radius * 2)}%,
+        ${-transferLength(this.Radius * 2)}%
       )`
       // 设置坐标点
       ctx.translate(this.Radius, this.Radius)
