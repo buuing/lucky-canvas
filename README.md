@@ -6,7 +6,7 @@
   <p class="hidden">
     <a href="https://github.com/LuckDraw/vue-luck-draw#readme">简体中文</a>
     ·
-    <a href="https://github.com/LuckDraw/vue-luck-draw/en/">English</a>
+    <a href="https://github.com/LuckDraw/vue-luck-draw/tree/master/en">English</a>
   </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
