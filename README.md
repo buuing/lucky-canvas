@@ -2,12 +2,12 @@
 <div align="center">
   <img src="./logo.png" width="200" alt="logo" />
   <h1>vue-luck-draw 抽奖插件</h1>
-  <p>一个基于vue的 ( 大转盘 / 九宫格 ) canvas 插件</p>
-  <!-- <p class="hidden">
+  <p>一个基于 vue 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p class="hidden">
     <a href="https://github.com/LuckDraw/vue-luck-draw#readme">简体中文</a>
     ·
-    <a href="javascript: ;">English</a>
-  </p> -->
+    <a href="https://github.com/LuckDraw/vue-luck-draw/en/">English</a>
+  </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?&logo=github" alt="stars" />
@@ -37,11 +37,11 @@
 
 <br />
 
-<h2 class="hidden">官方文档 & Demo演示</h2>
+## 官方文档 & Demo演示
 
-<blockquote class="hidden">
-  <p><a href="https://100px.net?vue" target="_black" rel="nofollow">https://100px.net?vue</a></p>
-</blockquote>
+> **中文**：[https://100px.net?vue](https://100px.net?vue)  
+
+> **English**：**If anyone can help translate the document, please contact me** `ldq404@qq.com`
 
 <br />
 
@@ -71,7 +71,7 @@ import LuckDraw from 'vue-luck-draw/vue3'
 createApp(App).use(LuckDraw).mount('#app')
 ```
 
-3. 最后在组件内使用 **`<LuckyWheel />`大转盘组件** 或 **`<LuckyGrid />`九宫格组件**
+3. 最后在组件内使用 **`<LuckyWheel />`大转盘抽奖** 或 **`<LuckyGrid />`九宫格抽奖**
 
 ```vue
 <template>
