@@ -2,7 +2,7 @@
 <Empty />
 
 <div align="center">
-  <img src="./logo.png" width="200" />
+  <img src="../logo.png" width="200" />
   <h1>vue-luck-draw</h1>
   <p>A Vue component, can realize lucky draw through simple configuration</p>
   <p class="hidden">
