@@ -41,7 +41,7 @@
 
 ## Docs & Demo
 
-> **中文**：[https://100px.net?vue](https://100px.net?vue)  
+> **中文**：[https://100px.net/document/vue.html](https://100px.net/document/vue.html)  
 
 > **English**：**If anyone can help translate the document, please contact me** `ldq404@qq.com`
 
