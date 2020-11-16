@@ -19,7 +19,7 @@
       <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?&logo=npm" alt="version" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dt/vue-luck-draw?&logo=npm" alt="downloads" />
+      <img src="https://img.shields.io/npm/dm/vue-luck-draw?&logo=npm" alt="downloads" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
       <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?&logo=npm" alt="size" />
