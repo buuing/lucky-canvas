@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="./logo.png" width="200" alt="logo" />
+  <img src="./web.svg" width="200" alt="logo" />
   <h1>vue-luck-draw 抽奖插件</h1>
   <p>一个基于 vue 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p class="hidden">
