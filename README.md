@@ -10,27 +10,27 @@
   </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?&logo=github" alt="stars" />
+      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?color=%2330a14e&logo=github&style=flat-square" alt="stars" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?logo=github" alt="forks" />
+      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%2330a14e&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?&logo=npm" alt="version" />
+      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?color=%2330a14e&logo=npm&style=flat-square" alt="version" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dm/vue-luck-draw?&logo=npm" alt="downloads" />
+      <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%2330a14e&logo=npm&style=flat-square" alt="downloads" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?&logo=npm" alt="size" />
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?color=%2330a14e&logo=npm&style=flat-square" alt="size" />
     </a>
   </p>
   <p>
     <a href="https://github.com/buuing" target="_black">
-      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github" alt="author" />
+      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?&logo=github" alt="license" />
+      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
     </a>
   </p>
 </div>
