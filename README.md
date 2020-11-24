@@ -22,7 +22,7 @@
       <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%2330a14e&logo=npm&style=flat-square" alt="downloads" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?color=%2330a14e&logo=npm&style=flat-square" alt="size" />
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/vue-luck-draw.common.js?color=%2330a14e&logo=npm&style=flat-square" alt="size" />
     </a>
   </p>
   <p>
@@ -94,7 +94,7 @@ createApp(App).use(LuckDraw).mount('#app')
 
 ### 方式 2：通过 script 标签引入
 
-从下面的链接里下载一个叫`luckdraw.umd.min.js`的 js 文件, 然后使用 script 标签引入
+从下面的链接里下载`vue-luck-draw.umd.min.js`文件, 然后使用 script 标签引入
 
 - vue2.x：[https://github.com/buuing/vue-luck-draw/tree/master/dist](https://github.com/buuing/vue-luck-draw/tree/master/dist)
 - vue3.x：[https://github.com/buuing/vue-luck-draw/tree/master/vue3](https://github.com/buuing/vue-luck-draw/tree/master/vue3)
