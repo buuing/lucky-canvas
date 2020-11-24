@@ -8,14 +8,6 @@ export const isExpectType = (param, ...types) => {
   return types.some(type => Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type)
 }
 
-// 移除\n
-export const removeEnter = str => {
-  return [].filter.call(str, s => s !== '\n').join('')
-}
-
-// 获取设备像素比
-export const dpr = window.devicePixelRatio
-
 // 参数校验器
 export const paramsValidator = (data, params = {}, msg = '') => {
   if (isExpectType(data, 'object')) data = [data]
@@ -32,44 +24,4 @@ export const paramsValidator = (data, params = {}, msg = '') => {
     }
     return true
   })
-}
-
-/**
- * 通过padding计算
- * @return { object }
- */
-export const computePadding = obj => {
-  let padding = obj.padding.replace(/px/g, '').split(' ').map(n => ~~n) || [0],
-    paddingTop = 0,
-    paddingBottom = 0,
-    paddingLeft = 0,
-    paddingRight = 0
-  switch (padding.length) {
-    case 1:
-      paddingTop = paddingBottom = paddingLeft = paddingRight = padding[0]
-      break
-    case 2:
-      paddingTop = paddingBottom = padding[0]
-      paddingLeft = paddingRight = padding[1]
-      break
-    case 3:
-      paddingTop = padding[0]
-      paddingLeft = paddingRight = padding[1]
-      paddingBottom = padding[2]
-      break
-    default:
-      paddingTop = padding[0]
-      paddingBottom = padding[1]
-      paddingLeft = padding[2]
-      paddingRight = padding[3]
-  }
-  // 检查是否单独传入值, 并且不是0
-  const res = { paddingTop, paddingBottom, paddingLeft, paddingRight }
-  for (let key in res) {
-    // 是否含有这个属性, 并且是数字或字符串
-    res[key] = obj.hasOwnProperty(key) && isExpectType(obj[key], 'string', 'number')
-      ? ~~String(obj[key]).replace(/px/g, '')
-      : res[key]
-  }
-  return [paddingTop, paddingBottom, paddingLeft, paddingRight]
 }
