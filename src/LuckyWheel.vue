@@ -1,5 +1,5 @@
 <template>
-  <div ref="luckDraw" style="overflow: hidden"></div>
+  <div ref="luckyWheel"></div>
 </template>
 
 <script>
@@ -7,6 +7,14 @@ import { LuckyWheel } from 'lucky-canvas'
 import { paramsValidator } from '../utils/index.js'
 export default {
   props: {
+    width: {
+      type: [String, Number],
+      default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: ''
+    },
     blocks: {
       type: Array,
       validator (data) {
@@ -49,25 +57,34 @@ export default {
   },
   data () {
     return {
-      lucky: null,
+      $lucky: null,
     }
   },
   watch: {
     prizes: {
       handler (newData, oldData) {
-        this.lucky.prizes = newData
+        this.$lucky.prizes = newData
       },
       deep: true
     },
     buttons: {
       handler (newData, oldData) {
-        this.lucky.buttons = newData
+        this.$lucky.buttons = newData
       },
       deep: true
     },
   },
   mounted () {
-    this.lucky = new LuckyWheel(this.$refs.luckDraw, {
+    this.$lucky = new LuckyWheel({
+      flag: 'WEB',
+      width: this.width,
+      height: this.height,
+      divElement: this.$refs.luckyWheel,
+      rAF: window.requestAnimationFrame,
+      setTimeout: window.setTimeout,
+      setInterval: window.setInterval,
+      clearInterval: window.clearInterval,
+    }, {
       ...this.$props,
       start: (...rest) => {
         this.$emit('start', ...rest)
@@ -79,10 +96,10 @@ export default {
   },
   methods: {
     play (...rest) {
-      this.lucky.play(...rest)
+      this.$lucky.play(...rest)
     },
     stop (...rest) {
-      this.lucky.stop(...rest)
+      this.$lucky.stop(...rest)
     },
   }
 }

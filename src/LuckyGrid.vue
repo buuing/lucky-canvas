@@ -1,5 +1,5 @@
 <template>
-  <div ref="luckDraw" style="overflow: hidden"></div>
+  <div ref="luckyGrid"></div>
 </template>
 
 <script>
@@ -7,7 +7,22 @@ import { LuckyGrid } from 'lucky-canvas'
 import { paramsValidator } from '../utils/index.js'
 export default {
   props: {
-    // 奖品 (该属性被watch监听)
+    width: {
+      type: [String, Number],
+      default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: ''
+    },
+    cols: {
+      type: [String, Number],
+      default: 3
+    },
+    rows: {
+      type: [String, Number],
+      default: 3
+    },
     prizes: {
       type: Array,
       validator (data) {
@@ -17,7 +32,6 @@ export default {
       },
       default: () => []
     },
-    // 按钮 (该属性被watch监听)
     button: {
       type: Object,
       validator (data) {
@@ -26,7 +40,6 @@ export default {
         })
       },
     },
-    // 边框 (该属性被watch监听)
     blocks: {
       type: Array,
       validator (data) {
@@ -36,55 +49,59 @@ export default {
       },
       default: () => []
     },
-    // 格子的默认样式 (该属性会在computed里面进行修正)
     defaultStyle: {
       type: Object,
-      default () { // 默认配置在computed里面: _defaultStyle
+      default () {
         return {}
       }
     },
-    // 中奖标记样式 (该属性会在computed里面进行修正)
     activeStyle: {
       type: Object,
-      default () { // 默认配置在computed里面: _activeStyle
+      default () {
         return {}
       }
     },
-    // 默认配置 (该属性会在computed里面进行修正)
     defaultConfig: {
       type: Object,
       default: () => {
         return {}
       }
     },
-    // 横向等分成 cols 个格子
-    cols: { type: [String, Number], default: 3 },
-    // 纵向等分成 rows 个格子
-    rows: { type: [String, Number], default: 3 },
-    // demo演示开启中奖标识自动游走
-    demo: { type: Boolean, default: false },
+    demo: { // demo演示开启中奖标识自动游走
+      type: Boolean,
+      default: false
+    },
   },
   data () {
     return {
-      lucky: null,
+      $lucky: null,
     }
   },
   watch: {
     prizes: {
       handler (newData, oldData) {
-        this.lucky.prizes = newData
+        this.$lucky.prizes = newData
       },
       deep: true,
     },
     button: {
       handler (newData, oldData) {
-        this.lucky.button = newData
+        this.$lucky.button = newData
       },
       deep: true,
     },
   },
   mounted () {
-    this.lucky = new LuckyGrid(this.$refs.luckDraw, {
+    this.$lucky = new LuckyGrid({
+      flag: 'WEB',
+      width: this.width,
+      height: this.height,
+      divElement: this.$refs.luckyGrid,
+      rAF: window.requestAnimationFrame,
+      setTimeout: window.setTimeout,
+      setInterval: window.setInterval,
+      clearInterval: window.clearInterval,
+    }, {
       ...this.$props,
       start: (...rest) => {
         this.$emit('start', ...rest)
@@ -96,10 +113,10 @@ export default {
   },
   methods: {
     play (...rest) {
-      this.lucky.play(...rest)
+      this.$lucky.play(...rest)
     },
     stop (...rest) {
-      this.lucky.stop(...rest)
+      this.$lucky.stop(...rest)
     },
   }
 }
