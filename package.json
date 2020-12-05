@@ -9,6 +9,6 @@
   "files": ["package.json", "dist", "vue3", "index.js"],
   "homepage": "https://100px.net",
   "dependencies": {
-    "lucky-canvas": "^1.0.5"
+    "lucky-canvas": "~1.1.0"
   }
 }
