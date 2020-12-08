@@ -10,19 +10,19 @@
   </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?color=%2330a14e&logo=github&style=flat-square" alt="stars" />
+      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%2330a14e&logo=github&style=flat-square" alt="forks" />
+      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?color=%2330a14e&logo=npm&style=flat-square" alt="version" />
+      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%2330a14e&logo=npm&style=flat-square" alt="downloads" />
+      <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
     </a>
     <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/vue-luck-draw.common.js?color=%2330a14e&logo=npm&style=flat-square" alt="size" />
+      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/vue-luck-draw.common.js?color=%23ffca28&logo=npm&style=flat-square" alt="size" />
     </a>
   </p>
   <p>
@@ -78,12 +78,14 @@ createApp(App).use(LuckDraw).mount('#app')
   <div>
     <!-- 大转盘抽奖 -->
     <LuckyWheel
-      style="width: 200px; height: 200px"
+      width="200px"
+      height="200px"
       ...你的配置
     />
     <!-- 九宫格抽奖 -->
     <LuckyGrid
-      style="width: 200px; height: 200px"
+      width="200px"
+      height="200px"
       ...你的配置
     />
   </div>
@@ -103,12 +105,14 @@ createApp(App).use(LuckDraw).mount('#app')
 <div id="app">
   <!-- 大转盘抽奖 -->
   <lucky-wheel
-    style="width: 200px; height: 200px"
+    width="200px"
+    height="200px"
     ...你的配置
   />
   <!-- 九宫格抽奖 -->
   <lucky-grid
-    style="width: 200px; height: 200px"
+    width="200px"
+    height="200px"
     ...你的配置
   />
 </div>
@@ -116,7 +120,10 @@ createApp(App).use(LuckDraw).mount('#app')
 <script src="./luckdraw.umd.min.js"></script>
 <script>
   new Vue({
-    el: '#app'
+    el: '#app',
+    data () {
+      return {}
+    }
   })
 </script>
 ```
