@@ -1,6 +1,6 @@
 {
   "name": "vue-luck-draw",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
   "main": "index.js",
   "keywords": [
@@ -22,6 +22,6 @@
   ],
   "homepage": "https://100px.net",
   "dependencies": {
-    "lucky-canvas": "^1.1.4"
+    "lucky-canvas": "^1.1.5"
   }
 }
