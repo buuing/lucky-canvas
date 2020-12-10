@@ -80,12 +80,14 @@ export default {
   watch: {
     prizes: {
       handler (newData, oldData) {
+        this.$lucky.prizes = []
         this.$lucky.prizes = newData
       },
       deep: true,
     },
     button: {
       handler (newData, oldData) {
+        this.$lucky.button = {}
         this.$lucky.button = newData
       },
       deep: true,
