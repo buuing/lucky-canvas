@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { name, version } from '../package.json'
 import { LuckyGrid } from 'lucky-canvas'
 import { paramsValidator } from '../utils/index.js'
 export default {
@@ -94,6 +95,8 @@ export default {
     },
   },
   mounted () {
+    // 添加版本信息到标签上, 方便定位版本问题
+    this.$refs.luckyGrid.setAttribute('package', `${name}@${version}`)
     this.$lucky = new LuckyGrid({
       flag: 'WEB',
       width: this.width,
