@@ -98,9 +98,6 @@ createApp(App).use(LuckDraw).mount('#app')
 
 Download the `luckdraw.umd.min.js` from the link below and include with a script tag
 
-- vue2.x：[https://github.com/buuing/vue-luck-draw/tree/master/dist](https://github.com/buuing/vue-luck-draw/tree/master/dist)
-- vue3.x：[https://github.com/buuing/vue-luck-draw/tree/master/vue3](https://github.com/buuing/vue-luck-draw/tree/master/vue3)
-
 - **vue2.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js)
 - **vue3.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js)
 
