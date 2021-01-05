@@ -100,13 +100,13 @@ createApp(App).use(LuckDraw).mount('#app')
 
 - **vue2.x：**
   - **最新版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js)
-  - **指定版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/dist/vue-luck-draw.umd.min.js)
+  - **指定版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.5/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/dist/vue-luck-draw.umd.min.js)
 
 <span></span>
 
 - **vue3.x：**
   - **最新版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js)
-  - **指定版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/vue3/vue-luck-draw.umd.min.js)
+  - **指定版本：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.5/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.3.4/vue3/vue-luck-draw.umd.min.js)
 
 
 ```html
