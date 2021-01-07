@@ -138,4 +138,4 @@ createApp(App).use(LuckDraw).mount('#app')
 
 <br />
 
-### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/vue-luck-draw) 上面帮我点个`star`**
+### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/vue-luck-draw) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
