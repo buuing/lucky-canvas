@@ -1995,7 +1995,7 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
 /***/ "b2a2":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"a\":\"vue-luck-draw\",\"b\":\"3.3.6\"}");
+module.exports = JSON.parse("{\"a\":\"vue-luck-draw\",\"b\":\"3.3.7\"}");
 
 /***/ }),
 
@@ -2747,12 +2747,12 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckDraw = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b2b17b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=244e9292&
-var LuckyGridvue_type_template_id_244e9292_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckyGrid"})}
-var LuckyGridvue_type_template_id_244e9292_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b2b17b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1d436103&
+var LuckyGridvue_type_template_id_1d436103_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckyGrid"})}
+var LuckyGridvue_type_template_id_1d436103_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=244e9292&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyGrid.vue?vue&type=template&id=1d436103&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -3033,37 +3033,48 @@ var paramsValidator = function paramsValidator(data) {
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
     // 添加版本信息到标签上, 方便定位版本问题
     this.$refs.luckyGrid.setAttribute('package', "".concat(vue_luck_draw_package["a" /* name */], "@").concat(vue_luck_draw_package["b" /* version */]));
-    this.$lucky = new lucky_canvas["LuckyGrid"]({
-      flag: 'WEB',
-      width: this.width,
-      height: this.height,
-      divElement: this.$refs.luckyGrid,
-      rAF: window.requestAnimationFrame,
-      setTimeout: window.setTimeout,
-      setInterval: window.setInterval,
-      clearInterval: window.clearInterval
-    }, _objectSpread2(_objectSpread2({}, this.$props), {}, {
-      start: function start() {
-        for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
-          rest[_key] = arguments[_key];
-        }
 
-        _this.$emit.apply(_this, ['start'].concat(rest));
-      },
-      end: function end() {
-        for (var _len2 = arguments.length, rest = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          rest[_key2] = arguments[_key2];
-        }
-
-        _this.$emit.apply(_this, ['end'].concat(rest));
-      }
-    }));
+    try {
+      this.init();
+      this.$emit('success');
+    } catch (err) {
+      this.$emit('error', err);
+    } finally {
+      this.$emit('finally');
+    }
   },
   methods: {
+    init: function init() {
+      var _this = this;
+
+      this.$lucky = new lucky_canvas["LuckyGrid"]({
+        flag: 'WEB',
+        width: this.width,
+        height: this.height,
+        divElement: this.$refs.luckyGrid,
+        rAF: window.requestAnimationFrame,
+        setTimeout: window.setTimeout,
+        setInterval: window.setInterval,
+        clearInterval: window.clearInterval
+      }, _objectSpread2(_objectSpread2({}, this.$props), {}, {
+        start: function start() {
+          for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+            rest[_key] = arguments[_key];
+          }
+
+          _this.$emit.apply(_this, ['start'].concat(rest));
+        },
+        end: function end() {
+          for (var _len2 = arguments.length, rest = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            rest[_key2] = arguments[_key2];
+          }
+
+          _this.$emit.apply(_this, ['end'].concat(rest));
+        }
+      }));
+    },
     play: function play() {
       var _this$$lucky;
 
@@ -3088,8 +3099,8 @@ var paramsValidator = function paramsValidator(data) {
 
 var LuckyGrid_component = normalizeComponent(
   src_LuckyGridvue_type_script_lang_js_,
-  LuckyGridvue_type_template_id_244e9292_render,
-  LuckyGridvue_type_template_id_244e9292_staticRenderFns,
+  LuckyGridvue_type_template_id_1d436103_render,
+  LuckyGridvue_type_template_id_1d436103_staticRenderFns,
   false,
   null,
   null,
@@ -3098,12 +3109,12 @@ var LuckyGrid_component = normalizeComponent(
 )
 
 /* harmony default export */ var LuckyGrid = (LuckyGrid_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b2b17b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6dce92c0&
-var LuckyWheelvue_type_template_id_6dce92c0_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckyWheel"})}
-var LuckyWheelvue_type_template_id_6dce92c0_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b2b17b80-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=54d19eec&
+var LuckyWheelvue_type_template_id_54d19eec_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"luckyWheel"})}
+var LuckyWheelvue_type_template_id_54d19eec_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=6dce92c0&
+// CONCATENATED MODULE: ./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=template&id=54d19eec&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vue-luck-draw/src/LuckyWheel.vue?vue&type=script&lang=js&
 
@@ -3212,37 +3223,48 @@ var LuckyWheelvue_type_template_id_6dce92c0_staticRenderFns = []
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
     // 添加版本信息到标签上, 方便定位版本问题
     this.$refs.luckyWheel.setAttribute('package', "".concat(vue_luck_draw_package["a" /* name */], "@").concat(vue_luck_draw_package["b" /* version */]));
-    this.$lucky = new lucky_canvas["LuckyWheel"]({
-      flag: 'WEB',
-      width: this.width,
-      height: this.height,
-      divElement: this.$refs.luckyWheel,
-      rAF: window.requestAnimationFrame,
-      setTimeout: window.setTimeout,
-      setInterval: window.setInterval,
-      clearInterval: window.clearInterval
-    }, _objectSpread2(_objectSpread2({}, this.$props), {}, {
-      start: function start() {
-        for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
-          rest[_key] = arguments[_key];
-        }
 
-        _this.$emit.apply(_this, ['start'].concat(rest));
-      },
-      end: function end() {
-        for (var _len2 = arguments.length, rest = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          rest[_key2] = arguments[_key2];
-        }
-
-        _this.$emit.apply(_this, ['end'].concat(rest));
-      }
-    }));
+    try {
+      this.init();
+      this.$emit('success');
+    } catch (err) {
+      this.$emit('error', err);
+    } finally {
+      this.$emit('finally');
+    }
   },
   methods: {
+    init: function init() {
+      var _this = this;
+
+      this.$lucky = new lucky_canvas["LuckyWheel"]({
+        flag: 'WEB',
+        width: this.width,
+        height: this.height,
+        divElement: this.$refs.luckyWheel,
+        rAF: window.requestAnimationFrame,
+        setTimeout: window.setTimeout,
+        setInterval: window.setInterval,
+        clearInterval: window.clearInterval
+      }, _objectSpread2(_objectSpread2({}, this.$props), {}, {
+        start: function start() {
+          for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+            rest[_key] = arguments[_key];
+          }
+
+          _this.$emit.apply(_this, ['start'].concat(rest));
+        },
+        end: function end() {
+          for (var _len2 = arguments.length, rest = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            rest[_key2] = arguments[_key2];
+          }
+
+          _this.$emit.apply(_this, ['end'].concat(rest));
+        }
+      }));
+    },
     play: function play() {
       var _this$$lucky;
 
@@ -3267,8 +3289,8 @@ var LuckyWheelvue_type_template_id_6dce92c0_staticRenderFns = []
 
 var LuckyWheel_component = normalizeComponent(
   src_LuckyWheelvue_type_script_lang_js_,
-  LuckyWheelvue_type_template_id_6dce92c0_render,
-  LuckyWheelvue_type_template_id_6dce92c0_staticRenderFns,
+  LuckyWheelvue_type_template_id_54d19eec_render,
+  LuckyWheelvue_type_template_id_54d19eec_staticRenderFns,
   false,
   null,
   null,

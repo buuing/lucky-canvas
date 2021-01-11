@@ -75,26 +75,36 @@ export default {
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
     this.$refs.luckyWheel.setAttribute('package', `${name}@${version}`)
-    this.$lucky = new LuckyWheel({
-      flag: 'WEB',
-      width: this.width,
-      height: this.height,
-      divElement: this.$refs.luckyWheel,
-      rAF: window.requestAnimationFrame,
-      setTimeout: window.setTimeout,
-      setInterval: window.setInterval,
-      clearInterval: window.clearInterval,
-    }, {
-      ...this.$props,
-      start: (...rest) => {
-        this.$emit('start', ...rest)
-      },
-      end: (...rest) => {
-        this.$emit('end', ...rest)
-      },
-    })
+    try {
+      this.init()
+      this.$emit('success')
+    } catch (err) {
+      this.$emit('error', err)
+    } finally {
+      this.$emit('finally')
+    }
   },
   methods: {
+    init () {
+      this.$lucky = new LuckyWheel({
+        flag: 'WEB',
+        width: this.width,
+        height: this.height,
+        divElement: this.$refs.luckyWheel,
+        rAF: window.requestAnimationFrame,
+        setTimeout: window.setTimeout,
+        setInterval: window.setInterval,
+        clearInterval: window.clearInterval,
+      }, {
+        ...this.$props,
+        start: (...rest) => {
+          this.$emit('start', ...rest)
+        },
+        end: (...rest) => {
+          this.$emit('end', ...rest)
+        },
+      })
+    },
     play (...rest) {
       this.$lucky.play(...rest)
     },
