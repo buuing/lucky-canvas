@@ -62,19 +62,14 @@ export default {
     }
   },
   watch: {
-    prizes: {
-      handler (newData, oldData) {
-        this.$lucky.prizes = []
-        this.$lucky.prizes = newData
-      },
-      deep: true
+    blocks (newData, oldData) {
+      this.$lucky.blocks = newData
     },
-    buttons: {
-      handler (newData, oldData) {
-        this.$lucky.buttons = []
-        this.$lucky.buttons = newData
-      },
-      deep: true
+    prizes (newData, oldData) {
+      this.$lucky.prizes = newData
+    },
+    buttons (newData, oldData) {
+      this.$lucky.buttons = newData
     },
   },
   mounted () {
