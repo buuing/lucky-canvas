@@ -21,8 +21,8 @@
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
     </a>
-    <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/vue-luck-draw.common.js?color=%23ffca28&logo=npm&style=flat-square" alt="size" />
+    <a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black">
+      <img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="jsdelivr" />
     </a>
   </p>
   <p>
