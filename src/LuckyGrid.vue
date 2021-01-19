@@ -5,73 +5,19 @@
 <script>
 import { name, version } from '../package.json'
 import { LuckyGrid } from 'lucky-canvas'
-import { paramsValidator } from '../utils/index.js'
 export default {
   props: {
-    width: {
-      type: [String, Number],
-      default: ''
-    },
-    height: {
-      type: [String, Number],
-      default: ''
-    },
-    cols: {
-      type: [String, Number],
-      default: 3
-    },
-    rows: {
-      type: [String, Number],
-      default: 3
-    },
-    prizes: {
-      type: Array,
-      validator (data) {
-        return paramsValidator({ prizes: data }, {
-          prizes: { x: 1, y: 1, imgs: { src: 1 }, fonts: { text: 1 } }
-        })
-      },
-      default: () => []
-    },
-    button: {
-      type: Object,
-      validator (data) {
-        return paramsValidator({ button: [data] }, {
-          button: { x: 1, y: 1, imgs: { src: 1 }, fonts: { text: 1 } }
-        })
-      },
-    },
-    blocks: {
-      type: Array,
-      validator (data) {
-        return paramsValidator({ blocks: data }, {
-          blocks: { padding: 1, background: 1 }
-        })
-      },
-      default: () => []
-    },
-    defaultStyle: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    activeStyle: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    defaultConfig: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    demo: { // demo演示开启中奖标识自动游走
-      type: Boolean,
-      default: false
-    },
+    width: { type: [String, Number], default: '' },
+    height: { type: [String, Number], default: '' },
+    cols: { type: [String, Number], default: 3 },
+    rows: { type: [String, Number], default: 3 },
+    prizes: { type: Array, default: () => [] },
+    button: { type: Object },
+    blocks: { type: Array, default: () => [] },
+    defaultStyle: { type: Object, default () { return {} } },
+    activeStyle: { type: Object, default () { return {} } },
+    defaultConfig: { type: Object, default: () => { return {} } },
+    demo: { type: Boolean, default: false },
   },
   data () {
     return {
