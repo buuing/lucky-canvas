@@ -12,6 +12,7 @@ export default {
     cols: { type: [String, Number], default: 3 },
     rows: { type: [String, Number], default: 3 },
     prizes: { type: Array, default: () => [] },
+    buttons: { type: Array, default: () => [] },
     button: { type: Object },
     blocks: { type: Array, default: () => [] },
     defaultStyle: { type: Object, default () { return {} } },
@@ -36,6 +37,9 @@ export default {
     },
     prizes (newData, oldData) {
       this.$lucky.prizes = newData
+    },
+    buttons (newData, oldData) {
+      this.$lucky.buttons = newData
     },
     button (newData, oldData) {
       this.$lucky.button = newData
