@@ -1,8 +1,6 @@
 
-<Empty />
-
 <div align="center">
-  <img src="../web.svg" width="200" />
+  <img src="../web.svg" width="200" alt="logo" />
   <h1>vue-luck-draw</h1>
   <p>A Vue component, can realize lucky draw through simple configuration</p>
   <p class="hidden">
@@ -12,27 +10,27 @@
   </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?&logo=github" alt="stars" />
+      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?logo=github" alt="forks" />
+      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?&logo=npm" alt="version" />
+      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dm/vue-luck-draw?&logo=npm" alt="downloads" />
+      <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
     </a>
-    <a href="https://github.com/buuing/vue-luck-draw/tree/master/dist" target="_black">
-      <img src="https://img.shields.io/github/size/buuing/vue-luck-draw/dist/luckdraw.common.js?&logo=npm" alt="size" />
+    <a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black">
+      <img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="jsdelivr" />
     </a>
   </p>
   <p>
     <a href="https://github.com/buuing" target="_black">
-      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github" alt="author" />
+      <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?&logo=github" alt="license" />
+      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
     </a>
   </p>
 </div>
@@ -80,12 +78,14 @@ createApp(App).use(LuckDraw).mount('#app')
   <div>
     <!-- turntable lottery -->
     <LuckyWheel
-      style="width: 200px; height: 200px"
+      width="200px"
+      height="200px"
       ...your settings
     />
     <!-- grid lottery -->
     <LuckyGrid
-      style="width: 200px; height: 200px"
+      width="200px"
+      height="200px"
       ...your settings
     />
   </div>
@@ -96,26 +96,29 @@ createApp(App).use(LuckDraw).mount('#app')
 
 ### Method 2：Direct <script> Include
 
-Download the `luckdraw.umd.min.js` from the link below and include with a script tag
+Download the `vue-luck-draw.umd.min.js` from the link below and include with a script tag
 
-- **vue2.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/dist/vue-luck-draw.umd.min.js)
-- **vue3.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw/vue3/vue-luck-draw.umd.min.js)
+- **vue2.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.4/dist/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.4/dist/vue-luck-draw.umd.min.js)
+
+- **vue3.x：** [https://cdn.jsdelivr.net/npm/vue-luck-draw@3.4/vue3/vue-luck-draw.umd.min.js](https://cdn.jsdelivr.net/npm/vue-luck-draw@3.4/vue3/vue-luck-draw.umd.min.js)
 
 ```html
 <div id="app">
   <!-- turntable lottery -->
   <lucky-wheel
-    style="width: 200px; height: 200px"
+    width="200px"
+    height="200px"
     ...your settings
   />
   <!-- grid lottery -->
   <lucky-grid
-    style="width: 200px; height: 200px"
+    width="200px"
+    height="200px"
     ...your settings
   />
 </div>
 <script src="./vue.min.js"></script>
-<script src="./luckdraw.umd.min.js"></script>
+<script src="./vue-luck-draw.umd.min.js"></script>
 <script>
   new Vue({
     el: '#app'
