@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="../web.svg" width="200" alt="logo" />
+  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/web.svg" width="200" alt="logo" />
   <h1>vue-luck-draw</h1>
   <p>A Vue component, can realize lucky draw through simple configuration</p>
   <p class="hidden">
