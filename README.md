@@ -16,7 +16,7 @@
       <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
-      <img src="https://img.shields.io/github/package-json/v/buuing/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
+      <img src="https://img.shields.io/npm/v/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
