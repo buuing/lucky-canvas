@@ -8,7 +8,7 @@ import { LuckyWheel } from 'lucky-canvas'
 export default {
   props: {
     width: { type: [String, Number], default: '' },
-    height: {type: [String, Number],default: ''},
+    height: { type: [String, Number], default: '' },
     blocks: { type: Array, default: () => [] },
     prizes: { type: Array, default: () => [] },
     buttons: { type: Array, default: () => [] },
