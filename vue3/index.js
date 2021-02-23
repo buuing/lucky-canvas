@@ -1,1 +1,1 @@
-export * from './vue-luck-draw.common.js'
+module.exports = require('./vue-luck-draw.common.js')
