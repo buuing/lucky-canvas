@@ -35,7 +35,7 @@ export default {
     // 添加版本信息到标签上, 方便定位版本问题
     this.$refs.luckyWheel.setAttribute('package', `${name}@${version}`)
     try {
-      this.init()
+      this.initLucky()
       this.$emit('success')
     } catch (err) {
       this.$emit('error', err)
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    init () {
+    initLucky () {
       this.$lucky = new LuckyWheel({
         flag: 'WEB',
         width: this.width,
@@ -63,6 +63,9 @@ export default {
           this.$emit('end', ...rest)
         },
       })
+    },
+    init () {
+      this.$lucky && this.$lucky.init({})
     },
     play (...rest) {
       this.$lucky.play(...rest)

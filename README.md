@@ -10,10 +10,10 @@
   </p>
   <p>
     <a href="https://github.com/LuckDraw/vue-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
+      <img src="https://img.shields.io/github/stars/LuckDraw/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/buuing/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
+      <img src="https://img.shields.io/github/forks/LuckDraw/vue-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
     </a>
     <a href="https://www.npmjs.com/package/vue-luck-draw" target="_black">
       <img src="https://img.shields.io/npm/v/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
@@ -30,7 +30,7 @@
       <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
     </a>
     <a href="https://github.com/LuckDraw/vue-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/buuing/vue-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
+      <img src="https://img.shields.io/github/license/LuckDraw/vue-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
     </a>
   </p>
 </div>
@@ -39,7 +39,7 @@
 
 ## 官方文档 & Demo演示
 
-> **中文**：[https://100px.net/document/vue.html](https://100px.net/document/vue.html)  
+> **中文**：[https://100px.net/usage/vue.html](https://100px.net/usage/vue.html)  
 
 > **English**：**If anyone can help translate the document, please contact me** `ldq404@qq.com`
 
@@ -151,7 +151,7 @@ createApp(App).use(LuckDraw).mount('#app')
 
 <br />
 
-## 推荐的开源项目
+## 友情链接
 
 - [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)
 
