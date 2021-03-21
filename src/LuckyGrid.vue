@@ -3,9 +3,14 @@
 </template>
 
 <script>
-import { name, version } from '../package.json'
 import { LuckyGrid } from 'lucky-canvas'
+import pkg from '../package.json'
+
+const name = pkg.name
+const version = pkg.version
+
 export default {
+  name:'LuckyGrid',
   props: {
     width: { type: [String, Number], default: '' },
     height: { type: [String, Number], default: '' },

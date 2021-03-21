@@ -3,9 +3,13 @@
 </template>
 
 <script>
-import { name, version } from '../package.json'
 import { LuckyWheel } from 'lucky-canvas'
+import pkg from '../package.json'
+
+const name = pkg.name
+const version = pkg.version
 export default {
+  name:'LuckyWheel',
   props: {
     width: { type: [String, Number], default: '' },
     height: { type: [String, Number], default: '' },
