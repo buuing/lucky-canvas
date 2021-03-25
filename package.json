@@ -18,26 +18,28 @@
     "package.json",
     "dist",
     "vue3",
-    "index.js"
+    "index.js",
+    "package"
   ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config=build/webpack.config.js",
-    "start": "cross-env NODE_ENV=development webpack serve --config=build/webpack.config.js"
+    "start": "cross-env NODE_ENV=development webpack serve --config=build/webpack.configvue2.js",
+    "start:vue3": "cross-env NODE_ENV=development webpack serve --config=build/webpack.configvue3.js"
   },
   "homepage": "https://100px.net",
   "dependencies": {
-    "clean-webpack-plugin": "^3.0.0",
-    "lucky-canvas": "^1.5.3",
-    "vue": "^2.6.12"
+    "@vue/compiler-sfc": "^3.0.7",
+    "lucky-canvas": "^1.5.3"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^8.0.0",
     "cross-env": "^7.0.3",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.3.9",
-    "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.12",
+    "vue": "^3.0.7",
+    "vue-loader": "^16.1.2",
     "webpack": "^5.27.1",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"

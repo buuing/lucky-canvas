@@ -1,4 +1,4 @@
-const { VueLoaderPlugin } = require('vue-loader')
+const VueLoaderPlugin = require('vue-loader/dist/plugin').default;
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -11,7 +11,7 @@ const PORT = 8081
 module.exports = {
 	mode: NODE_ENV,
   entry: {
-    main: process.env.NODE_ENV === 'development' ? path.resolve(__dirname, '../example/index.js') : path.resolve(__dirname, '../src/index.js'),
+    main: process.env.NODE_ENV === 'development' ? path.resolve(__dirname, '../example/vue3.js') : path.resolve(__dirname, '../src/index.js'),
 	},
 	output: {
     path: path.resolve(__dirname, '../package'),
