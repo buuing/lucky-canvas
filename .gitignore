@@ -1,7 +1,6 @@
 .DS_Store
 *.zip
 *.tgz
-*.lock
 node_modules
 yarn.lock
 package-lock.json
