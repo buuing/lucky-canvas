@@ -14,7 +14,7 @@ module.exports = {
     main: process.env.NODE_ENV === 'development' ? path.resolve(__dirname, '../example/vue2.js') : path.resolve(__dirname, '../src/index.js'),
 	},
 	output: {
-    path: path.resolve(__dirname, '../package'),
+    path: path.resolve(__dirname, '../dist'),
     filename: 'vue-luck-draw.js', //打包之后生成的文件名，可以随意写。
     library: 'vue-luck-draw', // 指定类库名,主要用于直接引用的方式(比如使用script 标签)
     libraryExport: "default", // 对外暴露default属性，就可以直接调用default里的属性

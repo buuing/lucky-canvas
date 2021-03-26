@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './index.vue';
-import LuckDraw from '../src/vue3.js';
+import LuckDraw from '../src/index.js';
+
+console.log('vue3')
 
 const app = createApp(App);
 

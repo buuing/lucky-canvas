@@ -1,5 +1,5 @@
 <template>
-  <div ref="luckyWheel"></div>
+  <div ref="luckyWheel" id="luckyWheel"></div>
 </template>
 
 <script>
@@ -37,7 +37,9 @@ export default {
   },
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
-    this.$refs.luckyWheel.setAttribute('package', `${name}@${version}`)
+    if (this.$refs.luckyWheel) {
+      this.$refs.luckyWheel.setAttribute('package', `${name}@${version}`)
+    }
     try {
       this.initLucky()
       this.$emit('success')
@@ -53,7 +55,7 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: this.$refs.luckyWheel,
+        divElement: document.getElementById('luckyWheel'),
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,

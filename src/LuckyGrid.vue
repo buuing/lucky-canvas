@@ -1,5 +1,5 @@
 <template>
-  <div ref="luckyGrid"></div>
+  <div ref="luckyGrid" id="luckyGrid"></div>
 </template>
 
 <script>
@@ -52,7 +52,9 @@ export default {
   },
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
-    this.$refs.luckyGrid.setAttribute('package', `${name}@${version}`)
+    if (this.$refs.luckyGrid) {
+      this.$refs.luckyGrid.setAttribute('package', `${name}@${version}`)
+    }
     try {
       this.initLucky()
       this.$emit('success')
@@ -68,7 +70,7 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: this.$refs.luckyGrid,
+        divElement: document.getElementById('luckyGrid'),
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,

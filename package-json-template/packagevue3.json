@@ -22,8 +22,12 @@
     "package"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config=build/webpack.config.js",
     "start": "yarn start:vue3",
+    "build": "yarn build:vue2 && yarn build:vue3",
+    "build:vue2": "yarn changeVue2 && yarn && yarn vue2build",
+    "build:vue3": "yarn changeVue3 &&  yarn && yarn vue3build",
+    "vue2build": "cross-env NODE_ENV=production webpack --config=build/webpack.configvue2.js",
+    "vue3build": "cross-env NODE_ENV=production webpack --config=build/webpack.configvue3.js",
     "start:vue2": "yarn changeVue2 && yarn && yarn vue2serve",
     "start:vue3": "yarn changeVue3 && yarn && yarn vue3serve",
     "vue2serve": "cross-env NODE_ENV=development webpack serve --config=build/webpack.configvue2.js",

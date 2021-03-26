@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import App from './index.vue';
-import LuckDraw from '../src/vue2.js';
+import LuckDraw from '../src/index.js';
+
+console.log('vue2')
 
 Vue.use(LuckDraw)
 
