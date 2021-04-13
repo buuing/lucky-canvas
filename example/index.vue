@@ -30,7 +30,7 @@ export default {
         { radius: '41px', background: '#f6c66f', pointer: true },
         {
           radius: '35px', background: '#ffdea0',
-          imgs: [{ src: require('./img/button.png'), width: '65%', top: '-50%' }]
+          // imgs: [{ src: require('./img/button.png'), width: '65%', top: '-50%' }]
         }
       ],
     }
@@ -44,7 +44,7 @@ export default {
       let data = ['1元红包', '100元红包', '0.5元红包', '2元红包', '10元红包', '50元红包', '0.3元红包', '5元红包']
       data.forEach((item, index) => {
         prizes.push({
-          title: item,
+          name: item,
           background: index % 2 ? '#f9e3bb' : '#f8d384',
           fonts: [{ text: item, top: '10%' }],
           imgs:[],
@@ -59,7 +59,7 @@ export default {
       }, 3000)
     },
     endCallBack (prize) {
-      alert(`恭喜你获得${prize.title}`)
+      alert(`恭喜你获得${prize.name}`)
     },
   }
 }

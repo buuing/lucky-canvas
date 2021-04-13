@@ -1,6 +1,6 @@
 <template>
   <div style="background: #ff4a4c; border-radius: 4px; color: #eee; text-align: center; padding: 10px 20px">
-    <p>请使用&lt;luckyWheel /&gt; 或 &lt;luckyGrid /&gt;组件</p>
+    <p>请使用&lt;luckyWheel /&gt; 或 &lt;luckyGrid /&gt;新版组件</p>
     <p>新增图片引入机制</p>
     <p>新增自动根据dpr优化清晰度</p>
     <p>新增九宫格抽奖</p>
@@ -16,6 +16,6 @@
 
 <script>
 export default {
-  name:'LuckDraw'
+  name: 'LuckDraw'
 }
 </script>
