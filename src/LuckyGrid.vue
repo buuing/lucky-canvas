@@ -1,16 +1,13 @@
 <template>
-  <div ref="luckyGrid" id="luckyGrid"></div>
+  <div ref="luckyGrid"></div>
 </template>
 
 <script>
 import { LuckyGrid } from 'lucky-canvas'
-import pkg from '../package.json'
-
-const name = pkg.name
-const version = pkg.version
+import { name, version } from '../package.json'
 
 export default {
-  name:'LuckyGrid',
+  name: 'LuckyGrid',
   props: {
     width: { type: [String, Number], default: '' },
     height: { type: [String, Number], default: '' },
@@ -70,7 +67,7 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: document.getElementById('luckyGrid'),
+        divElement: this.$refs.luckyGrid,
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,

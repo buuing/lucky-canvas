@@ -1,15 +1,13 @@
 <template>
-  <div ref="luckyWheel" id="luckyWheel"></div>
+  <div ref="luckyWheel"></div>
 </template>
 
 <script>
 import { LuckyWheel } from 'lucky-canvas'
-import pkg from '../package.json'
+import { name, version } from '../package.json'
 
-const name = pkg.name
-const version = pkg.version
 export default {
-  name:'LuckyWheel',
+  name: 'LuckyWheel',
   props: {
     width: { type: [String, Number], default: '' },
     height: { type: [String, Number], default: '' },
@@ -55,7 +53,7 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: document.getElementById('luckyWheel'),
+        divElement: this.$refs.luckyWheel,
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,
