@@ -1,4 +1,6 @@
 .DS_Store
+*.zip
+*.tgz
 node_modules
 yarn.lock
 package-lock.json
@@ -11,7 +13,6 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
 # Editor directories and files
 .idea

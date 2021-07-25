@@ -1,0 +1,15 @@
+/* mini-luck-draw/lucky-wheel/index.wxss */
+.lucky-box {
+  position: relative;
+  overflow: hidden;
+}
+.lucky-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+#lucky-grid {
+  position: absolute;
+  z-index: 99;
+}

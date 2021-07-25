@@ -1,0 +1,39 @@
+<view class="lucky-box" style="width: {{width}}; height: {{height}}">
+  <canvas
+    type="2d"
+    id="lucky-wheel"
+    canvas-id="lucky-wheel"
+    bindtouchstart="handleClickOfCanvas"
+    style="width: {{width}}; height: {{height}}; visibility: {{showCanvas ? 'visible' : 'hidden'}}"
+  ></canvas>
+  <image
+    wx:if="{{luckyImg}}"
+    src="{{luckyImg}}"
+    class="lucky-img"
+    mode="scaleToFill"
+    bindload="luckyImgLoad"
+    bindtouchstart="handleClickOfImg"
+    style="width: {{width}}; height: {{height}}"
+  ></image>
+  <view>
+    <view wx:if="{{isShow}}" wx:for="{{blocks}}" wx:key="index" wx:for-index="index" wx:for-item="block" style="visibility: hidden; height: 0">
+      <view wx:for="{{block.imgs}}" wx:key="i" wx:for-index="i" wx:for-item="img">
+        <image src="{{img.src}}" data-name="blocks" data-index="{{index}}" data-i="{{i}}" bindload="imgBindload"></image>
+      </view>
+    </view>
+  </view>
+  <view>
+    <view wx:if="{{isShow}}" wx:for="{{prizes}}" wx:key="index" wx:for-index="index" wx:for-item="prize" style="visibility: hidden; height: 0">
+      <view wx:for="{{prize.imgs}}" wx:key="i" wx:for-index="i" wx:for-item="img">
+        <image src="{{img.src}}" data-name="prizes" data-index="{{index}}" data-i="{{i}}" bindload="imgBindload"></image>
+      </view>
+    </view>
+  </view>
+  <view>
+    <view wx:if="{{isShow}}" wx:for="{{buttons}}" wx:key="index" wx:for-index="index" wx:for-item="button" style="visibility: hidden; height: 0">
+      <view wx:for="{{button.imgs}}" wx:key="i" wx:for-index="i" wx:for-item="img">
+        <image src="{{img.src}}" data-name="buttons" data-index="{{index}}" data-i="{{i}}" bindload="imgBindload"></image>
+      </view>
+    </view>
+  </view>
+</view>

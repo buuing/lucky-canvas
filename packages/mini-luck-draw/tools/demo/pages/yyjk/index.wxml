@@ -1,0 +1,19 @@
+<view class="box">
+  <view>
+    <lucky-grid
+      class="my-lucky"
+      id="lucky-grid"
+      width="600rpx"
+      height="600rpx"
+      blocks="{{blocks}}"
+      prizes="{{prizes}}"
+      buttons="{{buttons}}"
+      activeStyle="{{activeStyle}}"
+      defaultConfig="{{defaultConfig}}"
+      defaultStyle="{{defaultStyle}}"
+      bindstart="gridStart"
+      bindend="gridEnd"
+    />
+    <view class="mask" wx:if="{{maskShow}}" bindtouchstart="maskHidden"></view>
+  </view>
+</view>

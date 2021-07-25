@@ -1,0 +1,17 @@
+<view class="box">
+  <view>
+    <lucky-wheel
+      class="my-lucky"
+      id="lucky-wheel"
+      width="600rpx"
+      height="600rpx"
+      blocks="{{blocks}}"
+      prizes="{{prizes}}"
+      buttons="{{buttons}}"
+      defaultStyle="{{defaultStyle}}"
+      bindstart="wheelStart"
+      bindend="wheelEnd"
+    />
+    <view class="mask" wx:if="{{maskShow}}" bindtouchstart="maskHidden"></view>
+  </view>
+</view>

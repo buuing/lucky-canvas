@@ -1,0 +1,21 @@
+<view class="box">
+  <view class="center" style="padding: 20px 0">
+    该小程序为示例 demo | 官网: 100px.net
+  </view>
+  <view class="ul">
+    <view class="list"><navigator url="/pages/ymc/index">大转盘默认 Demo</navigator></view>
+    <view class="list"><navigator url="/pages/yyjk/index">九宫格默认 Demo</navigator></view>
+    <view class="list"><navigator url="/pages/cjl/index">仿抽奖乐大转盘</navigator></view>
+    <view class="list"><navigator url="/pages/yx/index">仿网易严选九宫格</navigator></view>
+    <view class="list"><navigator url="/pages/xc/index">仿携程转盘抽奖</navigator></view>
+    <!-- <view class="list"><navigator url="/pages/pdmm/index">仿潘德妈妈大转盘</navigator></view> -->
+    <view class="list"><navigator url="/pages/yyx/index">仿网易云游戏九宫格</navigator></view>
+    <view class="list"><navigator url="/pages/jd/index">仿京东大转盘抽京豆</navigator></view>
+    <view class="list"><navigator url="/pages/xdf/index">仿新东方小程序抽奖</navigator></view>
+    
+  </view>
+  <view class="center" style="padding: 20px 20px">
+    <view>本插件开源免费, 如果用着顺手可以 github 上面点个 star 支持我一下</view>
+    <view style="padding: 10px">Github: 官网右上角有链接</view>
+  </view>
+</view>

@@ -45,21 +45,53 @@
 
 <br />
 
-- **在 js / jq 中使用 [lucky-canvas](https://100px.net/usage/js.html)**
+- **在 js / jq 中使用 [lucky-canvas](https://github.com/luckdraw/lucky-canvas)**
 
-- **在 vue 中使用 [vue-luck-draw](https://100px.net/usage/vue.html)**
+- **在 vue 中使用 [vue-luck-draw](https://github.com/luckdraw/vue-luck-draw)**
 
-- **在 react 中使用 [react-luck-draw](https://100px.net/usage/react.html)**
+- **在 react 中使用 [react-luck-draw](https://github.com/luckdraw/react-luck-draw)**
 
-- **在 uni-app 中使用 [uni-luck-draw](https://100px.net/usage/uni-app.html)**
+- **在 uni-app 中使用 [uni-luck-draw](https://github.com/luckdraw/uni-luck-draw)**
 
-- **在 taro 中使用 [taro-luck-draw](https://100px.net/usage/taro.html)**
+- **在 taro 中使用 [taro-luck-draw](https://github.com/luckdraw/taro-luck-draw)**
 
-- **在 微信小程序 中使用 [mini-luck-draw](https://100px.net/usage/wx.html)**
+- **在 微信小程序 中使用 [mini-luck-draw](https://github.com/luckdraw/mini-luck-draw)**
 
 <br />
 
-### 贡献者
+## 在 Js / JQuery 中使用
+
+### 方式 1：通过 script 标签引入
+
+> 为了避免 CDN 链接出现异常或波动，我非常建议你**缓存到本地或服务器**
+
+- **指定版本：** [https://cdn.jsdelivr.net/npm/lucky-canvas@1.4/dist/lucky-canvas.umd.min.js](https://cdn.jsdelivr.net/npm/lucky-canvas@1.4/dist/lucky-canvas.umd.min.js)
+
+```html
+<div id="my-lucky"></div>
+<script src="https://cdn.jsdelivr.net/npm/lucky-canvas@1.4/dist/lucky-canvas.umd.min.js"></script>
+<script>
+
+  // 大转盘抽奖
+  let luckyWheel = new LuckyCanvas.LuckyWheel({
+    el: '#my-lucky',
+    width: '300px',
+    height: '300px'
+  }, {
+    // ...你的配置
+  })
+  
+  // 九宫格抽奖
+  let luckyGrid = new LuckyCanvas.LuckyGrid({
+    el: '#my-lucky',
+    width: '300px',
+    height: '300px'
+  }, {
+    // ...你的配置
+  })
+
+</script>
+```
 
 <br />
 
@@ -70,7 +102,3 @@
 ## 友情链接
 
 - [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)
-
-
-<!-- lerna过滤器配置 -->
-<!-- https://github.com/lerna/lerna/tree/main/core/filter-options#readme -->

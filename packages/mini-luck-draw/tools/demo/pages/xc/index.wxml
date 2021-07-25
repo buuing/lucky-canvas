@@ -1,0 +1,15 @@
+<view class="box">
+  <lucky-wheel
+    class="my-lucky"
+    id="lucky-wheel"
+    width="600rpx"
+    height="600rpx"
+    blocks="{{blocks}}"
+    prizes="{{prizes}}"
+    buttons="{{buttons}}"
+    defaultStyle="{{defaultStyle}}"
+    defaultConfig="{{defaultConfig}}"
+    bindstart="wheelStart"
+    bindend="wheelEnd"
+  />
+</view>

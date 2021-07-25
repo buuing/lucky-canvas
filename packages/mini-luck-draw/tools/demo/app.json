@@ -1,0 +1,23 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/yyjk/index",
+    "pages/ymc/index",
+    "pages/cjl/index",
+    "pages/yx/index",
+    "pages/yyx/index",
+    "pages/jd/index",
+    "pages/xdf/index",
+    "pages/xc/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#dc415f",
+    "navigationBarTitleText": "lucky-canvas 抽奖示例",
+    "navigationBarTextStyle":"white"
+  },
+  "usingComponents": {
+    "lucky-wheel": "./components/lucky-wheel/index",
+    "lucky-grid": "./components/lucky-grid/index"
+  }
+}

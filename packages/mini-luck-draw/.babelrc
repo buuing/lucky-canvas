@@ -1,0 +1,11 @@
+{
+    "plugins": [
+        ["module-resolver", {
+            "root": ["./src"],
+            "alias": {}
+        }]
+    ],
+    "presets": [
+        ["env", {"loose": true, "modules": "commonjs"}]
+    ]
+}

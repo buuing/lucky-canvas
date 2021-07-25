@@ -1,0 +1,56 @@
+{
+  "name": "vue-luck-draw",
+  "version": "3.4.5",
+  "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
+  "main": "index.js",
+  "keywords": [
+    "vue3抽奖",
+    "大转盘抽奖",
+    "九宫格抽奖",
+    "抽奖插件",
+    "web抽奖",
+    "移动端抽奖",
+    "canvas抽奖"
+  ],
+  "author": "ldq <17778888138@189.cn>",
+  "license": "BSD-3-Clause",
+  "files": [
+    "package.json",
+    "dist",
+    "vue3",
+    "index.js",
+    "package"
+  ],
+  "scripts": {
+    "start": "yarn start:vue3",
+    "build": "yarn build:vue2 && yarn build:vue3",
+    "build:vue2": "yarn changeVue2 && yarn && yarn vue2build",
+    "build:vue3": "yarn changeVue3 &&  yarn && yarn vue3build",
+    "vue2build": "cross-env NODE_ENV=production webpack --config=build/webpack.configvue2.js",
+    "vue3build": "cross-env NODE_ENV=production webpack --config=build/webpack.configvue3.js",
+    "start:vue2": "yarn changeVue2 && yarn && yarn vue2serve",
+    "start:vue3": "yarn changeVue3 && yarn && yarn vue3serve",
+    "vue2serve": "cross-env NODE_ENV=development webpack serve --config=build/webpack.configvue2.js",
+    "vue3serve": "cross-env NODE_ENV=development webpack serve --config=build/webpack.configvue3.js",
+    "changeVue2": "node update-packge-json.js vue2",
+    "changeVue3": "node update-packge-json.js vue3"
+  },
+  "homepage": "https://100px.net",
+  "dependencies": {
+    "lucky-canvas": "^1.5.3"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.7",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.0.0",
+    "cross-env": "^7.0.3",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.3.9",
+    "vue": "^3.0.7",
+    "vue-loader": "^16.1.2",
+    "webpack": "^5.27.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

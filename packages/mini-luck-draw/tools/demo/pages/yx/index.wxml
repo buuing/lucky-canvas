@@ -1,0 +1,15 @@
+<view class="box">
+  <lucky-grid
+    class="my-lucky"
+    id="lucky-grid"
+    width="600rpx"
+    height="600rpx"
+    blocks="{{blocks}}"
+    prizes="{{prizes}}"
+    buttons="{{buttons}}"
+    activeStyle="{{activeStyle}}"
+    defaultStyle="{{defaultStyle}}"
+    bindstart="gridStart"
+    bindend="gridEnd"
+  />
+</view>

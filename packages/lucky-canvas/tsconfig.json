@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "allowJs": true,
+    "strict": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "exclude": [
+    "node_modules/**"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

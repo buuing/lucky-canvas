@@ -2,6 +2,9 @@
 node_modules
 yarn.lock
 package-lock.json
+.vuepress/dist
+dist/demo.html
+vue3/demo.html
 
 # local env files
 .env.local
@@ -11,7 +14,6 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
 # Editor directories and files
 .idea
