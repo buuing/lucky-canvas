@@ -1,12 +1,53 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ReactLuckDraw = {}, global.React));
-}(this, (function (exports, React) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('react'), require('react-dom')) :
+  typeof define === 'function' && define.amd ? define(['react', 'react-dom'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.React, global.ReactDOM));
+}(this, (function (React, ReactDOM) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+  var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+
+      if (enumerableOnly) {
+        symbols = symbols.filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      }
+
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -43,40 +84,6 @@
     }
 
     return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
   }
 
   function _inherits(subClass, superClass) {
@@ -116,7 +123,7 @@
     if (typeof Proxy === "function") return true;
 
     try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
       return true;
     } catch (e) {
       return false;
@@ -194,6 +201,8 @@
   };
 
   function e(e, i) {
+    if ("function" != typeof i && null !== i) throw new TypeError("Class extends value " + String(i) + " is not a constructor or null");
+
     function n() {
       this.constructor = e;
     }
@@ -330,15 +339,10 @@
     }
   }
 
-  function o() {
-    for (var t = 0, e = 0, i = arguments.length; e < i; e++) t += arguments[e].length;
+  function o(t, e) {
+    for (var i = 0, n = e.length, r = t.length; i < n; i++, r++) t[r] = e[i];
 
-    var n = Array(t),
-        r = 0;
-
-    for (e = 0; e < i; e++) for (var o = arguments[e], s = 0, a = o.length; s < a; s++, r++) n[r] = o[s];
-
-    return n;
+    return t;
   }
 
   String.prototype.includes || (String.prototype.includes = function (t, e) {
@@ -498,18 +502,15 @@
       this.value = t, this.cb.call(this.$lucky, t, e);
     }, t;
   }(),
-      w = function () {
+      y = function () {
     function t(t) {
       var e = this;
-      this.htmlFontSize = 16, this.rAF = function () {}, this.setHTMLFontSize(), "string" == typeof t ? t = {
+      this.htmlFontSize = 16, this.rAF = function () {}, this.boxWidth = 0, this.boxHeight = 0, this.setHTMLFontSize(), "string" == typeof t ? t = {
         el: t
       } : 1 === t.nodeType && (t = {
         el: "",
         divElement: t
-      }), t = t, this.config = t, this.setDpr(), this.initWindowFunction(), t.flag || (t.flag = "WEB"), Object.prototype.hasOwnProperty.call(t, "ob") || (t.ob = !0), t.el && (t.divElement = document.querySelector(t.el));
-      var i = 0,
-          n = 0;
-      t.divElement && (i = t.divElement.offsetWidth, n = t.divElement.offsetHeight, t.canvasElement = document.createElement("canvas"), t.divElement.appendChild(t.canvasElement)), t.width = this.getLength(t.width) || i, t.height = this.getLength(t.height) || n, t.divElement && (t.divElement.style.overflow = "hidden", t.divElement.style.width = t.width + "px", t.divElement.style.height = t.height + "px"), t.canvasElement && (t.ctx = t.canvasElement.getContext("2d"), t.canvasElement.setAttribute("package", "lucky-canvas@1.5.2"), t.canvasElement.addEventListener("click", function (t) {
+      }), t = t, this.config = t, this.setDpr(), this.initWindowFunction(), t.flag || (t.flag = "WEB"), Object.prototype.hasOwnProperty.call(t, "ob") || (t.ob = !0), t.el && (t.divElement = document.querySelector(t.el)), t.divElement && (t.canvasElement = document.createElement("canvas"), t.divElement.appendChild(t.canvasElement)), this.resetWidthAndHeight(), t.canvasElement && (t.ctx = t.canvasElement.getContext("2d"), t.canvasElement.setAttribute("package", "lucky-canvas@1.5.4"), t.canvasElement.addEventListener("click", function (t) {
         return e.handleClick(t);
       }), t.canvasElement.addEventListener("mousemove", function (t) {
         return e.handleMouseMove(t);
@@ -517,38 +518,50 @@
         return e.handleMouseDown(t);
       }), t.canvasElement.addEventListener("mouseup", function (t) {
         return e.handleMouseUp(t);
-      })), this.ctx = t.ctx, t.ctx && t.width && t.height || console.error("无法获取到 CanvasContext2D 或宽高");
+      })), this.ctx = t.ctx, t.ctx ? this.boxWidth && this.boxHeight || console.error("无法获取到宽度或高度") : console.error("无法获取到 CanvasContext2D");
     }
 
-    return t.prototype.handleClick = function (t) {}, t.prototype.handleMouseDown = function (t) {}, t.prototype.handleMouseUp = function (t) {}, t.prototype.handleMouseMove = function (t) {}, t.prototype.conversionAxis = function (t, e) {
+    return t.prototype.init = function (t) {
+      this.setDpr(), this.setHTMLFontSize(), this.resetWidthAndHeight(), this.zoomCanvas();
+    }, t.prototype.handleClick = function (t) {}, t.prototype.handleMouseDown = function (t) {}, t.prototype.handleMouseUp = function (t) {}, t.prototype.handleMouseMove = function (t) {}, t.prototype.conversionAxis = function (t, e) {
       return [0, 0];
     }, t.prototype.setDpr = function () {
       var t = this.config;
       t.dpr || (window ? window.dpr = t.dpr = window.devicePixelRatio || 1 : t.dpr || console.error(t, "未传入 dpr 可能会导致绘制异常"));
     }, t.prototype.setHTMLFontSize = function () {
       window && (this.htmlFontSize = +window.getComputedStyle(document.documentElement).fontSize.slice(0, -2));
+    }, t.prototype.resetWidthAndHeight = function () {
+      var t = this.config,
+          e = 0,
+          i = 0;
+      t.divElement && (e = t.divElement.offsetWidth, i = t.divElement.offsetHeight), this.boxWidth = this.getLength(t.width) || e, this.boxHeight = this.getLength(t.height) || i, t.divElement && (t.divElement.style.overflow = "hidden", t.divElement.style.width = this.boxWidth + "px", t.divElement.style.height = this.boxHeight + "px");
     }, t.prototype.initWindowFunction = function () {
       var t = this.config;
-      if (window) return this.rAF = window.requestAnimationFrame, t.setTimeout = window.setTimeout, t.setInterval = window.setInterval, t.clearTimeout = window.clearTimeout, void (t.clearInterval = window.clearInterval);
+      if (window) return this.rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (t) {
+        window.setTimeout(t, 1e3 / 60);
+      }, t.setTimeout = window.setTimeout, t.setInterval = window.setInterval, t.clearTimeout = window.clearTimeout, void (t.clearInterval = window.clearInterval);
       if (t.rAF) this.rAF = t.rAF;else if (t.setTimeout) {
         var e = t.setTimeout;
 
         this.rAF = function (t) {
-          return e(t, 16);
+          return e(t, 16.7);
         };
       } else this.rAF = function (t) {
-        return setTimeout(t, 16);
+        return setTimeout(t, 16.7);
       };
     }, t.prototype.zoomCanvas = function () {
       var t = this.config,
           e = this.ctx,
           i = t.canvasElement,
           n = t.dpr,
-          r = function (t) {
+          r = [this.boxWidth * n, this.boxHeight * n],
+          o = r[0],
+          s = r[1],
+          a = function (t) {
         return (t * n - t) / (t * n) * (n / 2) * 100;
       };
 
-      i && (i.width = t.width * n, i.height = t.height * n, i.style.width = i.width + "px", i.style.height = i.height + "px", i.style.transform = "scale(" + 1 / n + ") translate(\n      " + -r(i.width) + "%, " + -r(i.height) + "%\n    )", e.scale(n, n));
+      i && (i.width = o, i.height = s, i.style.width = o + "px", i.style.height = s + "px", i.style.transform = "scale(" + 1 / n + ") translate(" + -a(o) + "%, " + -a(s) + "%)", e.scale(n, n));
     }, t.prototype.loadImg = function (t, e, i) {
       var n = this;
       return void 0 === i && (i = "$resolve"), new Promise(function (r, o) {
@@ -601,56 +614,56 @@
       return i.immediate && e.call(this, n.value), function () {};
     }, t;
   }(),
-      y = function (t) {
+      w = function (t) {
     return Math.PI / 180 * t;
   },
-      z = function (t, e) {
+      x = function (t, e) {
     return [+(Math.cos(t) * e).toFixed(8), +(Math.sin(t) * e).toFixed(8)];
   },
-      I = function (t, e) {
+      z = function (t, e) {
     var i = -t / e;
     return [i, -i * t + e];
   },
-      S = function (t, e, i, n, r, o) {
+      I = function (t, e, i, n, r, o) {
     var s;
 
-    if (void 0 === o && (o = !0), Math.abs(r - n).toFixed(8) >= y(180).toFixed(8)) {
+    if (void 0 === o && (o = !0), Math.abs(r - n).toFixed(8) >= w(180).toFixed(8)) {
       var a = (r + n) / 2;
-      return o ? (S(t, e, i, n, a, o), S(t, e, i, a, r, o)) : (S(t, e, i, a, r, o), S(t, e, i, n, a, o)), !1;
+      return o ? (I(t, e, i, n, a, o), I(t, e, i, a, r, o)) : (I(t, e, i, a, r, o), I(t, e, i, n, a, o)), !1;
     }
 
     o || (n = (s = [r, n])[0], r = s[1]);
-    var u = z(n, i),
+    var u = x(n, i),
         h = u[0],
         c = u[1],
-        l = z(r, i),
+        l = x(r, i),
         f = l[0],
         d = l[1],
-        p = I(h, c),
+        p = z(h, c),
         g = p[0],
         m = p[1],
-        v = I(f, d),
+        v = z(f, d),
         b = v[0],
-        w = v[1],
-        x = (w - m) / (g - b),
-        k = (b * m - g * w) / (b - g);
-    isNaN(x) && (Math.abs(h) === +i.toFixed(8) && (x = h), Math.abs(f) === +i.toFixed(8) && (x = f)), g === 1 / 0 || g === -1 / 0 ? k = b * x + w : b !== 1 / 0 && b !== -1 / 0 || (k = g * x + m), e.lineTo(h, c), t.indexOf("MP") > 0 ? e.quadraticCurveTo(x, k, f, d) : e.arcTo(x, k, f, d, i);
+        y = v[1],
+        k = (y - m) / (g - b),
+        S = (b * m - g * y) / (b - g);
+    isNaN(k) && (Math.abs(h) === +i.toFixed(8) && (k = h), Math.abs(f) === +i.toFixed(8) && (k = f)), g === 1 / 0 || g === -1 / 0 ? S = b * k + y : b !== 1 / 0 && b !== -1 / 0 || (S = g * k + m), e.lineTo(h, c), t.indexOf("MP") > 0 ? e.quadraticCurveTo(k, S, f, d) : e.arcTo(k, S, f, d, i);
   },
-      x = function (t, e, i, n, r, o, s, a) {
+      k = function (t, e, i, n, r, o, s, a) {
     i || (i = s);
-    var u = y(90 / Math.PI / n * s),
-        h = y(90 / Math.PI / i * s),
+    var u = w(90 / Math.PI / n * s),
+        h = w(90 / Math.PI / i * s),
         c = r + u,
         l = o - u,
         f = r + h,
         d = o - h;
-    e.beginPath(), e.fillStyle = a, e.moveTo.apply(e, z(c, n)), S(t, e, n, c, l, !0), d > f ? S(t, e, i, f, d, !1) : e.lineTo.apply(e, z((r + o) / 2, s / 2 / Math.abs(Math.sin((r - o) / 2)))), e.closePath(), e.fill();
+    e.beginPath(), e.fillStyle = a, e.moveTo.apply(e, x(c, n)), I(t, e, n, c, l, !0), d > f ? I(t, e, i, f, d, !1) : e.lineTo.apply(e, x((r + o) / 2, s / 2 / Math.abs(Math.sin((r - o) / 2)))), e.closePath(), e.fill();
   },
-      k = function (t, e, i, n, r, o, s) {
+      S = function (t, e, i, n, r, o, s) {
     var a = Math.min(n, r);
     o > a / 2 && (o = a / 2), t.beginPath(), t.fillStyle = s, t.moveTo(e + o, i), t.lineTo(e + o, i), t.lineTo(e + n - o, i), t.quadraticCurveTo(e + n, i, e + n, i + o), t.lineTo(e + n, i + r - o), t.quadraticCurveTo(e + n, i + r, e + n - o, i + r), t.lineTo(e + o, i + r), t.quadraticCurveTo(e, i + r, e, i + r - o), t.lineTo(e, i + o), t.quadraticCurveTo(e, i, e + o, i), t.closePath(), t.fill();
   },
-      T = {
+      C = {
     easeIn: function (t, e, i, n) {
       return t >= n && (t = n), i * (t /= n) * t + e;
     },
@@ -658,7 +671,7 @@
       return t >= n && (t = n), -i * (t /= n) * (t - 2) + e;
     }
   },
-      C = {
+      T = {
     easeIn: function (t, e, i, n) {
       return t >= n && (t = n), -i * Math.cos(t / n * (Math.PI / 2)) + i + e;
     },
@@ -666,7 +679,7 @@
       return t >= n && (t = n), i * Math.sin(t / n * (Math.PI / 2)) + e;
     }
   },
-      O = {
+      W = {
     easeIn: function (t, e, i, n) {
       return t >= n && (t = n), 0 == t ? e : i * Math.pow(2, 10 * (t / n - 1)) + e;
     },
@@ -674,7 +687,7 @@
       return t >= n && (t = n), t == n ? e + i : i * (1 - Math.pow(2, -10 * t / n)) + e;
     }
   },
-      _ = {
+      O = {
     easeIn: function (t, e, i, n) {
       return t >= n && (t = n), -i * (Math.sqrt(1 - (t /= n) * t) - 1) + e;
     },
@@ -682,9 +695,9 @@
       return t >= n && (t = n), i * Math.sqrt(1 - (t = t / n - 1) * t) + e;
     }
   },
-      E = Object.freeze({
+      _ = Object.freeze({
     __proto__: null,
-    quad: T,
+    quad: C,
     cubic: {
       easeIn: function (t, e, i, n) {
         return t >= n && (t = n), i * (t /= n) * t * t + e;
@@ -709,15 +722,16 @@
         return t >= n && (t = n), i * ((t = t / n - 1) * t * t * t * t + 1) + e;
       }
     },
-    sine: C,
-    expo: O,
-    circ: _
+    sine: T,
+    expo: W,
+    circ: O
   }),
-      P = function (t) {
+      E = function (t) {
     function o(e, i) {
+      var n;
       void 0 === i && (i = {});
-      var n = t.call(this, e) || this;
-      return n.blocks = [], n.prizes = [], n.buttons = [], n.defaultConfig = {}, n._defaultConfig = {
+      var r = t.call(this, e) || this;
+      return r.blocks = [], r.prizes = [], r.buttons = [], r.defaultConfig = {}, r._defaultConfig = {
         gutter: "0px",
         offsetDegree: 0,
         speed: 20,
@@ -725,26 +739,26 @@
         accelerationTime: 2500,
         decelerationTime: 2500,
         stopRange: .8
-      }, n.defaultStyle = {}, n._defaultStyle = {
+      }, r.defaultStyle = {}, r._defaultStyle = {
         fontSize: "18px",
         fontColor: "#000",
         fontStyle: "sans-serif",
         fontWeight: "400",
         lineHeight: "",
-        background: "transparent",
+        background: "rgba(0,0,0,0)",
         wordWrap: !0,
         lengthLimit: "90%"
-      }, n.Radius = 0, n.prizeRadius = 0, n.prizeDeg = 0, n.prizeRadian = 0, n.rotateDeg = 0, n.maxBtnRadius = 0, n.startTime = 0, n.endTime = 0, n.stopDeg = 0, n.endDeg = 0, n.FPS = 16.6, n.blockImgs = [[]], n.prizeImgs = [[]], n.btnImgs = [[]], e.ob && (n.initData(i), n.initWatch()), n.initComputed(), n.init({
-        blockImgs: n.blocks.map(function (t) {
+      }, r.Radius = 0, r.prizeRadius = 0, r.prizeDeg = 0, r.prizeRadian = 0, r.rotateDeg = 0, r.maxBtnRadius = 0, r.startTime = 0, r.endTime = 0, r.stopDeg = 0, r.endDeg = 0, r.FPS = 16.6, r.blockImgs = [[]], r.prizeImgs = [[]], r.btnImgs = [[]], e.ob && (r.initData(i), r.initWatch()), r.initComputed(), null === (n = e.beforeCreate) || void 0 === n || n.call(r), r.init({
+        blockImgs: r.blocks.map(function (t) {
           return t.imgs;
         }),
-        prizeImgs: n.prizes.map(function (t) {
+        prizeImgs: r.prizes.map(function (t) {
           return t.imgs;
         }),
-        btnImgs: n.buttons.map(function (t) {
+        btnImgs: r.buttons.map(function (t) {
           return t.imgs;
         })
-      }), n;
+      }), r;
     }
 
     return e(o, t), o.prototype.initData = function (t) {
@@ -767,7 +781,7 @@
           fontColor: "#000",
           fontStyle: "sans-serif",
           fontWeight: "400",
-          background: "transparent",
+          background: "rgba(0,0,0,0)",
           wordWrap: !0,
           lengthLimit: "90%"
         }, t.defaultStyle);
@@ -811,28 +825,29 @@
       }), this.$watch("endCallback", function () {
         return t.init({});
       });
-    }, o.prototype.init = function (t) {
-      var e,
-          i,
-          n = this,
-          r = this.config,
-          o = this.ctx;
-      this.setDpr(), this.setHTMLFontSize(), this.zoomCanvas(), this.Radius = Math.min(r.width, r.height) / 2, null === (e = r.beforeInit) || void 0 === e || e.call(this), o.translate(this.Radius, this.Radius), this.draw(), Object.keys(t).forEach(function (e) {
-        var i = e,
-            r = {
+    }, o.prototype.init = function (e) {
+      var i,
+          n,
+          r = this;
+      t.prototype.init.call(this);
+      var o = this.config,
+          s = this.ctx;
+      this.Radius = Math.min(this.boxWidth, this.boxHeight) / 2, null === (i = o.beforeInit) || void 0 === i || i.call(this), s.translate(this.Radius, this.Radius), this.draw(), this.draw(), Object.keys(e).forEach(function (t) {
+        var i = t,
+            n = {
           blockImgs: "blocks",
           prizeImgs: "prizes",
           btnImgs: "buttons"
         }[i],
-            o = t[i];
+            o = e[i];
         o && o.forEach(function (t, e) {
           t && t.forEach(function (t, o) {
-            n.loadAndCacheImg(r, e, i, o, function () {
-              n.draw();
+            r.loadAndCacheImg(n, e, i, o, function () {
+              r.draw();
             });
           });
         });
-      }), null === (i = r.afterInit) || void 0 === i || i.call(this);
+      }), null === (n = o.afterInit) || void 0 === n || n.call(this);
     }, o.prototype.handleClick = function (t) {
       var e,
           i = this.ctx;
@@ -885,13 +900,13 @@
                   c = [i.getOffsetX(u), i.getHeight(e.top, 2 * t) - t],
                   l = c[0],
                   f = c[1];
-              o.save(), e.rotate && o.rotate(y(i.rotateDeg)), i.drawImage(s, l, f, u, h), o.restore();
+              o.save(), e.rotate && o.rotate(w(i.rotateDeg)), i.drawImage(s, l, f, u, h), o.restore();
             }
           }
         }), t - i.getLength(e.padding && e.padding.split(" ")[0]);
-      }, this.Radius), this.prizeDeg = 360 / this.prizes.length, this.prizeRadian = y(this.prizeDeg);
+      }, this.Radius), this.prizeDeg = 360 / this.prizes.length, this.prizeRadian = w(this.prizeDeg);
 
-      var c = y(-90 + this.rotateDeg + s.offsetDegree),
+      var c = w(-90 + this.rotateDeg + s.offsetDegree),
           l = function (t) {
         return i.getOffsetX(o.measureText(t).width);
       },
@@ -905,11 +920,11 @@
             d = i.prizeRadius - i.maxBtnRadius,
             p = t.background || h.background;
         u(p) && function (t, e, i, n, r, o, s, a) {
-          s ? x(t, e, i, n, r, o, s, a) : (e.beginPath(), e.fillStyle = a, e.moveTo(0, 0), e.arc(0, 0, n, r, o, !1), e.closePath(), e.fill());
+          s ? k(t, e, i, n, r, o, s, a) : (e.beginPath(), e.fillStyle = a, e.moveTo(0, 0), e.arc(0, 0, n, r, o, !1), e.closePath(), e.fill());
         }(r.flag, o, i.maxBtnRadius, i.prizeRadius, n - i.prizeRadian / 2, n + i.prizeRadian / 2, i.getLength(s.gutter), p);
         var g = Math.cos(n) * i.prizeRadius,
             m = Math.sin(n) * i.prizeRadius;
-        o.translate(g, m), o.rotate(n + y(90)), t.imgs && t.imgs.forEach(function (t, n) {
+        o.translate(g, m), o.rotate(n + w(90)), t.imgs && t.imgs.forEach(function (t, n) {
           if (i.prizeImgs[e]) {
             var r = i.prizeImgs[e][n];
 
@@ -950,7 +965,7 @@
           }).forEach(function (e, i) {
             o.fillText(e, l(e), f(t, d, i));
           });
-        }), o.rotate(y(360) - n - y(90)), o.translate(-g, -m);
+        }), o.rotate(w(360) - n - w(90)), o.translate(-g, -m);
       }), o.restore(), this.buttons.forEach(function (t, e) {
         var n = i.getHeight(t.radius);
         i.maxBtnRadius = Math.max(i.maxBtnRadius, n), u(t.background) && (o.beginPath(), o.fillStyle = t.background, o.arc(0, 0, n, 0, 2 * Math.PI, !1), o.fill()), t.pointer && u(t.background) && (o.beginPath(), o.fillStyle = t.background, o.moveTo(-n, 0), o.lineTo(n, 0), o.lineTo(0, 2 * -n), o.closePath(), o.fill()), t.imgs && t.imgs.forEach(function (t, r) {
@@ -997,7 +1012,7 @@
         for (var u = (Math.random() * r - r / 2) * this.getLength(s.stopRange), h = 0; ++h;) {
           var c = 360 * h - n * r - o - s.offsetDegree + u;
 
-          if (E[s.speedFunction].easeOut(this.FPS, this.stopDeg, c, s.decelerationTime) - this.stopDeg > s.speed) {
+          if (_[s.speedFunction].easeOut(this.FPS, this.stopDeg, c, s.decelerationTime) - this.stopDeg > s.speed) {
             this.endDeg = c;
             break;
           }
@@ -1006,7 +1021,7 @@
         return this.slowDown();
       }
 
-      this.rotateDeg = (o + E[s.speedFunction].easeIn(a, 0, s.speed, s.accelerationTime)) % 360, this.draw(), i(this.run.bind(this, t + 1));
+      this.rotateDeg = (o + _[s.speedFunction].easeIn(a, 0, s.speed, s.accelerationTime)) % 360, this.draw(), i(this.run.bind(this, t + 1));
     }, o.prototype.slowDown = function () {
       var t,
           e = this,
@@ -1022,7 +1037,7 @@
         if (h >= u.decelerationTime) return this.startTime = 0, void (null === (t = this.endCallback) || void 0 === t || t.call(this, i({}, r.find(function (t, e) {
           return e === o;
         }))));
-        this.rotateDeg = E[u.speedFunction].easeOut(h, s, a, u.decelerationTime) % 360, this.draw(), n(this.slowDown.bind(this));
+        this.rotateDeg = _[u.speedFunction].easeOut(h, s, a, u.decelerationTime) % 360, this.draw(), n(this.slowDown.bind(this));
       } else this.startTime = 0;
     }, o.prototype.getWidth = function (t, e) {
       return void 0 === e && (e = this.prizeRadian * this.prizeRadius), s(t, "number") ? t : s(t, "string") ? this.changeUnits(t, e) : 0;
@@ -1034,28 +1049,29 @@
       var i = this.config;
       return [t / i.dpr - this.Radius, e / i.dpr - this.Radius];
     }, o;
-  }(w),
-      D = function (t) {
+  }(y),
+      P = function (t) {
     function h(e, i) {
+      var n;
       void 0 === i && (i = {});
-      var n = t.call(this, e) || this;
-      n.rows = 3, n.cols = 3, n.blocks = [], n.prizes = [], n.buttons = [], n.defaultConfig = {}, n._defaultConfig = {
+      var r = t.call(this, e) || this;
+      r.rows = 3, r.cols = 3, r.blocks = [], r.prizes = [], r.buttons = [], r.defaultConfig = {}, r._defaultConfig = {
         gutter: 5,
         speed: 20,
         accelerationTime: 2500,
         decelerationTime: 2500
-      }, n.defaultStyle = {}, n._defaultStyle = {
+      }, r.defaultStyle = {}, r._defaultStyle = {
         borderRadius: 20,
         fontColor: "#000",
         fontSize: "18px",
         fontStyle: "sans-serif",
         fontWeight: "400",
         lineHeight: "",
-        background: "transparent",
+        background: "rgba(0,0,0,0)",
         shadow: "",
         wordWrap: !0,
         lengthLimit: "90%"
-      }, n.activeStyle = {}, n._activeStyle = {
+      }, r.activeStyle = {}, r._activeStyle = {
         background: "#ffce98",
         shadow: "",
         fontStyle: "",
@@ -1063,19 +1079,19 @@
         fontSize: "",
         lineHeight: "",
         fontColor: ""
-      }, n.cellWidth = 0, n.cellHeight = 0, n.startTime = 0, n.endTime = 0, n.currIndex = 0, n.stopIndex = 0, n.endIndex = 0, n.demo = !1, n.timer = 0, n.FPS = 16.6, n.prizeFlag = -1, n.cells = [], n.blockImgs = [[]], n.btnImgs = [[]], n.prizeImgs = [], e.ob && (n.initData(i), n.initWatch()), n.initComputed();
-      var r = n.buttons.map(function (t) {
+      }, r.cellWidth = 0, r.cellHeight = 0, r.startTime = 0, r.endTime = 0, r.currIndex = 0, r.stopIndex = 0, r.endIndex = 0, r.demo = !1, r.timer = 0, r.FPS = 16.6, r.prizeFlag = -1, r.cells = [], r.blockImgs = [[]], r.btnImgs = [[]], r.prizeImgs = [], e.ob && (r.initData(i), r.initWatch()), r.initComputed(), null === (n = e.beforeCreate) || void 0 === n || n.call(r);
+      var o = r.buttons.map(function (t) {
         return t.imgs;
       });
-      return n.button && r.push(n.button.imgs), n.init({
-        blockImgs: n.blocks.map(function (t) {
+      return r.button && o.push(r.button.imgs), r.init({
+        blockImgs: r.blocks.map(function (t) {
           return t.imgs;
         }),
-        prizeImgs: n.prizes.map(function (t) {
+        prizeImgs: r.prizes.map(function (t) {
           return t.imgs;
         }),
-        btnImgs: r
-      }), n;
+        btnImgs: o
+      }), r;
     }
 
     return e(h, t), h.prototype.initData = function (t) {
@@ -1097,7 +1113,7 @@
           fontSize: "18px",
           fontStyle: "sans-serif",
           fontWeight: "400",
-          background: "transparent",
+          background: "rgba(0,0,0,0)",
           shadow: "",
           wordWrap: !0,
           lengthLimit: "90%"
@@ -1165,33 +1181,33 @@
       }), this.$watch("endCallback", function () {
         return t.init({});
       });
-    }, h.prototype.init = function (t) {
-      var e,
-          i,
-          n = this,
-          r = this,
-          o = r.config;
-      r.ctx, r.button;
-      this.setHTMLFontSize(), this.setDpr(), this.zoomCanvas(), null === (e = o.beforeInit) || void 0 === e || e.call(this), this.draw(), Object.keys(t).forEach(function (e) {
-        var i = e,
-            r = t[i],
+    }, h.prototype.init = function (e) {
+      var i,
+          n,
+          r = this;
+      t.prototype.init.call(this);
+      var o = this,
+          s = o.config;
+      o.ctx, o.button, null === (i = s.beforeInit) || void 0 === i || i.call(this), this.draw(), Object.keys(e).forEach(function (t) {
+        var i = t,
+            n = e[i],
             o = {
           blockImgs: "blocks",
           prizeImgs: "prizes",
           btnImgs: "buttons"
         }[i];
-        r && r.forEach(function (t, e) {
-          t && t.forEach(function (t, r) {
-            n.loadAndCacheImg(o, e, i, r, function () {
-              n.draw();
+        n && n.forEach(function (t, e) {
+          t && t.forEach(function (t, n) {
+            r.loadAndCacheImg(o, e, i, n, function () {
+              r.draw();
             });
           });
         });
-      }), null === (i = o.afterInit) || void 0 === i || i.call(this);
+      }), null === (n = s.afterInit) || void 0 === n || n.call(this);
     }, h.prototype.handleClick = function (t) {
       var e = this,
           i = this.ctx;
-      o(this.buttons, [this.button]).forEach(function (n) {
+      o(o([], this.buttons), [this.button]).forEach(function (n) {
         var r;
 
         if (n) {
@@ -1200,7 +1216,7 @@
               a = o[1],
               u = o[2],
               h = o[3];
-          i.beginPath(), i.rect(s, a, u, h), i.isPointInPath(t.offsetX, t.offsetY) && (e.startTime || null === (r = e.startCallback) || void 0 === r || r.call(e, t));
+          i.beginPath(), i.rect(s, a, u, h), i.isPointInPath(t.offsetX, t.offsetY) && (e.startTime || ("function" == typeof n.callback && n.callback.call(e, n), null === (r = e.startCallback) || void 0 === r || r.call(e, t, n)));
         }
       });
     }, h.prototype.loadAndCacheImg = function (t, e, i, o, s) {
@@ -1246,7 +1262,7 @@
           c = n._defaultConfig,
           l = n._defaultStyle,
           f = n._activeStyle;
-      null === (t = r.beforeDraw) || void 0 === t || t.call(this, h), h.clearRect(0, 0, r.width, r.height), this.cells = o(this.prizes, this.buttons), this.button && this.cells.push(this.button), this.cells.forEach(function (t) {
+      null === (t = r.beforeDraw) || void 0 === t || t.call(this, h), h.clearRect(0, 0, this.boxWidth, this.boxHeight), this.cells = o(o([], this.prizes), this.buttons), this.button && this.cells.push(this.button), this.cells.forEach(function (t) {
         t.col = t.col || 1, t.row = t.row || 1;
       }), this.prizeArea = this.blocks.reduce(function (t, e) {
         var n = t.x,
@@ -1298,7 +1314,7 @@
             m = e.borderRadius ? i.getLength(e.borderRadius) : 0,
             v = e.background || l.background;
 
-        return u(v) && k(h, n, r, o, a, m, i.handleBackground(n, r, o, a, v)), {
+        return u(v) && S(h, n, r, o, a, m, i.handleBackground(n, r, o, a, v)), {
           x: n + p,
           y: r + f,
           w: o - p - g,
@@ -1307,8 +1323,8 @@
       }, {
         x: 0,
         y: 0,
-        w: r.width,
-        h: r.height
+        w: this.boxWidth,
+        h: this.boxHeight
       }), this.cellWidth = (this.prizeArea.w - c.gutter * (this.cols - 1)) / this.cols, this.cellHeight = (this.prizeArea.h - c.gutter * (this.rows - 1)) / this.rows, this.cells.forEach(function (t, e) {
         var n = i.getGeometricProperty([t.x, t.y, t.col, t.row]),
             o = n[0],
@@ -1323,7 +1339,7 @@
           var m = (p ? f.shadow : t.shadow || l.shadow).replace(/px/g, "").split(",")[0].split(" ").map(function (t, e) {
             return e < 3 ? Number(t) : t;
           });
-          4 === m.length && (h.shadowColor = m[3], h.shadowOffsetX = m[0] * r.dpr, h.shadowOffsetY = m[1] * r.dpr, h.shadowBlur = m[2], m[0] > 0 ? c -= m[0] : (c += m[0], o -= m[0]), m[1] > 0 ? d -= m[1] : (d += m[1], s -= m[1])), k(h, o, s, c, d, i.getLength(t.borderRadius ? t.borderRadius : l.borderRadius), i.handleBackground(o, s, c, d, g)), h.shadowColor = "rgba(0, 0, 0, 0)", h.shadowOffsetX = 0, h.shadowOffsetY = 0, h.shadowBlur = 0;
+          4 === m.length && (h.shadowColor = m[3], h.shadowOffsetX = m[0] * r.dpr, h.shadowOffsetY = m[1] * r.dpr, h.shadowBlur = m[2], m[0] > 0 ? c -= m[0] : (c += m[0], o -= m[0]), m[1] > 0 ? d -= m[1] : (d += m[1], s -= m[1])), S(h, o, s, c, d, i.getLength(t.borderRadius ? t.borderRadius : l.borderRadius), i.handleBackground(o, s, c, d, g)), h.shadowColor = "rgba(0, 0, 0, 0)", h.shadowOffsetX = 0, h.shadowOffsetY = 0, h.shadowBlur = 0;
         }
 
         var v = "prizeImgs";
@@ -1416,7 +1432,7 @@
         for (var h = 0; ++h;) {
           var c = r.length * h + o - (n >> 0);
 
-          if (T.easeOut(this.FPS, this.stopIndex, c, a.decelerationTime) - this.stopIndex > a.speed) {
+          if (C.easeOut(this.FPS, this.stopIndex, c, a.decelerationTime) - this.stopIndex > a.speed) {
             this.endIndex = c;
             break;
           }
@@ -1425,7 +1441,7 @@
         return this.slowDown();
       }
 
-      this.currIndex = (n + T.easeIn(u, .1, a.speed, a.accelerationTime)) % r.length, this.draw(), i(this.run.bind(this, t + 1));
+      this.currIndex = (n + C.easeIn(u, .1, a.speed, a.accelerationTime)) % r.length, this.draw(), i(this.run.bind(this, t + 1));
     }, h.prototype.slowDown = function () {
       var t,
           e = this,
@@ -1441,7 +1457,7 @@
         if (h > u.decelerationTime) return this.startTime = 0, void (null === (t = this.endCallback) || void 0 === t || t.call(this, i({}, r.find(function (t, e) {
           return e === o;
         }))));
-        this.currIndex = T.easeOut(h, s, a, u.decelerationTime) % r.length, this.draw(), n(this.slowDown.bind(this));
+        this.currIndex = C.easeOut(h, s, a, u.decelerationTime) % r.length, this.draw(), n(this.slowDown.bind(this));
       } else this.startTime = 0;
     }, h.prototype.walk = function () {
       var t = this,
@@ -1470,9 +1486,9 @@
       var i = this.config;
       return [t / i.dpr, e / i.dpr];
     }, h;
-  }(w);
+  }(y);
 
-  exports.LuckyGrid = D, exports.LuckyWheel = P;
+  exports.LuckyGrid = P, exports.LuckyWheel = E;
   });
 
   var luckyCanvas = luckyCanvas_cjs_min;
@@ -1578,6 +1594,125 @@
     defaultStyle: {},
     defaultConfig: {}
   };
+
+  var Wheel = /*#__PURE__*/function (_React$Component) {
+    _inherits(Wheel, _React$Component);
+
+    var _super = _createSuper(Wheel);
+
+    function Wheel() {
+      var _this;
+
+      _classCallCheck(this, Wheel);
+
+      _this = _super.call(this);
+      _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+      _this.state = {
+        blocks: [{
+          padding: '13px',
+          background: '#d64737'
+        }],
+        prizes: [{
+          title: '1元红包',
+          background: '#f9e3bb',
+          fonts: [{
+            text: '1元红包',
+            top: '18%'
+          }]
+        }, {
+          title: '100元红包',
+          background: '#f8d384',
+          fonts: [{
+            text: '100元红包',
+            top: '18%'
+          }]
+        }, {
+          title: '0.5元红包',
+          background: '#f9e3bb',
+          fonts: [{
+            text: '0.5元红包',
+            top: '18%'
+          }]
+        }, {
+          title: '2元红包',
+          background: '#f8d384',
+          fonts: [{
+            text: '2元红包',
+            top: '18%'
+          }]
+        }, {
+          title: '10元红包',
+          background: '#f9e3bb',
+          fonts: [{
+            text: '10元红包',
+            top: '18%'
+          }]
+        }, {
+          title: '50元红包',
+          background: '#f8d384',
+          fonts: [{
+            text: '50元红包',
+            top: '18%'
+          }]
+        }],
+        buttons: [{
+          radius: '50px',
+          background: '#d64737'
+        }, {
+          radius: '45px',
+          background: '#fff'
+        }, {
+          radius: '41px',
+          background: '#f6c66f',
+          pointer: true
+        }, {
+          radius: '35px',
+          background: '#ffdea0',
+          fonts: [{
+            text: '开始\n抽奖',
+            fontSize: '18px',
+            top: -18
+          }]
+        }],
+        defaultStyle: {
+          fontColor: '#d64737',
+          fontSize: '14px'
+        }
+      };
+      return _this;
+    }
+
+    _createClass(Wheel, [{
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        return /*#__PURE__*/React__default['default'].createElement(LuckyWheel, {
+          ref: this.myLucky,
+          width: "300px",
+          height: "300px",
+          blocks: this.state.blocks,
+          prizes: this.state.prizes,
+          buttons: this.state.buttons,
+          defaultStyle: this.state.defaultStyle,
+          onStart: function onStart() {
+            _this2.myLucky.current.play();
+
+            setTimeout(function () {
+              var index = Math.random() * 6 >> 0;
+
+              _this2.myLucky.current.stop(index);
+            }, 2500);
+          },
+          onEnd: function onEnd(prize) {
+            alert('恭喜获得大奖:' + prize.title);
+          }
+        });
+      }
+    }]);
+
+    return Wheel;
+  }(React__default['default'].Component);
 
   var LuckyGrid = /*#__PURE__*/function (_React$Component) {
     _inherits(LuckyGrid, _React$Component);
@@ -1688,9 +1823,148 @@
     defaultConfig: {}
   };
 
-  exports.LuckyGrid = LuckyGrid;
-  exports.LuckyWheel = LuckyWheel;
+  var GridDemo = /*#__PURE__*/function (_React$Component) {
+    _inherits(GridDemo, _React$Component);
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+    var _super = _createSuper(GridDemo);
+
+    function GridDemo() {
+      var _this;
+
+      _classCallCheck(this, GridDemo);
+
+      _this = _super.call(this);
+      _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+      var data = [{
+        name: '1元红包',
+        img: 'https://100px.net/assets/img/0.efbe4dff.png'
+      }, {
+        name: '100元红包',
+        img: 'https://100px.net/assets/img/1.de299995.png'
+      }, {
+        name: '0.5元红包',
+        img: 'https://100px.net/assets/img/2.8f1949c9.png'
+      }, {
+        name: '2元红包',
+        img: 'https://100px.net/assets/img/3.9307595d.png'
+      }, {
+        name: '10元红包',
+        img: 'https://100px.net/assets/img/4.1349538d.png'
+      }, {
+        name: '50元红包',
+        img: 'https://100px.net/assets/img/5.b92ceb2f.png'
+      }, {
+        name: '0.3元红包',
+        img: 'https://100px.net/assets/img/6.02483a09.png'
+      }, {
+        name: '5元红包',
+        img: 'https://100px.net/assets/img/7.48cda152.png'
+      }];
+      var axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]];
+      var prizes = [];
+
+      for (var i = 0; i < 8; i++) {
+        var item = data[i];
+        prizes.push({
+          name: item.name,
+          index: i,
+          x: axis[i][0],
+          y: axis[i][1],
+          fonts: [{
+            text: item.name,
+            top: '70%'
+          }],
+          imgs: [{
+            src: item.img,
+            width: '53%',
+            top: '8%'
+          }]
+        });
+      }
+
+      _this.state = {
+        blocks: [{
+          padding: '10px',
+          background: '#ffc27a'
+        }, {
+          padding: '10px',
+          paddingRight: '90px',
+          background: '#ff4a4c'
+        }, {
+          padding: '0px',
+          background: '#fff'
+        }],
+        prizes: prizes,
+        activeStyle: {
+          background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
+          shadow: ''
+        },
+        buttons: [{
+          x: 1,
+          y: 1,
+          background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
+          shadow: '0 5 1 #e89b4f',
+          fonts: [{
+            text: "1 \u6B21",
+            fontColor: '#fff',
+            top: '73%',
+            fontSize: '11px'
+          }],
+          imgs: [{
+            src: 'https://100px.net/assets/img/button.2f4ac3e9.png',
+            width: '65%',
+            top: '12%'
+          }, {
+            src: './img/btn.png',
+            width: '50%',
+            top: '73%'
+          }]
+        }],
+        defaultStyle: {
+          borderRadius: 15,
+          fontColor: '#DF424B',
+          fontSize: '14px',
+          textAlign: 'center',
+          background: '#fff',
+          shadow: '0 5 1 #ebf1f4'
+        }
+      };
+      return _this;
+    }
+
+    _createClass(GridDemo, [{
+      key: "render",
+      value: function render() {
+        var _this2 = this;
+
+        return /*#__PURE__*/React__default['default'].createElement(LuckyGrid, {
+          ref: this.myLucky,
+          width: "300px",
+          height: "300px",
+          blocks: this.state.blocks,
+          prizes: this.state.prizes,
+          buttons: this.state.buttons,
+          defaultStyle: this.state.defaultStyle,
+          onStart: function onStart() {
+            _this2.myLucky.current.play();
+
+            setTimeout(function () {
+              var index = Math.random() * 6 >> 0;
+
+              _this2.myLucky.current.stop(index);
+            }, 2500);
+          },
+          onEnd: function onEnd(prize) {
+            alert('恭喜获得大奖:' + prize.name);
+          }
+        });
+      }
+    }]);
+
+    return GridDemo;
+  }(React__default['default'].Component);
+
+  ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(React__default['default'].StrictMode, null, /*#__PURE__*/React__default['default'].createElement(Wheel, null), /*#__PURE__*/React__default['default'].createElement(GridDemo, null)), document.getElementById('root'));
 
 })));
+//# sourceMappingURL=react-luck-draw.umd.js.map

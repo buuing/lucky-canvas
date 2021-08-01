@@ -12,18 +12,34 @@ export default {
     {
       file: `./dist/${name}.cjs.js`,
       format: 'cjs',
+      sourcemap: true
+    },
+    {
+      file: `./dist/${name}.umd.js`,
+      format: 'umd',
+      name: 'LuckyCanvas',
+      sourcemap: true,
+    },
+    {
+      file: `./dist/${name}.es.js`,
+      format: 'es',
+      sourcemap: true,
     },
   ],
   plugins: [
-    babel(),
+    babel({
+      exclude: "node_modules/**"
+    }),
     resolve(),
     commonjs(),
     json(),
     livereload(),
     serve({
       open: true,
-      contentBase: './'
+      port: 8000,
+      contentBase: './',
+      openPage: '/example/index.html',
     }),
   ],
-  external: ['react'],
+  // external: ['react'],
 }

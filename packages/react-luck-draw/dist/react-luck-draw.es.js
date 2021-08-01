@@ -1,14 +1,7 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
-'use strict';
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -1506,7 +1499,7 @@ var LuckyWheel = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, LuckyWheel);
 
     _this = _super.call(this, props);
-    _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+    _this.myLucky = /*#__PURE__*/React.createRef();
     return _this;
   }
 
@@ -1576,14 +1569,14 @@ var LuckyWheel = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React__default['default'].createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         ref: this.myLucky
       });
     }
   }]);
 
   return LuckyWheel;
-}(React__default['default'].Component);
+}(React.Component);
 LuckyWheel.defaultProps = {
   width: '',
   height: '',
@@ -1605,7 +1598,7 @@ var Wheel = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Wheel);
 
     _this = _super.call(this);
-    _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+    _this.myLucky = /*#__PURE__*/React.createRef();
     _this.state = {
       blocks: [{
         padding: '13px',
@@ -1686,7 +1679,7 @@ var Wheel = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return /*#__PURE__*/React__default['default'].createElement(LuckyWheel, {
+      return /*#__PURE__*/React.createElement(LuckyWheel, {
         ref: this.myLucky,
         width: "300px",
         height: "300px",
@@ -1711,7 +1704,7 @@ var Wheel = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return Wheel;
-}(React__default['default'].Component);
+}(React.Component);
 
 var LuckyGrid = /*#__PURE__*/function (_React$Component) {
   _inherits(LuckyGrid, _React$Component);
@@ -1724,7 +1717,7 @@ var LuckyGrid = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, LuckyGrid);
 
     _this = _super.call(this, props);
-    _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+    _this.myLucky = /*#__PURE__*/React.createRef();
     return _this;
   }
 
@@ -1801,14 +1794,14 @@ var LuckyGrid = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React__default['default'].createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         ref: this.myLucky
       });
     }
   }]);
 
   return LuckyGrid;
-}(React__default['default'].Component);
+}(React.Component);
 LuckyGrid.defaultProps = {
   width: '',
   height: '',
@@ -1833,7 +1826,7 @@ var GridDemo = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, GridDemo);
 
     _this = _super.call(this);
-    _this.myLucky = /*#__PURE__*/React__default['default'].createRef();
+    _this.myLucky = /*#__PURE__*/React.createRef();
     var data = [{
       name: '1元红包',
       img: 'https://100px.net/assets/img/0.efbe4dff.png'
@@ -1936,7 +1929,7 @@ var GridDemo = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return /*#__PURE__*/React__default['default'].createElement(LuckyGrid, {
+      return /*#__PURE__*/React.createElement(LuckyGrid, {
         ref: this.myLucky,
         width: "300px",
         height: "300px",
@@ -1961,7 +1954,7 @@ var GridDemo = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return GridDemo;
-}(React__default['default'].Component);
+}(React.Component);
 
-ReactDOM__default['default'].render( /*#__PURE__*/React__default['default'].createElement(React__default['default'].StrictMode, null, /*#__PURE__*/React__default['default'].createElement(Wheel, null), /*#__PURE__*/React__default['default'].createElement(GridDemo, null)), document.getElementById('root'));
-//# sourceMappingURL=react-luck-draw.cjs.js.map
+ReactDOM.render( /*#__PURE__*/React.createElement(React.StrictMode, null, /*#__PURE__*/React.createElement(Wheel, null), /*#__PURE__*/React.createElement(GridDemo, null)), document.getElementById('root'));
+//# sourceMappingURL=react-luck-draw.es.js.map

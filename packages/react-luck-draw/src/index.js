@@ -1,2 +1,12 @@
-export { default as LuckyWheel } from './components/LuckyWheel.js'
-export { default as LuckyGrid } from './components/LuckyGrid.js'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Wheel from './luckyWheel-demo';
+import Grid from './luckyGrid-demo';
+ReactDOM.render(
+  <React.StrictMode>
+    <Wheel />
+    <Grid />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
