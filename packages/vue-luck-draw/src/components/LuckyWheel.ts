@@ -1,27 +1,47 @@
-<template>
-  <div ref="luckyWheel"></div>
-</template>
-
-<script>
+import { defineComponent } from 'vue-demi'
 import { LuckyWheel } from 'lucky-canvas'
-import { name, version } from '../package.json'
+import h, { slot } from "../utils/h-demi"
+// import { name, version } from '../../package.json'
 
-export default {
+export default defineComponent({
   name: 'LuckyWheel',
   props: {
-    width: { type: [String, Number], default: '' },
-    height: { type: [String, Number], default: '' },
-    blocks: { type: Array, default: () => [] },
-    prizes: { type: Array, default: () => [] },
-    buttons: { type: Array, default: () => [] },
-    defaultStyle: { type: Object, default: () => { return {} } },
-    defaultConfig: { type: Object, default: () => { return {} } },
-  },
-  data () {
-    return {
-      $lucky: null,
+    width: {
+      type: [String, Number],
+      default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: ''
+    },
+    blocks: {
+      type: Array,
+      default: () => []
+    },
+    prizes: {
+      type: Array,
+      default: () => []
+    },
+    buttons: {
+      type: Array,
+      default: () => []
+    },
+    defaultStyle: {
+      type: Object,
+      default: () => ({})
+    },
+    defaultConfig: {
+      type: Object,
+      default: () => ({})
     }
   },
+  emits: [
+    'start',
+    'end',
+    'success',
+    'error',
+    'finally',
+  ],
   watch: {
     blocks (newData, oldData) {
       this.$lucky.blocks = newData
@@ -33,11 +53,16 @@ export default {
       this.$lucky.buttons = newData
     },
   },
+  data() {
+    return {
+      $lucky: null as LuckyWheel | null,
+    };
+  },
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
-    if (this.$refs.luckyWheel) {
-      this.$refs.luckyWheel.setAttribute('package', `${name}@${version}`)
-    }
+    // if (this.$refs.myLucky) {
+    //   this.$refs.myLucky.setAttribute('package', `${name}@${version}`)
+    // }
     try {
       this.initLucky()
       this.$emit('success')
@@ -53,10 +78,11 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: this.$refs.luckyWheel,
+        divElement: this.$refs.myLucky,
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,
+        clearTimeout: window.clearTimeout,
         clearInterval: window.clearInterval,
       }, {
         ...this.$props,
@@ -77,6 +103,8 @@ export default {
     stop (...rest) {
       this.$lucky.stop(...rest)
     },
+  },
+  render() {
+    return h('div', { ref: 'myLucky' })
   }
-}
-</script>
+})

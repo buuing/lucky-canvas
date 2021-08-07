@@ -1,32 +1,62 @@
-<template>
-  <div ref="luckyGrid"></div>
-</template>
-
-<script>
+import { defineComponent } from 'vue-demi'
 import { LuckyGrid } from 'lucky-canvas'
-import { name, version } from '../package.json'
+import h, { slot } from "../utils/h-demi"
+import { name, version } from '../../package.json'
 
-export default {
+export default defineComponent({
   name: 'LuckyGrid',
   props: {
-    width: { type: [String, Number], default: '' },
-    height: { type: [String, Number], default: '' },
-    cols: { type: [String, Number], default: 3 },
-    rows: { type: [String, Number], default: 3 },
-    prizes: { type: Array, default: () => [] },
-    buttons: { type: Array, default: () => [] },
-    button: { type: Object },
-    blocks: { type: Array, default: () => [] },
-    defaultStyle: { type: Object, default () { return {} } },
-    activeStyle: { type: Object, default () { return {} } },
-    defaultConfig: { type: Object, default: () => { return {} } },
-    demo: { type: Boolean, default: false },
+    width: {
+      type: [String, Number],
+      default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: ''
+    },
+    cols: {
+      type: [String, Number],
+      default: 3
+    },
+    rows: {
+      type: [String, Number],
+      default: 3
+    },
+    prizes: {
+      type: Array,
+      default: () => []
+    },
+    buttons: {
+      type: Array,
+      default: () => []
+    },
+    button: { // 老版本要兼容这个属性
+      type: Object
+    },
+    blocks: {
+      type: Array,
+      default: () => []
+    },
+    defaultStyle: {
+      type: Object,
+      default: () => ({})
+    },
+    activeStyle: {
+      type: Object,
+      default: () => ({})
+    },
+    defaultConfig: {
+      type: Object,
+      default: () => ({})
+    },
   },
-  data () {
-    return {
-      $lucky: null,
-    }
-  },
+  emits: [
+    'start',
+    'end',
+    'success',
+    'error',
+    'finally',
+  ],
   watch: {
     cols (newData, oldData) {
       this.$lucky.cols = newData
@@ -47,11 +77,16 @@ export default {
       this.$lucky.button = newData
     },
   },
+  data() {
+    return {
+      $lucky: null as LuckyGrid | null,
+    };
+  },
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
-    if (this.$refs.luckyGrid) {
-      this.$refs.luckyGrid.setAttribute('package', `${name}@${version}`)
-    }
+    // if (this.$refs.myLucky) {
+    //   this.$refs.myLucky.setAttribute('package', `${name}@${version}`)
+    // }
     try {
       this.initLucky()
       this.$emit('success')
@@ -67,10 +102,11 @@ export default {
         flag: 'WEB',
         width: this.width,
         height: this.height,
-        divElement: this.$refs.luckyGrid,
+        divElement: this.$refs.myLucky,
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,
+        clearTimeout: window.clearTimeout,
         clearInterval: window.clearInterval,
       }, {
         ...this.$props,
@@ -91,6 +127,8 @@ export default {
     stop (...rest) {
       this.$lucky.stop(...rest)
     },
+  },
+  render() {
+    return h('div', { ref: 'myLucky' })
   }
-}
-</script>
+})
