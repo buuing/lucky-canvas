@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { h as hDemi, isVue2 } from 'vue-demi'
 
 interface Options {

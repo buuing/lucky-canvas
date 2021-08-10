@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue-demi'
 import { LuckyWheel } from 'lucky-canvas'
-import h, { slot } from "../utils/h-demi"
+import h from "../utils/h-demi"
 // import { name, version } from '../../package.json'
 
 export default defineComponent({

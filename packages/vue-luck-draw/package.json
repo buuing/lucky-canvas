@@ -2,9 +2,9 @@
   "name": "vue-luck-draw",
   "version": "3.4.5",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
-  "module": "dist/index.esm.js",
-  "main": "dist/index.cjs.js",
-  "unpkg": "dist/index.global.js",
+  "module": "dist/vue-luck-draw.esm.js",
+  "main": "dist/vue-luck-draw.cjs.js",
+  "unpkg": "dist/vue-luck-draw.umd.js",
   "keywords": [
     "vue3抽奖",
     "大转盘抽奖",
@@ -44,6 +44,7 @@
     }
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@vue/compiler-sfc": "^3.0.11",
     "acorn-jsx": "^5.3.1",

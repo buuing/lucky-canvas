@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue-demi'
 import { LuckyGrid } from 'lucky-canvas'
-import h, { slot } from "../utils/h-demi"
-import { name, version } from '../../package.json'
+import h from "../utils/h-demi"
+// import { name, version } from '../../package.json'
 
 export default defineComponent({
   name: 'LuckyGrid',

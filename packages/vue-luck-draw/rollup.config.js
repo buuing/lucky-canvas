@@ -1,5 +1,6 @@
 
 import typescript from '@rollup/plugin-typescript';
+import commonjs from '@rollup/plugin-commonjs';
 import PostCSS from 'rollup-plugin-postcss'
 import pkg from './package.json'
 
@@ -8,6 +9,7 @@ const external = ['vue-demi']
 const plugins = [
   typescript(),
   PostCSS(),
+  commonjs(),
 ]
 
 export default [
@@ -29,7 +31,7 @@ export default [
       {
         file: pkg.unpkg,
         format: 'umd',
-        name: 'VueInstaStory',
+        name: 'VueLuckDraw',
         sourcemap: true,
         globals: {
           'vue-demi': 'VueDemi',
