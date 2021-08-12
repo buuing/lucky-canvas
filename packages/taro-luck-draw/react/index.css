@@ -1,0 +1,26 @@
+.lucky-box {
+  position: relative;
+  overflow: hidden;
+}
+#lucky-canvas {
+  position: absolute;
+  pointer-events: none;
+}
+.lucky-wheel-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+}
+.lucky-grid-btn {
+  position: absolute;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 0;
+}
+.lucky-imgs {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
