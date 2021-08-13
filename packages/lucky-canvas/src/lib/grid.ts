@@ -225,12 +225,15 @@ export default class LuckyGrid extends Lucky {
         prizeImgs: 'prizes',
         btnImgs: 'buttons',
       }[imgName] as 'blocks' | 'prizes' | 'buttons'
+      // 循环遍历所有图片
+      const allPromise: Promise<void>[] = []
       willUpdate && willUpdate.forEach((imgs, cellIndex) => {
         imgs && imgs.forEach((imgInfo, imgIndex) => {
-          this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex, () => {
-            this.draw()
-          })
+          allPromise.push(this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex))
         })
+      })
+      Promise.all(allPromise).then(() => {
+        this.draw()
       })
     })
     // 初始化后回调函数
@@ -272,31 +275,30 @@ export default class LuckyGrid extends Lucky {
     cellName: 'blocks' | 'prizes' | 'buttons',
     cellIndex: number,
     imgName: 'blockImgs' | 'prizeImgs' | 'btnImgs',
-    imgIndex: number,
-    callBack: () => void
-  ) {
-    let cell: BlockType | PrizeType | ButtonType = this[cellName][cellIndex]
-    // 临时过渡代码, 升级到2.x即可删除
-    if (cellName === 'buttons' && !this.buttons.length && this.button) {
-      cell = this.button
-    }
-    if (!cell || !cell.imgs) return
-    const imgInfo = cell.imgs[imgIndex]
-    if (!imgInfo) return
-    if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
-    // 异步加载图片
-    const request = [
-      this.loadImg(imgInfo.src, imgInfo),
-      imgInfo['activeSrc'] && this.loadImg(imgInfo['activeSrc'], imgInfo, '$activeResolve')
-    ]
-    Promise.all(request).then(([defaultImg, activeImg]) => {
-      this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg } as {
-        defaultImg: ImgObjType,
-        activeImg?: ImgObjType
+    imgIndex: number
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let cell: BlockType | PrizeType | ButtonType = this[cellName][cellIndex]
+      // 临时过渡代码, 升级到2.x即可删除
+      if (cellName === 'buttons' && !this.buttons.length && this.button) {
+        cell = this.button
       }
-      callBack.call(this)
-    }).catch(err => {
-      console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
+      if (!cell || !cell.imgs) return
+      const imgInfo = cell.imgs[imgIndex]
+      if (!imgInfo) return
+      if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
+      // 异步加载图片
+      const request = [
+        this.loadImg(imgInfo.src, imgInfo),
+        imgInfo['activeSrc'] && this.loadImg(imgInfo['activeSrc'], imgInfo, '$activeResolve')
+      ]
+      Promise.all(request).then(([defaultImg, activeImg]) => {
+        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg } as { defaultImg: ImgObjType, activeImg?: ImgObjType }
+        resolve()
+      }).catch(err => {
+        console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
+        reject()
+      })
     })
   }
 

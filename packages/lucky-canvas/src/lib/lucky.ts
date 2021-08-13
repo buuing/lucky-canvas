@@ -34,7 +34,6 @@ export default class Lucky {
     if (!config.flag) config.flag = 'WEB'
     if (!Object.prototype.hasOwnProperty.call(config, 'ob')) config.ob = true
     if (config.el) config.divElement = document.querySelector(config.el) as HTMLDivElement
-    let boxWidth = 0, boxHeight = 0
     // 如果存在父盒子, 就创建canvas标签
     if (config.divElement) {
       // 无论盒子内有没有canvas都执行覆盖逻辑
@@ -159,7 +158,7 @@ export default class Lucky {
     if (window) {
       this.rAF = (function () {
         return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
+          window['webkitRequestAnimationFrame'] ||
           window['mozRequestAnimationFrame'] ||
           function (callback) {
             window.setTimeout(callback, 1000 / 60)
@@ -221,6 +220,7 @@ export default class Lucky {
       } else {
         // 其余平台向外暴露, 交给外部自行处理
         info[resolveName] = resolve
+        info['$reject'] = reject
         return
       }
     })

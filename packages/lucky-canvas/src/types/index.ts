@@ -16,6 +16,7 @@ export interface ImgType {
   width?: string
   height?: string
   $resolve?: Function
+  $reject?: Function
 }
 
 export type BorderRadiusType =  string | number
