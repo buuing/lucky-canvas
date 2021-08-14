@@ -17,7 +17,7 @@
     "九宫格抽奖"
   ],
   "author": "ldq <ldq404@qq.com>",
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/LuckDraw/react-luck-draw/issues"
   },
