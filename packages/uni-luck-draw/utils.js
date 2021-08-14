@@ -50,29 +50,44 @@ export const base64src = function(base64data) {
   })
 }
 
-export const resolveImage = async (res, img, imgName = 'src', resolveName = '$resolve') => {
-  const src = img[imgName]
-  const $resolve = img[resolveName]
-  // #ifdef MP
-  // 如果是base64就调用base64src()方法把图片写入本地, 然后渲染临时路径
-  if (/^data:image\/([a-z]+);base64,/.test(src)) {
-    const path = await base64src(src)
-    $resolve({ ...res.detail, path })
-    return
+export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve') => {
+  let imgObj = canvas.createImage()
+  // 成功回调
+  imgObj.onload = () => {
+    img[resolveName](imgObj)
   }
-  // #endif
-  // 如果是本地图片, 直接返回
-  if (src.indexOf('http') !== 0) {
-    $resolve({ ...res.detail, path:src })
-    return
+  // 失败回调
+  imgObj.onerror = () => {
+    img['$reject']()
   }
-  // 如果是网络图片, 则通过getImageInfo()方法获取图片宽高
-  uni.getImageInfo({
-    src: src,
-    success: (imgObj) => $resolve(imgObj),
-    fail: () => console.error('API `uni.getImageInfo` 加载图片失败', src)
-  })
+  // 设置src
+  imgObj.src = img[srcName]
 }
+
+// 旧版canvas引入图片的方法
+// export const resolveImage = async (res, img, imgName = 'src', resolveName = '$resolve') => {
+//   const src = img[imgName]
+//   const $resolve = img[resolveName]
+//   // #ifdef MP
+//   // 如果是base64就调用base64src()方法把图片写入本地, 然后渲染临时路径
+//   if (/^data:image\/([a-z]+);base64,/.test(src)) {
+//     const path = await base64src(src)
+//     $resolve({ ...res.detail, path })
+//     return
+//   }
+//   // #endif
+//   // 如果是本地图片, 直接返回
+//   if (src.indexOf('http') !== 0) {
+//     $resolve({ ...res.detail, path:src })
+//     return
+//   }
+//   // 如果是网络图片, 则通过getImageInfo()方法获取图片宽高
+//   uni.getImageInfo({
+//     src: src,
+//     success: (imgObj) => $resolve(imgObj),
+//     fail: () => console.error('API `uni.getImageInfo` 加载图片失败', src)
+//   })
+// }
 
 export function getImage (canvasId) {
   return new Promise((resolve, reject) => {

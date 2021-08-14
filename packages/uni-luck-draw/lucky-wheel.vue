@@ -1,33 +1,42 @@
 <template>
   <view v-if="isShow" class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
-    <canvas id="lucky-grid" canvas-id="lucky-grid" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"></canvas>
+    <canvas
+      type="2d"
+      id="lucky-wheel"
+      canvas-id="lucky-wheel"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></canvas>
     <!-- #ifdef APP-PLUS -->
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <!-- #endif -->
     <!-- #ifndef APP-PLUS -->
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- #endif -->
-    <div class="lucky-imgs">
-      <div v-for="(block, index) in blocks" :key="index">
-        <div v-if="block.imgs">
-          <image v-for="(img, i) in block.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'blocks', index, i)"></image>
+    <!-- #ifndef H5 -->
+    <view v-if="canvas">
+      <div class="lucky-imgs">
+        <div v-for="(block, index) in blocks" :key="index">
+          <div v-if="block.imgs">
+            <image v-for="(img, i) in block.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'blocks', index, i)"></image>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="lucky-imgs">
-      <div v-for="(prize, index) in prizes" :key="index">
-        <div v-if="prize.imgs">
-          <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+      <div class="lucky-imgs">
+        <div v-for="(prize, index) in prizes" :key="index">
+          <div v-if="prize.imgs">
+            <image v-for="(img, i) in prize.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'prizes', index, i)"></image>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="lucky-imgs">
-      <div v-for="(btn, index) in buttons" :key="index">
-        <div v-if="btn.imgs">
-          <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
+      <div class="lucky-imgs">
+        <div v-for="(btn, index) in buttons" :key="index">
+          <div v-if="btn.imgs">
+            <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
+          </div>
         </div>
       </div>
-    </div>
+    </view>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -38,6 +47,7 @@
     name: 'lucky-wheel',
     data () {
       return {
+        canvas: null,
         isShow: false,
         boxWidth: 100,
         boxHeight: 100,
@@ -45,6 +55,7 @@
         btnHeight: 0,
         dpr: 1,
         transformStyle: '',
+        tmp: 0,
       }
     },
     props: {
@@ -70,15 +81,11 @@
       },
       defaultConfig: {
         type: Object,
-        default: () => {
-          return {}
-        }
+        default: () => ({})
       },
       defaultStyle: {
         type: Object,
-        default: () => {
-          return {}
-        }
+        default: () => ({})
       },
     },
     mounted () {
@@ -104,75 +111,86 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        resolveImage(res, img)
+        resolveImage(img, this.canvas)
       },
       initLucky () {
-        const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
         this.boxWidth = changeUnits(this.width)
         this.boxHeight = changeUnits(this.height)
-        const compute = (len) => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
-        this.transformStyle = `scale(${1 / dpr}) translate(
-          ${-compute(this.boxWidth * dpr)}%, ${-compute(this.boxHeight * dpr)}%
-        )`
         this.isShow = true
-        this.$nextTick(() => {
-          this.draw()
-        })
+        // 某些情况下获取不到 canvas
+        setTimeout(() => this.draw())
       },
       draw () {
         const _this = this
-        const ctx = this.ctx = uni.createCanvasContext('lucky-wheel', this)
-        const $lucky = this.$lucky = new LuckyWheel({
-          // #ifdef H5 || APP-PLUS
-          flag: 'UNI-H5',
-          // #endif
-          // #ifdef MP
-          flag: 'UNI-MP',
-          // #endif
-          dpr: 1,
-          ctx: this.ctx,
-          width: this.width,
-          height: this.height,
+        uni.createSelectorQuery().in(this).select('#lucky-wheel').fields({
+          node: true, size: true
+        }).exec((res) => {
           // #ifdef H5
-          rAF: requestAnimationFrame,
+          res[0].node = document.querySelector('#lucky-wheel canvas')
           // #endif
-          setTimeout: setTimeout,
-          clearTimeout: clearTimeout,
-          setInterval: setInterval,
-          clearInterval: clearInterval,
-          unitFunc: (num, unit) => changeUnits(num + unit),
-          beforeInit: function () {
-            const Radius = Math.min(this.config.width, this.config.height) / 2
-            ctx.translate(-Radius, -Radius)
-          },
-          afterInit: function () {
-            // 动态设置按钮
-            _this.btnWidth = this.maxBtnRadius * 2
-            _this.btnHeight = this.maxBtnRadius * 2
-            _this.$forceUpdate()
-          },
-          beforeDraw: function () {
-            ctx.translate(this.Radius, this.Radius)
-          },
-          afterDraw: function () {
-            ctx.draw()
-          },
-        }, {
-          ...this.$props,
-          start: (...rest) => {
-            this.$emit('start', ...rest)
-          },
-          end: (...rest) => {
-            this.$emit('end', ...rest)
-          },
+          if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
+          const { node, width, height } = res[0]
+          const canvas = this.canvas = node
+          const ctx = this.ctx = canvas.getContext('2d')
+          const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
+          // #ifndef H5
+          canvas.width = width * dpr
+          canvas.height = height * dpr
+          ctx.scale(dpr, dpr)
+          // #endif
+          const $lucky = this.$lucky = new LuckyWheel({
+            // #ifdef H5 || APP-PLUS
+            flag: 'WEB',
+            // #endif
+            // #ifdef MP
+            flag: 'MP-WX',
+            // #endif
+            ctx,
+            dpr,
+            width,
+            height,
+            setTimeout,
+            clearTimeout,
+            setInterval,
+            clearInterval,
+            // #ifdef H5
+            rAF: requestAnimationFrame,
+            // #endif
+            unitFunc: (num, unit) => changeUnits(num + unit),
+            beforeCreate: function () {
+              const Radius = Math.min(this.config.width, this.config.height) / 2
+              // 设置坐标轴
+              ctx.translate(Radius, Radius)
+            },
+            beforeInit: function () {
+              // 重置坐标轴
+              ctx.translate(-this.Radius, -this.Radius)
+            },
+            afterInit: function () {
+              // 动态设置按钮
+              _this.btnWidth = this.maxBtnRadius * 2
+              _this.btnHeight = this.maxBtnRadius * 2
+              _this.$forceUpdate()
+            },
+          }, {
+            ...this.$props,
+            start: function (...rest) {
+              // #ifdef H5
+              // 一个奇怪的渲染问题, 我怀疑uniapp有bug
+              if (_this.tmp++ === 0) {
+                ctx.translate(this.Radius, this.Radius)
+              }
+              // #endif
+              _this.$emit('start', ...rest)
+            },
+            end: (...rest) => {
+              this.$emit('end', ...rest)
+            },
+          })
         })
       },
       toPlay (e) {
-        // 触发抽奖逻辑
         this.$lucky.startCallback()
-      },
-      init () {
-        this.$lucky.init({})
       },
       play (...rest) {
         this.$lucky.play(...rest)
