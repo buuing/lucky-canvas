@@ -54,7 +54,6 @@
         btnWidth: 0,
         btnHeight: 0,
         dpr: 1,
-        transformStyle: '',
         tmp: 0,
       }
     },

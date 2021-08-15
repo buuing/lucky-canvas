@@ -24,32 +24,6 @@ export const changeUnits = (value) => {
   }))
 }
 
-let fsm
-let tempImageFlag = 0
-export const base64src = function(base64data) {
-  return new Promise((resolve, reject) => {
-    // 如果不是base64就直接返回路径
-    if (!/^data:image\/([a-z]+);base64,/.test(base64data)) return resolve(base64data)
-    const [, format, bodyData] = /data:image\/([a-z]+);base64,(.*)/.exec(base64data) || []
-    if (!format) return resolve(base64data)
-    const filePath = `${wx.env.USER_DATA_PATH}/lucky_${Date.now()}${tempImageFlag++}.${format}`
-    const buffer = wx.base64ToArrayBuffer(bodyData)
-    wx.getFileSystemManager().writeFile({
-      filePath,
-      data: buffer,
-      encoding: 'binary',
-      success: () => resolve(filePath),
-      fail: (res) => {
-        console.error('API `fsm.writeFile` 进入失败回调', {
-          errMsg: res.errMsg,
-          ArrayBuffer: buffer
-        })
-        reject(new Error('base64图片缓存失败'))
-      }
-    })
-  })
-}
-
 export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve') => {
   let imgObj = canvas.createImage()
   // 成功回调
@@ -63,6 +37,32 @@ export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '
   // 设置src
   imgObj.src = img[srcName]
 }
+
+// let fsm
+// let tempImageFlag = 0
+// export const base64src = function(base64data) {
+//   return new Promise((resolve, reject) => {
+//     // 如果不是base64就直接返回路径
+//     if (!/^data:image\/([a-z]+);base64,/.test(base64data)) return resolve(base64data)
+//     const [, format, bodyData] = /data:image\/([a-z]+);base64,(.*)/.exec(base64data) || []
+//     if (!format) return resolve(base64data)
+//     const filePath = `${wx.env.USER_DATA_PATH}/lucky_${Date.now()}${tempImageFlag++}.${format}`
+//     const buffer = wx.base64ToArrayBuffer(bodyData)
+//     wx.getFileSystemManager().writeFile({
+//       filePath,
+//       data: buffer,
+//       encoding: 'binary',
+//       success: () => resolve(filePath),
+//       fail: (res) => {
+//         console.error('API `fsm.writeFile` 进入失败回调', {
+//           errMsg: res.errMsg,
+//           ArrayBuffer: buffer
+//         })
+//         reject(new Error('base64图片缓存失败'))
+//       }
+//     })
+//   })
+// }
 
 // 旧版canvas引入图片的方法
 // export const resolveImage = async (res, img, imgName = 'src', resolveName = '$resolve') => {
