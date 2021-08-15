@@ -2,12 +2,7 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/logo.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
-  <p>一个基于 JavaScript 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
-  <p class="hidden">
-    <a href="https://github.com/luckdraw/lucky-canvas#readme">简体中文</a>
-    ·
-    <a href="https://github.com/luckdraw/lucky-canvas/tree/master/en">English</a>
-  </p>
+  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/LuckDraw/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/luckdraw/lucky-canvas?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
