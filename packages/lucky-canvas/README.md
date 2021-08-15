@@ -95,7 +95,7 @@
 
 <br />
 
-### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/lucky-canvas) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
+### **如果您觉得这个项目还不错, 可以帮我点个 <img src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?style=social" style="vertical-align: middle" /> ☜(ﾟヮﾟ☜)**
 
 <br />
 
