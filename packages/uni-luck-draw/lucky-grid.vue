@@ -27,7 +27,7 @@
     </view>
     <!-- #endif -->
     <!-- #ifndef H5 -->
-    <view v-if="canvas">
+    <view v-if="$lucky">
       <div class="lucky-imgs">
         <div v-for="(prize, index) in prizes" :key="index">
           <div v-if="prize.imgs">
@@ -62,6 +62,7 @@
     name: 'lucky-grid',
     data () {
       return {
+        $lucky: null,
         canvas: null,
         isShow: false,
         boxWidth: 100,
@@ -118,7 +119,12 @@
       }
     },
     mounted () {
+      // #ifdef APP-PLUS
+      console.error('该抽奖插件的最新版暂不支持app端, 请通过npm安装旧版本【npm i uni-luck-draw@1.3.9】')
+      // #endif
+      // #ifndef APP-PLUS
       this.initLucky()
+      // #endif
     },
     watch: {
       cols (newData) {
@@ -170,7 +176,11 @@
         this.boxHeight = changeUnits(this.height)
         this.isShow = true
         // 某些情况下获取不到 canvas
-        setTimeout(() => this.draw())
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.draw()
+          })
+        })
       },
       draw () {
         const _this = this
@@ -191,7 +201,7 @@
           ctx.scale(dpr, dpr)
           // #endif
           const $lucky = this.$lucky = new LuckyGrid({
-            // #ifdef H5 || APP-PLUS
+            // #ifdef H5
             flag: 'WEB',
             // #endif
             // #ifdef MP

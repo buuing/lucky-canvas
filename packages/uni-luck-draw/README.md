@@ -18,18 +18,15 @@
   </p>
 </div>
 
-<div align="center">
 
-|适配框架|npm包|npm下载量|CDN使用量|
-| :-: | :-: | :-: | :-: |
-|`JS` / `JQ`|[lucky-canvas](https://100px.net/usage/js.html)|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" /></a>|
-|`Vue2.x` / `Vue3.x`|[vue-luck-draw](https://100px.net/usage/vue.html)|<a href="https://www.npmjs.com/package/vue-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="downloads" /></a>|
-|`React`|[react-luck-draw](https://100px.net/usage/react.html)|<a href="https://www.npmjs.com/package/react-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/react-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/react-luck-draw/badge" alt="downloads" /></a>|
-|`UniApp`|[uni-luck-draw](https://100px.net/usage/uni.html)|<a href="https://www.npmjs.com/package/uni-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
-|`Taro3.x`|[taro-luck-draw](https://100px.net/usage/taro.html)|<a href="https://www.npmjs.com/package/taro-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/taro-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
-|`微信小程序`|[mini-luck-draw](https://100px.net/usage/wx.html)|<a href="https://www.npmjs.com/package/mini-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/mini-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
-
-</div>
+|适配框架|npm下载量|CDN使用量|
+| :-: | :-: | :-: |
+|[`JS` / `JQ` 中使用](https://100px.net/usage/js.html)|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" /></a>|
+|[`Vue` 中使用](https://100px.net/usage/vue.html)|<a href="https://www.npmjs.com/package/vue-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="downloads" /></a>|
+|[`React` 中使用](https://100px.net/usage/react.html)|<a href="https://www.npmjs.com/package/react-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/react-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/react-luck-draw/badge" alt="downloads" /></a>|
+|[`UniApp` 中使用](https://100px.net/usage/uni.html)|<a href="https://www.npmjs.com/package/uni-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
+|[`Taro3.x` 中使用](https://100px.net/usage/taro.html)|<a href="https://www.npmjs.com/package/taro-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/taro-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
+|[`微信小程序` 中使用](https://100px.net/usage/wx.html)|<a href="https://www.npmjs.com/package/mini-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/mini-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" /></a>|-|
 
 <br />
 
@@ -56,6 +53,8 @@ npm install uni-luck-draw
 # yarn 安装：
 yarn add uni-luck-draw
 ```
+
+<br />
 
 ### 2. 引入并使用
 
@@ -91,16 +90,20 @@ export default {
 }
 ```
 
+<br />
+
 ### 3. 我提供了一个最基本的 demo 供你用于尝试
 
 由于 uni-app 渲染 md 的时候会出问题，所以我把 demo 代码放到了文档里
 
 - [https://100px.net/document/uni-app.html](https://100px.net/document/uni-app.html)
 
-### 4. 补充说明
+<br />
 
-- [**如果用着顺手, 可以在 github 上面点个 star 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
+### **4. 补充说明**
 
-- 后面提问的同学, 别一上来就中差评, 搞得我好像淘宝卖货一样, 你仔细想想, 你这边差评提问, 谁能有好心情给你调bug, 我开源就图个乐呵, 你给个5星我难道还能不管你(●ˇ∀ˇ●)?
+- [**如果用着顺手, 可以在 github 上面点个 <img src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?style=social" height="22" align="top" /> 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
+
+- <font color="red">后面提问的同学, 别一上来就中差评, 搞得我好像淘宝卖货一样, 你仔细想想, 你这边差评提问, 谁能有好心情给你调bug, 我开源就图个乐呵, 你给个5星我难道还能不管你(●ˇ∀ˇ●)?</font>
 
 - 另外: 如果你修复了某些bug或兼容, 欢迎提给我, 我会把你展示到官网的贡献者列表当中
