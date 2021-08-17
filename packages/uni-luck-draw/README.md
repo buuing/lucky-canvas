@@ -102,7 +102,7 @@ export default {
 
 ### **4. 补充说明**
 
-- [**如果用着顺手, 可以在 github 上面点个 <img src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?style=social" height="22" align="top" /> 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
+- [**如果用着顺手, 可以在 github 上面点个 <img height="22" align="top" style="" src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?style=social" /> 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
 
 - <font color="red">后面提问的同学, 别一上来就中差评, 搞得我好像淘宝卖货一样, 你仔细想想, 你这边差评提问, 谁能有好心情给你调bug, 我开源就图个乐呵, 你给个5星我难道还能不管你(●ˇ∀ˇ●)?</font>
 

@@ -12,7 +12,6 @@
     <!-- #ifndef APP-PLUS -->
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- #endif -->
-    <!-- #ifndef H5 -->
     <view v-if="$lucky">
       <div class="lucky-imgs">
         <div v-for="(block, index) in blocks" :key="index">
@@ -36,13 +35,12 @@
         </div>
       </div>
     </view>
-    <!-- #endif -->
   </view>
 </template>
 
 <script>
   import { changeUnits, resolveImage } from './utils.js'
-  import { LuckyWheel } from '../lucky-canvas'
+  import { LuckyWheel } from './interim-fix.js'
   export default {
     name: 'lucky-wheel',
     data () {
@@ -116,7 +114,15 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        resolveImage(img, this.canvas)
+        resolveImage(img, this.canvas, void 0, void 0, () => {
+          // #ifdef H5
+          // 一个奇怪的渲染问题, 我怀疑uniapp有bug
+          if (this.tmp++ === 0) {
+            console.log(this.Radius)
+            this.ctx.translate(this.Radius, this.Radius)
+          }
+          // #endif
+        })
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)
@@ -149,7 +155,7 @@
           // #endif
           const $lucky = this.$lucky = new LuckyWheel({
             // #ifdef H5
-            flag: 'WEB',
+            flag: 'UNI-H5',
             // #endif
             // #ifdef MP
             flag: 'MP-WX',
@@ -169,6 +175,7 @@
             beforeCreate: function () {
               const Radius = Math.min(this.config.width, this.config.height) / 2
               // 设置坐标轴
+              _this.Radius = Radius
               ctx.translate(Radius, Radius)
             },
             beforeInit: function () {
@@ -184,12 +191,6 @@
           }, {
             ...this.$props,
             start: function (...rest) {
-              // #ifdef H5
-              // 一个奇怪的渲染问题, 我怀疑uniapp有bug
-              if (_this.tmp++ === 0) {
-                ctx.translate(this.Radius, this.Radius)
-              }
-              // #endif
               _this.$emit('start', ...rest)
             },
             end: (...rest) => {

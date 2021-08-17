@@ -24,10 +24,16 @@ export const changeUnits = (value) => {
   }))
 }
 
-export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve') => {
+export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve', cb) => {
+  // #ifdef H5
+  let imgObj = new Image()
+  // #endif
+  // #ifndef H5
   let imgObj = canvas.createImage()
+  // #endif
   // 成功回调
   imgObj.onload = () => {
+    if (typeof cb === 'function') cb()
     img[resolveName](imgObj)
   }
   // 失败回调
