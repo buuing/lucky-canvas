@@ -27,7 +27,7 @@
     </view>
     <!-- #endif -->
     <!-- #ifndef H5 -->
-    <view v-if="$lucky">
+    <view v-if="myLucky">
       <div class="lucky-imgs">
         <div v-for="(prize, index) in prizes" :key="index">
           <div v-if="prize.imgs">
@@ -62,7 +62,7 @@
     name: 'lucky-grid',
     data () {
       return {
-        $lucky: null,
+        myLucky: null,
         canvas: null,
         isShow: false,
         boxWidth: 100,
@@ -128,31 +128,31 @@
     },
     watch: {
       cols (newData) {
-        this.$lucky && (this.$lucky.cols = newData)
+        this.myLucky && (this.myLucky.cols = newData)
       },
       rows (newData) {
-        this.$lucky && (this.$lucky.rows = newData)
+        this.myLucky && (this.myLucky.rows = newData)
       },
       blocks (newData) {
-        this.$lucky && (this.$lucky.blocks = newData)
+        this.myLucky && (this.myLucky.blocks = newData)
       },
       prizes (newData) {
-        this.$lucky && (this.$lucky.prizes = newData)
+        this.myLucky && (this.myLucky.prizes = newData)
       },
       buttons (newData) {
-        this.$lucky && (this.$lucky.buttons = newData)
+        this.myLucky && (this.myLucky.buttons = newData)
       },
       button (newData) {
-        this.$lucky && (this.$lucky.button = newData)
+        this.myLucky && (this.myLucky.button = newData)
       },
       defaultStyle (newData) {
-        this.$lucky && (this.$lucky.defaultStyle = newData)
+        this.myLucky && (this.myLucky.defaultStyle = newData)
       },
       defaultConfig (newData) {
-        this.$lucky && (this.$lucky.defaultConfig = newData)
+        this.myLucky && (this.myLucky.defaultConfig = newData)
       },
       activeStyle (newData) {
-        this.$lucky && (this.$lucky.activeStyle = newData)
+        this.myLucky && (this.myLucky.activeStyle = newData)
       },
     },
     methods: {
@@ -200,7 +200,7 @@
           canvas.height = height * dpr
           ctx.scale(dpr, dpr)
           // #endif
-          const $lucky = this.$lucky = new LuckyGrid({
+          const myLucky = this.myLucky = new LuckyGrid({
             // #ifdef H5
             flag: 'WEB',
             // #endif
@@ -245,13 +245,13 @@
         })
       },
       toPlay (btn) {
-        this.$lucky.startCallback(btn)
+        this.myLucky.startCallback(btn)
       },
       play (...rest) {
-        this.$lucky.play(...rest)
+        this.myLucky.play(...rest)
       },
       stop (...rest) {
-        this.$lucky.stop(...rest)
+        this.myLucky.stop(...rest)
       },
     },
   }

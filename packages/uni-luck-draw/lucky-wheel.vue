@@ -12,7 +12,7 @@
     <!-- #ifndef APP-PLUS -->
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- #endif -->
-    <view v-if="$lucky">
+    <view v-if="myLucky">
       <div class="lucky-imgs">
         <div v-for="(block, index) in blocks" :key="index">
           <div v-if="block.imgs">
@@ -45,7 +45,7 @@
     name: 'lucky-wheel',
     data () {
       return {
-        $lucky: null,
+        myLucky: null,
         canvas: null,
         isShow: false,
         boxWidth: 100,
@@ -96,19 +96,19 @@
     },
     watch: {
       blocks (newData) {
-        this.$lucky && (this.$lucky.blocks = newData)
+        this.myLucky && (this.myLucky.blocks = newData)
       },
       prizes (newData) {
-        this.$lucky && (this.$lucky.prizes = newData)
+        this.myLucky && (this.myLucky.prizes = newData)
       },
       buttons (newData) {
-        this.$lucky && (this.$lucky.buttons = newData)
+        this.myLucky && (this.myLucky.buttons = newData)
       },
       defaultStyle (newData) {
-        this.$lucky && (this.$lucky.defaultStyle = newData)
+        this.myLucky && (this.myLucky.defaultStyle = newData)
       },
       defaultConfig (newData) {
-        this.$lucky && (this.$lucky.defaultConfig = newData)
+        this.myLucky && (this.myLucky.defaultConfig = newData)
       },
     },
     methods: {
@@ -118,7 +118,6 @@
           // #ifdef H5
           // 一个奇怪的渲染问题, 我怀疑uniapp有bug
           if (this.tmp++ === 0) {
-            console.log(this.Radius)
             this.ctx.translate(this.Radius, this.Radius)
           }
           // #endif
@@ -153,7 +152,7 @@
           canvas.height = height * dpr
           ctx.scale(dpr, dpr)
           // #endif
-          const $lucky = this.$lucky = new LuckyWheel({
+          const myLucky = this.myLucky = new LuckyWheel({
             // #ifdef H5
             flag: 'UNI-H5',
             // #endif
@@ -200,13 +199,13 @@
         })
       },
       toPlay (e) {
-        this.$lucky.startCallback()
+        this.myLucky.startCallback()
       },
       play (...rest) {
-        this.$lucky.play(...rest)
+        this.myLucky.play(...rest)
       },
       stop (...rest) {
-        this.$lucky.stop(...rest)
+        this.myLucky.stop(...rest)
       },
     },
   }
