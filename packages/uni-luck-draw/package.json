@@ -1,6 +1,6 @@
 {
   "name": "uni-luck-draw",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "uni-app【大转盘 / 九宫格】抽奖插件",
   "main": "index.js",
   "scripts": {

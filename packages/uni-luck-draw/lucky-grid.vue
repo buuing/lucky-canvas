@@ -265,6 +265,8 @@
   .lucky-box canvas {
     position: absolute;
     pointer-events: none;
+    left: 0;
+    top: 0;
   }
   .lucky-grid-btn {
     position: absolute;

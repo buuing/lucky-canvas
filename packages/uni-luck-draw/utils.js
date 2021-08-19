@@ -25,11 +25,12 @@ export const changeUnits = (value) => {
 }
 
 export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve', cb) => {
+  let imgObj
   // #ifdef H5
-  let imgObj = new Image()
+  imgObj = new Image()
   // #endif
   // #ifndef H5
-  let imgObj = canvas.createImage()
+  imgObj = canvas.createImage()
   // #endif
   // 成功回调
   imgObj.onload = () => {
