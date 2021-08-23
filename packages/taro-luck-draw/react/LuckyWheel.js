@@ -6,78 +6,110 @@ import { changeUnits, resolveImage, getFlag } from '../utils'
 import './index.css'
 
 export default class LuckyWheel extends React.Component {
-  ctx = null
   flag = getFlag()
-  $lucky = null
+  ctx = null
+  canvas = null
   state = {
+    $lucky: null,
     boxWidth: 300,
     boxHeight: 300,
     btnWidth: 0,
     btnHeight: 0,
   }
+
   constructor (props) {
     super(props)
     this.myLucky = React.createRef()
   }
+
   componentDidMount () {
-    const { props } = this
-    try {
-      this.init()
-      props.onSuccess && props.onSuccess()
-    } catch (err) {
-      console.error(err)
-      props.onError && props.onError(err)
-    } finally {
-      props.onFinally && props.onFinally(err)
-    }
+    this.initLucky()
   }
+
   componentDidUpdate (prevProps) {
-    if (this.props.blocks !== prevProps.blocks) {
-      this.$lucky.blocks = this.props.blocks
+    const { props, state } = this
+    if (props.blocks !== prevProps.blocks) {
+      state.$lucky.blocks = props.blocks
     }
-    if (this.props.prizes !== prevProps.prizes) {
-      this.$lucky.prizes = this.props.prizes
+    if (props.prizes !== prevProps.prizes) {
+      state.$lucky.prizes = props.prizes
     }
-    if (this.props.buttons !== prevProps.buttons) {
-      this.$lucky.buttons = this.props.buttons
+    if (props.buttons !== prevProps.buttons) {
+      state.$lucky.buttons = props.buttons
     }
   }
+
   async imgBindload (res, name, index, i) {
     const img = this.props[name][index].imgs[i]
-    resolveImage(res, img)
+    resolveImage(img, this.canvas)
   }
-  init () {
+
+  initLucky () {
     const { props } = this
     this.setState({
       boxWidth: changeUnits(props.width),
       boxHeight: changeUnits(props.height)
     }, () => {
-      let ctx, divElement, flag = this.flag
+      // 某些情况下获取不到 canvas
+      setTimeout(() => {
+        this.draw()
+      }, 100)
+    })
+  }
+
+  draw () {
+    const _this = this
+    const { props } = this
+    const page = Taro.getCurrentInstance().page
+    Taro.createSelectorQuery().in(page).select('#lucky-wheel').fields({
+      node: true, size: true
+    }).exec((res) => {
+      let flag = this.flag, rAF
       if (flag === 'WEB') {
-        divElement = this.myLucky.current
-      } else {
-        ctx = this.ctx = Taro.createCanvasContext('luckyWheel', this)
+        res[0] = {
+          node: document.querySelector('#lucky-wheel canvas'),
+          width: this.boxWidth,
+          height: this.boxHeight,
+        }
+        // 小程序使用帧动画真机会报错
+        rAF = requestAnimationFrame
       }
-      const $lucky = this.$lucky = new Wheel({
+      if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
+      const { node, width, height } = res[0]
+      const canvas = this.canvas = node
+      const ctx = this.ctx = canvas.getContext('2d')
+      const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      ctx.scale(dpr, dpr)
+      const $lucky = new Wheel({
         flag,
-        divElement,
         ctx,
-        width: this.state.boxWidth,
-        height: this.state.boxHeight,
+        dpr,
+        width,
+        height,
+        rAF,
+        setTimeout,
+        clearTimeout,
+        setInterval,
+        clearInterval,
         unitFunc: (num, unit) => changeUnits(num + unit),
-        beforeInit: function () {
+        beforeCreate: function () {
           if (flag === 'WEB') return
           const Radius = Math.min(this.config.width, this.config.height) / 2
-          ctx.translate(-Radius, -Radius)
+          ctx.translate(Radius, Radius)
         },
-        beforeDraw: function () {
+        beforeInit: function () {
           if (flag === 'WEB') return
-          ctx.translate(this.Radius, this.Radius)
+          ctx.translate(-this.Radius, -this.Radius)
         },
-        afterDraw () {
-          if (flag === 'WEB') return
-          ctx.draw()
-        }
+        afterInit: function () {
+          // 动态设置按钮大小
+          _this.setState({
+            btnWidth: this.maxBtnRadius * 2,
+            btnHeight: this.maxBtnRadius * 2,
+          })
+        },
       }, {
         ...props,
         start: (...rest) => {
@@ -87,28 +119,39 @@ export default class LuckyWheel extends React.Component {
           props.onEnd && props.onEnd(...rest)
         }
       })
-      // 动态设置按钮大小
-      this.setState({
-        btnWidth: $lucky.maxBtnRadius * 2,
-        btnHeight: $lucky.maxBtnRadius * 2,
-      })
+      this.setState({ $lucky })
     })
   }
+
   play (...rest) {
-    this.$lucky.play(...rest)
+    this.state.$lucky.play(...rest)
   }
+
   stop (...rest) {
-    this.$lucky.stop(...rest)
+    this.state.$lucky.stop(...rest)
   }
+
   toPlay () {
-    this.$lucky.startCallback()
+    this.state.$lucky.startCallback()
   }
+
   render () {
     const { props, state } = this
     return this.flag === 'WEB' ? <div ref={this.myLucky}></div> : (
       <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
-        <Canvas id="lucky-canvas" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }} canvasId="luckyWheel"></Canvas>
-        <CoverView className="lucky-wheel-btn" onTouchstart={e => this.toPlay(e)} style={{ width: state.btnWidth + 'px', height: state.btnHeight + 'px' }}></CoverView>
+        <Canvas
+          type="2d"
+          id="lucky-wheel"
+          canvasId="lucky-wheel"
+          style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}
+        ></Canvas>
+        {/* 按钮 */}
+        <CoverView
+          className="lucky-wheel-btn"
+          onTouchstart={e => this.toPlay(e)}
+          style={{ width: state.btnWidth + 'px', height: state.btnHeight + 'px' }}
+        ></CoverView>
+        {/* 图片 */}
         <View className="lucky-imgs">
           {
             props.blocks.map((block, index) => <View key={index}>

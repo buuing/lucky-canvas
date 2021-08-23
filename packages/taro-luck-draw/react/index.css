@@ -2,9 +2,11 @@
   position: relative;
   overflow: hidden;
 }
-#lucky-canvas {
+#lucky-wheel, #lucky-grid {
   position: absolute;
   pointer-events: none;
+  left: 0;
+  top: 0;
 }
 .lucky-wheel-btn {
   position: absolute;

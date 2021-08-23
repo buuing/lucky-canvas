@@ -10,7 +10,7 @@
     <view v-if="flag === 'WEB'" class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <cover-view v-else class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- 图片 -->
-    <view v-if="canvas && flag !== 'WEB'">
+    <view v-if="$lucky && flag !== 'WEB'">
       <view class="lucky-imgs">
         <view v-for="(block, index) in blocks" :key="index">
           <view v-if="block.imgs">

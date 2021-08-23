@@ -38,8 +38,9 @@ export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '
     img[resolveName](imgObj)
   }
   // 失败回调
-  imgObj.onerror = () => {
-    img['$reject']()
+  imgObj.onerror = (err) => {
+    console.error(err)
+    // img['$reject']()
   }
   // 设置src
   imgObj.src = img[srcName]

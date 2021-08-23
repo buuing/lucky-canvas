@@ -6,78 +6,119 @@ import { changeUnits, resolveImage, getFlag } from '../utils'
 import './index.css'
 
 export default class LuckyGrid extends React.Component {
-  ctx = null
   flag = getFlag()
-  $lucky = null
+  ctx = null
+  canvas = null
   state = {
+    $lucky: null,
     boxWidth: 300,
     boxHeight: 300,
     btns: [],
     btnShow: false,
   }
+
   constructor (props) {
     super(props)
     this.myLucky = React.createRef()
   }
+
   componentDidMount () {
-    const { props } = this
-    try {
-      this.init()
-      props.onSuccess && props.onSuccess()
-    } catch (err) {
-      console.error(err)
-      props.onError && props.onError(err)
-    } finally {
-      props.onFinally && props.onFinally(err)
-    }
+    this.initLucky()
   }
+
   componentDidUpdate (prevProps) {
-    if (this.props.cols !== prevProps.cols) {
-      this.$lucky.cols = this.props.cols
+    const { props, state } = this
+    if (props.cols !== prevProps.cols) {
+      state.$lucky.cols = props.cols
     }
-    if (this.props.rows !== prevProps.rows) {
-      this.$lucky.rows = this.props.rows
+    if (props.rows !== prevProps.rows) {
+      state.$lucky.rows = props.rows
     }
-    if (this.props.blocks !== prevProps.blocks) {
-      this.$lucky.blocks = this.props.blocks
+    if (props.blocks !== prevProps.blocks) {
+      state.$lucky.blocks = props.blocks
     }
-    if (this.props.prizes !== prevProps.prizes) {
-      this.$lucky.prizes = this.props.prizes
+    if (props.prizes !== prevProps.prizes) {
+      state.$lucky.prizes = props.prizes
     }
-    if (this.props.buttons !== prevProps.buttons) {
-      this.$lucky.buttons = this.props.buttons
+    if (props.buttons !== prevProps.buttons) {
+      state.$lucky.buttons = props.buttons
     }
   }
+
   async imgBindload (res, name, index, i) {
     const img = this.props[name][index].imgs[i]
-    resolveImage(res, img)
+    resolveImage(img, this.canvas)
   }
+
   async imgBindloadActive (res, name, index, i) {
     const img = this.props[name][index].imgs[i]
-    resolveImage(res, img, 'activeSrc', '$activeResolve')
+    resolveImage(img, this.canvas, 'activeSrc', '$activeResolve')
   }
-  init () {
+
+  initLucky () {
     const { props } = this
     this.setState({
       boxWidth: changeUnits(props.width),
       boxHeight: changeUnits(props.height)
     }, () => {
-      let ctx, divElement, flag = this.flag
+      // 某些情况下获取不到 canvas
+      setTimeout(() => {
+        this.draw()
+      }, 100)
+    })
+  }
+
+  draw () {
+    const _this = this
+    const { props } = this
+    const page = Taro.getCurrentInstance().page
+    Taro.createSelectorQuery().in(page).select('#lucky-grid').fields({
+      node: true, size: true
+    }).exec((res) => {
+      let flag = this.flag, rAF
       if (flag === 'WEB') {
-        divElement = this.myLucky.current
-      } else {
-        ctx = this.ctx = Taro.createCanvasContext('luckyGrid', this)
+        res[0] = {
+          node: document.querySelector('#lucky-grid canvas'),
+          width: this.boxWidth,
+          height: this.boxHeight,
+        }
+        // 小程序使用帧动画真机会报错
+        rAF = requestAnimationFrame
       }
-      this.$lucky = new Grid({
+      if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
+      const { node, width, height } = res[0]
+      const canvas = this.canvas = node
+      const ctx = this.ctx = canvas.getContext('2d')
+      const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      ctx.scale(dpr, dpr)
+      const $lucky = new Grid({
         flag,
-        divElement,
         ctx,
-        width: this.state.boxWidth,
-        height: this.state.boxHeight,
+        dpr,
+        width,
+        height,
+        rAF,
+        setTimeout,
+        clearTimeout,
+        setInterval,
+        clearInterval,
         unitFunc: (num, unit) => changeUnits(num + unit),
-        afterDraw: function () {
-          if (flag === 'WEB') return
-          ctx.draw()
+        afterInit: function () {
+          // 动态设置按钮大小
+          const btns = []
+          props.buttons.forEach((btn, index) => {
+            if (!btn) return
+            const [left, top, width, height] = this.getGeometricProperty([
+              btn.x,
+              btn.y,
+              btn.col || 1,
+              btn.row || 1
+            ])
+            btns[index] = { top, left, width, height }
+          })
+          _this.setState({ btns, btnShow: true })
         },
       }, {
         ...props,
@@ -88,35 +129,33 @@ export default class LuckyGrid extends React.Component {
           props.onEnd && props.onEnd(...rest)
         }
       })
-      // 动态设置按钮大小
-      const btns = []
-      props.buttons.forEach((btn, index) => {
-        if (!btn) return
-        const [left, top, width, height] = this.$lucky.getGeometricProperty([
-          btn.x,
-          btn.y,
-          btn.col || 1,
-          btn.row || 1
-        ])
-        btns[index] = { top, left, width, height }
-      })
-      this.setState({ btns, btnShow: true })
+      this.setState({ $lucky })
     })
   }
+
   play (...rest) {
-    this.$lucky.play(...rest)
+    this.state.$lucky.play(...rest)
   }
+
   stop (...rest) {
-    this.$lucky.stop(...rest)
+    this.state.$lucky.stop(...rest)
   }
+
   toPlay (btn) {
-    this.$lucky.startCallback(btn)
+    this.state.$lucky.startCallback(btn)
   }
+
   render () {
     const { props, state } = this
     return this.flag === 'WEB' ? <div ref={this.myLucky}></div> : (
       <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
-        <Canvas id="lucky-canvas" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }} canvasId="luckyGrid"></Canvas>
+        <Canvas
+          type="2d"
+          id="lucky-grid"
+          canvasId="lucky-grid"
+          style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}
+        ></Canvas>
+        {/* 按钮 */}
         {
           state.btnShow ? <View>
             {
@@ -129,6 +168,7 @@ export default class LuckyGrid extends React.Component {
             }
           </View> : null
         }
+        {/* 图片 */}
         <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>

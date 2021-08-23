@@ -47,8 +47,7 @@ export const changeUnits = (value) => {
 }
 
 export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve', cb) => {
-  let imgObj
-  imgObj = canvas.createImage()
+  let imgObj = canvas.createImage()
   // 成功回调
   imgObj.onload = () => {
     if (typeof cb === 'function') cb()

@@ -26,7 +26,7 @@
       </view>
     </view>
     <!-- 图片 -->
-    <view v-if="canvas && flag !== 'WEB'">
+    <view v-if="$lucky && flag !== 'WEB'">
       <view class="lucky-imgs">
         <view v-for="(prize, index) in prizes" :key="index">
           <view v-if="prize.imgs">
