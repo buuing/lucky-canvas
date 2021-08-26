@@ -34,14 +34,6 @@
             { src: './img/btn.png', width: '50%', top: '73%' }
           ]
         },
-        {
-          x: 0, y: 1,
-          background: 'pink',
-          callback () {
-            console.log(this)
-            return false
-          }
-        }
       ],
       activeStyle: {
         background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
@@ -88,7 +80,7 @@
         { name: '5元红包', img: './img/7.png' }
       ]
       let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 8; i++) {
         let item = data[i]
         prizes.push({
           name: item.name,
@@ -97,14 +89,17 @@
           imgs: [{ src: item.img, width: '53%', top: '8%' }]
         })
       }
+      console.log(prizes)
       luckyGrid.prizes = prizes
     })
     setTimeout(_ => {
-      luckyGrid.prizes[0].fonts[0].text = 'xxx'
-      luckyGrid.defaultStyle.fontColor = 'green'
+      // luckyGrid.prizes[0].fonts[0].text = 'xxx'
+      // luckyGrid.defaultStyle.fontColor = 'green'
       // luckyGrid.rows = 4
     }, 500)
-
+    // window.requestAnimationFrame(() => {
+      luckyGrid.draw()
+    // })
 // ;(function test () {
 //   setTimeout(() => {
 //     console.log(111)

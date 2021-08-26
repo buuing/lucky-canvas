@@ -13,10 +13,10 @@
       // 创建大转盘抽奖
       var luckyWheel = new LuckyCanvas.LuckyWheel({
         el: '#my-lucky',
-        width: '6rem',
-        height: '6rem',
+        width: '300px',
+        height: '300px',
       }, {
-        // prizes: [],
+        prizes: [],
         defaultStyle: {
           fontColor: '#d64737',
           fontSize: '14px'
@@ -34,7 +34,7 @@
           { radius: '41px', background: '#f6c66f', pointer: true },
           {
             radius: '35px', background: '#ffdea0',
-            imgs: [{ src: '', width: '65%', top: '-50%' }]
+            imgs: [{ src: './img/button.png', width: '65%', top: '-50%' }]
           }
         ],
         start () {
@@ -51,7 +51,6 @@
       // 设置奖品
       setTimeout(() => {
         const prizes = []
-        luckyWheel.prizes = []
         let data = [
           '1元红包',
           '100元红包',
@@ -63,44 +62,15 @@
           '5元红包',
         ]
         data.forEach((item, index) => {
-          luckyWheel.prizes.push({
+          prizes.push({
             title: item,
             background: index % 2 ? '#f9e3bb' : '#f8d384',
             fonts: [{ text: item, top: '10%', fontWeight: 300 }],
             imgs:[{ src: `./img/${index}.png`, width: '30%', top: '35%' }],
           })
         })
-        // luckyWheel.prizes = prizes
+        luckyWheel.prizes = prizes
       }, 500)
-      setTimeout(_ => {
-        // luckyWheel.prizes[0].fonts[0].text = 'xxx'
-        // luckyWheel.blocks[0].background = '#000'
-        luckyWheel.defaultStyle.fontColor = 'green'
-        luckyWheel.defaultConfig.gutter = '3'
-        // luckyWheel.defaultConfig.offsetDegree = 22.5
-        // luckyWheel.$set(luckyWheel.defaultConfig, 'offsetDegree', '22.5')
-        // luckyWheel.initComputed()
-        // console.log('offsetDegree' in Object.prototype)
-        // luckyWheel.init()
-        // console.log(luckyWheel.defaultConfig)
-      }, 1000)
-      setTimeout(() => {
-        // console.log(luckyWheel.prizes)
-        // luckyWheel.prizes.pop()
-        // luckyWheel.prizes.push({
-        //   title: '123',
-        //   background: 'pink',
-        //   fonts: [{ text: '123', top: '10%', fontWeight: 300 }],
-        //   imgs:[{ src: ``, width: '30%', top: '35%' }],
-        // })
-        // luckyWheel.blocks.push({ padding: '13px', background: '#000' })
-        // luckyWheel.blocks[0] = { padding: '13px', background: '#000' }
-      }, 2000);
-      window.onresize = function () {
-        console.log(111)
-        luckyWheel.init({})
-        
-      }
     </script>
   </body>
 </body>
