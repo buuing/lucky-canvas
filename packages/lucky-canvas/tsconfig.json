@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "allowJs": true,
-    "strict": true,
+    "target": "es5", // 编译后的es版本
+    "module": "esnext", // 前端模块化规范
+    "allowJs": true, // 允许引入js文件
+    "strict": true, // 开启严格模式
     "importHelpers": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
@@ -12,15 +12,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "lib": [
-      "es2015",
-      "es2016",
-      "es2017",
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
   },
   "exclude": [
     "node_modules/**"

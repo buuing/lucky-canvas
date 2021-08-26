@@ -70,10 +70,8 @@ export default class LuckyWheel extends Lucky {
    */
   constructor (config: ConfigType, data: LuckyWheelConfig = {}) {
     super(config)
-    if (config.ob) {
-      this.initData(data)
-      this.initWatch()
-    }
+    this.initData(data)
+    this.initWatch()
     this.initComputed()
     // 创建前回调函数
     config.beforeCreate?.call(this)

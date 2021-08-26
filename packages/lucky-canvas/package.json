@@ -2,15 +2,30 @@
   "name": "lucky-canvas",
   "version": "1.5.4",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
-  "main": "index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
     "build": "rollup --config rollup.config.build.js"
   },
+  "homepage": "https://100px.net",
+  "bugs": "https://github.com/LuckDraw/lucky-canvas/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LuckDraw/lucky-canvas.git"
+    "url": "git+https://github.com/LuckDraw/lucky-canvas.git",
+    "directory": "packages/lucky-canvas"
   },
+  "author": "ldq <ldq404@qq.com>",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "index.js",
+    "umd.min.js",
+    "LICENSE",
+    "package.json"
+  ],
   "keywords": [
     "vue3抽奖",
     "大转盘抽奖",
@@ -19,19 +34,6 @@
     "js抽奖",
     "移动端抽奖",
     "canvas抽奖"
-  ],
-  "author": "ldq <ldq404@qq.com>",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/LuckDraw/lucky-canvas/issues"
-  },
-  "homepage": "https://100px.net",
-  "files": [
-    "package.json",
-    "LICENSE",
-    "dist",
-    "index.js",
-    "umd.min.js"
   ],
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -52,8 +54,10 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^3.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
-    "tslib": "^2.0.3",
+    "tslib": "^2.3.1",
     "typescript": "^4.0.5"
   },
   "dependencies": {}

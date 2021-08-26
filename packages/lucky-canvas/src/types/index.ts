@@ -19,16 +19,14 @@ export interface ImgType {
   $reject?: Function
 }
 
-export type BorderRadiusType =  string | number
+export type BorderRadiusType = string | number
 export type BackgroundType = string
 export type ShadowType = string
 
 export interface ConfigType {
   // 临时处理元素类型, 当版本升到4.x之后就可以删掉了
-  nodeType: number
+  nodeType?: number
   // 配置
-  ob?: boolean
-  // flag: 'WEB' | 'MINI-WX' | 'UNI-H5' | 'UNI-MINI-WX'
   flag: 'WEB' | 'MP-WX' | 'UNI-H5' | 'UNI-MP' | 'TARO-H5' | 'TARO-MP'
   el?: string
   divElement?: HTMLDivElement

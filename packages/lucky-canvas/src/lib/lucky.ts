@@ -32,7 +32,6 @@ export default class Lucky {
     // 初始化 window 方法
     this.initWindowFunction()
     if (!config.flag) config.flag = 'WEB'
-    if (!Object.prototype.hasOwnProperty.call(config, 'ob')) config.ob = true
     if (config.el) config.divElement = document.querySelector(config.el) as HTMLDivElement
     // 如果存在父盒子, 就创建canvas标签
     if (config.divElement) {

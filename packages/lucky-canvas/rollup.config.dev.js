@@ -7,25 +7,15 @@ import babel from 'rollup-plugin-babel'
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 // import eslint from '@rollup/plugin-eslint'
-import { name } from './package.json'
+import pkg from './package.json'
 
 export default {
   input: 'src/index.ts',
   output: [
     {
-      file: `dist/${name}.umd.js`,
+      file: pkg.browser,
       format: 'umd',
       name: 'LuckyCanvas',
-      sourcemap: true,
-    },
-    {
-      file: `dist/${name}.cjs.js`,
-      format: 'cjs',
-      sourcemap: true,
-    },
-    {
-      file: `dist/${name}.es.js`,
-      format: 'es',
       sourcemap: true,
     },
   ],
