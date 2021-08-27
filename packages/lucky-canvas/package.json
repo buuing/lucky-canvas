@@ -5,7 +5,7 @@
   "main": "dist/lucky-canvas.cjs.js",
   "module": "dist/lucky-canvas.esm.js",
   "browser": "dist/lucky-canvas.umd.js",
-  "types": "dist/lucky-canvas.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
     "build": "rollup --config rollup.config.build.js"
