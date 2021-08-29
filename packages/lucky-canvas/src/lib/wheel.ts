@@ -171,20 +171,23 @@ export default class LuckyWheel extends Lucky {
     this.draw() // 先画一次, 防止闪烁
     this.draw() // 再画一次, 拿到正确的按钮轮廓
     // 异步加载图片
-    Object.keys(willUpdateImgs).forEach(key => {
-      const imgName = key as 'blockImgs' | 'prizeImgs' | 'btnImgs'
-      const cellName = {
-        blockImgs: 'blocks',
-        prizeImgs: 'prizes',
-        btnImgs: 'buttons',
-      }[imgName] as 'blocks' | 'prizes' | 'buttons'
+    ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
+      enum CellNameKey {
+        blockImgs = 'blocks',
+        prizeImgs = 'prizes',
+        btnImgs = 'buttons',
+      }
+      const cellName = CellNameKey[imgName]
       const willUpdate = willUpdateImgs[imgName]
+      // 循环遍历所有图片
+      const allPromise: Promise<void>[] = []
       willUpdate && willUpdate.forEach((imgs, cellIndex) => {
         imgs && imgs.forEach((imgInfo, imgIndex) => {
-          this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex, () => {
-            this.draw()
-          })
+          allPromise.push(this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex))
         })
+      })
+      Promise.all(allPromise).then(() => {
+        this.draw()
       })
     })
     // 初始化后回调函数
@@ -205,30 +208,33 @@ export default class LuckyWheel extends Lucky {
   }
 
   /**
-   * 单独加载某一张图片并计算其实际渲染宽高
-   * @param { number } cellIndex 奖品索引
-   * @param { number } imgIndex 奖品图片索引
-   * @param { Function } callBack 图片加载完毕回调
+   * 根据索引单独加载指定图片并缓存
+   * @param cellName 模块名称
+   * @param cellIndex 模块索引
+   * @param imgName 模块对应的图片缓存
+   * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
     cellName: 'blocks' | 'prizes' | 'buttons',
     cellIndex: number,
     imgName: 'blockImgs' | 'prizeImgs' | 'btnImgs',
     imgIndex: number,
-    callBack: () => void
-  ) {
-    // 获取图片信息
-    const cell: BlockType | PrizeType | ButtonType = this[cellName][cellIndex]
-    if (!cell || !cell.imgs) return
-    const imgInfo = cell.imgs[imgIndex]
-    if (!imgInfo) return
-    if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
-    // 异步加载图片
-    this.loadImg(imgInfo.src, imgInfo).then(res => {
-      this[imgName][cellIndex][imgIndex] = res
-      callBack.call(this)
-    }).catch(err => {
-      console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      // 获取图片信息
+      const cell: BlockType | PrizeType | ButtonType = this[cellName][cellIndex]
+      if (!cell || !cell.imgs) return
+      const imgInfo = cell.imgs[imgIndex]
+      if (!imgInfo) return
+      if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
+      // 异步加载图片
+      this.loadImg(imgInfo.src, imgInfo).then(res => {
+        this[imgName][cellIndex][imgIndex] = res
+        resolve()
+      }).catch(err => {
+        console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
+        reject()
+      })
     })
   }
 

@@ -209,20 +209,20 @@ export default class LuckyGrid extends Lucky {
     btnImgs?: Array<ButtonImgType[] | undefined>
   }): void {
     super.init()
-    const { config, ctx, button } = this
+    const { config } = this
     // 初始化前回调函数
     config.beforeInit?.call(this)
     // 先画一次防止闪烁
     this.draw()
     // 异步加载图片
-    Object.keys(willUpdateImgs).forEach(key => {
-      const imgName = key as 'blockImgs' | 'prizeImgs' | 'btnImgs'
+    ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
+      enum CellNameKey {
+        blockImgs = 'blocks',
+        prizeImgs = 'prizes',
+        btnImgs = 'buttons',
+      }
+      const cellName = CellNameKey[imgName]
       const willUpdate = willUpdateImgs[imgName]
-      const cellName = {
-        blockImgs: 'blocks',
-        prizeImgs: 'prizes',
-        btnImgs: 'buttons',
-      }[imgName] as 'blocks' | 'prizes' | 'buttons'
       // 循环遍历所有图片
       const allPromise: Promise<void>[] = []
       willUpdate && willUpdate.forEach((imgs, cellIndex) => {
@@ -265,9 +265,10 @@ export default class LuckyGrid extends Lucky {
 
   /**
    * 根据索引单独加载指定图片并缓存
-   * @param { number } prizeIndex 奖品索引
-   * @param { number } imgIndex 奖品图片索引
-   * @param { Function } callBack 图片加载完毕回调
+   * @param cellName 模块名称
+   * @param cellIndex 模块索引
+   * @param imgName 模块对应的图片缓存
+   * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
     cellName: 'blocks' | 'prizes' | 'buttons',
