@@ -53,7 +53,6 @@
         btnWidth: 0,
         btnHeight: 0,
         dpr: 1,
-        tmp: 0,
       }
     },
     props: {
@@ -114,14 +113,7 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        resolveImage(img, this.canvas, void 0, void 0, () => {
-          // #ifdef H5
-          // 一个奇怪的渲染问题, 我怀疑uniapp有bug
-          if (this.tmp++ === 0) {
-            this.ctx.translate(this.Radius, this.Radius)
-          }
-          // #endif
-        })
+        resolveImage(img, this.canvas)
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)

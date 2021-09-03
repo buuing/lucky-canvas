@@ -24,7 +24,7 @@ export const changeUnits = (value) => {
   }))
 }
 
-export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve', cb) => {
+export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '$resolve') => {
   let imgObj
   // #ifdef H5
   imgObj = new Image()
@@ -34,7 +34,6 @@ export const resolveImage = async (img, canvas, srcName = 'src', resolveName = '
   // #endif
   // 成功回调
   imgObj.onload = () => {
-    if (typeof cb === 'function') cb()
     img[resolveName](imgObj)
   }
   // 失败回调
