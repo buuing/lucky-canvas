@@ -1,10 +1,10 @@
 /**
  * 判断是否是期望的类型
- * @param { any } param 将要判断的变量
+ * @param { unknown } param 将要判断的变量
  * @param { ...string } types 期望的类型
  * @return { boolean } 返回期望是否正确
  */
-export const isExpectType = (param: any, ...types: string[]): boolean => {
+export const isExpectType = (param: unknown, ...types: string[]): boolean => {
   return types.some(type => Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type)
 }
 
@@ -21,7 +21,7 @@ export const removeEnter = (str: string): string => {
  * 把任何数据类型转成数字
  * @param num 
  */
-export const getNumber = (num: any): number => {
+export const getNumber = (num: unknown): number => {
   if (num === null) return 0
   if (typeof num === 'object') return NaN
   if (typeof num === 'number') return num

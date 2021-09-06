@@ -9,8 +9,8 @@
  */
 
 interface SpeedType {
-  easeIn: (t: number, b: number, c: number, d: number) => number
-  easeOut: (t: number, b: number, c: number, d: number) => number
+  easeIn: (...arr: number[]) => number
+  easeOut: (...arr: number[]) => number
 }
 
 // 二次方的缓动

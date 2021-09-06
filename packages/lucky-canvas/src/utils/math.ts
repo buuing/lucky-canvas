@@ -208,7 +208,7 @@ export const getLinearGradient = (
   else if (deg.includes('left')) direction = [x + w, y, x, y]
   else if (deg.includes('right')) direction = [x, y, x + w, y]
   // 创建线性渐变必须使用整数坐标
-  const gradient = ctx.createLinearGradient(...(direction.map(n => n >> 0) as [number, number, number, number]))
+  const gradient = ctx.createLinearGradient(...(direction.map(n => n >> 0) as typeof direction))
   // 这里后期重构, 先用any代替
   return context.reduce((gradient: any, item: any, index: any) => {
     const info = item.split(' ')

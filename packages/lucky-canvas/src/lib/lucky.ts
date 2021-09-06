@@ -5,8 +5,11 @@ import { ConfigType, ImgType, UniImageType } from '../types/index'
 import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
+type RequireKey = 'flag' | 'ctx' | 'dpr' | 'setTimeout' | 'setInterval' | 'clearTimeout' | 'clearInterval'
+type MyConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>
+
 export default class Lucky {
-  protected readonly config: ConfigType
+  protected readonly config: MyConfigType
   protected readonly ctx: CanvasRenderingContext2D
   protected htmlFontSize: number = 16
   protected rAF: Function = function () {}
@@ -20,13 +23,11 @@ export default class Lucky {
   constructor (config: string | HTMLDivElement | ConfigType) {
     // 先初始化 fontSize 以防后面有 rem 单位
     this.setHTMLFontSize()
-    /* eslint-disable */
     // 兼容代码开始: 为了处理 v1.0.6 版本在这里传入了一个 dom
     if (typeof config === 'string') config = { el: config } as ConfigType
     else if (config.nodeType === 1) config = { el: '', divElement: config } as ConfigType
     config = config as ConfigType
-    /* eslint-enable */
-    this.config = config
+    this.config = config as MyConfigType
     // 拿到 config 即可设置 dpr
     this.setDpr()
     // 初始化 window 方法
@@ -113,7 +114,7 @@ export default class Lucky {
     if (config.dpr) {
       // 优先使用 config 传入的 dpr
     } else if (window) {
-      (window as any).dpr = config.dpr = window.devicePixelRatio || 1
+      window['dpr'] = config.dpr = window.devicePixelRatio || 1
     } else if (!config.dpr) {
       console.error(config, '未传入 dpr 可能会导致绘制异常')
     }
@@ -159,7 +160,7 @@ export default class Lucky {
         return window.requestAnimationFrame ||
           window['webkitRequestAnimationFrame'] ||
           window['mozRequestAnimationFrame'] ||
-          function (callback) {
+          function (callback: Function) {
             window.setTimeout(callback, 1000 / 60)
           }
       })()
