@@ -27,35 +27,11 @@ export default class LuckyGrid extends Lucky {
   private buttons: Array<ButtonType> = []
   private button?: ButtonType
   private defaultConfig: DefaultConfigType = {}
-  private _defaultConfig = { // 此处初始化无用, 是为了方便类型推导才加的
-    gutter: 5,
-    speed: 20,
-    accelerationTime: 2500,
-    decelerationTime: 2500,
-  }
   private defaultStyle: DefaultStyleType = {}
-  private _defaultStyle = { // 此处初始化无用, 是为了方便类型推导才加的
-    borderRadius: 20,
-    fontColor: '#000',
-    fontSize: '18px',
-    fontStyle: 'sans-serif',
-    fontWeight: '400',
-    lineHeight: '',
-    background: 'rgba(0,0,0,0)',
-    shadow: '',
-    wordWrap: true,
-    lengthLimit: '90%',
-  }
   private activeStyle: ActiveStyleType = {}
-  private _activeStyle = { // 此处初始化无用, 是为了方便类型推导才加的
-    background: '#ffce98',
-    shadow: '',
-    fontStyle: '',
-    fontWeight: '',
-    fontSize: '',
-    lineHeight: '',
-    fontColor: '',
-  }
+  private _defaultConfig: Required<DefaultConfigType> = {} as Required<DefaultConfigType>
+  private _defaultStyle: Required<DefaultStyleType> = {} as Required<DefaultStyleType>
+  private _activeStyle: Required<ActiveStyleType> = {} as Required<ActiveStyleType>
   private startCallback?: StartCallbackType
   private endCallback?: EndCallbackType
   private cellWidth = 0                 // 格子宽度
@@ -387,7 +363,7 @@ export default class LuckyGrid extends Lucky {
       if (hasBackground(background)) {
         // 处理阴影 (暂时先用any, 这里后续要优化)
         const shadow: any = (
-          isActive ? _activeStyle.shadow! : (cell.shadow || _defaultStyle.shadow!)
+          isActive ? _activeStyle.shadow : (cell.shadow || _defaultStyle.shadow)
         )
           .replace(/px/g, '') // 清空px字符串
           .split(',')[0].split(' ') // 防止有人声明多个阴影, 截取第一个阴影

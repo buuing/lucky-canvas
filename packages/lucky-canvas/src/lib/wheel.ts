@@ -19,26 +19,9 @@ export default class LuckyWheel extends Lucky {
   private prizes: Array<PrizeType> = []
   private buttons: Array<ButtonType> = []
   private defaultConfig: DefaultConfigType = {}
-  private _defaultConfig = {
-    gutter: '0px',
-    offsetDegree: 0,
-    speed: 20,
-    speedFunction: 'quad',
-    accelerationTime: 2500,
-    decelerationTime: 2500,
-    stopRange: 0.8,
-  }
   private defaultStyle: DefaultStyleType = {}
-  private _defaultStyle = {
-    fontSize: '18px',
-    fontColor: '#000',
-    fontStyle: 'sans-serif',
-    fontWeight: '400',
-    lineHeight: '',
-    background: 'rgba(0,0,0,0)',
-    wordWrap: true,
-    lengthLimit: '90%',
-  }
+  private _defaultConfig: Required<DefaultConfigType> = {} as Required<DefaultConfigType>
+  private _defaultStyle: Required<DefaultStyleType> = {} as Required<DefaultStyleType>
   private startCallback?: StartCallbackType
   private endCallback?: EndCallbackType
   private Radius = 0                    // 大转盘半径
@@ -361,7 +344,7 @@ export default class LuckyWheel extends Lucky {
         let fontWeight = font.fontWeight || _defaultStyle.fontWeight
         let fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
         let fontStyle = font.fontStyle || _defaultStyle.fontStyle
-        ctx.fillStyle = fontColor!
+        ctx.fillStyle = fontColor
         ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`
         let lines = [], text = String(font.text)
         if (Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
@@ -427,7 +410,7 @@ export default class LuckyWheel extends Lucky {
         let fontWeight = font.fontWeight || _defaultStyle.fontWeight
         let fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
         let fontStyle = font.fontStyle || _defaultStyle.fontStyle
-        ctx.fillStyle = fontColor!
+        ctx.fillStyle = fontColor
         ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`
         String(font.text).split('\n').forEach((line, lineIndex) => {
           ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
