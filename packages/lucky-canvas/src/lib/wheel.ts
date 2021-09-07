@@ -9,7 +9,7 @@ import LuckyWheelConfig, {
   StartCallbackType,
   EndCallbackType
 } from '../types/wheel'
-import { FontType, ImgType, UniImageType } from '../types/index'
+import { FontType, ImgType } from '../types/index'
 import { isExpectType, removeEnter, hasBackground } from '../utils/index'
 import { getAngle, drawSector } from '../utils/math'
 import * as Tween from '../utils/tween'
@@ -42,9 +42,9 @@ export default class LuckyWheel extends Lucky {
    * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
    */
   private prizeFlag: number | undefined
-  private blockImgs: Array<HTMLImageElement[] | UniImageType[]> = [[]]
-  private prizeImgs: Array<HTMLImageElement[] | UniImageType[]> = [[]]
-  private btnImgs: Array<HTMLImageElement[] | UniImageType[]> = [[]]
+  private blockImgs: Array<HTMLImageElement[]> = [[]]
+  private prizeImgs: Array<HTMLImageElement[]> = [[]]
+  private btnImgs: Array<HTMLImageElement[]> = [[]]
 
   /**
    * 大转盘构造器
@@ -230,7 +230,7 @@ export default class LuckyWheel extends Lucky {
    * @return [渲染宽度, 渲染高度]
    */
   private computedWidthAndHeight (
-    imgObj: HTMLImageElement | UniImageType,
+    imgObj: HTMLImageElement,
     imgInfo: ImgType,
     maxWidth: number,
     maxHeight: number

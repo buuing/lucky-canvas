@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { ConfigType, UniImageType } from '../types/index'
+import { ConfigType } from '../types/index'
 import LuckyGridConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -16,8 +16,6 @@ import LuckyGridConfig, {
 import { isExpectType, removeEnter, computePadding, hasBackground } from '../utils/index'
 import { drawRoundRect, getLinearGradient } from '../utils/math'
 import { quad } from '../utils/tween'
-
-type ImgObjType = HTMLImageElement | UniImageType
 
 export default class LuckyGrid extends Lucky {
   private rows: RowsType = 3
@@ -56,9 +54,9 @@ export default class LuckyGrid extends Lucky {
   // 奖品区域几何信息
   private prizeArea: { x: number, y: number, w: number, h: number } | undefined
   // 图片缓存
-  private blockImgs: Array<{ defaultImg: ImgObjType }[]> = [[]]
-  private btnImgs: Array<{ defaultImg: ImgObjType }[]> = [[]]
-  private prizeImgs: Array<{ defaultImg: ImgObjType, activeImg?: ImgObjType }[]> = []
+  private blockImgs: Array<{ defaultImg: HTMLImageElement }[]> = [[]]
+  private btnImgs: Array<{ defaultImg: HTMLImageElement }[]> = [[]]
+  private prizeImgs: Array<{ defaultImg: HTMLImageElement, activeImg?: HTMLImageElement }[]> = []
 
   /**
    * 九宫格构造器
@@ -268,7 +266,7 @@ export default class LuckyGrid extends Lucky {
         imgInfo['activeSrc'] && this.loadImg(imgInfo['activeSrc'], imgInfo, '$activeResolve')
       ]
       Promise.all(request).then(([defaultImg, activeImg]) => {
-        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg } as { defaultImg: ImgObjType, activeImg?: ImgObjType }
+        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg } as { defaultImg: HTMLImageElement, activeImg?: HTMLImageElement }
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -285,7 +283,7 @@ export default class LuckyGrid extends Lucky {
    * @return [渲染宽度, 渲染高度]
    */
   private computedWidthAndHeight (
-    imgObj: ImgObjType,
+    imgObj: HTMLImageElement,
     imgInfo: CellImgType,
     cell: CellType<CellFontType, CellImgType>
   ): [number, number] {

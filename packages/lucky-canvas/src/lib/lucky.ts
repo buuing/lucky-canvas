@@ -1,7 +1,7 @@
 import '../utils/polyfill'
 import { isExpectType } from '../utils/index'
 import { name, version } from '../../package.json'
-import { ConfigType, ImgType, UniImageType } from '../types/index'
+import { ConfigType, ImgType } from '../types/index'
 import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
@@ -209,14 +209,14 @@ export default class Lucky {
     src: string,
     info: ImgType,
     resolveName = '$resolve'
-  ): Promise<HTMLImageElement | UniImageType> {
+  ): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       if (!src) reject(`=> '${info.src}' 不能为空或不合法`)
       if (this.config.flag === 'WEB') {
         let imgObj = new Image()
-        imgObj.src = src
         imgObj.onload = () => resolve(imgObj)
         imgObj.onerror = () => reject(`=> '${info.src}' 图片加载失败`)
+        imgObj.src = src
       } else {
         // 其余平台向外暴露, 交给外部自行处理
         info[resolveName] = resolve
@@ -235,21 +235,22 @@ export default class Lucky {
    * @param height 渲染高度
    */
   protected drawImage (
-    imgObj: HTMLImageElement | UniImageType,
-    xAxis: number,
-    yAxis: number,
-    width: number,
-    height: number
+    imgObj: HTMLImageElement,
+    ...rectInfo: [number, number, number, number]
   ): void {
     let drawImg, { config, ctx } = this
     if (['WEB', 'MP-WX'].includes(config.flag)) {
-      // 浏览器中直接绘制标签即可
+      // 浏览器和新版小程序中直接绘制即可
       drawImg = imgObj
     } else if (['UNI-H5', 'UNI-MP', 'TARO-H5', 'TARO-MP'].includes(config.flag)) {
-      // 小程序中直接绘制一个路径
-      drawImg = (imgObj as UniImageType).path
+      // 旧版本的小程序需要绘制 path, 这里特殊处理一下
+      type OldImageType = HTMLImageElement & { path: CanvasImageSource }
+      drawImg = (imgObj as OldImageType).path
+    } else {
+      // 如果传入了未知的标识
+      return console.error('意料之外的 flag, 该平台尚未兼容!')
     }
-    return ctx.drawImage((drawImg as CanvasImageSource), xAxis, yAxis, width, height)
+    return ctx.drawImage(drawImg, ...rectInfo)
   }
 
   /**
