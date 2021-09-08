@@ -46,8 +46,8 @@
 
 <table align="center">
   <tr>
-    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"><div>buuing</div></a><div><span title="核心开发">🤖</span><span title="修复bug">🚧</span><span title="维护文档">📚</span><span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"><div>shenyixuanV1</div></a><div><span title="修复bug">🚧</span><span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"><div>buuing</div></a><div><span title="核心开发">🤖</span> <span title="修复bug">🚧</span> <span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"><div>shenyixuanV1</div></a><div><span title="修复bug">🚧</span> <span title="贡献Demo">🎭</span></div></td>
     <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"><div>httpcheck</div></a><div><span title="修复bug">🚧</span></div></td>
     <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"><div>Xutaotaotao</div></a><div><span title="修复bug">🚧</span></div></td>
     <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"><div>yushen7</div></a><div><span title="修复bug">🚧</span></div></td>
