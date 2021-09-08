@@ -46,27 +46,25 @@
 
 <table align="center">
   <tr>
-    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"><div>buuing</div></a><div><span title="核心开发">🤖</span> <span title="修复bug">🚧</span> <span title="维护文档">📚</span></div></td>
-    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"><div>shenyixuanV1</div></a><div><span title="修复bug">🚧</span> <span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"><div>httpcheck</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"><div>Xutaotaotao</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"><div>yushen7</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/qingtiantongxie" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24731632?v=4"><div>qingtiantongxie</div></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"></a><div><span title="核心开发">🤖</span> <span title="修复bug">🚧</span> <span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"></a><div><span title="修复bug">🚧</span> <span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/qingtiantongxie" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24731632?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/Deja-vuuu" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/27748682?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/health901" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/1503105?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/fantacytyx" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/8966236?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/wfs498121294" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/12890610?v=4"></a><div><span title="修复bug">🚧</span></div></td>
   <tr>
   </tr>
-    <td align="center"><a href="https://github.com/Deja-vuuu" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/27748682?v=4"><div>Deja-vuuu</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/health901" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/1503105?v=4"><div>health901</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/fantacytyx" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/8966236?v=4"><div>fantacytyx</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/wfs498121294" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/12890610?v=4"><div>wfs498121294</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"><div>Haoz03</div></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"><div>Eaoncan</div></a><div><span title="修复bug">🚧</span></div></td>
-  <tr>
-  </tr>
-    <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"><div>saltedfishDing</div></a><div><span title="维护文档">📚</span></div></td>
-    <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"><div>igxm</div></a><div><span title="维护文档">📚</span></div></td>
-    <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"><div>nanjing910823</div></a><div><span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"><div>fatcat712</div></a><div><span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"><div>FlowerFestival</div></a><div><span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"></a><div><span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"></a><div><span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
   </tr>
 </table>
 
