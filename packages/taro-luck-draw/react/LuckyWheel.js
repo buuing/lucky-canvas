@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { View, Canvas, CoverView, Image } from '@tarojs/components'
 import { LuckyWheel as Wheel } from 'lucky-canvas'
 import { changeUnits, resolveImage, getFlag } from '../utils'
-import './index.css'
+import '../utils/index.css'
 
 export default class LuckyWheel extends React.Component {
   flag = getFlag()

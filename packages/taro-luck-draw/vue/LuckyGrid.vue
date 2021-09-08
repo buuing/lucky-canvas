@@ -217,24 +217,5 @@ export default {
 </script>
 
 <style>
-  .lucky-box {
-    position: relative;
-    overflow: hidden;
-  }
-  #lucky-grid {
-    position: absolute;
-    pointer-events: none;
-    left: 0;
-    top: 0;
-  }
-  .lucky-grid-btn {
-    position: absolute;
-    background: rgba(0, 0, 0, 0);
-    border-radius: 0;
-  }
-  .lucky-imgs {
-    width: 0;
-    height: 0;
-    visibility: hidden;
-  }
+@import url('../utils/index.css');
 </style>

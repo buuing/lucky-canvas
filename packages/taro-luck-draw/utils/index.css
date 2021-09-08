@@ -15,11 +15,13 @@
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0);
   border-radius: 50%;
+  cursor: pointer;
 }
 .lucky-grid-btn {
   position: absolute;
   background: rgba(0, 0, 0, 0);
   border-radius: 0;
+  cursor: pointer;
 }
 .lucky-imgs {
   width: 0;
