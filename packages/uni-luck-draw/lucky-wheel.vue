@@ -12,6 +12,7 @@
     <!-- #ifndef APP-PLUS -->
     <cover-view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- #endif -->
+    <!-- #ifndef H5 -->
     <view v-if="myLucky">
       <div class="lucky-imgs">
         <div v-for="(block, index) in blocks" :key="index">
@@ -35,6 +36,7 @@
         </div>
       </div>
     </view>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -146,7 +148,7 @@
           // #endif
           const myLucky = this.myLucky = new LuckyWheel({
             // #ifdef H5
-            flag: 'UNI-H5',
+            flag: 'WEB',
             // #endif
             // #ifdef MP
             flag: 'MP-WX',
