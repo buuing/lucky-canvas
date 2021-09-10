@@ -515,6 +515,8 @@ export default class LuckyGrid extends Lucky {
    */
   private run (num: number = 0): void {
     const { rAF, currIndex, prizes, prizeFlag, startTime, _defaultConfig } = this
+    // 如果等于 -1 就直接停止游戏
+    if (prizeFlag === -1) return (this.startTime = 0, void 0)
     let interval = Date.now() - startTime
     // 先完全旋转, 再停止
     if (interval >= _defaultConfig.accelerationTime && prizeFlag !== void 0) {
@@ -546,12 +548,12 @@ export default class LuckyGrid extends Lucky {
    */
   private slowDown (): void {
     const { rAF, prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
-    let interval = Date.now() - this.endTime
     // 如果等于 -1 就直接停止游戏
     if (prizeFlag === -1) return (this.startTime = 0, void 0)
+    let interval = Date.now() - this.endTime
     if (interval > _defaultConfig.decelerationTime) {
       this.startTime = 0
-      this.endCallback?.({...prizes.find((prize, index) => index === prizeFlag)})
+      this.endCallback?.(prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
     this.currIndex = quad.easeOut(interval, stopIndex, endIndex, _defaultConfig.decelerationTime) % prizes.length

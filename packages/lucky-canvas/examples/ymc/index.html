@@ -8,8 +8,12 @@
 <body>
   <body>
     <div id="my-lucky"></div>
+    <button onclick="btn()">-1</button>
     <script src="../../dist/lucky-canvas.umd.js"></script>
     <script>
+      function btn() {
+        luckyWheel.stop(-1)
+      }
       // 创建大转盘抽奖
       var luckyWheel = new LuckyCanvas.LuckyWheel({
         el: '#my-lucky',

@@ -93,7 +93,7 @@ export default class LuckyWheel extends Lucky {
         speedFunction: 'quad',
         accelerationTime: 2500,
         decelerationTime: 2500,
-        stopRange: 0.8,
+        stopRange: 0,
         ...this.defaultConfig
       }
       return config
@@ -452,6 +452,8 @@ export default class LuckyWheel extends Lucky {
    */
   private run (num: number = 0): void {
     const { rAF, prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
+    // 如果等于 -1 就直接停止游戏
+    if (prizeFlag === -1) return (this.startTime = 0, void 0)
     let interval = Date.now() - this.startTime
     // 先完全旋转, 再停止
     if (interval >= _defaultConfig.accelerationTime && prizeFlag !== void 0) {
@@ -485,11 +487,12 @@ export default class LuckyWheel extends Lucky {
    */
   private slowDown (): void {
     const { rAF, prizes, prizeFlag, stopDeg, endDeg, _defaultConfig } = this
-    let interval = Date.now() - this.endTime
+    // 如果等于 -1 就直接停止游戏
     if (prizeFlag === -1) return (this.startTime = 0, void 0)
+    let interval = Date.now() - this.endTime
     if (interval >= _defaultConfig.decelerationTime) {
       this.startTime = 0
-      this.endCallback?.({...prizes.find((prize, index) => index === prizeFlag)})
+      this.endCallback?.(prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
     this.rotateDeg = Tween[_defaultConfig.speedFunction].easeOut(interval, stopDeg, endDeg, _defaultConfig.decelerationTime) % 360

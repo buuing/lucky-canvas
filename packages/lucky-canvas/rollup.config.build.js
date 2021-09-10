@@ -7,30 +7,40 @@ import commonjs from '@rollup/plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import { terser } from 'rollup-plugin-terser'
 import del from 'rollup-plugin-delete'
-import { name } from './package.json'
+import pkg from './package.json'
 
 export default [
   {
     input: 'src/index.ts',
     output: [
       {
-        file: `dist/${name}.cjs.js`,
+        file: pkg.main,
         format: 'cjs',
       },
       {
-        file: `dist/${name}.cjs.min.js`,
+        file: `dist/${pkg.name}.cjs.min.js`,
         format: 'cjs',
+        plugins: [terser()],
+        sourcemap: true,
+      },
+      {
+        file: pkg.browser,
+        format: 'umd',
+        name: 'LuckyCanvas',
+      },
+      {
+        file: `dist/${pkg.name}.umd.min.js`,
+        format: 'umd',
+        name: 'LuckyCanvas',
         plugins: [terser()]
       },
       {
-        file: `dist/${name}.umd.js`,
-        format: 'umd',
-        name: 'LuckyCanvas',
+        file: pkg.module,
+        format: 'es',
       },
       {
-        file: `dist/${name}.umd.min.js`,
-        format: 'umd',
-        name: 'LuckyCanvas',
+        file: `dist/${pkg.name}.esm.min.js`,
+        format: 'es',
         plugins: [terser()]
       },
     ],

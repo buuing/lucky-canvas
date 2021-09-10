@@ -1,15 +1,12 @@
 import '../utils/polyfill'
 import { isExpectType } from '../utils/index'
 import { name, version } from '../../package.json'
-import { ConfigType, ImgType } from '../types/index'
+import { ConfigType, UserConfigType, ImgType } from '../types/index'
 import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
-type RequireKey = 'flag' | 'ctx' | 'dpr' | 'setTimeout' | 'setInterval' | 'clearTimeout' | 'clearInterval'
-type MyConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>
-
 export default class Lucky {
-  protected readonly config: MyConfigType
+  protected readonly config: ConfigType
   protected readonly ctx: CanvasRenderingContext2D
   protected htmlFontSize: number = 16
   protected rAF: Function = function () {}
@@ -20,14 +17,14 @@ export default class Lucky {
    * 公共构造器
    * @param config
    */
-  constructor (config: string | HTMLDivElement | ConfigType) {
+  constructor (config: string | HTMLDivElement | UserConfigType) {
     // 先初始化 fontSize 以防后面有 rem 单位
     this.setHTMLFontSize()
     // 兼容代码开始: 为了处理 v1.0.6 版本在这里传入了一个 dom
-    if (typeof config === 'string') config = { el: config } as ConfigType
-    else if (config.nodeType === 1) config = { el: '', divElement: config } as ConfigType
-    config = config as ConfigType
-    this.config = config as MyConfigType
+    if (typeof config === 'string') config = { el: config } as UserConfigType
+    else if (config.nodeType === 1) config = { el: '', divElement: config } as UserConfigType
+    config = config as UserConfigType
+    this.config = config as ConfigType
     // 拿到 config 即可设置 dpr
     this.setDpr()
     // 初始化 window 方法
@@ -229,10 +226,7 @@ export default class Lucky {
   /**
    * 公共绘制图片的方法
    * @param imgObj 图片对象
-   * @param xAxis x轴位置
-   * @param yAxis y轴位置
-   * @param width 渲染宽度
-   * @param height 渲染高度
+   * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度] 
    */
   protected drawImage (
     imgObj: HTMLImageElement,

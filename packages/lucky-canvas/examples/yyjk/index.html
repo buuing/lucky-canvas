@@ -7,8 +7,12 @@
 </head>
 <body>
   <div id="my-lucky"></div>
+  <button onclick="btn()">-1</button>
   <script src="../../dist/lucky-canvas.umd.js"></script>
   <script>
+    function btn() {
+      luckyGrid.stop(-1)
+    }
     let luckyNum = 1
     // 创建九宫格抽奖
     var luckyGrid = new LuckyCanvas.LuckyGrid({

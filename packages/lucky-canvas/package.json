@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
   "main": "dist/lucky-canvas.cjs.js",
   "module": "dist/lucky-canvas.esm.js",
@@ -21,9 +21,11 @@
   "license": "Apache-2.0",
   "files": [
     "dist",
+    "types",
     "index.js",
     "umd.min.js",
     "LICENSE",
+    "README.md",
     "package.json"
   ],
   "keywords": [
