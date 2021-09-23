@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue2.x</title>
+</head>
+<body>
+  <div id="app">
+    <lucky-wheel
+      width="300px"
+      height="300px"
+      :blocks="blocks"
+      :prizes="prizes"
+      :buttons="buttons"
+      :defaultStyle="defaultStyle"
+    />
+  </div>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script src="./composition-api.js"></script>
+  <script src="./vue-demi.js"></script>
+  <script src="./dist/vue-luck-draw.umd.js"></script>
+  <script>
+    console.log(VueLuckDraw)
+    new Vue({
+      el: '#app',
+      data: {
+        blocks: [{ padding: '13px', background: '#d64737' }],
+        prizes: [
+          { title: '1元红包', background: '#f9e3bb', fonts: [{ text: '1元红包', top: '18%' }] },
+          { title: '100元红包', background: '#f8d384', fonts: [{ text: '100元红包', top: '18%' }] },
+          { title: '0.5元红包', background: '#f9e3bb', fonts: [{ text: '0.5元红包', top: '18%' }] },
+          { title: '2元红包', background: '#f8d384', fonts: [{ text: '2元红包', top: '18%' }] },
+          { title: '10元红包', background: '#f9e3bb', fonts: [{ text: '10元红包', top: '18%' }] },
+          { title: '50元红包', background: '#f8d384', fonts: [{ text: '50元红包', top: '18%' }] },
+        ],
+        buttons: [
+          { radius: '50px', background: '#d64737' },
+          { radius: '45px', background: '#fff' },
+          { radius: '41px', background: '#f6c66f', pointer: true },
+          {
+            radius: '35px', background: '#ffdea0',
+            fonts: [{ text: '开始\n抽奖', fontSize: '18px', top: -18 }]
+          }
+        ],
+        defaultStyle: { fontColor: '#d64737', fontSize: '14px' },
+      }
+    })
+  </script>
+</body>
+</html>

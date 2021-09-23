@@ -21,3 +21,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+packages/demo-taro-vue
+packages/demo-taro-react
+packages/uni-app-demo

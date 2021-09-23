@@ -1,6 +1,6 @@
 {
   "name": "uni-luck-draw",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "uni-app【大转盘 / 九宫格】抽奖插件",
   "main": "index.js",
   "scripts": {
@@ -14,12 +14,11 @@
     "utils.js",
     "demo.vue",
     "lucky-wheel.vue",
-    "lucky-grid.vue",
-    "interim-fix.js"
+    "lucky-grid.vue"
   ],
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "lucky-canvas": "^1.5.3"
+    "lucky-canvas": "1.5.4"
   }
 }

@@ -1,18 +1,21 @@
 import { defineComponent } from 'vue-demi'
 import { LuckyWheel } from 'lucky-canvas'
 import h from "../utils/h-demi"
-// import { name, version } from '../../package.json'
+// @ts-ignore
+import { name, version } from '../../package.json'
 
 export default defineComponent({
   name: 'LuckyWheel',
   props: {
     width: {
       type: [String, Number],
-      default: ''
+      default: '300px',
+      require: true
     },
     height: {
       type: [String, Number],
-      default: ''
+      default: '300px',
+      require: true
     },
     blocks: {
       type: Array,
@@ -44,13 +47,13 @@ export default defineComponent({
   ],
   watch: {
     blocks (newData, oldData) {
-      this.$lucky.blocks = newData
+      this.$lucky && ((this.$lucky as any).blocks = newData)
     },
     prizes (newData, oldData) {
-      this.$lucky.prizes = newData
+      this.$lucky && ((this.$lucky as any).prizes = newData)
     },
     buttons (newData, oldData) {
-      this.$lucky.buttons = newData
+      this.$lucky && ((this.$lucky as any).buttons = newData)
     },
   },
   data() {
@@ -60,9 +63,11 @@ export default defineComponent({
   },
   mounted () {
     // 添加版本信息到标签上, 方便定位版本问题
-    // if (this.$refs.myLucky) {
-    //   this.$refs.myLucky.setAttribute('package', `${name}@${version}`)
-    // }
+    if (this.$refs.myLucky) {
+      const dom = this.$refs.myLucky as HTMLDivElement
+      dom.setAttribute('package', `${name}@${version}`)
+    }
+    // 开始创建组件
     try {
       this.initLucky()
       this.$emit('success')
@@ -76,32 +81,39 @@ export default defineComponent({
     initLucky () {
       this.$lucky = new LuckyWheel({
         flag: 'WEB',
-        width: this.width,
-        height: this.height,
-        divElement: this.$refs.myLucky,
+        width: String(this.width),
+        height: String(this.height),
+        divElement: this.$refs.myLucky as HTMLDivElement,
         rAF: window.requestAnimationFrame,
         setTimeout: window.setTimeout,
         setInterval: window.setInterval,
         clearTimeout: window.clearTimeout,
         clearInterval: window.clearInterval,
       }, {
-        ...this.$props,
-        start: (...rest) => {
-          this.$emit('start', ...rest)
+        ...this.$props as any,
+        start: () => {
+          this.$emit('start')
         },
-        end: (...rest) => {
-          this.$emit('end', ...rest)
+        end: (btn) => {
+          this.$emit('end', btn)
         },
       })
     },
     init () {
       this.$lucky && this.$lucky.init({})
     },
-    play (...rest) {
-      this.$lucky.play(...rest)
+    /**
+     * play方法可以让抽奖开始旋转
+     */
+    play () {
+      this.$lucky?.play()
     },
-    stop (...rest) {
-      this.$lucky.stop(...rest)
+    /**
+     * stop方法可以传递一个中奖索引, 来停止游戏
+     * @param index 中奖索引
+     */
+    stop (index: number) {
+      this.$lucky?.stop(index)
     },
   },
   render() {

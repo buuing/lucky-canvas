@@ -1,10 +1,11 @@
 {
   "name": "vue-luck-draw",
-  "version": "3.4.5",
+  "version": "3.4.6",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
-  "module": "dist/vue-luck-draw.esm.js",
-  "main": "dist/vue-luck-draw.cjs.js",
-  "unpkg": "dist/vue-luck-draw.umd.js",
+  "module": "dist/vue-luck-draw.esm",
+  "main": "dist/vue-luck-draw.cjs",
+  "browser": "dist/vue-luck-draw.umd",
+  "types": "types/index.d.ts",
   "keywords": [
     "vue3抽奖",
     "大转盘抽奖",
@@ -17,22 +18,22 @@
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
   "files": [
-    "package.json",
     "dist",
     "vue3",
     "index.js",
-    "package"
+    "README.md",
+    "package.json"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "build:watch": "rollup -c -w",
+    "dev": "rollup --config rollup.config.dev.js -w",
+    "build": "rollup --config rollup.config.build.js",
     "switch:2": "vue-demi-switch 2 vue2",
     "switch:3": "vue-demi-switch 3"
   },
   "homepage": "https://100px.net",
   "dependencies": {
-    "vue-demi": "^0.7.4",
-    "lucky-canvas": "^1.5.4"
+    "lucky-canvas": "^1.5.5",
+    "vue-demi": "^0.7.4"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-beta.1",
@@ -45,12 +46,15 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "^8.2.1",
     "@vue/compiler-sfc": "^3.0.11",
     "acorn-jsx": "^5.3.1",
     "postcss": "^8.2.8",
     "rollup": "^2.43.0",
     "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "0.30.0",
     "typescript": "^4.2.3",
     "vue": "^3.0.11"
   }

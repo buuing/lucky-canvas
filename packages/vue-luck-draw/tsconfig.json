@@ -10,8 +10,12 @@
     "skipLibCheck": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "./types",
+    "outDir": "./dist",
   },
   "include": [
     "src/**/*.ts",

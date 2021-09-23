@@ -46,25 +46,25 @@
 
 <table align="center">
   <tr>
-    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"></a><div><span title="核心开发">🤖</span> <span title="修复bug">🚧</span> <span title="维护文档">📚</span></div></td>
-    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"></a><div><span title="修复bug">🚧</span> <span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/qingtiantongxie" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24731632?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Deja-vuuu" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/27748682?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/health901" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/1503105?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/fantacytyx" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/8966236?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/wfs498121294" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/12890610?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"></a><div><span title="核心开发">🤖</span> <span title="基础建设">🛰</span> <span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"></a><div><span title="逻辑优化">🦄</span></div></td>
+    <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/qingtiantongxie" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24731632?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/Deja-vuuu" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/27748682?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"></a><div><span title="修复bug">🛠</span> <span title="贡献Demo">🎏</span></div></td>
+    <td align="center"><a href="https://github.com/health901" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/1503105?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/fantacytyx" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/8966236?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/wfs498121294" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/12890610?v=4"></a><div><span title="修复bug">🛠</span></div></td>
   <tr>
   </tr>
-    <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🚧</span></div></td>
-    <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🚧</span></div></td>
+    <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"></a><div><span title="维护文档">📚</span></div></td>
     <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"></a><div><span title="维护文档">📚</span></div></td>
-    <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
-    <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"></a><div><span title="贡献Demo">🎭</span></div></td>
+    <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎏</span></div></td>
+    <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"></a><div><span title="贡献Demo">🎏</span></div></td>
+    <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"></a><div><span title="贡献Demo">🎏</span></div></td>
   </tr>
 </table>
 
@@ -81,3 +81,23 @@
 
 <!-- lerna过滤器配置 -->
 <!-- https://github.com/lerna/lerna/tree/main/core/filter-options#readme -->
+
+<!-- 
+
+## 更新计划
+
+- core包打包的时候, 看看能不能处理一下es6语法, 转es5
+- 增加根据窗口resize自适应宽高
+- 增加中奖概率的配置
+- 打通vue构建流程
+- 向外暴露一个init方法, 用于重置整个抽奖
+- 转盘的getter改用线去绘制
+- 转盘的文字考虑做个溢出文本隐藏
+
+- 转盘和九宫格可以默认缓慢移动
+- 大转盘增加指针旋转方式, 并可以同时指定多个指针进行抽奖
+- 九宫格增加多人抽奖机制, 并可以分别进行抽奖
+- 增加老虎机抽奖类型
+- 优化完善声明周期, 增加特定的渲染回调, 增加plugin机制
+
+ -->

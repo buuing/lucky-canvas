@@ -57,7 +57,7 @@
 
 <script>
   import { changeUnits, resolveImage } from './utils.js'
-  import { LuckyGrid } from './interim-fix.js'
+  import { LuckyGrid } from '../lucky-canvas/index.js'
   export default {
     name: 'lucky-grid',
     data () {
@@ -272,6 +272,7 @@
     position: absolute;
     background: rgba(0, 0, 0, 0);
     border-radius: 0;
+    cursor: pointer;
   }
   .lucky-imgs {
     width: 0;

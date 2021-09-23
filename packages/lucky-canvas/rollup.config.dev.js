@@ -18,6 +18,11 @@ export default {
       name: 'LuckyCanvas',
       sourcemap: true,
     },
+    {
+      file: pkg.module,
+      format: 'es',
+      sourcemap: true,
+    },
   ],
   plugins: [
     resolve(),

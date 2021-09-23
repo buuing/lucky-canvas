@@ -6,7 +6,7 @@
   "scripts": {
     "install": "lerna bootstrap",
     "dev": "lerna exec --scope=lucky-canvas -- npm run dev",
-    "dev:vue": "",
+    "dev:vue": "lerna exec --scope=lucky-canvas --scope=vue-luck-draw -- npm run dev",
     "dev:react": "lerna exec dev --scope=lucky-canvas --scope=react-luck-draw -- npm run dev",
     "dev:uni": "",
     "dev:taro": "",

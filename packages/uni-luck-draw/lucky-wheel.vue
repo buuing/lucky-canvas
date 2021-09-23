@@ -42,7 +42,7 @@
 
 <script>
   import { changeUnits, resolveImage } from './utils.js'
-  import { LuckyWheel } from './interim-fix.js'
+  import { LuckyWheel } from '../lucky-canvas/index.js'
   export default {
     name: 'lucky-wheel',
     data () {
@@ -223,6 +223,7 @@
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0);
     border-radius: 50%;
+    cursor: pointer;
   }
   .lucky-imgs {
     width: 0;
