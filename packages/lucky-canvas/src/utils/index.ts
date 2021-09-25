@@ -90,3 +90,15 @@ export const computePadding = (
   }
   return [paddingTop, paddingBottom, paddingLeft, paddingRight]
 }
+
+export const throttle = (fn: Function, wait = 300) => {
+  let timeId = null as any
+  return function (this: any, ...args: any[]) {
+    if (timeId) return
+    timeId = setTimeout(() => {
+      fn.apply(this, args)
+      clearTimeout(timeId)
+      timeId = null
+    }, wait)
+  }
+}

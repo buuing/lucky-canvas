@@ -1,5 +1,5 @@
 import '../utils/polyfill'
-import { isExpectType } from '../utils/index'
+import { isExpectType, throttle } from '../utils/index'
 import { name, version } from '../../package.json'
 import { ConfigType, UserConfigType, ImgType } from '../types/index'
 import { defineReactive } from '../observer'
@@ -47,7 +47,13 @@ export default class Lucky {
     if (!this.config.ctx) {
       console.error('无法获取到 CanvasContext2D')
     }
+    // 监听 window 触发 resize 时重置
+    window && window.addEventListener('resize', throttle(() => {
+      this.init()
+    }, 300))
   }
+
+  public init() {}
 
   /**
    * 初始化方法
@@ -239,6 +245,7 @@ export default class Lucky {
         '%': (n: number) => n * (denominator / 100),
         'px': (n: number) => n * 1,
         'rem': (n: number) => n * this.htmlFontSize,
+        'vw': (n: number) => n / 100 * window.innerWidth,
       }[unit]
       if (unitFunc) return unitFunc(num)
       // 如果找不到默认单位, 就交给外面处理
