@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/logo.png" width="128" alt="logo" />
+  <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>taro-luck-draw 抽奖插件</h1>
   <p>一个基于 Taro 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>

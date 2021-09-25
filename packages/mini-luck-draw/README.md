@@ -1,10 +1,6 @@
 
-```diff
-- 🚧 该库已迁移到 https://github.com/LuckDraw/lucky-canvas
-```
-
 <div align="center">
-  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/wx.jpg" width="258" alt="logo" />
+  <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>微信小程序 抽奖组件</h1>
   <p>一个基于微信小程序的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>

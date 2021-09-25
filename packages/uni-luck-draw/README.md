@@ -1,5 +1,7 @@
+<br />
+
 <div align="center">
-  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/logo.png" width="128" alt="logo" />
+  <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
   <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
@@ -102,8 +104,30 @@ export default {
 
 ### **4. 补充说明**
 
-- [**如果用着顺手, 可以在 github 上面点个 <img height="22" align="top" style="" src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?style=social" /> 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
+- [**如果用着顺手, 可以在 Github 上面点个 <img height="22" align="top" src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas" /> 支持一下(●'◡'●)**](https://github.com/LuckDraw/lucky-canvas)
 
-- <font color="red">后面提问的同学, 别一上来就中差评, 搞得我好像淘宝卖货一样, 你仔细想想, 你这边差评提问, 谁能有好心情给你调bug, 我开源就图个乐呵, 你给个5星我难道还能不管你(●ˇ∀ˇ●)?</font>
+- 后面提问的同学, 别一上来就中差评, 搞得我好像淘宝卖货一样, 你仔细想想, 你这边差评提问, 谁能有好心情给你调bug, 我开源就图个乐呵, 你给个5星我难道还能不管你(●ˇ∀ˇ●)?
 
 - 另外: 如果你修复了某些bug或兼容, 欢迎提给我, 我会把你展示到官网的贡献者列表当中
+
+---
+
+<font color="red">浏览器端</font>
+
+<li>H5, 九宫格无bug, <font color="red">大转盘在H5环境下原点坐标渲染异常, 原因复现如下</font></li>
+<li><font color="blue">https://github.com/dcloudio/uni-app/issues/2847</font></li>
+<li>解决方案: 先通过 npm i uni-luck-draw@1.3 安装老版本, 等uniapp官方修复这个问题之后再更新最新版</li>
+
+<br />
+<font color="red">小程序端</font>
+
+<li>微信小程序, 使用type2d重构之后, 流畅度良好</li>
+<li>QQ小程序, 新版未测试</li>
+<li>其余小程序, 还没测, 有需求的小伙伴可以自行测试然后反馈给我</li>
+
+<br />
+<font color="red">app端（最新版刚使用type2d重构, 暂不兼容APP, 请通过npm安装旧版</font>
+
+<li><code>npm i uni-luck-draw@1.3</code></li>
+<li>【v1.3】：IOS版, 很流畅</li>
+<li>【v1.3】：安卓版, 很卡顿, 请即将使用的人做好心理准备</li>
