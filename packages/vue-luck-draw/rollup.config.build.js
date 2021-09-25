@@ -26,11 +26,6 @@ export default [
           'lucky-canvas': 'LuckyCanvas',
         },
       },
-      // {
-      //   exports: 'named',
-      //   format: 'cjs',
-      //   file: pkg.main
-      // },
     ],
     plugins: [
       ts(),

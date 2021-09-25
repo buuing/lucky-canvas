@@ -3,7 +3,6 @@
   "version": "3.4.6",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
   "module": "dist/vue-luck-draw.esm",
-  "main": "dist/vue-luck-draw.cjs",
   "browser": "dist/vue-luck-draw.umd",
   "types": "types/index.d.ts",
   "keywords": [
