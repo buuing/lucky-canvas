@@ -18,17 +18,13 @@ export default class Lucky {
    * @param config
    */
   constructor (config: string | HTMLDivElement | UserConfigType) {
-    // 先初始化 fontSize 以防后面有 rem 单位
-    this.setHTMLFontSize()
     // 兼容代码开始: 为了处理 v1.0.6 版本在这里传入了一个 dom
     if (typeof config === 'string') config = { el: config } as UserConfigType
     else if (config.nodeType === 1) config = { el: '', divElement: config } as UserConfigType
+    // 这里先野蛮的处理, 等待后续优化, 对外暴露的类型是UserConfigType, 但内部期望是ConfigType
     config = config as UserConfigType
     this.config = config as ConfigType
-    // 拿到 config 即可设置 dpr
-    this.setDpr()
-    // 初始化 window 方法
-    this.initWindowFunction()
+    // 开始初始化
     if (!config.flag) config.flag = 'WEB'
     if (config.el) config.divElement = document.querySelector(config.el) as HTMLDivElement
     // 如果存在父盒子, 就创建canvas标签
@@ -37,38 +33,38 @@ export default class Lucky {
       config.canvasElement = document.createElement('canvas')
       config.divElement.appendChild(config.canvasElement)
     }
-    // 初始化宽高
-    this.resetWidthAndHeight()
     // 获取 canvas 上下文
     if (config.canvasElement) {
       config.ctx = config.canvasElement.getContext('2d')!
       // 添加版本信息到标签上, 方便定位版本问题
       config.canvasElement.setAttribute('package', `${name}@${version}`)
       config.canvasElement.addEventListener('click', e => this.handleClick(e))
-      config.canvasElement.addEventListener('mousemove', e => this.handleMouseMove(e))
-      config.canvasElement.addEventListener('mousedown', e => this.handleMouseDown(e))
-      config.canvasElement.addEventListener('mouseup', e => this.handleMouseUp(e))
     }
     this.ctx = config.ctx as CanvasRenderingContext2D
+    // 初始化 window 方法
+    this.initWindowFunction()
     // 如果最后得不到 canvas 上下文那就无法进行绘制
-    if (!config.ctx) {
+    if (!this.config.ctx) {
       console.error('无法获取到 CanvasContext2D')
-      return
-    }
-    if (!this.boxWidth || !this.boxHeight) {
-      console.error('无法获取到宽度或高度')
-      return
     }
   }
 
   /**
    * 初始化方法
    */
-  public init (willUpdateImgs?: object) {
-    this.setDpr()
+   protected initLucky () {
+    // 先初始化 fontSize 以防后面有 rem 单位
     this.setHTMLFontSize()
+    // 拿到 config 即可设置 dpr
+    this.setDpr()
+    // 初始化宽高
     this.resetWidthAndHeight()
+    // 根据 dpr 来缩放 canvas
     this.zoomCanvas()
+    if (!this.boxWidth || !this.boxHeight) {
+      console.error('无法获取到宽度或高度')
+      return
+    }
   }
 
   /**
@@ -78,28 +74,11 @@ export default class Lucky {
   protected handleClick (e: MouseEvent): void {}
 
   /**
-   * 鼠标按下事件
-   * @param e 事件参数
+   * 根标签的字体大小
    */
-  protected handleMouseDown (e: MouseEvent): void {}
-
-  /**
-   * 鼠标抬起事件
-   * @param e 事件参数
-   */
-  protected handleMouseUp (e: MouseEvent): void {}
-
-  /**
-   * 鼠标移动事件
-   * @param e 事件参数
-   */
-  protected handleMouseMove (e: MouseEvent): void {}
-
-  /**
-   * 换算坐标
-   */
-  protected conversionAxis (x: number, y: number): [number, number] {
-    return [0, 0]
+  protected setHTMLFontSize (): void {
+    if (!window) return
+    this.htmlFontSize = +window.getComputedStyle(document.documentElement).fontSize.slice(0, -2)
   }
 
   /**
@@ -115,14 +94,6 @@ export default class Lucky {
     } else if (!config.dpr) {
       console.error(config, '未传入 dpr 可能会导致绘制异常')
     }
-  }
-
-  /**
-   * 根标签的字体大小
-   */
-  protected setHTMLFontSize (): void {
-    if (!window) return
-    this.htmlFontSize = +window.getComputedStyle(document.documentElement).fontSize.slice(0, -2)
   }
 
   /**
@@ -148,19 +119,34 @@ export default class Lucky {
   }
 
   /**
+   * 根据 dpr 缩放 canvas 并处理位移
+   */
+  protected zoomCanvas (): void {
+    const { config, ctx } = this
+    const { canvasElement, dpr } = config
+    const [width, height] = [this.boxWidth * dpr, this.boxHeight * dpr]
+    const compute = (len: number) => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
+    if (!canvasElement) return
+    canvasElement.width = width
+    canvasElement.height = height
+    canvasElement.style.width = `${width}px`
+    canvasElement.style.height = `${height}px`
+    canvasElement.style.transform = `scale(${1 / dpr}) translate(${-compute(width)}%, ${-compute(height)}%)`
+    ctx.scale(dpr, dpr)
+  }
+
+  /**
    * 从 window 对象上获取一些方法
    */
   private initWindowFunction (): void {
     const { config } = this
     if (window) {
-      this.rAF = (function () {
-        return window.requestAnimationFrame ||
-          window['webkitRequestAnimationFrame'] ||
-          window['mozRequestAnimationFrame'] ||
-          function (callback: Function) {
-            window.setTimeout(callback, 1000 / 60)
-          }
-      })()
+      this.rAF = window.requestAnimationFrame ||
+        window['webkitRequestAnimationFrame'] ||
+        window['mozRequestAnimationFrame'] ||
+        function (callback: Function) {
+          window.setTimeout(callback, 1000 / 60)
+        }
       config.setTimeout = window.setTimeout
       config.setInterval = window.setInterval
       config.clearTimeout = window.clearTimeout
@@ -178,23 +164,6 @@ export default class Lucky {
       // 如果config里面没有提供, 那就假设全局方法存在setTimeout
       this.rAF = (callback: Function): number => setTimeout(callback, 16.7)
     }
-  }
-
-  /**
-   * 根据 dpr 缩放 canvas 并处理位移
-   */
-  protected zoomCanvas (): void {
-    const { config, ctx } = this
-    const { canvasElement, dpr } = config
-    const [width, height] = [this.boxWidth * dpr, this.boxHeight * dpr]
-    const compute = (len: number) => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
-    if (!canvasElement) return
-    canvasElement.width = width
-    canvasElement.height = height
-    canvasElement.style.width = `${width}px`
-    canvasElement.style.height = `${height}px`
-    canvasElement.style.transform = `scale(${1 / dpr}) translate(${-compute(width)}%, ${-compute(height)}%)`
-    ctx.scale(dpr, dpr)
   }
 
   /**

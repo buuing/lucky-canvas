@@ -13,13 +13,12 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: pkg.browser,
+      file: `${pkg.browser}.js`,
       format: 'umd',
       name: 'LuckyCanvas',
-      sourcemap: true,
     },
     {
-      file: pkg.module,
+      file: `${pkg.module}.js`,
       format: 'es',
       sourcemap: true,
     },

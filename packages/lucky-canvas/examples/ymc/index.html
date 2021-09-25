@@ -8,17 +8,15 @@
 <body>
   <body>
     <div id="my-lucky"></div>
-    <button onclick="btn()">-1</button>
+    <button onclick="luckyWheel.stop(-1)">stop(-1)</button>
+    <button onclick="luckyWheel.init()">init()</button>
     <script src="../../dist/lucky-canvas.umd.js"></script>
     <script>
-      function btn() {
-        luckyWheel.stop(-1)
-      }
       // 创建大转盘抽奖
       var luckyWheel = new LuckyCanvas.LuckyWheel({
         el: '#my-lucky',
-        width: '300px',
-        height: '300px',
+        width: '20rem',
+        height: '20rem',
       }, {
         prizes: [],
         defaultStyle: {
@@ -75,6 +73,17 @@
         })
         luckyWheel.prizes = prizes
       }, 500)
+      
+      setTimeout(() => {
+        luckyWheel.prizes.push({
+          fonts: [{ text: 111 }],
+          imgs: [{
+            src: `./img/0.png`,
+            width: '50%'
+          }],
+          background: 'pink'
+        })
+      }, 1000)
     </script>
   </body>
 </body>

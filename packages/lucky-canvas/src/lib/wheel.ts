@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { ConfigType } from '../types/index'
+import { ConfigType, UserConfigType } from '../types/index'
 import LuckyWheelConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -51,7 +51,7 @@ export default class LuckyWheel extends Lucky {
    * @param config 元素标识
    * @param data 抽奖配置项
    */
-  constructor (config: ConfigType, data: LuckyWheelConfig = {}) {
+  constructor (config: UserConfigType, data: LuckyWheelConfig = {}) {
     super(config)
     this.initData(data)
     this.initWatch()
@@ -64,6 +64,22 @@ export default class LuckyWheel extends Lucky {
       prizeImgs: this.prizes.map(prize => prize.imgs),
       btnImgs: this.buttons.map(btn => btn.imgs),
     })
+  }
+
+  protected initLucky (): void {
+    super.initLucky()
+    this.Radius = 0
+    this.prizeRadius = 0
+    this.prizeDeg = 0
+    this.prizeRadian = 0
+    this.rotateDeg = 0
+    this.maxBtnRadius = 0
+    this.startTime = 0
+    this.endTime = 0
+    this.stopDeg = 0
+    this.endDeg = 0
+    this.FPS = 16.6
+    this.prizeFlag = -1
   }
 
   /**
@@ -144,8 +160,8 @@ export default class LuckyWheel extends Lucky {
     blockImgs?: Array<BlockImgType[] | undefined>
     prizeImgs?: Array<PrizeImgType[] | undefined>
     btnImgs?: Array<ButtonImgType[] | undefined>
-  }): void {
-    super.init()
+  } = {}): void {
+    this.initLucky()
     const { config, ctx } = this
     this.Radius = Math.min(this.boxWidth, this.boxHeight) / 2
     // 初始化前回调函数

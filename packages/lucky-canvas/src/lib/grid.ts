@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { ConfigType } from '../types/index'
+import { ConfigType, UserConfigType } from '../types/index'
 import LuckyGridConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -63,7 +63,7 @@ export default class LuckyGrid extends Lucky {
    * @param config 元素标识
    * @param data 抽奖配置项
    */
-  constructor (config: ConfigType, data: LuckyGridConfig = {}) {
+  constructor (config: UserConfigType, data: LuckyGridConfig = {}) {
     super(config)
     this.initData(data)
     this.initWatch()
@@ -77,6 +77,21 @@ export default class LuckyGrid extends Lucky {
       prizeImgs: this.prizes.map(prize => prize.imgs),
       btnImgs,
     })
+  }
+
+  protected initLucky (): void {
+    super.initLucky()
+    this.cellWidth = 0
+    this.cellHeight = 0
+    this.startTime = 0
+    this.endTime = 0
+    this.currIndex = 0
+    this.stopIndex = 0
+    this.endIndex = 0
+    this.demo = false
+    this.timer = 0
+    this.FPS = 16.6
+    this.prizeFlag = -1
   }
 
   /**
@@ -181,8 +196,8 @@ export default class LuckyGrid extends Lucky {
     blockImgs?: Array<BlockImgType[] | undefined>,
     prizeImgs?: Array<PrizeImgType[] | undefined>,
     btnImgs?: Array<ButtonImgType[] | undefined>
-  }): void {
-    super.init()
+  } = {}): void {
+    this.initLucky()
     const { config } = this
     // 初始化前回调函数
     config.beforeInit?.call(this)
