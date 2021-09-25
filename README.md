@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/LuckDraw/lucky-canvas/master/logo.png" width="128" alt="logo" />
+  <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
   <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
@@ -87,6 +87,11 @@
 ## 更新计划
 
 - core包打包的时候, 看看能不能处理一下es6语法, 转es5
+- vw和vh单位的适配
+- 大转盘控制旋转方向
+- 增加图片加载完毕的回调事件
+- 官网首页的css有问题 优化一下
+- 九宫格的active样式如何优化
 - 增加根据窗口resize自适应宽高
 - 增加中奖概率的配置
 - 打通vue构建流程
@@ -95,6 +100,7 @@
 - 转盘的文字考虑做个溢出文本隐藏
 
 - 转盘和九宫格可以默认缓慢移动
+- 抽奖按钮的指针可以调整方向
 - 大转盘增加指针旋转方式, 并可以同时指定多个指针进行抽奖
 - 九宫格增加多人抽奖机制, 并可以分别进行抽奖
 - 增加老虎机抽奖类型
