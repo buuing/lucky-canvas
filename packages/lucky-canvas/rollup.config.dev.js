@@ -16,6 +16,7 @@ export default {
       file: `${pkg.browser}.js`,
       format: 'umd',
       name: 'LuckyCanvas',
+      sourcemap: true,
     },
     {
       file: `${pkg.module}.js`,

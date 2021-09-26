@@ -17,6 +17,7 @@ export default [
         file: `${pkg.browser}.js`,
         format: 'umd',
         name: 'LuckyCanvas',
+        sourcemap: true,
       },
       {
         file: `${pkg.browser}.min.js`,
@@ -50,14 +51,14 @@ export default [
     input: "dist/src/index.d.ts",
     output: [
       {
-        file: "dist/index.d.ts",
+        file: "types/index.d.ts",
         format: "es"
       }
     ],
     plugins: [
       dts(),
       del({
-        targets: 'dist/src',
+        targets: ['dist/src'],
         hook: 'buildEnd'
       })
     ],

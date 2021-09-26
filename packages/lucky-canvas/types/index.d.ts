@@ -20,32 +20,28 @@ declare type BackgroundType = string;
 declare type ShadowType = string;
 interface ConfigType {
     nodeType?: number;
-    ob?: boolean;
-    flag?: 'WEB' | 'MP-WX' | 'UNI-H5' | 'UNI-MP' | 'TARO-H5' | 'TARO-MP';
+    flag: 'WEB' | 'MP-WX' | 'UNI-H5' | 'UNI-MP' | 'TARO-H5' | 'TARO-MP';
     el?: string;
     divElement?: HTMLDivElement;
     canvasElement?: HTMLCanvasElement;
-    ctx?: CanvasRenderingContext2D;
-    dpr?: number;
+    ctx: CanvasRenderingContext2D;
+    dpr: number;
     width: string;
     height: string;
     unitFunc?: (num: number, unit: string) => number;
     rAF?: Function;
-    setTimeout?: Function;
-    setInterval?: Function;
-    clearTimeout?: Function;
-    clearInterval?: Function;
+    setTimeout: Function;
+    setInterval: Function;
+    clearTimeout: Function;
+    clearInterval: Function;
     beforeCreate?: Function;
     beforeInit?: Function;
     afterInit?: Function;
     beforeDraw?: Function;
     afterDraw?: Function;
 }
-interface UniImageType {
-    path: string;
-    width: number;
-    height: number;
-}
+declare type RequireKey = 'width' | 'height';
+declare type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>;
 
 interface WatchOptType {
     handler?: () => Function;
@@ -54,6 +50,7 @@ interface WatchOptType {
 }
 
 declare class Lucky {
+    protected readonly version: string;
     protected readonly config: ConfigType;
     protected readonly ctx: CanvasRenderingContext2D;
     protected htmlFontSize: number;
@@ -64,71 +61,50 @@ declare class Lucky {
      * 公共构造器
      * @param config
      */
-    constructor(config: string | HTMLDivElement | ConfigType);
+    constructor(config: string | HTMLDivElement | UserConfigType);
+    init(): void;
     /**
      * 初始化方法
      */
-    init(willUpdateImgs?: object): void;
+    protected initLucky(): void;
     /**
      * 鼠标点击事件
      * @param e 事件参数
      */
     protected handleClick(e: MouseEvent): void;
     /**
-     * 鼠标按下事件
-     * @param e 事件参数
+     * 根标签的字体大小
      */
-    protected handleMouseDown(e: MouseEvent): void;
-    /**
-     * 鼠标抬起事件
-     * @param e 事件参数
-     */
-    protected handleMouseUp(e: MouseEvent): void;
-    /**
-     * 鼠标移动事件
-     * @param e 事件参数
-     */
-    protected handleMouseMove(e: MouseEvent): void;
-    /**
-     * 换算坐标
-     */
-    protected conversionAxis(x: number, y: number): [number, number];
+    protected setHTMLFontSize(): void;
     /**
      * 设备像素比
      * window 环境下自动获取, 其余环境手动传入
      */
     protected setDpr(): void;
     /**
-     * 根标签的字体大小
-     */
-    protected setHTMLFontSize(): void;
-    /**
      * 重置盒子和canvas的宽高
      */
     private resetWidthAndHeight;
-    /**
-     * 从 window 对象上获取一些方法
-     */
-    private initWindowFunction;
     /**
      * 根据 dpr 缩放 canvas 并处理位移
      */
     protected zoomCanvas(): void;
     /**
+     * 从 window 对象上获取一些方法
+     */
+    private initWindowFunction;
+    /**
      * 异步加载图片并返回图片的几何信息
      * @param src 图片路径
      * @param info 图片信息
      */
-    protected loadImg(src: string, info: ImgType, resolveName?: string): Promise<HTMLImageElement | UniImageType>;
+    protected loadImg(src: string, info: ImgType, resolveName?: string): Promise<HTMLImageElement>;
     /**
      * 公共绘制图片的方法
      * @param imgObj 图片对象
-     * @param xAxis x轴位置
-     * @param yAxis y轴位置
-     * @param width 渲染宽度
-     * @param height 渲染高度
+     * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度]
      */
-    protected drawImage(imgObj: HTMLImageElement | UniImageType, xAxis: number, yAxis: number, width: number, height: number): void;
+    protected drawImage(imgObj: HTMLImageElement, ...rectInfo: [number, number, number, number]): void;
     /**
      * 获取长度
      * @param length 将要转换的长度
@@ -232,8 +208,8 @@ declare class LuckyWheel extends Lucky {
     private prizes;
     private buttons;
     private defaultConfig;
-    private _defaultConfig;
     private defaultStyle;
+    private _defaultConfig;
     private _defaultStyle;
     private startCallback?;
     private endCallback?;
@@ -263,7 +239,8 @@ declare class LuckyWheel extends Lucky {
      * @param config 元素标识
      * @param data 抽奖配置项
      */
-    constructor(config: ConfigType, data?: LuckyWheelConfig);
+    constructor(config: UserConfigType, data?: LuckyWheelConfig);
+    protected initLucky(): void;
     /**
      * 初始化数据
      * @param data
@@ -281,7 +258,7 @@ declare class LuckyWheel extends Lucky {
      * 初始化 canvas 抽奖
      * @param { willUpdateImgs } willUpdateImgs 需要更新的图片
      */
-    init(willUpdateImgs: {
+    init(willUpdateImgs?: {
         blockImgs?: Array<BlockImgType$1[] | undefined>;
         prizeImgs?: Array<PrizeImgType$1[] | undefined>;
         btnImgs?: Array<ButtonImgType$1[] | undefined>;
@@ -292,10 +269,11 @@ declare class LuckyWheel extends Lucky {
      */
     protected handleClick(e: MouseEvent): void;
     /**
-     * 单独加载某一张图片并计算其实际渲染宽高
-     * @param { number } cellIndex 奖品索引
-     * @param { number } imgIndex 奖品图片索引
-     * @param { Function } callBack 图片加载完毕回调
+     * 根据索引单独加载指定图片并缓存
+     * @param cellName 模块名称
+     * @param cellIndex 模块索引
+     * @param imgName 模块对应的图片缓存
+     * @param imgIndex 图片索引
      */
     private loadAndCacheImg;
     /**
@@ -449,10 +427,10 @@ declare class LuckyGrid extends Lucky {
     private buttons;
     private button?;
     private defaultConfig;
-    private _defaultConfig;
     private defaultStyle;
-    private _defaultStyle;
     private activeStyle;
+    private _defaultConfig;
+    private _defaultStyle;
     private _activeStyle;
     private startCallback?;
     private endCallback?;
@@ -483,7 +461,8 @@ declare class LuckyGrid extends Lucky {
      * @param config 元素标识
      * @param data 抽奖配置项
      */
-    constructor(config: ConfigType, data?: LuckyGridConfig);
+    constructor(config: UserConfigType, data?: LuckyGridConfig);
+    protected initLucky(): void;
     /**
      * 初始化数据
      * @param data
@@ -501,7 +480,7 @@ declare class LuckyGrid extends Lucky {
      * 初始化 canvas 抽奖
      * @param willUpdateImgs 需要更新的图片
      */
-    init(willUpdateImgs: {
+    init(willUpdateImgs?: {
         blockImgs?: Array<BlockImgType[] | undefined>;
         prizeImgs?: Array<PrizeImgType[] | undefined>;
         btnImgs?: Array<ButtonImgType[] | undefined>;
@@ -513,9 +492,10 @@ declare class LuckyGrid extends Lucky {
     protected handleClick(e: MouseEvent): void;
     /**
      * 根据索引单独加载指定图片并缓存
-     * @param { number } prizeIndex 奖品索引
-     * @param { number } imgIndex 奖品图片索引
-     * @param { Function } callBack 图片加载完毕回调
+     * @param cellName 模块名称
+     * @param cellIndex 模块索引
+     * @param imgName 模块对应的图片缓存
+     * @param imgIndex 图片索引
      */
     private loadAndCacheImg;
     /**

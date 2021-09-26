@@ -6,6 +6,7 @@ import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
 export default class Lucky {
+  protected readonly version: string = version
   protected readonly config: ConfigType
   protected readonly ctx: CanvasRenderingContext2D
   protected htmlFontSize: number = 16
