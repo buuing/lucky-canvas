@@ -161,6 +161,7 @@ interface BlockType$1 {
     imgs?: Array<BlockImgType$1>;
 }
 interface PrizeType$1 {
+    range?: number;
     background?: BackgroundType;
     fonts?: Array<PrizeFontType$1>;
     imgs?: Array<PrizeImgType$1>;
@@ -297,7 +298,7 @@ declare class LuckyWheel extends Lucky {
      * 对外暴露: 缓慢停止方法
      * @param index 中奖索引
      */
-    stop(index: number): void;
+    stop(index?: number): void;
     /**
      * 实际开始执行方法
      * @param num 记录帧动画执行多少次
@@ -371,7 +372,9 @@ interface CellType<T, U> {
     fonts?: Array<T>;
     imgs?: Array<U>;
 }
-declare type PrizeType = CellType<PrizeFontType, PrizeImgType>;
+declare type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
+    range?: number;
+};
 declare type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
     callback?: Function;
 };

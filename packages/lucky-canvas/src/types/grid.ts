@@ -42,16 +42,18 @@ export interface BlockType {
 export interface CellType<T, U> {
   x: number
   y: number
-  col: number
-  row: number
+  col?: number
+  row?: number
   borderRadius?: BorderRadiusType
-  background: BackgroundType
+  background?: BackgroundType
   shadow?: ShadowType
   fonts?: Array<T>
   imgs?: Array<U>
 }
 
-export type PrizeType = CellType<PrizeFontType, PrizeImgType>
+export type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
+  range?: number
+}
 
 export type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
   callback?: Function

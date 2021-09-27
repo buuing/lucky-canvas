@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { ConfigType, UserConfigType } from '../types/index'
+import { UserConfigType } from '../types/index'
 import LuckyGridConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -13,7 +13,13 @@ import LuckyGridConfig, {
   StartCallbackType,
   EndCallbackType,
 } from '../types/grid'
-import { isExpectType, removeEnter, computePadding, hasBackground } from '../utils/index'
+import {
+  isExpectType,
+  removeEnter,
+  computePadding,
+  hasBackground,
+  computeRange
+} from '../utils/index'
 import { drawRoundRect, getLinearGradient } from '../utils/math'
 import { quad } from '../utils/tween'
 
@@ -364,7 +370,7 @@ export default class LuckyGrid extends Lucky {
     this.cellHeight = (this.prizeArea.h - _defaultConfig.gutter * (this.rows - 1)) / this.rows
     // 绘制所有格子
     this.cells.forEach((cell, cellIndex) => {
-      let [x, y, width, height] = this.getGeometricProperty([cell.x, cell.y, cell.col, cell.row])
+      let [x, y, width, height] = this.getGeometricProperty([cell.x, cell.y, cell.col!, cell.row!])
       // 默认不显示中奖标识
       let isActive = false
       // 只要 prizeFlag 不是负数, 就显示中奖标识
@@ -515,12 +521,18 @@ export default class LuckyGrid extends Lucky {
    * @param index 中奖索引
    */
   public stop (index: number): void {
-    // 判断 prizeFlag 是否等于 -1
-    this.prizeFlag = index < 0 ? -1 : index % this.prizes.length
-    // 如果是 -1 就初始化状态
-    if (this.prizeFlag === -1) {
+    // 如果没有传递中奖索引, 则通过range属性计算一个
+    if (!index && index !== 0) {
+      const rangeArr = this.prizes.map(item => item.range)
+      index = computeRange(rangeArr)
+    }
+    // 如果index是负数则停止游戏, 反之则传递中奖索引
+    if (index < 0) {
+      this.prizeFlag = -1
       this.currIndex = 0
       this.draw()
+    } else {
+      this.prizeFlag = index % this.prizes.length
     }
   }
 
@@ -593,7 +605,7 @@ export default class LuckyGrid extends Lucky {
    * @param { array } [...矩阵坐标, col, row]
    * @return { array } [...真实坐标, width, height]
    */
-  private getGeometricProperty ([x, y, col, row]: number[]) {
+  private getGeometricProperty ([x, y, col = 1, row = 1]: number[]) {
     const { cellWidth, cellHeight } = this
     const gutter = this._defaultConfig.gutter
     let res = [

@@ -102,3 +102,25 @@ export const throttle = (fn: Function, wait = 300) => {
     }, wait)
   }
 }
+
+/**
+ * 通过概率计算出一个奖品索引
+ * @param { Array<number | undefined> } rangeArr 概率
+ * @returns { number } 中奖索引
+ */
+export const computeRange = (rangeArr: Array<number | undefined>): number => {
+  const ascendingArr: number[] = []
+  // 额外增加 map 来优化 ts 的类型推断
+  const sum = rangeArr.map(num => Number(num)).reduce((prev, curr) => {
+    if (curr > 0) { // 大于0
+      const res = prev + curr
+      ascendingArr.push(res)
+      return res
+    } else { // 小于等于0或NaN
+      ascendingArr.push(NaN)
+      return prev
+    }
+  }, 0)
+  const random = Math.random() * sum
+  return ascendingArr.findIndex(num => random <= num)
+}

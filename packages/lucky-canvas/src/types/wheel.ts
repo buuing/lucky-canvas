@@ -26,6 +26,7 @@ export interface BlockType {
 }
 
 export interface PrizeType {
+  range?: number
   background?: BackgroundType
   fonts?: Array<PrizeFontType>
   imgs?: Array<PrizeImgType>

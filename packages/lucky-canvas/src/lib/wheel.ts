@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { ConfigType, UserConfigType } from '../types/index'
+import { UserConfigType } from '../types/index'
 import LuckyWheelConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -10,7 +10,12 @@ import LuckyWheelConfig, {
   EndCallbackType
 } from '../types/wheel'
 import { FontType, ImgType } from '../types/index'
-import { isExpectType, removeEnter, hasBackground } from '../utils/index'
+import {
+  isExpectType,
+  removeEnter,
+  hasBackground,
+  computeRange
+} from '../utils/index'
 import { getAngle, drawSector } from '../utils/math'
 import * as Tween from '../utils/tween'
 
@@ -452,13 +457,19 @@ export default class LuckyWheel extends Lucky {
    * 对外暴露: 缓慢停止方法
    * @param index 中奖索引
    */
-  public stop (index: number): void {
-    // 判断 prizeFlag 是否等于 -1
-    this.prizeFlag = index < 0 ? -1 : index % this.prizes.length
-    // 如果是 -1 就初始化状态
-    if (this.prizeFlag === -1) {
+  public stop (index?: number): void {
+    // 如果没有传递中奖索引, 则通过range属性计算一个
+    if (!index && index !== 0) {
+      const rangeArr = this.prizes.map(item => item.range)
+      index = computeRange(rangeArr)
+    }
+    // 如果index是负数则停止游戏, 反之则传递中奖索引
+    if (index < 0) {
+      this.prizeFlag = -1
       this.rotateDeg = this.prizeDeg / 2 - this._defaultConfig.offsetDegree
       this.draw()
+    } else {
+      this.prizeFlag = index % this.prizes.length
     }
   }
 
