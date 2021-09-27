@@ -312,7 +312,8 @@ export default class LuckyWheel extends Lucky {
     // 计算起始弧度
     this.prizeDeg = 360 / this.prizes.length
     this.prizeRadian = getAngle(this.prizeDeg)
-    let start = getAngle(-90 + this.rotateDeg + _defaultConfig.offsetDegree)
+    // 起始角度调整到正上方, 并且减去半个扇形角度
+    let start = getAngle(this.rotateDeg - 90 + this.prizeDeg / 2 + _defaultConfig.offsetDegree)
     // 计算文字横坐标
     const getFontX = (line: string) => {
       return this.getOffsetX(ctx.measureText(line).width)
