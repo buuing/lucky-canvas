@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.5.6",
+  "version": "1.5.8",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
   "main": "dist/lucky-canvas.cjs",
   "module": "dist/lucky-canvas.esm",
@@ -8,8 +8,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
-    "build": "rollup --config rollup.config.build.js",
-    "postinstall": "node ./postinstall.js"
+    "build": "rollup --config rollup.config.build.js"
   },
   "homepage": "https://100px.net",
   "bugs": "https://github.com/LuckDraw/lucky-canvas/issues",

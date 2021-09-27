@@ -415,6 +415,7 @@ interface LuckyGridConfig {
     blocks?: Array<BlockType>;
     prizes?: Array<PrizeType>;
     buttons?: Array<ButtonType>;
+    button?: ButtonType;
     defaultConfig?: DefaultConfigType;
     defaultStyle?: DefaultStyleType;
     activeStyle?: ActiveStyleType;
