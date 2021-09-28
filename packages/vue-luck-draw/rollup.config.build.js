@@ -5,6 +5,7 @@ import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import PostCSS from 'rollup-plugin-postcss'
 import del from 'rollup-plugin-delete'
+import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
 export default [
@@ -17,10 +18,25 @@ export default [
         sourcemap: true,
       },
       {
+        file: `${pkg.module}.min.js`,
+        format: 'esm',
+        plugins: [terser()]
+      },
+      {
         file: `${pkg.browser}.js`,
         format: 'umd',
         name: 'VueLuckDraw',
         sourcemap: true,
+        globals: {
+          'vue-demi': 'VueDemi',
+          'lucky-canvas': 'LuckyCanvas',
+        },
+      },
+      {
+        file: `${pkg.browser}.min.js`,
+        format: 'umd',
+        name: 'VueLuckDraw',
+        plugins: [terser()],
         globals: {
           'vue-demi': 'VueDemi',
           'lucky-canvas': 'LuckyCanvas',

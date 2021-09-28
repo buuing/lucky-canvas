@@ -124,7 +124,7 @@ export default defineComponent({
       })
     },
     init () {
-      this.$lucky && this.$lucky.init({})
+      this.$lucky && this.$lucky.init()
     },
     /**
      * play方法可以让抽奖开始旋转
@@ -136,7 +136,7 @@ export default defineComponent({
      * stop方法可以传递一个中奖索引, 来停止游戏
      * @param index 中奖索引
      */
-    stop (index: number) {
+    stop (index?: number) {
       this.$lucky?.stop(index)
     },
   },

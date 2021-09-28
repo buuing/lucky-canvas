@@ -520,7 +520,7 @@ export default class LuckyGrid extends Lucky {
    * 对外暴露: 缓慢停止方法
    * @param index 中奖索引
    */
-  public stop (index: number): void {
+  public stop (index?: number): void {
     // 如果没有传递中奖索引, 则通过range属性计算一个
     if (!index && index !== 0) {
       const rangeArr = this.prizes.map(item => item.range)
