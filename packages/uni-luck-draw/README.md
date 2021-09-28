@@ -25,7 +25,7 @@
 | :-: | :-: | :-: |
 |[`JS` / `JQ` 中使用](https://100px.net/usage/js.html)|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" /></a>|
 |[`Vue` 中使用](https://100px.net/usage/vue.html)|<a href="https://www.npmjs.com/package/vue-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="downloads" /></a>|
-|[`React` 中使用](https://100px.net/usage/react.html)|<a href="https://www.npmjs.com/package/react-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/react-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/react-luck-draw/badge" alt="downloads" /></a>|
+|[`React` 中使用](https://100px.net/usage/react.html)|<a href="https://www.npmjs.com/package/react-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
 |[`UniApp` 中使用](https://100px.net/usage/uni.html)|<a href="https://www.npmjs.com/package/uni-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
 |[`Taro3.x` 中使用](https://100px.net/usage/taro.html)|<a href="https://www.npmjs.com/package/taro-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/taro-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
 |[`微信小程序` 中使用](https://100px.net/usage/wx.html)|<a href="https://www.npmjs.com/package/mini-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/mini-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
@@ -111,23 +111,3 @@ export default {
 - 另外: 如果你修复了某些bug或兼容, 欢迎提给我, 我会把你展示到官网的贡献者列表当中
 
 ---
-
-<font color="red">浏览器端</font>
-
-<li>H5, 九宫格无bug, <font color="red">大转盘在H5环境下原点坐标渲染异常, 原因复现如下</font></li>
-<li><font color="blue">https://github.com/dcloudio/uni-app/issues/2847</font></li>
-<li>解决方案: 先通过 npm i uni-luck-draw@1.3 安装老版本, 等uniapp官方修复这个问题之后再更新最新版</li>
-
-<br />
-<font color="red">小程序端</font>
-
-<li>微信小程序, 使用type2d重构之后, 流畅度良好</li>
-<li>QQ小程序, 新版未测试</li>
-<li>其余小程序, 还没测, 有需求的小伙伴可以自行测试然后反馈给我</li>
-
-<br />
-<font color="red">app端（最新版刚使用type2d重构, 暂不兼容APP, 请通过npm安装旧版</font>
-
-<li><code>npm i uni-luck-draw@1.3</code></li>
-<li>【v1.3】：IOS版, 很流畅</li>
-<li>【v1.3】：安卓版, 很卡顿, 请即将使用的人做好心理准备</li>

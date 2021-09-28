@@ -247,6 +247,9 @@
       toPlay (btn) {
         this.myLucky.startCallback(btn)
       },
+      init () {
+        this.myLucky.init()
+      },
       play (...rest) {
         this.myLucky.play(...rest)
       },
