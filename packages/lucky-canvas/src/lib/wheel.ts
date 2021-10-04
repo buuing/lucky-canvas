@@ -496,7 +496,7 @@ export default class LuckyWheel extends Lucky {
       // 测算最终停止的角度
       let i = 0
       while (++i) {
-        const endDeg = 360 * i - prizeFlag * prizeDeg - rotateDeg - _defaultConfig.offsetDegree + stopRange
+        const endDeg = 360 * i - prizeFlag * prizeDeg - rotateDeg - _defaultConfig.offsetDegree + stopRange - prizeDeg / 2
         let currSpeed = Tween[_defaultConfig.speedFunction].easeOut(this.FPS, this.stopDeg, endDeg, _defaultConfig.decelerationTime) - this.stopDeg
         if (currSpeed > _defaultConfig.speed) {
           this.endDeg = endDeg
