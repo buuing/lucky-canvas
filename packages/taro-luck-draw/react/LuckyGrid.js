@@ -19,7 +19,6 @@ export default class LuckyGrid extends React.Component {
 
   constructor (props) {
     super(props)
-    this.myLucky = React.createRef()
   }
 
   componentDidMount () {
@@ -63,74 +62,84 @@ export default class LuckyGrid extends React.Component {
     }, () => {
       // 某些情况下获取不到 canvas
       setTimeout(() => {
-        this.draw()
+        this.getConfig()
       }, 100)
     })
   }
 
-  draw () {
+  getConfig () {
+    let flag = this.flag
+    const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
+    if (flag === 'WEB') {
+      // H5 环境
+      const divElement = document.querySelector('#lucky-box')
+      this.drawLucky({
+        dpr,
+        flag,
+        divElement,
+        width: this.state.boxWidth,
+        height: this.state.boxHeight,
+        rAF: requestAnimationFrame,
+      })
+    } else {
+      // 小程序环境
+      const page = Taro.getCurrentInstance().page
+      Taro.createSelectorQuery().in(page).select('#lucky-grid').fields({
+        node: true, size: true
+      }).exec((res) => {
+        if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
+        const { node, width, height } = res[0]
+        const canvas = this.canvas = node
+        const ctx = this.ctx = canvas.getContext('2d')
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+        ctx.scale(dpr, dpr)
+        this.drawLucky({
+          dpr,
+          flag,
+          ctx,
+          width,
+          height,
+        })
+      })
+    }
+  }
+
+  drawLucky (config) {
     const _this = this
     const { props } = this
-    const page = Taro.getCurrentInstance().page
-    Taro.createSelectorQuery().in(page).select('#lucky-grid').fields({
-      node: true, size: true
-    }).exec((res) => {
-      let flag = this.flag, rAF
-      if (flag === 'WEB') {
-        res[0] = {
-          node: document.querySelector('#lucky-grid canvas'),
-          width: this.boxWidth,
-          height: this.boxHeight,
-        }
-        // 小程序使用帧动画真机会报错
-        rAF = requestAnimationFrame
+    const $lucky = new Grid({
+      ...config,
+      setTimeout,
+      clearTimeout,
+      setInterval,
+      clearInterval,
+      unitFunc: (num, unit) => changeUnits(num + unit),
+      afterInit: function () {
+        // 动态设置按钮大小
+        const btns = []
+        props.buttons.forEach((btn, index) => {
+          if (!btn) return
+          const [left, top, width, height] = this.getGeometricProperty([
+            btn.x,
+            btn.y,
+            btn.col || 1,
+            btn.row || 1
+          ])
+          btns[index] = { top, left, width, height }
+        })
+        _this.setState({ btns, btnShow: true })
+      },
+    }, {
+      ...props,
+      start: (...rest) => {
+        props.onStart && props.onStart(...rest)
+      },
+      end: (...rest) => {
+        props.onEnd && props.onEnd(...rest)
       }
-      if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
-      const { node, width, height } = res[0]
-      const canvas = this.canvas = node
-      const ctx = this.ctx = canvas.getContext('2d')
-      const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
-      canvas.width = width * dpr
-      canvas.height = height * dpr
-      ctx.scale(dpr, dpr)
-      const $lucky = new Grid({
-        flag,
-        ctx,
-        dpr,
-        width,
-        height,
-        rAF,
-        setTimeout,
-        clearTimeout,
-        setInterval,
-        clearInterval,
-        unitFunc: (num, unit) => changeUnits(num + unit),
-        afterInit: function () {
-          // 动态设置按钮大小
-          const btns = []
-          props.buttons.forEach((btn, index) => {
-            if (!btn) return
-            const [left, top, width, height] = this.getGeometricProperty([
-              btn.x,
-              btn.y,
-              btn.col || 1,
-              btn.row || 1
-            ])
-            btns[index] = { top, left, width, height }
-          })
-          _this.setState({ btns, btnShow: true })
-        },
-      }, {
-        ...props,
-        start: (...rest) => {
-          props.onStart && props.onStart(...rest)
-        },
-        end: (...rest) => {
-          props.onEnd && props.onEnd(...rest)
-        }
-      })
-      this.setState({ $lucky })
     })
+    this.setState({ $lucky })
   }
 
   play (...rest) {
@@ -147,7 +156,7 @@ export default class LuckyGrid extends React.Component {
 
   render () {
     const { props, state } = this
-    return this.flag === 'WEB' ? <div ref={this.myLucky}></div> : (
+    return this.flag === 'WEB' ? <div id="lucky-box"></div> : (
       <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
         <Canvas
           type="2d"

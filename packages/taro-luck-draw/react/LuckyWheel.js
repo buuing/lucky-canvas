@@ -19,7 +19,6 @@ export default class LuckyWheel extends React.Component {
 
   constructor (props) {
     super(props)
-    this.myLucky = React.createRef()
   }
 
   componentDidMount () {
@@ -52,75 +51,85 @@ export default class LuckyWheel extends React.Component {
     }, () => {
       // 某些情况下获取不到 canvas
       setTimeout(() => {
-        this.draw()
+        this.getConfig()
       }, 100)
     })
   }
 
-  draw () {
-    const _this = this
-    const { props } = this
-    const page = Taro.getCurrentInstance().page
-    Taro.createSelectorQuery().in(page).select('#lucky-wheel').fields({
-      node: true, size: true
-    }).exec((res) => {
-      let flag = this.flag, rAF
-      if (flag === 'WEB') {
-        res[0] = {
-          node: document.querySelector('#lucky-wheel canvas'),
-          width: this.boxWidth,
-          height: this.boxHeight,
-        }
-        // 小程序使用帧动画真机会报错
-        rAF = requestAnimationFrame
-      }
-      if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
-      const { node, width, height } = res[0]
-      const canvas = this.canvas = node
-      const ctx = this.ctx = canvas.getContext('2d')
-      const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
-      canvas.width = width * dpr
-      canvas.height = height * dpr
-      ctx.scale(dpr, dpr)
-      const $lucky = new Wheel({
-        flag,
-        ctx,
+  getConfig () {
+    let flag = this.flag
+    const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
+    if (flag === 'WEB') {
+      // H5 环境
+      const divElement = document.querySelector('#lucky-box')
+      this.drawLucky({
         dpr,
-        width,
-        height,
-        rAF,
-        setTimeout,
-        clearTimeout,
-        setInterval,
-        clearInterval,
-        unitFunc: (num, unit) => changeUnits(num + unit),
-        beforeCreate: function () {
-          if (flag === 'WEB') return
-          const Radius = Math.min(this.config.width, this.config.height) / 2
-          ctx.translate(Radius, Radius)
-        },
-        beforeInit: function () {
-          if (flag === 'WEB') return
-          ctx.translate(-this.Radius, -this.Radius)
-        },
-        afterInit: function () {
-          // 动态设置按钮大小
-          _this.setState({
-            btnWidth: this.maxBtnRadius * 2,
-            btnHeight: this.maxBtnRadius * 2,
-          })
-        },
-      }, {
-        ...props,
-        start: (...rest) => {
-          props.onStart && props.onStart(...rest)
-        },
-        end: (...rest) => {
-          props.onEnd && props.onEnd(...rest)
-        }
+        flag,
+        divElement,
+        width: this.state.boxWidth,
+        height: this.state.boxHeight,
+        rAF: requestAnimationFrame,
       })
-      this.setState({ $lucky })
+    } else {
+      // 小程序环境
+      const page = Taro.getCurrentInstance().page
+      Taro.createSelectorQuery().in(page).select('#lucky-wheel').fields({
+        node: true, size: true
+      }).exec((res) => {
+        if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
+        const { node, width, height } = res[0]
+        const canvas = this.canvas = node
+        const ctx = this.ctx = canvas.getContext('2d')
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+        ctx.scale(dpr, dpr)
+        this.drawLucky({
+          dpr,
+          flag,
+          ctx,
+          width,
+          height,
+        })
+      })
+    }
+  }
+
+  drawLucky (config) {
+    const _this = this
+    const { props, flag } = this
+    const $lucky = new Wheel({
+      ...config,
+      setTimeout,
+      clearTimeout,
+      setInterval,
+      clearInterval,
+      unitFunc: (num, unit) => changeUnits(num + unit),
+      beforeCreate: function () {
+        if (flag === 'WEB') return
+        const Radius = Math.min(this.config.width, this.config.height) / 2
+        ctx.translate(Radius, Radius)
+      },
+      beforeInit: function () {
+        if (flag === 'WEB') return
+        ctx.translate(-this.Radius, -this.Radius)
+      },
+      afterInit: function () {
+        // 动态设置按钮大小
+        _this.setState({
+          btnWidth: this.maxBtnRadius * 2,
+          btnHeight: this.maxBtnRadius * 2,
+        })
+      },
+    }, {
+      ...props,
+      start: (...rest) => {
+        props.onStart && props.onStart(...rest)
+      },
+      end: (...rest) => {
+        props.onEnd && props.onEnd(...rest)
+      }
     })
+    this.setState({ $lucky })
   }
 
   play (...rest) {
@@ -137,7 +146,7 @@ export default class LuckyWheel extends React.Component {
 
   render () {
     const { props, state } = this
-    return this.flag === 'WEB' ? <div ref={this.myLucky}></div> : (
+    return this.flag === 'WEB' ? <div id="lucky-box"></div> : (
       <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
         <Canvas
           type="2d"
