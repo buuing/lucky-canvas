@@ -178,7 +178,7 @@ export default class LuckyGrid extends React.Component {
           </View> : null
         }
         {/* 图片 */}
-        <View className="lucky-imgs">
+        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>
               {
@@ -191,8 +191,8 @@ export default class LuckyGrid extends React.Component {
               }
             </View>)
           }
-        </View>
-        <View className="lucky-imgs">
+        </View> : null }
+        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
           {
             props.buttons.map((button, index) => <View key={index}>
               {
@@ -202,7 +202,7 @@ export default class LuckyGrid extends React.Component {
               }
             </View>)
           }
-        </View>
+        </View> : null }
       </View>
     )
   }

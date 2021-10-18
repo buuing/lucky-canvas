@@ -1,1 +1,1 @@
-module.exports = require('./dist/lucky-canvas.cjs.min.js')
+module.exports = require('./dist/lucky-canvas.esm.min.js')

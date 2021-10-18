@@ -161,7 +161,7 @@ export default class LuckyWheel extends React.Component {
           style={{ width: state.btnWidth + 'px', height: state.btnHeight + 'px' }}
         ></CoverView>
         {/* 图片 */}
-        <View className="lucky-imgs">
+        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
           {
             props.blocks.map((block, index) => <View key={index}>
               {
@@ -171,8 +171,8 @@ export default class LuckyWheel extends React.Component {
               }
             </View>)
           }
-        </View>
-        <View className="lucky-imgs">
+        </View> : null }
+        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>
               {
@@ -182,8 +182,8 @@ export default class LuckyWheel extends React.Component {
               }
             </View>)
           }
-        </View>
-        <View className="lucky-imgs">
+        </View> : null }
+        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
           {
             props.buttons.map((button, index) => <View key={index}>
               {
@@ -193,7 +193,7 @@ export default class LuckyWheel extends React.Component {
               }
             </View>)
           }
-        </View>
+        </View> : null }
       </View>
     )
   }

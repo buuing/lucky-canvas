@@ -42,7 +42,7 @@
 
 <script>
   import { changeUnits, resolveImage } from './utils.js'
-  import { LuckyWheel } from '../lucky-canvas/index.js'
+  import { LuckyWheel } from '../lucky-canvas'
   export default {
     name: 'lucky-wheel',
     data () {
