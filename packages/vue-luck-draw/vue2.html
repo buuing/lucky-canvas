@@ -9,12 +9,15 @@
 <body>
   <div id="app">
     <lucky-wheel
+      ref="myLucky"
       width="300px"
       height="300px"
       :blocks="blocks"
       :prizes="prizes"
       :buttons="buttons"
-      :defaultStyle="defaultStyle"
+      :default-style="defaultStyle"
+      @start="click"
+      @end="end"
     />
   </div>
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
@@ -27,8 +30,8 @@
       data: {
         blocks: [{ padding: '13px', background: '#d64737' }],
         prizes: [
-          { title: '1元红包', background: '#f9e3bb', fonts: [{ text: '1元红包', top: '18%' }] },
-          { title: '100元红包', background: '#f8d384', fonts: [{ text: '100元红包', top: '18%' }] },
+          { title: '1元红包', background: '#f9e3bb', fonts: [{ text: '1元红包', top: '18%' }], range: 0.1 },
+          { title: '100元红包', background: '#f8d384', fonts: [{ text: '100元红包', top: '18%' }], range: 0.2 },
           { title: '0.5元红包', background: '#f9e3bb', fonts: [{ text: '0.5元红包', top: '18%' }] },
           { title: '2元红包', background: '#f8d384', fonts: [{ text: '2元红包', top: '18%' }] },
           { title: '10元红包', background: '#f9e3bb', fonts: [{ text: '10元红包', top: '18%' }] },
@@ -44,6 +47,18 @@
           }
         ],
         defaultStyle: { fontColor: '#d64737', fontSize: '14px' },
+      },
+      methods: {
+        click () {
+          this.$refs.myLucky.play()
+          setTimeout(() => {
+            this.$refs.myLucky.stop()
+          }, 100)
+        },
+        end (prize) {
+          console.log(prize.fonts[0].text)
+          this.click()
+        }
       }
     })
   </script>

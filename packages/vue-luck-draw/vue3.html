@@ -9,16 +9,18 @@
 <body>
   <div id="app">
     <lucky-wheel
+      ref="myLucky"
       width="300px"
       height="300px"
       :blocks="blocks"
       :prizes="prizes"
       :buttons="buttons"
-      :defaultStyle="defaultStyle"
+      :default-style="defaultStyle"
+      @start="click"
     />
   </div>
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.1.5/vue.global.js"></script>
-  <script src="./composition-api.js"></script>
+  <!-- <script src="./composition-api.js"></script> -->
   <script src="./vue-demi.js"></script>
   <script src="./dist/vue-luck-draw.umd.js"></script>
   <script>
@@ -47,6 +49,14 @@
             fontColor: '#d64737',
             fontSize: '14px'
           },
+        }
+      },
+      methods: {
+        click () {
+          this.$refs.myLucky.play()
+          setTimeout(() => {
+            this.$refs.myLucky.stop(0)
+          }, 3000)
         }
       }
     }).use(VueLuckDraw).mount('#app')
