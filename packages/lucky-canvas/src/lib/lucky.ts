@@ -50,16 +50,14 @@ export default class Lucky {
     }
     // 监听 window 触发 resize 时重置
     window && window.addEventListener('resize', throttle(() => {
-      this.init()
+      this.resize()
     }, 300))
   }
 
-  public init() {}
-
   /**
-   * 初始化方法
+   * 初始化组件大小/单位
    */
-   protected initLucky () {
+  protected resize(): void {
     // 先初始化 fontSize 以防后面有 rem 单位
     this.setHTMLFontSize()
     // 拿到 config 即可设置 dpr
@@ -68,6 +66,13 @@ export default class Lucky {
     this.resetWidthAndHeight()
     // 根据 dpr 来缩放 canvas
     this.zoomCanvas()
+  }
+
+  /**
+   * 初始化方法
+   */
+   protected initLucky () {
+    this.resize()
     if (!this.boxWidth || !this.boxHeight) {
       console.error('无法获取到宽度或高度')
       return
@@ -122,6 +127,7 @@ export default class Lucky {
       config.divElement.style.overflow = 'hidden'
       config.divElement.style.width = this.boxWidth + 'px'
       config.divElement.style.height = this.boxHeight + 'px'
+      // config.divElement.style['transform-origin'] = 'center'
     }
   }
 
@@ -132,13 +138,13 @@ export default class Lucky {
     const { config, ctx } = this
     const { canvasElement, dpr } = config
     const [width, height] = [this.boxWidth * dpr, this.boxHeight * dpr]
-    const compute = (len: number) => (len * dpr - len) / (len * dpr) * (dpr / 2) * 100
     if (!canvasElement) return
     canvasElement.width = width
     canvasElement.height = height
     canvasElement.style.width = `${width}px`
     canvasElement.style.height = `${height}px`
-    canvasElement.style.transform = `scale(${1 / dpr}) translate(${-compute(width)}%, ${-compute(height)}%)`
+    canvasElement.style['transform-origin'] = 'left top'
+    canvasElement.style.transform = `scale(${1 / dpr})`
     ctx.scale(dpr, dpr)
   }
 

@@ -85,8 +85,12 @@ export default class LuckyGrid extends Lucky {
     })
   }
 
+  protected resize(): void {
+    super.resize()
+    this.draw()
+  }
+
   protected initLucky (): void {
-    super.initLucky()
     this.cellWidth = 0
     this.cellHeight = 0
     this.startTime = 0
@@ -98,6 +102,7 @@ export default class LuckyGrid extends Lucky {
     this.timer = 0
     this.FPS = 16.6
     this.prizeFlag = -1
+    super.initLucky()
   }
 
   /**

@@ -71,8 +71,14 @@ export default class LuckyWheel extends Lucky {
     })
   }
 
+  protected resize(): void {
+    super.resize()
+    this.Radius = Math.min(this.boxWidth, this.boxHeight) / 2
+    this.ctx.translate(this.Radius, this.Radius)
+    this.draw()
+  }
+
   protected initLucky (): void {
-    super.initLucky()
     this.Radius = 0
     this.prizeRadius = 0
     this.prizeDeg = 0
@@ -85,6 +91,7 @@ export default class LuckyWheel extends Lucky {
     this.endDeg = 0
     this.FPS = 16.6
     this.prizeFlag = -1
+    super.initLucky()
   }
 
   /**
@@ -167,11 +174,9 @@ export default class LuckyWheel extends Lucky {
     btnImgs?: Array<ButtonImgType[] | undefined>
   } = {}): void {
     this.initLucky()
-    const { config, ctx } = this
-    this.Radius = Math.min(this.boxWidth, this.boxHeight) / 2
+    const { config } = this
     // 初始化前回调函数
     config.beforeInit?.call(this)
-    ctx.translate(this.Radius, this.Radius)
     this.draw() // 先画一次, 防止闪烁
     this.draw() // 再画一次, 拿到正确的按钮轮廓
     // 异步加载图片

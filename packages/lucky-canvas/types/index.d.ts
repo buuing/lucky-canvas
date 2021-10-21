@@ -62,7 +62,10 @@ declare class Lucky {
      * @param config
      */
     constructor(config: string | HTMLDivElement | UserConfigType);
-    init(): void;
+    /**
+     * 初始化组件大小/单位
+     */
+    protected resize(): void;
     /**
      * 初始化方法
      */
@@ -241,6 +244,7 @@ declare class LuckyWheel extends Lucky {
      * @param data 抽奖配置项
      */
     constructor(config: UserConfigType, data?: LuckyWheelConfig);
+    protected resize(): void;
     protected initLucky(): void;
     /**
      * 初始化数据
@@ -466,6 +470,7 @@ declare class LuckyGrid extends Lucky {
      * @param data 抽奖配置项
      */
     constructor(config: UserConfigType, data?: LuckyGridConfig);
+    protected resize(): void;
     protected initLucky(): void;
     /**
      * 初始化数据
