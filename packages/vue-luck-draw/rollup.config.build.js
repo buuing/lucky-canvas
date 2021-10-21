@@ -25,7 +25,7 @@ export default [
       {
         file: `${pkg.browser}.js`,
         format: 'umd',
-        name: 'VueLuckDraw',
+        name: 'VueLuckyCanvas',
         sourcemap: true,
         globals: {
           'vue-demi': 'VueDemi',
@@ -35,7 +35,7 @@ export default [
       {
         file: `${pkg.browser}.min.js`,
         format: 'umd',
-        name: 'VueLuckDraw',
+        name: 'VueLuckyCanvas',
         plugins: [terser()],
         globals: {
           'vue-demi': 'VueDemi',

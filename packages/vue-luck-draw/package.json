@@ -1,9 +1,9 @@
 {
   "name": "@lucky-canvas/vue",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
-  "module": "dist/vue-luck-draw.esm",
-  "browser": "dist/vue-luck-draw.umd",
+  "module": "dist/index.esm",
+  "browser": "dist/index.umd",
   "types": "types/index.d.ts",
   "keywords": [
     "vue3抽奖",
@@ -18,9 +18,7 @@
   "license": "Apache-2.0",
   "files": [
     "dist",
-    "vue3",
-    "types",
-    "index.js"
+    "types"
   ],
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",

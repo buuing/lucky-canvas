@@ -17,7 +17,7 @@ export default [
       {
         file: `${pkg.browser}.js`,
         format: 'umd',
-        name: 'VueLuckDraw',
+        name: 'VueLuckyCanvas',
         sourcemap: true,
         globals: {
           'vue-demi': 'VueDemi',
