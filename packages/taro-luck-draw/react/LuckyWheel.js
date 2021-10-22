@@ -96,7 +96,7 @@ export default class LuckyWheel extends React.Component {
 
   drawLucky (config) {
     const _this = this
-    const { props, flag } = this
+    const { props, flag, ctx } = this
     const $lucky = new Wheel({
       ...config,
       setTimeout,
