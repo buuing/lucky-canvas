@@ -145,8 +145,8 @@ export default class LuckyWheel extends React.Component {
   }
 
   render () {
-    const { props, state } = this
-    return this.flag === 'WEB' ? <div id="lucky-box"></div> : (
+    const { props, state, flag } = this
+    return flag === 'WEB' ? <div id="lucky-box"></div> : (
       <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
         <Canvas
           type="2d"
