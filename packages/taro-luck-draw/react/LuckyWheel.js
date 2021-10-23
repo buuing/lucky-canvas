@@ -27,6 +27,7 @@ export default class LuckyWheel extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { props, state } = this
+    if (!state.$lucky) return
     if (props.blocks !== prevProps.blocks) {
       state.$lucky.blocks = props.blocks
     }

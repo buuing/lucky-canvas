@@ -27,6 +27,7 @@ export default class LuckyGrid extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { props, state } = this
+    if (!state.$lucky) return
     if (props.cols !== prevProps.cols) {
       state.$lucky.cols = props.cols
     }
