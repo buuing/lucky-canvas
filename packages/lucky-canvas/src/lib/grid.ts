@@ -437,29 +437,32 @@ export default class LuckyGrid extends Lucky {
       // 绘制文字
       cell.fonts && cell.fonts.forEach(font => {
         // 字体样式
-        let style = isActive && _activeStyle.fontStyle
+        const style = isActive && _activeStyle.fontStyle
           ? _activeStyle.fontStyle
           : (font.fontStyle || _defaultStyle.fontStyle)
         // 字体加粗
-        let fontWeight = isActive && _activeStyle.fontWeight
+        const fontWeight = isActive && _activeStyle.fontWeight
           ? _activeStyle.fontWeight
           : (font.fontWeight || _defaultStyle.fontWeight)
         // 字体大小
-        let size = isActive && _activeStyle.fontSize
+        const size = isActive && _activeStyle.fontSize
           ? this.getLength(_activeStyle.fontSize)
           : this.getLength(font.fontSize || _defaultStyle.fontSize)
         // 字体行高
         const lineHeight = isActive && _activeStyle.lineHeight
           ? _activeStyle.lineHeight
           : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
+        const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+        const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
+        const lineClamp = font.lineClamp || _defaultStyle.lineClamp
         ctx.font = `${fontWeight} ${size >> 0}px ${style}`
         ctx.fillStyle = (isActive && _activeStyle.fontColor) ? _activeStyle.fontColor : (font.fontColor || _defaultStyle.fontColor)
         let lines = [], text = String(font.text)
         // 计算文字换行
-        if (Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+        if (wordWrap) {
           // 最大宽度
-          let maxWidth = this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, cell.col)
-          lines = splitText(ctx, removeEnter(text), () => maxWidth)
+          let maxWidth = this.getWidth(lengthLimit, cell.col)
+          lines = splitText(ctx, removeEnter(text), () => maxWidth, lineClamp)
         } else {
           lines = text.split('\n')
         }

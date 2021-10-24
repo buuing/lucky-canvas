@@ -1,5 +1,5 @@
 // 字体类型
-export interface FontType {
+export type FontType = {
   text: string
   top?: string | number
   fontColor?: string
@@ -9,8 +9,14 @@ export interface FontType {
   lineHeight?: string
 }
 
+export type FontExtendType = {
+  wordWrap?: boolean
+  lengthLimit?: string | number
+  lineClamp?: number
+}
+
 // 图片类型
-export interface ImgType {
+export type ImgType = {
   src: string
   top?: string | number
   width?: string
@@ -23,7 +29,7 @@ export type BorderRadiusType = string | number
 export type BackgroundType = string
 export type ShadowType = string
 
-export interface ConfigType {
+export type ConfigType = {
   // 临时处理元素类型, 当版本升到4.x之后就可以删掉了
   nodeType?: number
   // 配置
@@ -53,7 +59,7 @@ export interface ConfigType {
 type RequireKey = 'width' | 'height'
 export type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>
 
-export interface UniImageType {
+export type UniImageType = {
   path: string
   width: number
   height: number

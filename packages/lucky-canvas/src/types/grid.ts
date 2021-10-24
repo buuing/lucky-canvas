@@ -3,32 +3,27 @@ import {
   ImgType,
   BorderRadiusType,
   BackgroundType,
-  ShadowType
+  ShadowType,
+  FontExtendType
 } from './index'
 
-export interface PrizeFontType extends FontType {
-  wordWrap?: boolean
-  lengthLimit?: string | number
-}
+export type PrizeFontType = FontType & FontExtendType
 
-export interface ButtonFontType extends FontType {
-  wordWrap?: boolean
-  lengthLimit?: string | number
-}
+export type ButtonFontType = FontType & FontExtendType
 
 export type CellFontType = PrizeFontType | ButtonFontType
 
-export interface BlockImgType extends ImgType {}
+export type BlockImgType = ImgType & {}
 
-export interface PrizeImgType extends ImgType {
+export type PrizeImgType = ImgType & {
   activeSrc?: string
 }
 
-export interface ButtonImgType extends ImgType {}
+export type ButtonImgType = ImgType & {}
 
 export type CellImgType = PrizeImgType | ButtonImgType
 
-export interface BlockType {
+export type BlockType = {
   borderRadius?: BorderRadiusType
   background?: BackgroundType
   padding?: string
@@ -39,7 +34,7 @@ export interface BlockType {
   imgs?: Array<BlockImgType>
 }
 
-export interface CellType<T, U> {
+export type CellType<T, U> = {
   x: number
   y: number
   col?: number
@@ -59,14 +54,14 @@ export type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
   callback?: Function
 }
 
-export interface DefaultConfigType {
+export type DefaultConfigType = {
   gutter?: number
   speed?: number
   accelerationTime?: number
   decelerationTime?: number
 }
 
-export interface DefaultStyleType {
+export type DefaultStyleType = {
   borderRadius?: BorderRadiusType
   background?: BackgroundType
   shadow?: ShadowType
@@ -77,9 +72,10 @@ export interface DefaultStyleType {
   lineHeight?: PrizeFontType['lineHeight']
   wordWrap?: PrizeFontType['wordWrap']
   lengthLimit?: PrizeFontType['lengthLimit']
+  lineClamp?: PrizeFontType['lineClamp']
 }
 
-export interface ActiveStyleType {
+export type ActiveStyleType = {
   background?: BackgroundType
   shadow?: ShadowType
   fontColor?: PrizeFontType['fontColor']

@@ -134,20 +134,31 @@ export const computeRange = (rangeArr: Array<number | undefined>): number => {
 export const splitText = (
   ctx: CanvasRenderingContext2D,
   text: string,
-  getWidth: (lines: string[]) => number
+  getWidth: (lines: string[]) => number,
+  lineClamp: number = Infinity
 ): string[] => {
-  const lines = []
+  // 如果 lineClamp 设置不正确, 则忽略该属性
+  if (lineClamp <= 0) lineClamp = Infinity
   let str = ''
+  const lines = []
+  const EndWidth = ctx.measureText('...').width
   for (let i = 0; i < text.length; i++) {
     str += text[i]
-    const currWidth = ctx.measureText(str).width
+    let currWidth = ctx.measureText(str).width
     const maxWidth = getWidth(lines)
+    // 如果正在计算最后一行, 则加上三个小点的宽度
+    if (lineClamp === lines.length + 1) currWidth += EndWidth
     // 如果已经没有宽度了, 就没有必要再计算了
     if (maxWidth < 0) return lines
     // 如果当前一行的宽度不够了, 则处理下一行
     if (currWidth > maxWidth) {
       lines.push(str.slice(0, -1))
       str = text[i]
+    }
+    // 如果现在是最后一行, 则加上三个小点并跳出
+    if (lineClamp === lines.length) {
+      lines[lines.length - 1] += '...'
+      return lines
     }
   }
   if (str) lines.push(str)

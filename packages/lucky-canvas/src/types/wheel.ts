@@ -1,38 +1,36 @@
 import {
   FontType,
   ImgType,
-  BackgroundType
+  BackgroundType,
+  FontExtendType
 } from './index'
 
-export interface PrizeFontType extends FontType {
-  wordWrap?: boolean
-  lengthLimit?: string | number
-}
+export type PrizeFontType = FontType & FontExtendType
 
-export interface ButtonFontType extends FontType {}
+export type ButtonFontType = FontType & {}
 
-export interface BlockImgType extends ImgType {
+export type BlockImgType = ImgType & {
   rotate?: boolean
 }
 
-export interface PrizeImgType extends ImgType {}
+export type PrizeImgType = ImgType & {}
 
-export interface ButtonImgType extends ImgType {}
+export type ButtonImgType = ImgType & {}
 
-export interface BlockType {
+export type BlockType = {
   padding?: string
   background?: BackgroundType
   imgs?: Array<BlockImgType>
 }
 
-export interface PrizeType {
+export type PrizeType = {
   range?: number
   background?: BackgroundType
   fonts?: Array<PrizeFontType>
   imgs?: Array<PrizeImgType>
 }
 
-export interface ButtonType {
+export type ButtonType = {
   radius?: string
   pointer?: boolean
   background?: BackgroundType
@@ -40,7 +38,7 @@ export interface ButtonType {
   imgs?: Array<ButtonImgType>
 }
 
-export interface DefaultConfigType {
+export type DefaultConfigType = {
   gutter?: string | number
   offsetDegree?: number
   speed?: number
@@ -50,7 +48,7 @@ export interface DefaultConfigType {
   stopRange?: number
 }
 
-export interface DefaultStyleType {
+export type DefaultStyleType = {
   background?: BackgroundType
   fontColor?: PrizeFontType['fontColor']
   fontSize?: PrizeFontType['fontSize']
@@ -59,6 +57,7 @@ export interface DefaultStyleType {
   lineHeight?: PrizeFontType['lineHeight']
   wordWrap?: PrizeFontType['wordWrap']
   lengthLimit?: PrizeFontType['lengthLimit']
+  lineClamp?: PrizeFontType['lineClamp']
 }
 
 export type StartCallbackType = (e: MouseEvent) => void

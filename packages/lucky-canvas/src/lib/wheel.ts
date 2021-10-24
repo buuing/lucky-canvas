@@ -368,23 +368,26 @@ export default class LuckyWheel extends Lucky {
       })
       // 逐行绘制文字
       prize.fonts && prize.fonts.forEach(font => {
-        let fontColor = font.fontColor || _defaultStyle.fontColor
-        let fontWeight = font.fontWeight || _defaultStyle.fontWeight
-        let fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
-        let fontStyle = font.fontStyle || _defaultStyle.fontStyle
+        const fontColor = font.fontColor || _defaultStyle.fontColor
+        const fontWeight = font.fontWeight || _defaultStyle.fontWeight
+        const fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
+        const fontStyle = font.fontStyle || _defaultStyle.fontStyle
+        const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+        const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
+        const lineClamp = font.lineClamp || _defaultStyle.lineClamp
         ctx.fillStyle = fontColor
         ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`
         let lines = [], text = String(font.text)
-        if (Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
+        if (wordWrap) {
           lines = splitText(ctx, removeEnter(text), (lines) => {
-            // 临边
+            // 三角形临边
             const adjacentSides = this.prizeRadius - getFontY(font, prizeHeight, lines.length)
-            // 短边
+            // 三角形短边
             const shortSide = adjacentSides * Math.tan(this.prizeRadian / 2)
             // 最大宽度
             let maxWidth = shortSide * 2 - this.getLength(_defaultConfig.gutter)
-            return this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)
-          })
+            return this.getWidth(lengthLimit, maxWidth)
+          }, lineClamp)
         } else {
           lines = text.split('\n')
         }
