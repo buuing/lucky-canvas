@@ -14,7 +14,8 @@ import {
   isExpectType,
   removeEnter,
   hasBackground,
-  computeRange
+  computeRange,
+  splitText
 } from '../utils/index'
 import { getAngle, drawSector } from '../utils/math'
 import * as Tween from '../utils/tween'
@@ -375,20 +376,15 @@ export default class LuckyWheel extends Lucky {
         ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`
         let lines = [], text = String(font.text)
         if (Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
-          text = removeEnter(text)
-          let str = ''
-          for (let i = 0; i < text.length; i++) {
-            str += text[i]
-            let currWidth = ctx.measureText(str).width
-            let maxWidth = (this.prizeRadius - getFontY(font, prizeHeight, lines.length))
-              * Math.tan(this.prizeRadian / 2) * 2 - this.getLength(_defaultConfig.gutter)
-            if (currWidth > this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)) {
-              lines.push(str.slice(0, -1))
-              str = text[i]
-            }
-          }
-          if (str) lines.push(str)
-          if (!lines.length) lines.push(text)
+          lines = splitText(ctx, removeEnter(text), (lines) => {
+            // 临边
+            const adjacentSides = this.prizeRadius - getFontY(font, prizeHeight, lines.length)
+            // 短边
+            const shortSide = adjacentSides * Math.tan(this.prizeRadian / 2)
+            // 最大宽度
+            let maxWidth = shortSide * 2 - this.getLength(_defaultConfig.gutter)
+            return this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, maxWidth)
+          })
         } else {
           lines = text.split('\n')
         }
@@ -472,7 +468,7 @@ export default class LuckyWheel extends Lucky {
     // 如果index是负数则停止游戏, 反之则传递中奖索引
     if (index < 0) {
       this.prizeFlag = -1
-      this.rotateDeg = this.prizeDeg / 2 - this._defaultConfig.offsetDegree
+      this.rotateDeg = 0
       this.draw()
     } else {
       this.prizeFlag = index % this.prizes.length

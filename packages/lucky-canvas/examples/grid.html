@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="my-lucky"></div>
+  <button onclick="luckyGrid.stop(-1)">stop(-1)</button>
+  <button onclick="luckyGrid.init()">init()</button>
+  <script src="../dist/lucky-canvas.umd.js"></script>
+  <script>
+    let luckyNum = 1
+    // 创建九宫格抽奖
+    var luckyGrid = new LuckyCanvas.LuckyGrid({
+      el: '#my-lucky',
+      width: '300px',
+      height: '300px'
+    }, {
+        blocks: [
+            { padding: '10px', background: '#869cfa' },
+            { padding: '10px', background: '#e9e8fe' },
+        ],
+        prizes: [
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+        ],
+        defaultStyle: {
+            background: '#b8c5f2'
+        },
+      start () {
+        if (!luckyNum) return alert('还剩0次抽奖机会')
+          luckyGrid.stop(4)
+        luckyGrid.play()
+        setTimeout(() => {
+          luckyGrid.stop(4)
+        }, 3000)
+      },
+      end (prize) {
+        console.log(prize)
+        // alert(`恭喜你获得大奖: ${prize.name}`)
+        // luckyNum--
+        luckyGrid.buttons[0].fonts[0].text = `${luckyNum} 次`
+        // luckyGrid.stop(-1)
+      }
+    })
+    // 模拟接口异步请求奖品列表
+    setTimeout(() => {
+      const prizes = []
+      const data = [
+        { name: '10元红包', img: './imgs/10.png' },
+        { name: '20元红包', img: './imgs/20.png' },
+        { name: '50元红包', img: './imgs/50.png' },
+        { name: '100元红包111111111111111111111111111111111111111', img: './imgs/100.png' },
+      ]
+      let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
+      for (let i = 0; i < 4; i++) {
+        let item = data[i]
+        prizes.push({
+          name: item.name,
+          index: i, x: axis[i][0], y: axis[i][1],
+          fonts: [{ text: item.name, top: '0%' }],
+        //   imgs: [{ src: item.img, width: '53%', top: '8%' }]
+        })
+      }
+      console.log(prizes)
+      luckyGrid.prizes = prizes
+    })
+  </script>
+</body>
+</html>

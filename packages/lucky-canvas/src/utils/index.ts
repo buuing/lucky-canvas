@@ -124,3 +124,33 @@ export const computeRange = (rangeArr: Array<number | undefined>): number => {
   const random = Math.random() * sum
   return ascendingArr.findIndex(num => random <= num)
 }
+
+/**
+ * 根据宽度分割字符串, 来达到换行的效果
+ * @param text 
+ * @param maxWidth 
+ * @returns 
+ */
+export const splitText = (
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  getWidth: (lines: string[]) => number
+): string[] => {
+  const lines = []
+  let str = ''
+  for (let i = 0; i < text.length; i++) {
+    str += text[i]
+    const currWidth = ctx.measureText(str).width
+    const maxWidth = getWidth(lines)
+    // 如果已经没有宽度了, 就没有必要再计算了
+    if (maxWidth < 0) return lines
+    // 如果当前一行的宽度不够了, 则处理下一行
+    if (currWidth > maxWidth) {
+      lines.push(str.slice(0, -1))
+      str = text[i]
+    }
+  }
+  if (str) lines.push(str)
+  if (!lines.length) lines.push(text)
+  return lines
+}

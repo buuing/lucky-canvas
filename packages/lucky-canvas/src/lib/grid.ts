@@ -18,7 +18,8 @@ import {
   removeEnter,
   computePadding,
   hasBackground,
-  computeRange
+  computeRange,
+  splitText
 } from '../utils/index'
 import { drawRoundRect, getLinearGradient } from '../utils/math'
 import { quad } from '../utils/tween'
@@ -456,19 +457,9 @@ export default class LuckyGrid extends Lucky {
         let lines = [], text = String(font.text)
         // 计算文字换行
         if (Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap) {
-          text = removeEnter(text)
-          let str = ''
-          for (let i = 0; i < text.length; i++) {
-            str += text[i]
-            let currWidth = ctx.measureText(str).width
-            let maxWidth = this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, cell.col)
-            if (currWidth > maxWidth) {
-              lines.push(str.slice(0, -1))
-              str = text[i]
-            }
-          }
-          if (str) lines.push(str)
-          if (!lines.length) lines.push(text)
+          // 最大宽度
+          let maxWidth = this.getWidth(font.lengthLimit || _defaultStyle.lengthLimit, cell.col)
+          lines = splitText(ctx, removeEnter(text), () => maxWidth)
         } else {
           lines = text.split('\n')
         }

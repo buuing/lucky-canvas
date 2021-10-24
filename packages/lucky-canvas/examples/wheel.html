@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <body>
+    <div id="my-lucky"></div>
+    <button onclick="luckyWheel.stop(-1)">stop(-1)</button>
+    <button onclick="luckyWheel.init()">init()</button>
+    <script src="../dist/lucky-canvas.umd.js"></script>
+    <script>
+      // 创建大转盘抽奖
+      var luckyWheel = new LuckyCanvas.LuckyWheel({
+        el: '#my-lucky',
+        width: '50vw',
+        height: '50vw',
+      }, {
+        blocks: [{ padding: '10px', background: '#617df2' }],
+        prizes: [],
+        buttons: [
+            { radius: '50px', background: 'rgba(0, 0, 0, 0.1)' },
+        ],
+        defaultStyle: {
+        //   fontSize: '14px'
+        },
+        defaultConfig: {
+          offsetDegree: 110,
+          gutter: 1,
+          stopRange: 0,
+        },
+        start () {
+          luckyWheel.play()
+          setTimeout(() => {
+            luckyWheel.stop(3)
+          }, 3000)
+        },
+        end (prize) {
+          console.log(prize)
+          // alert(`恭喜你获得${prize.title}`)
+        },
+      })
+      // 设置奖品
+      setTimeout(() => {
+        const prizes = []
+        let data = [
+          { name: '10元红包啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', img: '10.png' },
+          { name: '20元红包', img: '20.png' },
+          { name: '50元红包', img: '50.png' },
+          { name: '100元红包', img: '100.png' },
+          { name: '20元红包', img: '20.png' },
+          { name: '10元红包', img: '10.png' },
+        ]
+        data.forEach((item, index) => {
+          prizes.push({
+            background: index % 2 ? '#e9e8fe' : '#b8c5f2',
+            fonts: [{ text: item.name, top: '10%', fontWeight: 300 }],
+            imgs:[{ src: `./imgs/${item.img}`, width: '30%', top: '35%' }],
+          })
+        })
+        luckyWheel.prizes = prizes
+      }, 500)
+      
+    //   setTimeout(() => {
+    //     luckyWheel.prizes.push({
+    //       fonts: [{ text: 111 }],
+    //       imgs: [{
+    //         src: `./imgs/10.png`,
+    //         width: '50%'
+    //       }],
+    //       background: 'pink'
+    //     })
+    //   }, 1000)
+    </script>
+  </body>
+</body>
+</html>
