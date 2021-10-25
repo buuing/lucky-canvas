@@ -91,6 +91,8 @@ export type StartCallbackType = (e: MouseEvent, button?: ButtonType) => void
 export type EndCallbackType = (prize: object) => void
 
 export default interface LuckyGridConfig {
+  width: string | number
+  height: string | number
   rows?: RowsType
   cols?: ColsType
   blocks?: Array<BlockType>

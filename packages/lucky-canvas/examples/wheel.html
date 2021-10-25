@@ -10,6 +10,8 @@
     <div id="my-lucky"></div>
     <button onclick="luckyWheel.stop(-1)">stop(-1)</button>
     <button onclick="luckyWheel.init()">init()</button>
+    <button onclick="luckyWheel.height = luckyWheel.width = '300px'">300px</button>
+    <button onclick="luckyWheel.height = luckyWheel.width = '60vw'">60vw</button>
     <script src="../dist/lucky-canvas.umd.js"></script>
     <script>
       // 创建大转盘抽奖
@@ -18,6 +20,8 @@
         width: '50vw',
         height: '50vw',
       }, {
+        width: '50vw',
+        height: '50vw',
         blocks: [{ padding: '10px', background: '#617df2' }],
         prizes: [],
         buttons: [
@@ -25,7 +29,7 @@
         ],
         defaultStyle: {
         //   fontSize: '14px'
-          lineClamp: 2,
+          lineClamp: 3,
         },
         defaultConfig: {
           offsetDegree: 0,
@@ -63,17 +67,6 @@
         })
         luckyWheel.prizes = prizes
       }, 500)
-      
-    //   setTimeout(() => {
-    //     luckyWheel.prizes.push({
-    //       fonts: [{ text: 111 }],
-    //       imgs: [{
-    //         src: `./imgs/10.png`,
-    //         width: '50%'
-    //       }],
-    //       background: 'pink'
-    //     })
-    //   }, 1000)
     </script>
   </body>
 </body>

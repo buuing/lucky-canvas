@@ -57,8 +57,11 @@ export default class LuckyWheel extends Lucky {
    * @param config 元素标识
    * @param data 抽奖配置项
    */
-  constructor (config: UserConfigType, data: LuckyWheelConfig = {}) {
-    super(config)
+  constructor (config: UserConfigType, data: LuckyWheelConfig) {
+    super(config, {
+      width: data.width,
+      height: data.height
+    })
     this.initData(data)
     this.initWatch()
     this.initComputed()
@@ -100,6 +103,8 @@ export default class LuckyWheel extends Lucky {
    * @param data
    */
   private initData (data: LuckyWheelConfig): void {
+    this.$set(this, 'width', data.width || '300px')
+    this.$set(this, 'height', data.height || '300px')
     this.$set(this, 'blocks', data.blocks || [])
     this.$set(this, 'prizes', data.prizes || [])
     this.$set(this, 'buttons', data.buttons || [])
@@ -147,17 +152,27 @@ export default class LuckyWheel extends Lucky {
    * 初始化观察者
    */
   private initWatch () {
+    // 重置宽度
+    this.$watch('width', (newVal: string | number) => {
+      this.data.width = newVal
+      this.resize()
+    })
+    // 重置高度
+    this.$watch('height', (newVal: string | number) => {
+      this.data.height = newVal
+      this.resize()
+    })
     // 观察 blocks 变化收集图片
     this.$watch('blocks', (newData: Array<BlockType>) => {
-      return this.init({ blockImgs: newData.map(cell => cell.imgs) })
+      this.init({ blockImgs: newData.map(cell => cell.imgs) })
     }, { deep: true })
     // 观察 prizes 变化收集图片
     this.$watch('prizes', (newData: Array<PrizeType>) => {
-      return this.init({ prizeImgs: newData.map(cell => cell.imgs) })
+      this.init({ prizeImgs: newData.map(cell => cell.imgs) })
     }, { deep: true })
     // 观察 buttons 变化收集图片
     this.$watch('buttons', (newData: Array<ButtonType>) => {
-      return this.init({ btnImgs: newData.map(cell => cell.imgs) })
+      this.init({ btnImgs: newData.map(cell => cell.imgs) })
     }, { deep: true })
     this.$watch('defaultConfig', () => this.draw(), { deep: true })
     this.$watch('defaultStyle', () => this.draw(), { deep: true })

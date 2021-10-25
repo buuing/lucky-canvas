@@ -70,8 +70,11 @@ export default class LuckyGrid extends Lucky {
    * @param config 元素标识
    * @param data 抽奖配置项
    */
-  constructor (config: UserConfigType, data: LuckyGridConfig = {}) {
-    super(config)
+  constructor (config: UserConfigType, data: LuckyGridConfig) {
+    super(config, {
+      width: data.width,
+      height: data.height
+    })
     this.initData(data)
     this.initWatch()
     this.initComputed()
@@ -111,6 +114,8 @@ export default class LuckyGrid extends Lucky {
    * @param data
    */
   private initData (data: LuckyGridConfig): void {
+    this.$set(this, 'width', data.width || '300px')
+    this.$set(this, 'height', data.height || '300px')
     this.$set(this, 'rows', Number(data.rows) || 3)
     this.$set(this, 'cols', Number(data.cols) || 3)
     this.$set(this, 'blocks', data.blocks || [])
@@ -171,25 +176,35 @@ export default class LuckyGrid extends Lucky {
    * 初始化观察者
    */
   private initWatch (): void {
+    // 重置宽度
+    this.$watch('width', (newVal: string | number) => {
+      this.data.width = newVal
+      this.resize()
+    })
+    // 重置高度
+    this.$watch('height', (newVal: string | number) => {
+      this.data.height = newVal
+      this.resize()
+    })
     // 监听 blocks 数据的变化
     this.$watch('blocks', (newData: Array<BlockType>) => {
-      return this.init({ blockImgs: newData.map(block => block.imgs) })
+      this.init({ blockImgs: newData.map(block => block.imgs) })
     }, { deep: true })
     // 监听 prizes 数据的变化
     this.$watch('prizes', (newData: Array<PrizeType>) => {
-      return this.init({ prizeImgs: newData.map(prize => prize.imgs) })
+      this.init({ prizeImgs: newData.map(prize => prize.imgs) })
     }, { deep: true })
     // 监听 button 数据的变化
     this.$watch('buttons', (newData: Array<ButtonType>) => {
       const btnImgs = newData.map(btn => btn.imgs)
       if (this.button) btnImgs.push(this.button.imgs)
-      return this.init({ btnImgs })
+      this.init({ btnImgs })
     }, { deep: true })
     // 临时过渡代码, 升级到2.x即可删除
     this.$watch('button', () => {
       const btnImgs = this.buttons.map(btn => btn.imgs)
       if (this.button) btnImgs.push(this.button.imgs)
-      return this.init({ btnImgs })
+      this.init({ btnImgs })
     }, { deep: true })
     this.$watch('rows', () => this.init({}))
     this.$watch('cols', () => this.init({}))

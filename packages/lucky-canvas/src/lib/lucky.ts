@@ -13,18 +13,28 @@ export default class Lucky {
   protected rAF: Function = function () {}
   protected boxWidth: number = 0
   protected boxHeight: number = 0
-
+  protected data: {
+    width: string | number,
+    height: string | number
+  }
   /**
    * 公共构造器
    * @param config
    */
-  constructor (config: string | HTMLDivElement | UserConfigType) {
+  constructor (
+    config: string | HTMLDivElement | UserConfigType,
+    data: {
+      width: string | number,
+      height: string | number
+    }
+  ) {
     // 兼容代码开始: 为了处理 v1.0.6 版本在这里传入了一个 dom
     if (typeof config === 'string') config = { el: config } as UserConfigType
     else if (config.nodeType === 1) config = { el: '', divElement: config } as UserConfigType
     // 这里先野蛮的处理, 等待后续优化, 对外暴露的类型是UserConfigType, 但内部期望是ConfigType
     config = config as UserConfigType
     this.config = config as ConfigType
+    this.data = data
     // 开始初始化
     if (!config.flag) config.flag = 'WEB'
     if (config.el) config.divElement = document.querySelector(config.el) as HTMLDivElement
@@ -112,22 +122,21 @@ export default class Lucky {
    * 重置盒子和canvas的宽高
    */
   private resetWidthAndHeight (): void {
-    const { config } = this
+    const { config, data } = this
     // 如果是浏览器环境并且存在盒子
     let boxWidth = 0, boxHeight = 0
     if (config.divElement) {
       boxWidth = config.divElement.offsetWidth
       boxHeight = config.divElement.offsetHeight
     }
-    // 如果 config 上面没有宽高, 就从 style 上面取
-    this.boxWidth = this.getLength(config.width) || boxWidth
-    this.boxHeight = this.getLength(config.height) || boxHeight
+    // 先从 data 里取宽高, 如果 config 上面没有, 就从 style 上面取
+    this.boxWidth = this.getLength(data.width || config.width) || boxWidth
+    this.boxHeight = this.getLength(data.height || config.height) || boxHeight
     // 重新把宽高赋给盒子
     if (config.divElement) {
       config.divElement.style.overflow = 'hidden'
       config.divElement.style.width = this.boxWidth + 'px'
       config.divElement.style.height = this.boxHeight + 'px'
-      // config.divElement.style['transform-origin'] = 'center'
     }
   }
 

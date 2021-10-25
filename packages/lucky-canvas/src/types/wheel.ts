@@ -64,6 +64,8 @@ export type StartCallbackType = (e: MouseEvent) => void
 export type EndCallbackType = (prize: object) => void
 
 export default interface LuckyWheelConfig {
+  width: string | number
+  height: string | number
   blocks?: Array<BlockType>
   prizes?: Array<PrizeType>
   buttons?: Array<ButtonType>
