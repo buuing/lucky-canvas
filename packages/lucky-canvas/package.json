@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.5.12",
+  "version": "1.5.13",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
   "module": "dist/lucky-canvas.esm",
   "browser": "dist/lucky-canvas.umd",
@@ -21,11 +21,7 @@
   "files": [
     "dist",
     "types",
-    "index.js",
-    "umd.min.js",
-    "LICENSE",
-    "README.md",
-    "package.json"
+    "index.js"
   ],
   "keywords": [
     "vue3抽奖",
