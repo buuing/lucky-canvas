@@ -55,7 +55,7 @@ export default [
     input: "dist/src/index.d.ts",
     output: [
       {
-        file: "dist/index.d.ts",
+        file: "types/index.d.ts",
         format: "es"
       }
     ],

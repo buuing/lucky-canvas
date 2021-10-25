@@ -1,4 +1,4 @@
-interface FontType {
+declare type FontType = {
     text: string;
     top?: string | number;
     fontColor?: string;
@@ -6,19 +6,24 @@ interface FontType {
     fontStyle?: string;
     fontWeight?: string;
     lineHeight?: string;
-}
-interface ImgType {
+};
+declare type FontExtendType = {
+    wordWrap?: boolean;
+    lengthLimit?: string | number;
+    lineClamp?: number;
+};
+declare type ImgType = {
     src: string;
     top?: string | number;
     width?: string;
     height?: string;
     $resolve?: Function;
     $reject?: Function;
-}
+};
 declare type BorderRadiusType = string | number;
 declare type BackgroundType = string;
 declare type ShadowType = string;
-interface ConfigType {
+declare type ConfigType = {
     nodeType?: number;
     flag: 'WEB' | 'MP-WX' | 'UNI-H5' | 'UNI-MP' | 'TARO-H5' | 'TARO-MP';
     el?: string;
@@ -39,7 +44,7 @@ interface ConfigType {
     afterInit?: Function;
     beforeDraw?: Function;
     afterDraw?: Function;
-}
+};
 declare type RequireKey = 'width' | 'height';
 declare type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>;
 
@@ -57,11 +62,18 @@ declare class Lucky {
     protected rAF: Function;
     protected boxWidth: number;
     protected boxHeight: number;
+    protected data: {
+        width: string | number;
+        height: string | number;
+    };
     /**
      * 公共构造器
      * @param config
      */
-    constructor(config: string | HTMLDivElement | UserConfigType);
+    constructor(config: string | HTMLDivElement | UserConfigType, data: {
+        width: string | number;
+        height: string | number;
+    });
     /**
      * 初始化组件大小/单位
      */
@@ -145,38 +157,32 @@ declare class Lucky {
     protected $watch(expr: string | Function, handler: Function | WatchOptType, watchOpt?: WatchOptType): Function;
 }
 
-interface PrizeFontType$1 extends FontType {
-    wordWrap?: boolean;
-    lengthLimit?: string | number;
-}
-interface ButtonFontType$1 extends FontType {
-}
-interface BlockImgType$1 extends ImgType {
+declare type PrizeFontType$1 = FontType & FontExtendType;
+declare type ButtonFontType$1 = FontType & {};
+declare type BlockImgType$1 = ImgType & {
     rotate?: boolean;
-}
-interface PrizeImgType$1 extends ImgType {
-}
-interface ButtonImgType$1 extends ImgType {
-}
-interface BlockType$1 {
+};
+declare type PrizeImgType$1 = ImgType & {};
+declare type ButtonImgType$1 = ImgType & {};
+declare type BlockType$1 = {
     padding?: string;
     background?: BackgroundType;
     imgs?: Array<BlockImgType$1>;
-}
-interface PrizeType$1 {
+};
+declare type PrizeType$1 = {
     range?: number;
     background?: BackgroundType;
     fonts?: Array<PrizeFontType$1>;
     imgs?: Array<PrizeImgType$1>;
-}
-interface ButtonType$1 {
+};
+declare type ButtonType$1 = {
     radius?: string;
     pointer?: boolean;
     background?: BackgroundType;
     fonts?: Array<ButtonFontType$1>;
     imgs?: Array<ButtonImgType$1>;
-}
-interface DefaultConfigType$1 {
+};
+declare type DefaultConfigType$1 = {
     gutter?: string | number;
     offsetDegree?: number;
     speed?: number;
@@ -184,8 +190,8 @@ interface DefaultConfigType$1 {
     accelerationTime?: number;
     decelerationTime?: number;
     stopRange?: number;
-}
-interface DefaultStyleType$1 {
+};
+declare type DefaultStyleType$1 = {
     background?: BackgroundType;
     fontColor?: PrizeFontType$1['fontColor'];
     fontSize?: PrizeFontType$1['fontSize'];
@@ -194,10 +200,13 @@ interface DefaultStyleType$1 {
     lineHeight?: PrizeFontType$1['lineHeight'];
     wordWrap?: PrizeFontType$1['wordWrap'];
     lengthLimit?: PrizeFontType$1['lengthLimit'];
-}
+    lineClamp?: PrizeFontType$1['lineClamp'];
+};
 declare type StartCallbackType$1 = (e: MouseEvent) => void;
 declare type EndCallbackType$1 = (prize: object) => void;
 interface LuckyWheelConfig {
+    width: string | number;
+    height: string | number;
     blocks?: Array<BlockType$1>;
     prizes?: Array<PrizeType$1>;
     buttons?: Array<ButtonType$1>;
@@ -243,7 +252,7 @@ declare class LuckyWheel extends Lucky {
      * @param config 元素标识
      * @param data 抽奖配置项
      */
-    constructor(config: UserConfigType, data?: LuckyWheelConfig);
+    constructor(config: UserConfigType, data: LuckyWheelConfig);
     protected resize(): void;
     protected initLucky(): void;
     /**
@@ -340,22 +349,14 @@ declare class LuckyWheel extends Lucky {
     protected conversionAxis(x: number, y: number): [number, number];
 }
 
-interface PrizeFontType extends FontType {
-    wordWrap?: boolean;
-    lengthLimit?: string | number;
-}
-interface ButtonFontType extends FontType {
-    wordWrap?: boolean;
-    lengthLimit?: string | number;
-}
-interface BlockImgType extends ImgType {
-}
-interface PrizeImgType extends ImgType {
+declare type PrizeFontType = FontType & FontExtendType;
+declare type ButtonFontType = FontType & FontExtendType;
+declare type BlockImgType = ImgType & {};
+declare type PrizeImgType = ImgType & {
     activeSrc?: string;
-}
-interface ButtonImgType extends ImgType {
-}
-interface BlockType {
+};
+declare type ButtonImgType = ImgType & {};
+declare type BlockType = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
     padding?: string;
@@ -364,8 +365,8 @@ interface BlockType {
     paddingBottom?: string | number;
     paddingLeft?: string | number;
     imgs?: Array<BlockImgType>;
-}
-interface CellType<T, U> {
+};
+declare type CellType<T, U> = {
     x: number;
     y: number;
     col?: number;
@@ -375,20 +376,20 @@ interface CellType<T, U> {
     shadow?: ShadowType;
     fonts?: Array<T>;
     imgs?: Array<U>;
-}
+};
 declare type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
     range?: number;
 };
 declare type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
     callback?: Function;
 };
-interface DefaultConfigType {
+declare type DefaultConfigType = {
     gutter?: number;
     speed?: number;
     accelerationTime?: number;
     decelerationTime?: number;
-}
-interface DefaultStyleType {
+};
+declare type DefaultStyleType = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
     shadow?: ShadowType;
@@ -399,8 +400,9 @@ interface DefaultStyleType {
     lineHeight?: PrizeFontType['lineHeight'];
     wordWrap?: PrizeFontType['wordWrap'];
     lengthLimit?: PrizeFontType['lengthLimit'];
-}
-interface ActiveStyleType {
+    lineClamp?: PrizeFontType['lineClamp'];
+};
+declare type ActiveStyleType = {
     background?: BackgroundType;
     shadow?: ShadowType;
     fontColor?: PrizeFontType['fontColor'];
@@ -408,12 +410,14 @@ interface ActiveStyleType {
     fontStyle?: PrizeFontType['fontStyle'];
     fontWeight?: PrizeFontType['fontWeight'];
     lineHeight?: PrizeFontType['lineHeight'];
-}
+};
 declare type RowsType = number;
 declare type ColsType = number;
 declare type StartCallbackType = (e: MouseEvent, button?: ButtonType) => void;
 declare type EndCallbackType = (prize: object) => void;
 interface LuckyGridConfig {
+    width: string | number;
+    height: string | number;
     rows?: RowsType;
     cols?: ColsType;
     blocks?: Array<BlockType>;
@@ -469,7 +473,7 @@ declare class LuckyGrid extends Lucky {
      * @param config 元素标识
      * @param data 抽奖配置项
      */
-    constructor(config: UserConfigType, data?: LuckyGridConfig);
+    constructor(config: UserConfigType, data: LuckyGridConfig);
     protected resize(): void;
     protected initLucky(): void;
     /**

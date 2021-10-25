@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/vue",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
   "module": "dist/index.esm",
   "browser": "dist/index.umd",
@@ -49,7 +49,10 @@
     "acorn-jsx": "^5.3.1",
     "postcss": "^8.2.8",
     "rollup": "^2.43.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^4.0.0",
     "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "0.30.0",
     "typescript": "^4.2.3",
     "vue": "^3.0.11"
