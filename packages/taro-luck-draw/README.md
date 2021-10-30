@@ -1,7 +1,7 @@
 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
-  <h1>taro-luck-draw 抽奖插件</h1>
+  <h1>@lucky-canvas/taro 抽奖插件</h1>
   <p>一个基于 Taro 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/LuckDraw/lucky-canvas/stargazers" target="_black">
@@ -19,28 +19,92 @@
   </p>
 </div>
 
-<div align="center">
+<br />
 
-|适配框架|npm包|最新版本|npm下载量|CDN使用量|
-| :-: | :-: | :-: | :-: | :-: |
-|`JS` / `JQ`|[lucky-canvas](https://100px.net/usage/js.html)|<img src="https://img.shields.io/npm/v/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" /></a>|
-|`Vue2.x` / `Vue3.x`|[vue-luck-draw](https://100px.net/usage/vue.html)|<img src="https://img.shields.io/npm/v/vue-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/vue-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/vue-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/vue-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/vue-luck-draw/badge" alt="downloads" /></a>|
-|`React`|[react-luck-draw](https://100px.net/usage/react.html)|<img src="https://img.shields.io/npm/v/react-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/react-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/react-luck-draw" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/react-luck-draw/badge" alt="downloads" /></a>|
-|`UniApp`|[uni-luck-draw](https://100px.net/usage/uni.html)|<img src="https://img.shields.io/npm/v/uni-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/uni-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/uni-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
-|`Taro3.x`|[taro-luck-draw](https://100px.net/usage/taro.html)|<img src="https://img.shields.io/npm/v/taro-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/taro-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/taro-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
-|`微信小程序`|[mini-luck-draw](https://100px.net/usage/wx.html)|<img src="https://img.shields.io/npm/v/mini-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/mini-luck-draw" target="_black"><img src="https://img.shields.io/npm/dm/mini-luck-draw?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
+## 官方文档
 
-</div>
+> **中文**：[https://100px.net/document/taro.html](https://100px.net/document/taro.html)
 
 <br />
 
-## 官方文档 & Demo演示
+## 在 Taro 中使用
 
-> **中文**：[https://100px.net](https://100px.net)
+### 安装
+
+> 为了确保相关依赖安装正确, 你必须通过 npm / yarn 来安装
+
+```shell
+# npm 安装：
+npm install taro
+
+# yarn 安装：
+yarn add taro
+```
 
 
 <br />
 
-### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/lucky-canvas) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
+### 使用
+
+#### taro-vue 简单示例
+
+- [点击查看 taro-vue 完整示例](https://100px.net/usage/taro.html)
+
+```html
+<template>
+  <view>
+
+    <!-- 大转盘抽奖 -->
+    <LuckyWheel width="600rpx" height="600rpx" ...你的配置 />
+
+    <!-- 九宫格抽奖 -->
+    <LuckyGrid width="600rpx" height="600rpx" ...你的配置 />
+
+  </view>
+</template>
+
+<script>
+import { LuckyWheel, LuckyGrid } from '@lucky-canvas/taro/vue'
+export default {
+  components: { LuckyWheel, LuckyGrid },
+}
+</script>
+```
+
+<br />
+
+#### taro-react 简单示例
+
+- [点击查看 taro-react 完整示例](https://100px.net/usage/taro.html)
+
+```js
+import React from 'react'
+import { View } from '@tarojs/components'
+import { LuckyWheel, LuckyGrid } from '@lucky-canvas/taro/react'
+
+export default class Index extends React.Component {
+  render () {
+    return <View>
+
+      {/* 大转盘抽奖 */}
+      <LuckyWheel width="300px" height="300px" ...你的配置 />
+
+      {/* 大转盘抽奖 */}
+      <LuckyGrid width="300px" height="300px" ...你的配置 />
+
+    </View>
+  }
+}
+```
+
+<br />
+
+## 完整文档: https://100px.net
+
+<br />
+
+## 🙏🙏🙏 点个Star
+
+### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/buuing/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ☜) ☜(ﾟヮﾟ☜)**
 
 <br />
