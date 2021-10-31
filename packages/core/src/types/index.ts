@@ -1,5 +1,5 @@
 // 字体类型
-export type FontType = {
+export type FontItemType = {
   text: string
   top?: string | number
   fontColor?: string
@@ -15,12 +15,15 @@ export type FontExtendType = {
   lineClamp?: number
 }
 
+export type ImgType = HTMLImageElement | HTMLCanvasElement
+
 // 图片类型
-export type ImgType = {
+export type ImgItemType = {
   src: string
   top?: string | number
   width?: string
   height?: string
+  formatter?: (img: ImgType) => ImgType
   $resolve?: Function
   $reject?: Function
 }

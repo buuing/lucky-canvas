@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { UserConfigType } from '../types/index'
+import { UserConfigType, ImgType } from '../types/index'
 import LuckyGridConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -61,9 +61,9 @@ export default class LuckyGrid extends Lucky {
   // 奖品区域几何信息
   private prizeArea: { x: number, y: number, w: number, h: number } | undefined
   // 图片缓存
-  private blockImgs: Array<{ defaultImg: HTMLImageElement }[]> = [[]]
-  private btnImgs: Array<{ defaultImg: HTMLImageElement }[]> = [[]]
-  private prizeImgs: Array<{ defaultImg: HTMLImageElement, activeImg?: HTMLImageElement }[]> = []
+  private blockImgs: Array<{ defaultImg: ImgType }[]> = [[]]
+  private btnImgs: Array<{ defaultImg: ImgType }[]> = [[]]
+  private prizeImgs: Array<{ defaultImg: ImgType, activeImg?: ImgType }[]> = []
 
   /**
    * 九宫格构造器
@@ -308,7 +308,15 @@ export default class LuckyGrid extends Lucky {
         imgInfo['activeSrc'] && this.loadImg(imgInfo['activeSrc'], imgInfo, '$activeResolve')
       ]
       Promise.all(request).then(([defaultImg, activeImg]) => {
-        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg } as { defaultImg: HTMLImageElement, activeImg?: HTMLImageElement }
+        const formatter = imgInfo.formatter
+        // 对图片进行处理
+        if (typeof formatter === 'function') {
+          defaultImg = formatter.call(this, defaultImg)
+          if (activeImg) {
+            activeImg = formatter.call(this, activeImg)
+          }
+        }
+        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg }
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -325,7 +333,7 @@ export default class LuckyGrid extends Lucky {
    * @return [渲染宽度, 渲染高度]
    */
   private computedWidthAndHeight (
-    imgObj: HTMLImageElement,
+    imgObj: ImgType,
     imgInfo: CellImgType,
     cell: CellType<CellFontType, CellImgType>
   ): [number, number] {

@@ -1,4 +1,4 @@
-declare type FontType = {
+declare type FontItemType = {
     text: string;
     top?: string | number;
     fontColor?: string;
@@ -12,11 +12,13 @@ declare type FontExtendType = {
     lengthLimit?: string | number;
     lineClamp?: number;
 };
-declare type ImgType = {
+declare type ImgType = HTMLImageElement | HTMLCanvasElement;
+declare type ImgItemType = {
     src: string;
     top?: string | number;
     width?: string;
     height?: string;
+    formatter?: (img: ImgType) => ImgType;
     $resolve?: Function;
     $reject?: Function;
 };
@@ -113,13 +115,13 @@ declare class Lucky {
      * @param src 图片路径
      * @param info 图片信息
      */
-    protected loadImg(src: string, info: ImgType, resolveName?: string): Promise<HTMLImageElement>;
+    protected loadImg(src: string, info: ImgItemType, resolveName?: string): Promise<ImgType>;
     /**
      * 公共绘制图片的方法
      * @param imgObj 图片对象
      * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度]
      */
-    protected drawImage(imgObj: HTMLImageElement, ...rectInfo: [number, number, number, number]): void;
+    protected drawImage(imgObj: ImgType, ...rectInfo: [number, number, number, number]): void;
     /**
      * 获取长度
      * @param length 将要转换的长度
@@ -157,13 +159,13 @@ declare class Lucky {
     protected $watch(expr: string | Function, handler: Function | WatchOptType, watchOpt?: WatchOptType): Function;
 }
 
-declare type PrizeFontType$1 = FontType & FontExtendType;
-declare type ButtonFontType$1 = FontType & {};
-declare type BlockImgType$1 = ImgType & {
+declare type PrizeFontType$1 = FontItemType & FontExtendType;
+declare type ButtonFontType$1 = FontItemType & {};
+declare type BlockImgType$1 = ImgItemType & {
     rotate?: boolean;
 };
-declare type PrizeImgType$1 = ImgType & {};
-declare type ButtonImgType$1 = ImgType & {};
+declare type PrizeImgType$1 = ImgItemType & {};
+declare type ButtonImgType$1 = ImgItemType & {};
 declare type BlockType$1 = {
     padding?: string;
     background?: BackgroundType;
@@ -349,13 +351,13 @@ declare class LuckyWheel extends Lucky {
     protected conversionAxis(x: number, y: number): [number, number];
 }
 
-declare type PrizeFontType = FontType & FontExtendType;
-declare type ButtonFontType = FontType & FontExtendType;
-declare type BlockImgType = ImgType & {};
-declare type PrizeImgType = ImgType & {
+declare type PrizeFontType = FontItemType & FontExtendType;
+declare type ButtonFontType = FontItemType & FontExtendType;
+declare type BlockImgType = ImgItemType & {};
+declare type PrizeImgType = ImgItemType & {
     activeSrc?: string;
 };
-declare type ButtonImgType = ImgType & {};
+declare type ButtonImgType = ImgItemType & {};
 declare type BlockType = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
@@ -379,6 +381,7 @@ declare type CellType<T, U> = {
 };
 declare type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
     range?: number;
+    disabled?: boolean;
 };
 declare type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
     callback?: Function;

@@ -1,7 +1,7 @@
 import '../utils/polyfill'
 import { isExpectType, throttle } from '../utils/index'
 import { name, version } from '../../package.json'
-import { ConfigType, UserConfigType, ImgType } from '../types/index'
+import { ConfigType, UserConfigType, ImgItemType, ImgType } from '../types/index'
 import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
@@ -195,9 +195,9 @@ export default class Lucky {
    */
   protected loadImg (
     src: string,
-    info: ImgType,
+    info: ImgItemType,
     resolveName = '$resolve'
-  ): Promise<HTMLImageElement> {
+  ): Promise<ImgType> {
     return new Promise((resolve, reject) => {
       if (!src) reject(`=> '${info.src}' 不能为空或不合法`)
       if (this.config.flag === 'WEB') {
@@ -220,7 +220,7 @@ export default class Lucky {
    * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度] 
    */
   protected drawImage (
-    imgObj: HTMLImageElement,
+    imgObj: ImgType,
     ...rectInfo: [number, number, number, number]
   ): void {
     let drawImg, { config, ctx } = this
@@ -229,7 +229,7 @@ export default class Lucky {
       drawImg = imgObj
     } else if (['UNI-H5', 'UNI-MP', 'TARO-H5', 'TARO-MP'].includes(config.flag)) {
       // 旧版本的小程序需要绘制 path, 这里特殊处理一下
-      type OldImageType = HTMLImageElement & { path: CanvasImageSource }
+      type OldImageType = ImgType & { path: CanvasImageSource }
       drawImg = (imgObj as OldImageType).path
     } else {
       // 如果传入了未知的标识

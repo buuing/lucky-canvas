@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { UserConfigType } from '../types/index'
+import { UserConfigType, FontItemType, ImgItemType, ImgType } from '../types/index'
 import LuckyWheelConfig, {
   BlockType, BlockImgType,
   PrizeType, PrizeImgType,
@@ -9,7 +9,6 @@ import LuckyWheelConfig, {
   StartCallbackType,
   EndCallbackType
 } from '../types/wheel'
-import { FontType, ImgType } from '../types/index'
 import {
   isExpectType,
   removeEnter,
@@ -48,9 +47,9 @@ export default class LuckyWheel extends Lucky {
    * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
    */
   private prizeFlag: number | undefined
-  private blockImgs: Array<HTMLImageElement[]> = [[]]
-  private prizeImgs: Array<HTMLImageElement[]> = [[]]
-  private btnImgs: Array<HTMLImageElement[]> = [[]]
+  private blockImgs: Array<ImgType[]> = [[]]
+  private prizeImgs: Array<ImgType[]> = [[]]
+  private btnImgs: Array<ImgType[]> = [[]]
 
   /**
    * 大转盘构造器
@@ -253,8 +252,11 @@ export default class LuckyWheel extends Lucky {
       if (!imgInfo) return
       if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
       // 异步加载图片
-      this.loadImg(imgInfo.src, imgInfo).then(res => {
-        this[imgName][cellIndex][imgIndex] = res
+      this.loadImg(imgInfo.src, imgInfo).then(currImg => {
+        if (typeof imgInfo.formatter === 'function') {
+          currImg = imgInfo.formatter.call(this, currImg)
+        }
+        this[imgName][cellIndex][imgIndex] = currImg
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -272,8 +274,8 @@ export default class LuckyWheel extends Lucky {
    * @return [渲染宽度, 渲染高度]
    */
   private computedWidthAndHeight (
-    imgObj: HTMLImageElement,
-    imgInfo: ImgType,
+    imgObj: ImgType,
+    imgInfo: ImgItemType,
     maxWidth: number,
     maxHeight: number
   ): [number, number] {
@@ -340,7 +342,7 @@ export default class LuckyWheel extends Lucky {
       return this.getOffsetX(ctx.measureText(line).width)
     }
     // 计算文字纵坐标
-    const getFontY = (font: FontType, height: number, lineIndex: number) => {
+    const getFontY = (font: FontItemType, height: number, lineIndex: number) => {
       // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
       const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
       return this.getHeight(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)

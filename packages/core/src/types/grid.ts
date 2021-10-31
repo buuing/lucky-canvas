@@ -1,25 +1,25 @@
 import {
-  FontType,
-  ImgType,
+  FontItemType,
+  ImgItemType,
   BorderRadiusType,
   BackgroundType,
   ShadowType,
   FontExtendType
 } from './index'
 
-export type PrizeFontType = FontType & FontExtendType
+export type PrizeFontType = FontItemType & FontExtendType
 
-export type ButtonFontType = FontType & FontExtendType
+export type ButtonFontType = FontItemType & FontExtendType
 
 export type CellFontType = PrizeFontType | ButtonFontType
 
-export type BlockImgType = ImgType & {}
+export type BlockImgType = ImgItemType & {}
 
-export type PrizeImgType = ImgType & {
+export type PrizeImgType = ImgItemType & {
   activeSrc?: string
 }
 
-export type ButtonImgType = ImgType & {}
+export type ButtonImgType = ImgItemType & {}
 
 export type CellImgType = PrizeImgType | ButtonImgType
 
@@ -48,6 +48,7 @@ export type CellType<T, U> = {
 
 export type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
   range?: number
+  disabled?: boolean
 }
 
 export type ButtonType = CellType<ButtonFontType, ButtonImgType> & {

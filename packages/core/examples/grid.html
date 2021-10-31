@@ -7,10 +7,15 @@
 </head>
 <body>
   <div id="my-lucky"></div>
+  <button onclick="luckyGrid.play()">play()</button>
+  <button onclick="luckyGrid.stop(0)">stop(0)</button>
+  <button onclick="luckyGrid.stop(1)">stop(1)</button>
+  <button onclick="luckyGrid.stop(2)">stop(2)</button>
   <button onclick="luckyGrid.stop(-1)">stop(-1)</button>
   <button onclick="luckyGrid.init()">init()</button>
   <script src="../dist/lucky-canvas.umd.js"></script>
-  <script>
+  <script src="https://cdn.jsdelivr.net/npm/magic-image@0.0.2/dist/magic-image.umd.js"></script>
+    <script>
     let luckyNum = 1
     // 创建九宫格抽奖
     var luckyGrid = new LuckyCanvas.LuckyGrid({
@@ -22,11 +27,7 @@
             { padding: '10px', background: '#869cfa' },
             { padding: '10px', background: '#e9e8fe' },
         ],
-        prizes: [
-            { x: 0, y: 0 },
-            { x: 1, y: 0 },
-            { x: 2, y: 0 },
-        ],
+        prizes: [],
         defaultStyle: {
             background: '#b8c5f2',
             lineClamp: 3,
@@ -44,7 +45,7 @@
         console.log(prize)
         // alert(`恭喜你获得大奖: ${prize.name}`)
         // luckyNum--
-        luckyGrid.buttons[0].fonts[0].text = `${luckyNum} 次`
+        // luckyGrid.buttons[0].fonts[0].text = `${luckyNum} 次`
         // luckyGrid.stop(-1)
       }
     })
@@ -55,16 +56,30 @@
         { name: '10元红包', img: './imgs/10.png' },
         { name: '20元红包', img: './imgs/20.png' },
         { name: '50元红包', img: './imgs/50.png' },
+        { name: '50元红包', img: './imgs/50.png' },
+        { name: '50元红包', img: './imgs/50.png' },
+        { name: '50元红包', img: './imgs/50.png' },
+        { name: '50元红包', img: './imgs/50.png' },
         { name: '100元红包111111111111111111111111111111111111111', img: './imgs/100.png' },
       ]
       let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < data.length; i++) {
         let item = data[i]
+        const disabled = i<6
         prizes.push({
           name: item.name,
           index: i, x: axis[i][0], y: axis[i][1],
           fonts: [{ text: item.name, top: '0%' }],
-        //   imgs: [{ src: item.img, width: '53%', top: '8%' }]
+          disabled: disabled,
+          imgs: [{
+            src: item.img, width: '53%', top: '8%',
+            formatter (img) {
+              // 处理图片
+              const newImage = MagicImage.opacity(img, disabled ? 30 : 100)
+              // 返回新的图片对象
+              return newImage
+            }
+          }]
         })
       }
       console.log(prizes)

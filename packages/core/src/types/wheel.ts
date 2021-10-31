@@ -1,21 +1,21 @@
 import {
-  FontType,
-  ImgType,
+  FontItemType,
+  ImgItemType,
   BackgroundType,
   FontExtendType
 } from './index'
 
-export type PrizeFontType = FontType & FontExtendType
+export type PrizeFontType = FontItemType & FontExtendType
 
-export type ButtonFontType = FontType & {}
+export type ButtonFontType = FontItemType & {}
 
-export type BlockImgType = ImgType & {
+export type BlockImgType = ImgItemType & {
   rotate?: boolean
 }
 
-export type PrizeImgType = ImgType & {}
+export type PrizeImgType = ImgItemType & {}
 
-export type ButtonImgType = ImgType & {}
+export type ButtonImgType = ImgItemType & {}
 
 export type BlockType = {
   padding?: string
