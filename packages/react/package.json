@@ -1,6 +1,6 @@
 {
-  "name": "react-luck-draw",
-  "version": "1.0.1",
+  "name": "@lucky-canvas/react",
+  "version": "0.0.1",
   "description": "react抽奖插件",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,6 @@
   },
   "homepage": "https://100px.net",
   "files": [
-    "package.json",
-    "LICENSE",
     "dist",
     "index.js"
   ],
@@ -42,6 +40,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "lucky-canvas": "^1.5.2"
+    "lucky-canvas": "~1.5.13"
   }
 }
