@@ -141,20 +141,18 @@ export const drawSectorByArcTo = (
   ctx.fill()
 }
 
-// 绘制圆角矩形 (由于微信小程序的 arcTo 有 bug, 下面的圆弧使用二次贝塞尔曲线代替)
-export const drawRoundRect = (
+// 绘制圆角矩形的路径 (由于微信小程序的 arcTo 有 bug, 下面的圆弧使用二次贝塞尔曲线代替)
+export const roundRect = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
   w: number,
   h: number,
   r: number,
-  color: string
 ) => {
   let min = Math.min(w, h)
   if (r > min / 2) r = min / 2
   ctx.beginPath()
-  ctx.fillStyle = color
   ctx.moveTo(x + r, y)
   ctx.lineTo(x + r, y)
   ctx.lineTo(x + w - r, y)
@@ -169,6 +167,20 @@ export const drawRoundRect = (
   ctx.lineTo(x, y + r)
   // ctx.arcTo(x, y, x + r, y, r)
   ctx.quadraticCurveTo(x, y, x + r, y)
+}
+
+// 绘制圆角矩形
+export const drawRoundRect = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number,
+  color: string
+) => {
+  ctx.fillStyle = color
+  roundRect(ctx, x, y, w, h, r)
   ctx.closePath()
   ctx.fill()
 }

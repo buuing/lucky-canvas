@@ -91,6 +91,12 @@ export const computePadding = (
   return [paddingTop, paddingBottom, paddingLeft, paddingRight]
 }
 
+/**
+ * 节流函数
+ * @param fn 将要处理的函数
+ * @param wait 时间, 单位为毫秒
+ * @returns 包装好的节流函数
+ */
 export const throttle = (fn: Function, wait = 300) => {
   let timeId = null as any
   return function (this: any, ...args: any[]) {
