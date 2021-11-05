@@ -136,6 +136,18 @@ declare class Lucky {
      */
     protected changeUnits(value: string, denominator?: number): number;
     /**
+     * 图片裁剪
+     */
+    $clip(img: ImgType, ...params: (string | number)[]): ImgType;
+    /**
+     * 透明度
+     */
+    $opacity(img: ImgType, value: string | number): ImgType;
+    /**
+     * 高斯模糊
+     */
+    $blur(img: ImgType, radius: string | number): ImgType;
+    /**
      * 添加一个新的响应式数据 (临时)
      * @param data 数据
      * @param key 属性
@@ -246,9 +258,7 @@ declare class LuckyWheel extends Lucky {
      * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
      */
     private prizeFlag;
-    private blockImgs;
-    private prizeImgs;
-    private btnImgs;
+    private ImageCache;
     /**
      * 大转盘构造器
      * @param config 元素标识
@@ -272,13 +282,9 @@ declare class LuckyWheel extends Lucky {
     private initWatch;
     /**
      * 初始化 canvas 抽奖
-     * @param { willUpdateImgs } willUpdateImgs 需要更新的图片
      */
-    init(willUpdateImgs?: {
-        blockImgs?: Array<BlockImgType$1[] | undefined>;
-        prizeImgs?: Array<PrizeImgType$1[] | undefined>;
-        btnImgs?: Array<ButtonImgType$1[] | undefined>;
-    }): void;
+    init(): Promise<void>;
+    private initImageCache;
     /**
      * canvas点击事件
      * @param e 事件参数
@@ -468,9 +474,7 @@ declare class LuckyGrid extends Lucky {
     private prizeFlag;
     private cells;
     private prizeArea;
-    private blockImgs;
-    private btnImgs;
-    private prizeImgs;
+    private ImageCache;
     /**
      * 九宫格构造器
      * @param config 元素标识
@@ -494,13 +498,9 @@ declare class LuckyGrid extends Lucky {
     private initWatch;
     /**
      * 初始化 canvas 抽奖
-     * @param willUpdateImgs 需要更新的图片
      */
-    init(willUpdateImgs?: {
-        blockImgs?: Array<BlockImgType[] | undefined>;
-        prizeImgs?: Array<PrizeImgType[] | undefined>;
-        btnImgs?: Array<ButtonImgType[] | undefined>;
-    }): void;
+    init(): Promise<void>;
+    private initImageCache;
     /**
      * canvas点击事件
      * @param e 事件参数

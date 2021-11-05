@@ -1,11 +1,13 @@
 import Lucky from './lucky'
 import { UserConfigType, ImgType } from '../types/index'
 import LuckyGridConfig, {
-  BlockType, BlockImgType,
-  PrizeType, PrizeImgType,
-  ButtonType, ButtonImgType,
-  CellFontType, CellImgType,
-  RowsType, ColsType,
+  BlockType,
+  PrizeType,
+  ButtonType,
+  CellFontType,
+  CellImgType,
+  RowsType,
+  ColsType,
   CellType,
   DefaultConfigType,
   DefaultStyleType,
@@ -61,9 +63,11 @@ export default class LuckyGrid extends Lucky {
   // 奖品区域几何信息
   private prizeArea: { x: number, y: number, w: number, h: number } | undefined
   // 图片缓存
-  private blockImgs: Array<{ defaultImg: ImgType }[]> = [[]]
-  private btnImgs: Array<{ defaultImg: ImgType }[]> = [[]]
-  private prizeImgs: Array<{ defaultImg: ImgType, activeImg?: ImgType }[]> = []
+  private ImageCache = {
+    blocks: [] as Array<ImgType[]>,
+    prizes: [] as Array<ImgType[]>,
+    buttons: [] as Array<{ defaultImg: ImgType, activeImg?: ImgType }[]>
+  }
 
   /**
    * 九宫格构造器
@@ -80,13 +84,8 @@ export default class LuckyGrid extends Lucky {
     this.initComputed()
     // 创建前回调函数
     config.beforeCreate?.call(this)
-    const btnImgs = this.buttons.map(btn => btn.imgs)
-    if (this.button) btnImgs.push(this.button.imgs)
-    this.init({
-      blockImgs: this.blocks.map(block => block.imgs),
-      prizeImgs: this.prizes.map(prize => prize.imgs),
-      btnImgs,
-    })
+    // 首次初始化
+    this.init()
   }
 
   protected resize(): void {
@@ -188,42 +187,29 @@ export default class LuckyGrid extends Lucky {
     })
     // 监听 blocks 数据的变化
     this.$watch('blocks', (newData: Array<BlockType>) => {
-      this.init({ blockImgs: newData.map(block => block.imgs) })
+      this.initImageCache()
     }, { deep: true })
     // 监听 prizes 数据的变化
     this.$watch('prizes', (newData: Array<PrizeType>) => {
-      this.init({ prizeImgs: newData.map(prize => prize.imgs) })
+      this.initImageCache()
     }, { deep: true })
     // 监听 button 数据的变化
     this.$watch('buttons', (newData: Array<ButtonType>) => {
-      const btnImgs = newData.map(btn => btn.imgs)
-      if (this.button) btnImgs.push(this.button.imgs)
-      this.init({ btnImgs })
+      this.initImageCache()
     }, { deep: true })
-    // 临时过渡代码, 升级到2.x即可删除
-    this.$watch('button', () => {
-      const btnImgs = this.buttons.map(btn => btn.imgs)
-      if (this.button) btnImgs.push(this.button.imgs)
-      this.init({ btnImgs })
-    }, { deep: true })
-    this.$watch('rows', () => this.init({}))
-    this.$watch('cols', () => this.init({}))
+    this.$watch('rows', () => this.init())
+    this.$watch('cols', () => this.init())
     this.$watch('defaultConfig', () => this.draw(), { deep: true })
     this.$watch('defaultStyle', () => this.draw(), { deep: true })
     this.$watch('activeStyle', () => this.draw(), { deep: true })
-    this.$watch('startCallback', () => this.init({}))
-    this.$watch('endCallback', () => this.init({}))
+    this.$watch('startCallback', () => this.init())
+    this.$watch('endCallback', () => this.init())
   }
 
   /**
    * 初始化 canvas 抽奖
-   * @param willUpdateImgs 需要更新的图片
    */
-  public init (willUpdateImgs: {
-    blockImgs?: Array<BlockImgType[] | undefined>,
-    prizeImgs?: Array<PrizeImgType[] | undefined>,
-    btnImgs?: Array<ButtonImgType[] | undefined>
-  } = {}): void {
+  public async init (): Promise<void> {
     this.initLucky()
     const { config } = this
     // 初始化前回调函数
@@ -231,27 +217,35 @@ export default class LuckyGrid extends Lucky {
     // 先画一次防止闪烁
     this.draw()
     // 异步加载图片
-    ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
-      enum CellNameKey {
-        blockImgs = 'blocks',
-        prizeImgs = 'prizes',
-        btnImgs = 'buttons',
-      }
-      const cellName = CellNameKey[imgName]
-      const willUpdate = willUpdateImgs[imgName]
-      // 循环遍历所有图片
-      const allPromise: Promise<void>[] = []
-      willUpdate && willUpdate.forEach((imgs, cellIndex) => {
-        imgs && imgs.forEach((imgInfo, imgIndex) => {
-          allPromise.push(this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex))
-        })
-      })
-      Promise.all(allPromise).then(() => {
-        this.draw()
-      })
-    })
+    await this.initImageCache()
     // 初始化后回调函数
     config.afterInit?.call(this)
+  }
+
+  private initImageCache (): Promise<void> {
+    return new Promise((resolve) => {
+      const btnImgs = this.buttons.map(btn => btn.imgs)
+      if (this.button) btnImgs.push(this.button.imgs)
+      const willUpdateImgs = {
+        blocks: this.blocks.map(block => block.imgs),
+        prizes: this.prizes.map(prize => prize.imgs),
+        buttons: btnImgs,
+      }
+      ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
+        const willUpdate = willUpdateImgs[imgName]
+        // 循环遍历所有图片
+        const allPromise: Promise<void>[] = []
+        willUpdate && willUpdate.forEach((imgs, cellIndex) => {
+          imgs && imgs.forEach((imgInfo, imgIndex) => {
+            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgName, imgIndex))
+          })
+        })
+        Promise.all(allPromise).then(() => {
+          this.draw()
+          resolve()
+        })
+      })
+    })
   }
 
   /**
@@ -287,9 +281,9 @@ export default class LuckyGrid extends Lucky {
    * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
-    cellName: 'blocks' | 'prizes' | 'buttons',
+    cellName: keyof typeof this.ImageCache,
     cellIndex: number,
-    imgName: 'blockImgs' | 'prizeImgs' | 'btnImgs',
+    imgName: keyof typeof this.ImageCache,
     imgIndex: number
   ): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -301,7 +295,8 @@ export default class LuckyGrid extends Lucky {
       if (!cell || !cell.imgs) return
       const imgInfo = cell.imgs[imgIndex]
       if (!imgInfo) return
-      if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
+      const ImageCache = this.ImageCache
+      if (!ImageCache[imgName][cellIndex]) ImageCache[imgName][cellIndex] = []
       // 异步加载图片
       const request = [
         this.loadImg(imgInfo.src, imgInfo),
@@ -316,7 +311,7 @@ export default class LuckyGrid extends Lucky {
             activeImg = formatter.call(this, activeImg)
           }
         }
-        this[imgName][cellIndex][imgIndex] = { defaultImg, activeImg }
+        ImageCache[imgName][cellIndex][imgIndex] = { defaultImg, activeImg }
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -438,15 +433,16 @@ export default class LuckyGrid extends Lucky {
         ctx.shadowBlur = 0
       }
       // 修正图片缓存
-      let cellName = 'prizeImgs'
+      let cellName = 'prizes'
       if (cellIndex >= this.prizes.length) {
-        cellName = 'btnImgs'
+        cellName = 'buttons'
         cellIndex -= this.prizes.length
       }
       // 绘制图片
       cell.imgs && cell.imgs.forEach((imgInfo, imgIndex) => {
-        if (!this[cellName][cellIndex]) return
-        const cellImg = this[cellName][cellIndex][imgIndex]
+        const cellImgs = this.ImageCache[cellName]
+        if (!cellImgs[cellIndex]) return
+        const cellImg = cellImgs[cellIndex][imgIndex]
         if (!cellImg) return
         const renderImg = (isActive && cellImg['activeImg']) || cellImg.defaultImg
         if (!renderImg) return

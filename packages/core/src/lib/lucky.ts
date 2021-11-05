@@ -1,5 +1,6 @@
 import '../utils/polyfill'
 import { isExpectType, throttle } from '../utils/index'
+import { clip, opacity, blur } from '../utils/image'
 import { name, version } from '../../package.json'
 import { ConfigType, UserConfigType, ImgItemType, ImgType } from '../types/index'
 import { defineReactive } from '../observer'
@@ -268,6 +269,30 @@ export default class Lucky {
       const otherUnitFunc = this.config.unitFunc
       return otherUnitFunc ? otherUnitFunc(num, unit) : num
     }))
+  }
+
+  /**
+   * 图片裁剪
+   */
+  public $clip (img: ImgType, ...params: (string | number)[]): ImgType {
+    const args: number[] = params.map(val => {
+      return this.getLength(val)
+    })
+    return clip(img, ...(args as [number, number, number, number, number]))
+  }
+
+  /**
+   * 透明度
+   */
+  public $opacity (img: ImgType, value: string | number) {
+    return opacity(img, this.getLength(value))
+  }
+
+  /**
+   * 高斯模糊
+   */
+  public $blur (img: ImgType, radius: string | number) {
+    return blur(img, this.getLength(radius))
   }
 
   /**

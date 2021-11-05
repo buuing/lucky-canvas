@@ -1,9 +1,9 @@
 import Lucky from './lucky'
 import { UserConfigType, FontItemType, ImgItemType, ImgType } from '../types/index'
 import LuckyWheelConfig, {
-  BlockType, BlockImgType,
-  PrizeType, PrizeImgType,
-  ButtonType, ButtonImgType,
+  BlockType,
+  PrizeType,
+  ButtonType,
   DefaultConfigType,
   DefaultStyleType,
   StartCallbackType,
@@ -47,9 +47,11 @@ export default class LuckyWheel extends Lucky {
    * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
    */
   private prizeFlag: number | undefined
-  private blockImgs: Array<ImgType[]> = [[]]
-  private prizeImgs: Array<ImgType[]> = [[]]
-  private btnImgs: Array<ImgType[]> = [[]]
+  private ImageCache = {
+    blocks: [] as Array<ImgType[]>,
+    prizes: [] as Array<ImgType[]>,
+    buttons: [] as Array<ImgType[]>,
+  }
 
   /**
    * 大转盘构造器
@@ -66,12 +68,8 @@ export default class LuckyWheel extends Lucky {
     this.initComputed()
     // 创建前回调函数
     config.beforeCreate?.call(this)
-    // 收集首次渲染的图片
-    this.init({
-      blockImgs: this.blocks.map(block => block.imgs),
-      prizeImgs: this.prizes.map(prize => prize.imgs),
-      btnImgs: this.buttons.map(btn => btn.imgs),
-    })
+    // 首次初始化
+    this.init()
   }
 
   protected resize(): void {
@@ -163,31 +161,26 @@ export default class LuckyWheel extends Lucky {
     })
     // 观察 blocks 变化收集图片
     this.$watch('blocks', (newData: Array<BlockType>) => {
-      this.init({ blockImgs: newData.map(cell => cell.imgs) })
+      this.initImageCache()
     }, { deep: true })
     // 观察 prizes 变化收集图片
     this.$watch('prizes', (newData: Array<PrizeType>) => {
-      this.init({ prizeImgs: newData.map(cell => cell.imgs) })
+      this.initImageCache()
     }, { deep: true })
     // 观察 buttons 变化收集图片
     this.$watch('buttons', (newData: Array<ButtonType>) => {
-      this.init({ btnImgs: newData.map(cell => cell.imgs) })
+      this.initImageCache()
     }, { deep: true })
     this.$watch('defaultConfig', () => this.draw(), { deep: true })
     this.$watch('defaultStyle', () => this.draw(), { deep: true })
-    this.$watch('startCallback', () => this.init({}))
-    this.$watch('endCallback', () => this.init({}))
+    this.$watch('startCallback', () => this.init())
+    this.$watch('endCallback', () => this.init())
   }
 
   /**
    * 初始化 canvas 抽奖
-   * @param { willUpdateImgs } willUpdateImgs 需要更新的图片
    */
-  public init (willUpdateImgs: {
-    blockImgs?: Array<BlockImgType[] | undefined>
-    prizeImgs?: Array<PrizeImgType[] | undefined>
-    btnImgs?: Array<ButtonImgType[] | undefined>
-  } = {}): void {
+  public async init (): Promise<void> {
     this.initLucky()
     const { config } = this
     // 初始化前回调函数
@@ -195,27 +188,33 @@ export default class LuckyWheel extends Lucky {
     this.draw() // 先画一次, 防止闪烁
     this.draw() // 再画一次, 拿到正确的按钮轮廓
     // 异步加载图片
-    ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
-      enum CellNameKey {
-        blockImgs = 'blocks',
-        prizeImgs = 'prizes',
-        btnImgs = 'buttons',
-      }
-      const cellName = CellNameKey[imgName]
-      const willUpdate = willUpdateImgs[imgName]
-      // 循环遍历所有图片
-      const allPromise: Promise<void>[] = []
-      willUpdate && willUpdate.forEach((imgs, cellIndex) => {
-        imgs && imgs.forEach((imgInfo, imgIndex) => {
-          allPromise.push(this.loadAndCacheImg(cellName, cellIndex, imgName, imgIndex))
-        })
-      })
-      Promise.all(allPromise).then(() => {
-        this.draw()
-      })
-    })
+    await this.initImageCache()
     // 初始化后回调函数
     config.afterInit?.call(this)
+  }
+
+  private initImageCache (): Promise<void> {
+    return new Promise((resolve) => {
+      const willUpdateImgs = {
+        blocks: this.blocks.map(block => block.imgs),
+        prizes: this.prizes.map(prize => prize.imgs),
+        buttons: this.buttons.map(btn => btn.imgs),
+      }
+      ;(<(keyof typeof willUpdateImgs)[]>Object.keys(willUpdateImgs)).forEach(imgName => {
+        const willUpdate = willUpdateImgs[imgName]
+        // 循环遍历所有图片
+        const allPromise: Promise<void>[] = []
+        willUpdate && willUpdate.forEach((imgs, cellIndex) => {
+          imgs && imgs.forEach((imgInfo, imgIndex) => {
+            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgName, imgIndex))
+          })
+        })
+        Promise.all(allPromise).then(() => {
+          this.draw()
+          resolve()
+        })
+      })
+    })
   }
 
   /**
@@ -239,9 +238,9 @@ export default class LuckyWheel extends Lucky {
    * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
-    cellName: 'blocks' | 'prizes' | 'buttons',
+    cellName: keyof typeof this.ImageCache,
     cellIndex: number,
-    imgName: 'blockImgs' | 'prizeImgs' | 'btnImgs',
+    imgName: keyof typeof this.ImageCache,
     imgIndex: number,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -250,13 +249,14 @@ export default class LuckyWheel extends Lucky {
       if (!cell || !cell.imgs) return
       const imgInfo = cell.imgs[imgIndex]
       if (!imgInfo) return
-      if (!this[imgName][cellIndex]) this[imgName][cellIndex] = []
+      const ImageCache = this.ImageCache
+      if (!ImageCache[imgName][cellIndex]) ImageCache[imgName][cellIndex] = []
       // 异步加载图片
       this.loadImg(imgInfo.src, imgInfo).then(currImg => {
         if (typeof imgInfo.formatter === 'function') {
           currImg = imgInfo.formatter.call(this, currImg)
         }
-        this[imgName][cellIndex][imgIndex] = currImg
+        ImageCache[imgName][cellIndex][imgIndex] = currImg
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -319,8 +319,9 @@ export default class LuckyWheel extends Lucky {
         ctx.fill()
       }
       block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
-        if (!this.blockImgs[blockIndex]) return
-        const blockImg = this.blockImgs[blockIndex][imgIndex]
+        const blockImgs = this.ImageCache['blocks']
+        if (!blockImgs || !blockImgs[blockIndex]) return
+        const blockImg = blockImgs[blockIndex][imgIndex]
         if (!blockImg) return
         // 绘制图片
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, radius * 2, radius * 2)
@@ -371,8 +372,9 @@ export default class LuckyWheel extends Lucky {
       ctx.rotate(currMiddleDeg + getAngle(90))
       // 绘制图片
       prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
-        if (!this.prizeImgs[prizeIndex]) return
-        const prizeImg = this.prizeImgs[prizeIndex][imgIndex]
+        const prizeImgs = this.ImageCache['prizes']
+        if (!prizeImgs || !prizeImgs[prizeIndex]) return
+        const prizeImg = prizeImgs[prizeIndex][imgIndex]
         if (!prizeImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(
           prizeImg,
@@ -440,8 +442,9 @@ export default class LuckyWheel extends Lucky {
       }
       // 绘制按钮图片
       btn.imgs && btn.imgs.forEach((imgInfo, imgIndex) => {
-        if (!this.btnImgs[btnIndex]) return
-        const btnImg = this.btnImgs[btnIndex][imgIndex]
+        const btnImgs = this.ImageCache['buttons']
+        if (!btnImgs || !btnImgs[btnIndex]) return
+        const btnImg = btnImgs[btnIndex][imgIndex]
         if (!btnImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(btnImg, imgInfo, radius * 2, radius * 2)
         const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius)]
