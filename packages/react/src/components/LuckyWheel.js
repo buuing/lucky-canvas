@@ -20,6 +20,7 @@ export default class LuckyWheel extends React.Component {
     }
   }
   componentDidUpdate (prevProps) {
+    if (!this.$lucky) return
     if (this.props.blocks !== prevProps.blocks) {
       this.$lucky.blocks = this.props.blocks
     }
@@ -32,7 +33,6 @@ export default class LuckyWheel extends React.Component {
   }
   init () {
     const { props } = this
-    console.log(props)
     this.$lucky = new Wheel({
       flag: 'WEB',
       width: props.width,

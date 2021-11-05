@@ -23,7 +23,7 @@ export default [
         plugins: [terser()]
       },
       {
-        file: `${pkg.browser}.js`,
+        file: `${pkg.unpkg}.js`,
         format: 'umd',
         name: 'VueLuckyCanvas',
         sourcemap: true,
@@ -33,7 +33,7 @@ export default [
         },
       },
       {
-        file: `${pkg.browser}.min.js`,
+        file: `${pkg.unpkg}.min.js`,
         format: 'umd',
         name: 'VueLuckyCanvas',
         plugins: [terser()],

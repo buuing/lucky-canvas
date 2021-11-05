@@ -7,14 +7,14 @@ export default class GridDemo extends React.Component {
     this.myLucky = React.createRef()
 
     const data = [
-        { name: '1元红包', img: 'https://100px.net/assets/img/0.efbe4dff.png' },
-        { name: '100元红包', img: 'https://100px.net/assets/img/1.de299995.png' },
-        { name: '0.5元红包', img: 'https://100px.net/assets/img/2.8f1949c9.png' },
-        { name: '2元红包', img: 'https://100px.net/assets/img/3.9307595d.png' },
-        { name: '10元红包', img: 'https://100px.net/assets/img/4.1349538d.png' },
-        { name: '50元红包', img: 'https://100px.net/assets/img/5.b92ceb2f.png' },
-        { name: '0.3元红包', img: 'https://100px.net/assets/img/6.02483a09.png' },
-        { name: '5元红包', img: 'https://100px.net/assets/img/7.48cda152.png' }
+        { name: '1元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '100元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '0.5元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '2元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '10元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '50元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '0.3元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
+        { name: '5元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' }
       ]
       let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
       const prizes = []
@@ -46,8 +46,8 @@ export default class GridDemo extends React.Component {
             { text: `1 次`, fontColor: '#fff', top: '73%', fontSize: '11px' },
         ],
         imgs: [
-            { src: 'https://100px.net/assets/img/button.2f4ac3e9.png', width: '65%', top: '12%' },
-            { src: './img/btn.png', width: '50%', top: '73%' }
+            // { src: 'https://100px.net/assets/img/button.2f4ac3e9.png', width: '65%', top: '12%' },
+            // { src: './img/btn.png', width: '50%', top: '73%' }
         ]
         }
       ],

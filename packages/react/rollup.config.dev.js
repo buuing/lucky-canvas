@@ -1,4 +1,4 @@
-import { name } from './package.json'
+import pkg from './package.json'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
@@ -9,22 +9,20 @@ import serve from 'rollup-plugin-serve'
 export default {
   input: './src/index.js',
   output: [
-    // {
-    //   file: `./dist/${name}.cjs.js`,
-    //   format: 'cjs',
-    //   sourcemap: true
-    // },
     {
-      file: `./dist/${name}.umd.js`,
-      format: 'umd',
-      name: 'LuckyCanvas',
+      file: `${pkg.module}.js`,
+      format: 'esm',
       sourcemap: true,
     },
-    // {
-    //   file: `./dist/${name}.es.js`,
-    //   format: 'es',
-    //   sourcemap: true,
-    // },
+    {
+      file: `${pkg.unpkg}.js`,
+      format: 'umd',
+      name: 'ReactLuckyCanvas',
+      sourcemap: true,
+      globals: {
+        'lucky-canvas': 'LuckyCanvas',
+      },
+    },
   ],
   plugins: [
     babel({

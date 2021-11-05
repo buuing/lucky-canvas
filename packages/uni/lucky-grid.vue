@@ -57,7 +57,7 @@
 
 <script>
   import { changeUnits, resolveImage } from './utils.js'
-  import { LuckyGrid } from '../lucky-canvas'
+  import { LuckyGrid } from '../../lucky-canvas'
   export default {
     name: 'lucky-grid',
     data () {

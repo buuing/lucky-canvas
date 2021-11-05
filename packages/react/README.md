@@ -1,27 +1,20 @@
+
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png" width="128" alt="logo" />
-  <h1>react-luck-draw 抽奖插件</h1>
-  <p>一个基于 react 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <h1>lucky-canvas 抽奖插件</h1>
+  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
   <p>
-    <a href="https://github.com/LuckDraw/react-luck-draw/stargazers" target="_black">
-      <img src="https://img.shields.io/github/stars/LuckDraw/react-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="stars" />
+    <a href="https://github.com/buuing/lucky-canvas/stargazers" target="_black">
+      <img src="https://img.shields.io/github/stars/buuing/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />
     </a>
-    <a href="https://github.com/LuckDraw/react-luck-draw/network/members" target="_black">
-      <img src="https://img.shields.io/github/forks/LuckDraw/react-luck-draw?color=%23ffca28&logo=github&style=flat-square" alt="forks" />
+    <a href="https://github.com/buuing/lucky-canvas/network/members" target="_black">
+      <img src="https://img.shields.io/github/forks/buuing/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="forks" />
     </a>
-    <a href="https://www.npmjs.com/package/react-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/v/react-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="version" />
-    </a>
-    <a href="https://www.npmjs.com/package/react-luck-draw" target="_black">
-      <img src="https://img.shields.io/npm/dm/react-luck-draw?color=%23ffca28&logo=npm&style=flat-square" alt="downloads" />
-    </a>
-  </p>
-  <p>
     <a href="https://github.com/buuing" target="_black">
       <img src="https://img.shields.io/badge/Author-%20buuing%20-7289da.svg?&logo=github&style=flat-square" alt="author" />
     </a>
-    <a href="https://github.com/LuckDraw/react-luck-draw/blob/master/LICENSE" target="_black">
-      <img src="https://img.shields.io/github/license/LuckDraw/react-luck-draw?color=%232DCE89&logo=github&style=flat-square" alt="license" />
+    <a href="https://github.com/buuing/lucky-canvas/blob/master/LICENSE" target="_black">
+      <img src="https://img.shields.io/github/license/buuing/lucky-canvas?color=%232dce89&logo=github&style=flat-square" alt="license" />
     </a>
   </p>
 </div>
@@ -30,128 +23,52 @@
 
 ## 官方文档 & Demo演示
 
-> **中文**：[https://100px.net/usage/react.html](https://100px.net/usage/react.html)  
+> **中文**：[https://100px.net](https://100px.net)
 
 > **English**：**If anyone can help translate the document, please contact me** `ldq404@qq.com`
+  
+<br />
+
+## 贡献者
+
+<table align="center">
+  <tr>
+    <td align="center"><a href="https://github.com/buuing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/36689704?v=4"></a><div><span title="核心开发">🤖</span> <span title="基础建设">🛰</span> <span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/httpcheck" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26322785?v=4"></a><div><span title="逻辑优化">🦄</span></div></td>
+    <td align="center"><a href="https://github.com/Xutaotaotao" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24652625?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/yushen7" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/35678187?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/qingtiantongxie" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/24731632?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/Deja-vuuu" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/27748682?v=4"></a><div><span title="基础建设">🛰</span></div></td>
+    <td align="center"><a href="https://github.com/shenyixuanV1" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/52775847?v=4"></a><div><span title="修复bug">🛠</span> <span title="贡献Demo">🎨</span></div></td>
+    <td align="center"><a href="https://github.com/health901" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/1503105?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/fantacytyx" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/8966236?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/wfs498121294" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/12890610?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+  <tr>
+  </tr>
+    <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"></a><div><span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"></a><div><span title="维护文档">📚</span></div></td>
+    <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+    <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+    <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+  </tr>
+</table>
 
 <br />
 
-- **在 js / jq 中使用 [lucky-canvas](https://github.com/luckdraw/lucky-canvas)**
+## 🙏🙏🙏 点个Star
 
-- **在 vue 中使用 [vue-luck-draw](https://github.com/luckdraw/vue-luck-draw)**
+**如果您觉得这个项目还不错, 可以在 [Github](https://github.com/buuing/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ☜)**
 
-- **在 react 中使用 [react-luck-draw](https://github.com/luckdraw/react-luck-draw)**
-
-- **在 uni-app 中使用 [uni-luck-draw](https://github.com/luckdraw/uni-luck-draw)**
-
-- **在 taro 中使用 [taro-luck-draw](https://github.com/luckdraw/taro-luck-draw)**
-
-- **在 微信小程序 中使用 [mini-luck-draw](https://github.com/luckdraw/mini-luck-draw)**
-
-<br />
-
-## 在 react 中使用
-
-1. 首先安装插件
-
-```shell
-# npm 安装：
-npm install react-luck-draw
-
-# yarn 安装：
-yarn add react-luck-draw
-```
-
-2. 然后找到 `main.js` 引入插件并使用
-
-```js
-import { LuckyWheel, LuckyGrid } from 'react-luck-draw'
-
-export default function Test () {
-  return <div>
-
-    // 大转盘抽奖
-    <LuckyWheel width="300px" height="300px" ...你的配置></LuckyWheel>
-
-    // 九宫格抽奖
-    <LuckyGrid width="300px" height="300px" ...你的配置></LuckyGrid>
-
-  </div>
-}
-```
-
-3. 最后我提供一个 react 的抽奖 demo 供你参考, 具体参数配置请看文档
-
-```jsx
-import React from 'react'
-import { LuckyWheel } from 'react-luck-draw'
-
-export default class App extends React.Component {
-  constructor () {
-    super()
-    this.myLucky = React.createRef()
-    this.state = {
-      blocks: [
-        { padding: '13px', background: '#d64737' }
-      ],
-      prizes: [
-        { title: '1元红包', background: '#f9e3bb', fonts: [{ text: '1元红包', top: '18%' }] },
-        { title: '100元红包', background: '#f8d384', fonts: [{ text: '100元红包', top: '18%' }] },
-        { title: '0.5元红包', background: '#f9e3bb', fonts: [{ text: '0.5元红包', top: '18%' }] },
-        { title: '2元红包', background: '#f8d384', fonts: [{ text: '2元红包', top: '18%' }] },
-        { title: '10元红包', background: '#f9e3bb', fonts: [{ text: '10元红包', top: '18%' }] },
-        { title: '50元红包', background: '#f8d384', fonts: [{ text: '50元红包', top: '18%' }] },
-      ],
-      buttons: [
-        { radius: '50px', background: '#d64737' },
-        { radius: '45px', background: '#fff' },
-        { radius: '41px', background: '#f6c66f', pointer: true },
-        {
-          radius: '35px', background: '#ffdea0',
-          fonts: [{ text: '开始\n抽奖', fontSize: '18px', top: -18 }]
-        }
-      ],
-      defaultStyle: {
-        fontColor: '#d64737',
-        fontSize: '14px'
-      },
-    }
-  }
-  render () {
-    return <LuckyWheel
-      ref={this.myLucky}
-      width="300px"
-      height="300px"
-      blocks={this.state.blocks}
-      prizes={this.state.prizes}
-      buttons={this.state.buttons}
-      defaultStyle={this.state.defaultStyle}
-      onStart={() => { // 点击抽奖按钮会触发star回调
-        // 调用抽奖组件的play方法开始游戏
-        this.myLucky.current.play()
-        // 模拟调用接口异步抽奖
-        setTimeout(() => {
-          // 假设拿到后端返回的中奖索引
-          const index = Math.random() * 6 >> 0
-          // 调用stop停止旋转并传递中奖索引
-          this.myLucky.current.stop(index)
-        }, 2500)
-      }}
-      onEnd={prize => { // 抽奖结束会触发end回调
-        console.log(prize)
-        alert('恭喜获得大奖:' + prize.title)
-      }}
-    ></LuckyWheel>
-  }
-}
-```
-
-<br />
-
-### **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/react-luck-draw) 上面帮我点个`star` ☜(ﾟヮﾟ☜)**
 
 <br />
 
 ## 友情链接
 
 - [🎁 h5-Dooring 一款功能强大，高可扩展的H5可视化编辑器](https://github.com/MrXujiang/h5-Dooring)
+- [🎁 right-menu 功能强大的右键菜单插件, 支持 JS / TS / Vue / React 等多端框架](https://github.com/buuing/right-menu)
+
+
+<!-- lerna过滤器配置 -->
+<!-- https://github.com/lerna/lerna/tree/main/core/filter-options#readme -->

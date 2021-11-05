@@ -15,7 +15,7 @@ export default [
         sourcemap: true,
       },
       {
-        file: `${pkg.browser}.js`,
+        file: `${pkg.unpkg}.js`,
         format: 'umd',
         name: 'VueLuckyCanvas',
         sourcemap: true,

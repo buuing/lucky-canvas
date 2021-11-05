@@ -17,6 +17,6 @@
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "lucky-canvas": "~1.5.8"
+    "lucky-canvas": "~1.6.0"
   }
 }

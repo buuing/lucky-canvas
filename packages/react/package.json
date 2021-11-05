@@ -2,14 +2,16 @@
   "name": "@lucky-canvas/react",
   "version": "0.0.1",
   "description": "react抽奖插件",
-  "main": "index.js",
+  "module": "dist/index.esm",
+  "unpkg": "dist/index.umd",
+  "types": "types/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
     "build": "rollup --config rollup.config.build.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LuckDraw/react-luck-draw.git"
+    "url": "git+https://github.com/LuckDraw/lucky-canvas.git"
   },
   "keywords": [
     "react抽奖插件",
@@ -19,12 +21,12 @@
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/LuckDraw/react-luck-draw/issues"
+    "url": "https://github.com/LuckDraw/lucky-canvas/issues"
   },
   "homepage": "https://100px.net",
   "files": [
     "dist",
-    "index.js"
+    "types"
   ],
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -40,6 +42,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "lucky-canvas": "~1.5.13"
+    "lucky-canvas": "^1.6.0"
   }
 }
