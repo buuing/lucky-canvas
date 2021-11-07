@@ -1,6 +1,6 @@
 {
-  "name": "mini-luck-draw",
-  "version": "1.1.1",
+  "name": "@lucky-canvas/mini",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,6 +16,9 @@
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint-tools": "eslint \"tools/**/*.js\" --rule \"import/no-extraneous-dependencies: false\" --fix"
   },
+  "files": [
+    "dist"
+  ],
   "miniprogram": "dist",
   "jest": {
     "testEnvironment": "jsdom",
@@ -67,6 +70,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "lucky-canvas": "^1.5.3"
+    "lucky-canvas": "^1.6.1"
   }
 }

@@ -14,6 +14,16 @@ export default [
     input: 'src/index.ts',
     output: [
       {
+        file: `${pkg.main}.js`,
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: `${pkg.main}.min.js`,
+        format: 'cjs',
+        plugins: [terser()]
+      },
+      {
         file: `${pkg.unpkg}.js`,
         format: 'umd',
         name: 'LuckyCanvas',
@@ -27,12 +37,12 @@ export default [
       },
       {
         file: `${pkg.module}.js`,
-        format: 'es',
+        format: 'esm',
         sourcemap: true,
       },
       {
         file: `${pkg.module}.min.js`,
-        format: 'es',
+        format: 'esm',
         plugins: [terser()]
       },
     ],
