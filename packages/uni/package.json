@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/uni",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "uni-app【大转盘 / 九宫格】抽奖插件",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

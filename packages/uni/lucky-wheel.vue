@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import { changeUnits, resolveImage } from './utils.js'
+  import { changeUnits, resolveImage, getImage } from './utils.js'
   import { LuckyWheel } from '../../lucky-canvas'
   export default {
     name: 'lucky-wheel',
@@ -117,6 +117,9 @@
         const img = this[name][index].imgs[i]
         resolveImage(img, this.canvas)
       },
+      async getImage () {
+        return getImage.call(this, 'lucky-wheel')
+      },
       initLucky () {
         this.boxWidth = changeUnits(this.width)
         this.boxHeight = changeUnits(this.height)
@@ -171,10 +174,10 @@
               _this.Radius = Radius
               ctx.translate(Radius, Radius)
             },
-            beforeInit: function () {
-              // 重置坐标轴
-              ctx.translate(-this.Radius, -this.Radius)
-            },
+			      beforeResize: function () {
+              const Radius = Math.min(width, height) / 2
+              ctx.translate(-Radius, -Radius)
+			      },
             afterInit: function () {
               // 动态设置按钮
               _this.btnWidth = this.maxBtnRadius * 2

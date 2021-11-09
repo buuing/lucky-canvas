@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import { changeUnits, resolveImage } from './utils.js'
+  import { changeUnits, resolveImage, getImage } from './utils.js'
   import { LuckyGrid } from '../../lucky-canvas'
   export default {
     name: 'lucky-grid',
@@ -170,6 +170,9 @@
         const { i } = res.currentTarget.dataset
         const img = this[name].imgs[i]
         resolveImage(img, this.canvas)
+      },
+      async getImage () {
+        return getImage.call(this, 'lucky-grid')
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)
