@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/vue",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
   "module": "dist/index.esm",
   "unpkg": "dist/index.umd",
@@ -29,7 +29,7 @@
   "homepage": "https://100px.net",
   "dependencies": {
     "@vue/composition-api": "^1.0.0",
-    "lucky-canvas": "^1.6.0",
+    "lucky-canvas": "^1.6.3",
     "vue-demi": "^0.7.4"
   },
   "peerDependencies": {

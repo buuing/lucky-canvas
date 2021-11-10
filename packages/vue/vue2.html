@@ -7,11 +7,22 @@
   <title>vue2.x</title>
 </head>
 <body>
+    <script>
+      var documentElement = document.documentElement;
+      function callback() {
+          var clientWidth = documentElement.clientWidth;
+          // 屏幕宽度大于780，不在放大
+          clientWidth = clientWidth < 780 ? clientWidth : 780;
+          documentElement.style.fontSize = clientWidth / 10 + 'px';
+      }
+      document.addEventListener('DOMContentLoaded', callback);
+      window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', callback);
+    </script>
   <div id="app">
     <lucky-wheel
       ref="myLucky"
-      width="300px"
-      height="300px"
+      width="10rem"
+      height="10rem"
       :blocks="blocks"
       :prizes="prizes"
       :buttons="buttons"
@@ -25,6 +36,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue-demi@0.11.4/lib/index.iife.js"></script>
   <script src="./dist/index.umd.js"></script>
   <script>
+    console.log(window.getComputedStyle(document.documentElement).fontSize)
     var vm = new Vue({
       el: '#app',
       data: {
