@@ -77,6 +77,7 @@ export default class LuckyWheel extends Lucky {
     this.Radius = Math.min(this.boxWidth, this.boxHeight) / 2
     this.ctx.translate(this.Radius, this.Radius)
     this.draw()
+    this.config.afterResize?.()
   }
 
   protected initLucky (): void {

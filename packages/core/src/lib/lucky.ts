@@ -60,15 +60,18 @@ export default class Lucky {
       console.error('无法获取到 CanvasContext2D')
     }
     // 监听 window 触发 resize 时重置
-    window && window.addEventListener('resize', throttle(() => {
+    window && window.addEventListener('resize', throttle(() => this.resize(), 300))
+    // 监听异步设置 html 的 fontSize 并重新绘制
+    window && window.MutationObserver && new window.MutationObserver(() => {
       this.resize()
-    }, 300))
+    }).observe(document.documentElement, { attributes: true })
   }
 
   /**
    * 初始化组件大小/单位
    */
   protected resize(): void {
+    this.config.beforeResize?.()
     // 先初始化 fontSize 以防后面有 rem 单位
     this.setHTMLFontSize()
     // 拿到 config 即可设置 dpr

@@ -91,6 +91,7 @@ export default class LuckyGrid extends Lucky {
   protected resize(): void {
     super.resize()
     this.draw()
+    this.config.afterResize?.()
   }
 
   protected initLucky (): void {

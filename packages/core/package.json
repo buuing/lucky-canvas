@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
   "main": "dist/index.cjs",
   "module": "dist/index.esm",
@@ -25,7 +25,6 @@
     "index.js"
   ],
   "keywords": [
-    "vue3抽奖",
     "大转盘抽奖",
     "九宫格抽奖",
     "抽奖插件",

@@ -42,6 +42,8 @@ declare type ConfigType = {
     clearTimeout: Function;
     clearInterval: Function;
     beforeCreate?: Function;
+    beforeResize?: Function;
+    afterResize?: Function;
     beforeInit?: Function;
     afterInit?: Function;
     beforeDraw?: Function;

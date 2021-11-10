@@ -53,6 +53,8 @@ export type ConfigType = {
   clearInterval: Function
   // 组件生命周期
   beforeCreate?: Function
+  beforeResize?: Function
+  afterResize?: Function
   beforeInit?: Function
   afterInit?: Function
   beforeDraw?: Function
