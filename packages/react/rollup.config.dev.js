@@ -7,7 +7,7 @@ import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 
 export default {
-  input: './src/index.js',
+  input: './src/app.js',
   output: [
     {
       file: `${pkg.module}.js`,

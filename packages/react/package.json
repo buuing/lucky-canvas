@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react抽奖插件",
   "module": "dist/index.esm",
   "unpkg": "dist/index.umd",
