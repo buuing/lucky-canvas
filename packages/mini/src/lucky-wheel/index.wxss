@@ -1,4 +1,4 @@
-/* mini-luck-draw/lucky-wheel/index.wxss */
+/* @lucky-canvas/mini/lucky-wheel/index.wxss */
 .lucky-box {
   position: relative;
   overflow: hidden;
