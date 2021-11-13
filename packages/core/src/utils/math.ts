@@ -31,7 +31,6 @@ export const getTangentByPointer = (x: number, y: number): Array<number> => {
 
 // 根据三点画圆弧
 export const drawRadian = (
-  flag: string,
   ctx: CanvasRenderingContext2D,
   r: number,
   start: number,
@@ -42,11 +41,11 @@ export const drawRadian = (
   if (Math.abs(end - start).toFixed(8) >= getAngle(180).toFixed(8)) {
     let middle = (end + start) / 2
     if (direction) {
-      drawRadian(flag, ctx, r, start, middle, direction)
-      drawRadian(flag, ctx, r, middle, end, direction)
+      drawRadian(ctx, r, start, middle, direction)
+      drawRadian(ctx, r, middle, end, direction)
     } else {
-      drawRadian(flag, ctx, r, middle, end, direction)
-      drawRadian(flag, ctx, r, start, middle, direction)
+      drawRadian(ctx, r, middle, end, direction)
+      drawRadian(ctx, r, start, middle, direction)
     }
     return false
   }
@@ -72,47 +71,17 @@ export const drawRadian = (
   }
   ctx.lineTo(x1, y1)
   // 微信小程序下 arcTo 在安卓真机下绘制有 bug
-  if (flag.indexOf('MP') > 0) {
-    ctx.quadraticCurveTo(x0, y0, x2, y2)
-  } else {
-    ctx.arcTo(x0, y0, x2, y2, r)
-  }
+  ctx.arcTo(x0, y0, x2, y2, r)
 }
 
-// 绘制扇形
-export const drawSector = (
-  flag: string,
-  ctx: CanvasRenderingContext2D,
-  minRadius: number,
-  maxRadius: number,
-  start: number,
-  end: number,
-  gutter: number,
-  background: string
-) => {
-  // 如果不存在 getter, 则直接使用 arc 绘制扇形
-  if (!gutter) {
-    ctx.beginPath()
-    ctx.fillStyle = background
-    ctx.moveTo(0, 0)
-    ctx.arc(0, 0, maxRadius, start, end, false)
-    ctx.closePath()
-    ctx.fill()
-  } else {
-    drawSectorByArcTo(flag, ctx, minRadius, maxRadius, start, end, gutter, background)
-  }
-}
-
-// 根据arcTo绘制扇形
+// 使用 arcTo 绘制扇形 (弃用)
 export const drawSectorByArcTo = (
-  flag: string,
   ctx: CanvasRenderingContext2D,
   minRadius: number,
   maxRadius: number,
   start: number,
   end: number,
   gutter: number,
-  background: string
 ) => {
   if (!minRadius) minRadius = gutter
   // 内外圆弧分别进行等边缩放
@@ -123,12 +92,11 @@ export const drawSectorByArcTo = (
   let minStart = start + minGutter
   let minEnd = end - minGutter
   ctx.beginPath()
-  ctx.fillStyle = background
   ctx.moveTo(...getArcPointerByDeg(maxStart, maxRadius))
-  drawRadian(flag, ctx, maxRadius, maxStart, maxEnd, true)
+  drawRadian(ctx, maxRadius, maxStart, maxEnd, true)
   // 如果 getter 比按钮短就绘制圆弧, 反之计算新的坐标点
   if (minEnd > minStart) {
-    drawRadian(flag, ctx, minRadius, minStart, minEnd, false)
+    drawRadian(ctx, minRadius, minStart, minEnd, false)
   } else {
     ctx.lineTo(
       ...getArcPointerByDeg(
@@ -138,17 +106,12 @@ export const drawSectorByArcTo = (
     )
   }
   ctx.closePath()
-  ctx.fill()
 }
 
-// 绘制圆角矩形的路径 (由于微信小程序的 arcTo 有 bug, 下面的圆弧使用二次贝塞尔曲线代替)
-export const roundRect = (
+// 使用 arcTo 绘制圆角矩形 (弃用)
+export const roundRectByArcTo = (
   ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number,
+  ...[x, y, w, h, r]: number[]
 ) => {
   let min = Math.min(w, h)
   if (r > min / 2) r = min / 2
@@ -156,33 +119,55 @@ export const roundRect = (
   ctx.moveTo(x + r, y)
   ctx.lineTo(x + r, y)
   ctx.lineTo(x + w - r, y)
-  // ctx.arcTo(x + w, y, x + w, y + r, r)
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r)
+  ctx.arcTo(x + w, y, x + w, y + r, r)
   ctx.lineTo(x + w, y + h - r)
-  // ctx.arcTo(x + w, y + h, x + w - r, y + h, r)
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h)
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r)
   ctx.lineTo(x + r, y + h)
-  // ctx.arcTo(x, y + h, x, y + h - r, r)
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r)
+  ctx.arcTo(x, y + h, x, y + h - r, r)
   ctx.lineTo(x, y + r)
-  // ctx.arcTo(x, y, x + r, y, r)
-  ctx.quadraticCurveTo(x, y, x + r, y)
+  ctx.arcTo(x, y, x + r, y, r)
 }
 
-// 绘制圆角矩形
-export const drawRoundRect = (
+// 使用 arc 绘制扇形
+export const fanShapedByArc = (
   ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number,
-  color: string
-) => {
-  ctx.fillStyle = color
-  roundRect(ctx, x, y, w, h, r)
+  minRadius: number,
+  maxRadius: number,
+  start: number,
+  end: number,
+  gutter: number,
+): void => {
+  ctx.beginPath()
+  let maxGutter = getAngle(90 / Math.PI / maxRadius * gutter)
+  let minGutter = getAngle(90 / Math.PI / minRadius * gutter)
+  let maxStart = start + maxGutter
+  let maxEnd = end - maxGutter
+  let minStart = start + minGutter
+  let minEnd = end - minGutter
+  ctx.arc(0, 0, maxRadius, maxStart, maxEnd, false)
+  ctx.arc(0, 0, minRadius, minEnd, minStart, true)
   ctx.closePath()
-  ctx.fill()
+}
+
+// 使用 arc 绘制圆角矩形
+export const roundRectByArc = (
+  ctx: CanvasRenderingContext2D,
+  ...[x, y, w, h, r]: number[]
+) => {
+  const min = Math.min(w, h), PI = Math.PI
+  if (r > min / 2) r = min / 2
+  ctx.beginPath()
+  ctx.moveTo(x + r, y)
+  ctx.lineTo(x + r, y)
+  ctx.lineTo(x + w - r, y)
+  ctx.arc(x + w - r, y + r, r, -PI / 2, 0)
+  ctx.lineTo(x + w, y + h - r)
+  ctx.arc(x + w - r, y + h - r, r, 0, PI / 2)
+  ctx.lineTo(x + r, y + h)
+  ctx.arc(x + r, y + h - r, r, PI / 2, PI)
+  ctx.lineTo(x, y + r)
+  ctx.arc(x + r, y + r, r, PI, -PI / 2)
+  ctx.closePath()
 }
 
 /**

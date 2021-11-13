@@ -1,5 +1,5 @@
 import { ImgType } from '../types/index'
-import { roundRect } from './math'
+import { roundRectByArc } from './math'
 
 /**
  * 根据路径获取图片对象
@@ -40,7 +40,7 @@ export const clip = (
   canvas.width = width
   canvas.height = height
   const scale = width / w
-  roundRect(ctx, x * scale, y * scale, w * scale, h * scale, r * scale)
+  roundRectByArc(ctx, x * scale, y * scale, w * scale, h * scale, r * scale)
   ctx.clip()
   ctx.drawImage(img, 0, 0, width, height)
   return canvas

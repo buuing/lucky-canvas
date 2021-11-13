@@ -16,7 +16,7 @@ import {
   computeRange,
   splitText
 } from '../utils/index'
-import { getAngle, drawSector } from '../utils/math'
+import { getAngle, fanShapedByArc } from '../utils/math'
 import * as Tween from '../utils/tween'
 
 export default class LuckyWheel extends Lucky {
@@ -358,14 +358,16 @@ export default class LuckyWheel extends Lucky {
       let prizeHeight = this.prizeRadius - this.maxBtnRadius
       // 绘制背景
       const background = prize.background || _defaultStyle.background
-      hasBackground(background) && drawSector(
-        config.flag, ctx,
-        this.maxBtnRadius, this.prizeRadius,
-        currMiddleDeg - this.prizeRadian / 2,
-        currMiddleDeg + this.prizeRadian / 2,
-        this.getLength(_defaultConfig.gutter),
-        background
-      )
+      if (hasBackground(background)) {
+        ctx.fillStyle = background
+        fanShapedByArc(
+          ctx, this.maxBtnRadius, this.prizeRadius,
+          currMiddleDeg - this.prizeRadian / 2,
+          currMiddleDeg + this.prizeRadian / 2,
+          this.getLength(_defaultConfig.gutter),
+        )
+        ctx.fill()
+      }
       // 计算临时坐标并旋转文字
       let x = Math.cos(currMiddleDeg) * this.prizeRadius
       let y = Math.sin(currMiddleDeg) * this.prizeRadius

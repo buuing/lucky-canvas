@@ -23,7 +23,7 @@ import {
   computeRange,
   splitText
 } from '../utils/index'
-import { drawRoundRect, getLinearGradient } from '../utils/math'
+import { roundRectByArc, getLinearGradient } from '../utils/math'
 import { quad } from '../utils/tween'
 
 export default class LuckyGrid extends Lucky {
@@ -381,7 +381,9 @@ export default class LuckyGrid extends Lucky {
       // 绘制边框
       const background = block.background || _defaultStyle.background
       if (hasBackground(background)) {
-        drawRoundRect(ctx, x, y, w, h, r, this.handleBackground(x, y, w, h, background))
+        ctx.fillStyle = this.handleBackground(x, y, w, h, background)
+        roundRectByArc(ctx, x, y, w, h, r)
+        ctx.fill()
       }
       return {
         x: x + paddingLeft,
@@ -422,11 +424,11 @@ export default class LuckyGrid extends Lucky {
           shadow[0] > 0 ? (width -= shadow[0]) : (width += shadow[0], x -= shadow[0])
           shadow[1] > 0 ? (height -= shadow[1]) : (height += shadow[1], y -= shadow[1])
         }
-        drawRoundRect(
-          ctx, x, y, width, height,
-          this.getLength(cell.borderRadius ? cell.borderRadius : _defaultStyle.borderRadius),
-          this.handleBackground(x, y, width, height, background)
-        )
+        // 绘制背景
+        ctx.fillStyle = this.handleBackground(x, y, width, height, background)
+        const borderRadius = this.getLength(cell.borderRadius ? cell.borderRadius : _defaultStyle.borderRadius)
+        roundRectByArc(ctx, x, y, width, height, borderRadius)
+        ctx.fill()
         // 清空阴影
         ctx.shadowColor = 'rgba(0, 0, 0, 0)'
         ctx.shadowOffsetX = 0
