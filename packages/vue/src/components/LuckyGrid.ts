@@ -115,8 +115,8 @@ export default defineComponent({
         clearInterval: window.clearInterval,
       }, {
         ...this.$props as any,
-        start: () => {
-          this.$emit('start')
+        start: (e, button) => {
+          this.$emit('start', e, button)
         },
         end: (btn) => {
           this.$emit('end', btn)
