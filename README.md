@@ -60,6 +60,7 @@
   </tr>
     <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/theozhang32" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/92575976?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"></a><div><span title="维护文档">📚</span></div></td>
     <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"></a><div><span title="维护文档">📚</span></div></td>
     <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
