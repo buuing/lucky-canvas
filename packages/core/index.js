@@ -1,1 +1,1 @@
-module.exports = require('./dist/index.esm.min.js')
+module.exports = require('./dist/index.umd.js')

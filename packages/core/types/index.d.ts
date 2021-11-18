@@ -263,8 +263,8 @@ declare class LuckyWheel extends Lucky {
     private ImageCache;
     /**
      * 大转盘构造器
-     * @param config 元素标识
-     * @param data 抽奖配置项
+     * @param config 配置项
+     * @param data 抽奖数据
      */
     constructor(config: UserConfigType, data: LuckyWheelConfig);
     protected resize(): void;
@@ -479,8 +479,8 @@ declare class LuckyGrid extends Lucky {
     private ImageCache;
     /**
      * 九宫格构造器
-     * @param config 元素标识
-     * @param data 抽奖配置项
+     * @param config 配置项
+     * @param data 抽奖数据
      */
     constructor(config: UserConfigType, data: LuckyGridConfig);
     protected resize(): void;

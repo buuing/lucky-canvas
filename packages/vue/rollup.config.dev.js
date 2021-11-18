@@ -10,12 +10,12 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        file: `${pkg.module}.js`,
+        file: pkg.module,
         format: 'esm',
         sourcemap: true,
       },
       {
-        file: `${pkg.unpkg}.js`,
+        file: pkg.unpkg,
         format: 'umd',
         name: 'VueLuckyCanvas',
         sourcemap: true,

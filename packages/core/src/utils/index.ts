@@ -8,6 +8,20 @@ export const isExpectType = (param: unknown, ...types: string[]): boolean => {
   return types.some(type => Object.prototype.toString.call(param).slice(8, -1).toLowerCase() === type)
 }
 
+export const get = (data: object, strKeys: string) => {
+  const keys = strKeys.split('.')
+  for (let key of keys) {
+    const res = data[key]
+    if (!isExpectType(res, 'object', 'array')) return res
+    data = res
+  }
+  return data
+}
+
+export const has = (data: object, key: string | number) => {
+  return Object.prototype.hasOwnProperty.call(data, key)
+}
+
 /**
  * 移除\n
  * @param { string } str 将要处理的字符串

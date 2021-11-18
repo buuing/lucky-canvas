@@ -47,16 +47,16 @@ export const fanShapedByArc = (
   let minEnd = end - minGutter
   ctx.arc(0, 0, maxRadius, maxStart, maxEnd, false)
   // 如果 getter 比按钮短就绘制圆弧, 反之计算新的坐标点
-  if (minEnd > minStart) {
-    ctx.arc(0, 0, minRadius, minEnd, minStart, true)
-  } else {
+  // if (minEnd > minStart) {
+  //   ctx.arc(0, 0, minRadius, minEnd, minStart, true)
+  // } else {
     ctx.lineTo(
       ...getArcPointerByDeg(
         (start + end) / 2,
         gutter / 2 / Math.abs(Math.sin((start - end) / 2))
       )
     )
-  }
+  // }
   ctx.closePath()
 }
 

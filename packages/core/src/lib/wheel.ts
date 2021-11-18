@@ -55,8 +55,8 @@ export default class LuckyWheel extends Lucky {
 
   /**
    * 大转盘构造器
-   * @param config 元素标识
-   * @param data 抽奖配置项
+   * @param config 配置项
+   * @param data 抽奖数据
    */
   constructor (config: UserConfigType, data: LuckyWheelConfig) {
     super(config, {

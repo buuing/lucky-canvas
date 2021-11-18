@@ -13,13 +13,13 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: `${pkg.unpkg}.js`,
+      file: pkg.unpkg,
       format: 'umd',
       name: 'LuckyCanvas',
       sourcemap: true,
     },
     {
-      file: `${pkg.module}.js`,
+      file: pkg.module,
       format: 'es',
       sourcemap: true,
     },

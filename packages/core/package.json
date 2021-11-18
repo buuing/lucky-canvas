@@ -1,10 +1,11 @@
 {
   "name": "lucky-canvas",
-  "version": "1.6.6",
+  "version": "1.7.1",
   "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
-  "main": "dist/index.cjs",
-  "module": "dist/index.esm",
-  "unpkg": "dist/index.umd",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "types": "types/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",

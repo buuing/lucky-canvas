@@ -13,26 +13,23 @@
   <button onclick="luckyGrid.stop(2)">stop(2)</button>
   <button onclick="luckyGrid.stop(-1)">stop(-1)</button>
   <button onclick="luckyGrid.init()">init()</button>
-  <script src="../dist/lucky-canvas.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/magic-image@0.0.2/dist/magic-image.umd.js"></script>
+  <script src="../dist/index.umd.js"></script>
     <script>
     let luckyNum = 1
     // 创建九宫格抽奖
-    var luckyGrid = new LuckyCanvas.LuckyGrid({
-      el: '#my-lucky',
-      width: '300px',
-      height: '300px'
-    }, {
-        blocks: [
-            { padding: '10px', background: '#869cfa' },
-            { padding: '10px', background: '#e9e8fe' },
-        ],
-        prizes: [],
-        defaultStyle: {
-            background: '#b8c5f2',
-            lineClamp: 3,
-            lengthLimit: '100%'
-        },
+    var luckyGrid = new LuckyCanvas.LuckyGrid('#my-lucky', {
+      width: '400px',
+      height: '300px',
+      blocks: [
+          { padding: '10px', background: '#869cfa' },
+          { padding: '10px', background: '#e9e8fe' },
+      ],
+      prizes: [],
+      defaultStyle: {
+          background: '#b8c5f2',
+          lineClamp: 3,
+          lengthLimit: '100%'
+      },
       start () {
         if (!luckyNum) return alert('还剩0次抽奖机会')
           luckyGrid.stop(4)

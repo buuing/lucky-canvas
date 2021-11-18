@@ -1,9 +1,11 @@
 {
   "name": "@lucky-canvas/vue",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "一个支持 vue2 / vue3 的（大转盘抽奖 / 九宫格抽奖）luckydraw 插件",
-  "module": "dist/index.esm",
-  "unpkg": "dist/index.umd",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "types": "types/index.d.ts",
   "keywords": [
     "vue3抽奖",
@@ -18,7 +20,8 @@
   "license": "Apache-2.0",
   "files": [
     "dist",
-    "types"
+    "types",
+    "index.js"
   ],
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
@@ -29,7 +32,7 @@
   "homepage": "https://100px.net",
   "dependencies": {
     "@vue/composition-api": "^1.0.0",
-    "lucky-canvas": "^1.6.3",
+    "lucky-canvas": "^1.7.0",
     "vue-demi": "^0.7.4"
   },
   "peerDependencies": {

@@ -71,8 +71,8 @@ export default class LuckyGrid extends Lucky {
 
   /**
    * 九宫格构造器
-   * @param config 元素标识
-   * @param data 抽奖配置项
+   * @param config 配置项
+   * @param data 抽奖数据
    */
   constructor (config: UserConfigType, data: LuckyGridConfig) {
     super(config, {
