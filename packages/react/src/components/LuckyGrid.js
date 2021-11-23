@@ -21,6 +21,12 @@ export default class LuckyGrid extends React.Component {
   }
   componentDidUpdate (prevProps) {
     if (!this.$lucky) return
+    if (this.props.width !== prevProps.width) {
+      this.$lucky.width = this.props.width
+    }
+    if (this.props.height !== prevProps.height) {
+      this.$lucky.height = this.props.height
+    }
     if (this.props.cols !== prevProps.cols) {
       this.$lucky.cols = this.props.cols
     }
@@ -41,8 +47,6 @@ export default class LuckyGrid extends React.Component {
     const { props } = this
     this.$lucky = new Grid({
       flag: 'WEB',
-      width: props.width,
-      height: props.height,
       divElement: this.myLucky.current
     }, {
       ...props,

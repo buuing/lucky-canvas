@@ -1,9 +1,11 @@
 {
   "name": "@lucky-canvas/react",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "react抽奖插件",
-  "module": "dist/index.esm",
-  "unpkg": "dist/index.umd",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "types": "types/index.d.ts",
   "scripts": {
     "dev": "rollup --config rollup.config.dev.js -w",
@@ -42,6 +44,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "lucky-canvas": "^1.6.0"
+    "lucky-canvas": "^1.7.1"
   }
 }

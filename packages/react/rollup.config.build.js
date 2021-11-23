@@ -9,29 +9,20 @@ export default {
   input: './src/index.js',
   output: [
     {
-      file: `${pkg.module}.js`,
+      file: pkg.main,
+      format: 'cjs',
+      sourcemap: true,
+    },
+    {
+      file: pkg.module,
       format: 'esm',
       sourcemap: true,
     },
     {
-      file: `${pkg.module}.min.js`,
-      format: 'esm',
-      plugins: [terser()]
-    },
-    {
-      file: `${pkg.unpkg}.js`,
+      file: pkg.unpkg,
       format: 'umd',
       name: 'ReactLuckDraw',
       sourcemap: true,
-      globals: {
-        'lucky-canvas': 'LuckyCanvas',
-      },
-    },
-    {
-      file: `${pkg.unpkg}.min.js`,
-      format: 'umd',
-      name: 'ReactLuckDraw',
-      plugins: [terser()],
       globals: {
         'lucky-canvas': 'LuckyCanvas',
       },

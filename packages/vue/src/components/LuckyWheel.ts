@@ -94,8 +94,8 @@ export default defineComponent({
         start: (e) => {
           this.$emit('start', e)
         },
-        end: (btn) => {
-          this.$emit('end', btn)
+        end: (prize) => {
+          this.$emit('end', prize)
         },
       })
     },

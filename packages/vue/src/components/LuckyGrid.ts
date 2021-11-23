@@ -25,6 +25,10 @@ export default defineComponent({
       type: [String, Number],
       default: 3
     },
+    blocks: {
+      type: Array,
+      default: () => []
+    },
     prizes: {
       type: Array,
       default: () => []
@@ -35,10 +39,6 @@ export default defineComponent({
     },
     button: { // 老版本要兼容这个属性
       type: Object
-    },
-    blocks: {
-      type: Array,
-      default: () => []
     },
     defaultStyle: {
       type: Object,
@@ -115,11 +115,11 @@ export default defineComponent({
         clearInterval: window.clearInterval,
       }, {
         ...this.$props as any,
-        start: (e, button) => {
-          this.$emit('start', e, button)
+        start: (e, btn) => {
+          this.$emit('start', e, btn)
         },
-        end: (btn) => {
-          this.$emit('end', btn)
+        end: (prize) => {
+          this.$emit('end', prize)
         },
       })
     },
