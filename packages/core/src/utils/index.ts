@@ -185,3 +185,15 @@ export const splitText = (
   if (!lines.length) lines.push(text)
   return lines
 }
+
+// 获取一个重新排序的数组
+export const getSortedArrayByIndex = <T>(arr: T[], order: number[]): T[] => {
+  const map: { [key: number]: T } = {}, res = []
+  for (let i = 0; i < arr.length; i++) {
+    map[i] = arr[i]
+  }
+  for (let i = 0; i < order.length; i++) {
+    res[i] = map[order[i]]
+  }
+  return res
+}
