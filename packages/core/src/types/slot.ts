@@ -37,15 +37,15 @@ export type SlotType = {
 }
 
 export type DefaultConfigType = {
-  // 用来控制是水平排列还是垂直排列
+  // 用来控制插槽水平排列还是垂直排列
   mode?: 'vertical' | 'horizontal'
   /**
    * 当排列方向 = `vertical`时
-   *    1 top to bottom
-   *   -1 bottom to top
+   *    1 bottom to top
+   *   -1 top to bottom
    * 当排列方向 = `horizontal`时
-   *    1 left to right
-   *   -1 right to left
+   *    1 right to left
+   *   -1 left to right
    */
   direction?: 1 | -1
   // 行间距

@@ -42,8 +42,6 @@ export type ConfigType = {
   canvasElement?: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   dpr: number
-  width: string
-  height: string
   unitFunc?: (num: number, unit: string) => number
   // 覆盖方法
   rAF?: Function
@@ -69,3 +67,5 @@ export type UniImageType = {
   width: number
   height: number
 }
+
+export type Tuple<T, Len extends number, Res extends T[] = []> = Res['length'] extends Len ? Res : Tuple<T, Len, [...Res, T]>

@@ -40,6 +40,7 @@ export default [
       resolve(),
       commonjs(),
       babel({ exclude: 'node_modules/**' }),
+      terser()
     ]
   }, {
     input: "dist/src/index.d.ts",

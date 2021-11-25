@@ -24,13 +24,19 @@
           { padding: '10px', background: '#869cfa' },
           { padding: '10px', background: '#e9e8fe' },
       ],
+      buttons: [
+      {x:1, y:1},
+      {x:0, y:1}
+      ],
       prizes: [],
       defaultStyle: {
           background: '#b8c5f2',
           lineClamp: 3,
           lengthLimit: '100%'
       },
-      start () {
+      start (e, btn) {
+        console.log(btn)
+        return
         if (!luckyNum) return alert('还剩0次抽奖机会')
           luckyGrid.stop(4)
         luckyGrid.play()
@@ -57,7 +63,7 @@
         { name: '50元红包', img: './imgs/50.png' },
         { name: '50元红包', img: './imgs/50.png' },
         { name: '50元红包', img: './imgs/50.png' },
-        { name: '100元红包111111111111111111111111111111111111111', img: './imgs/100.png' },
+        // { name: '100元红包111111111111111111111111111111111111111', img: './imgs/100.png' },
       ]
       let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
       for (let i = 0; i < data.length; i++) {
@@ -70,12 +76,6 @@
           disabled: disabled,
           imgs: [{
             src: item.img, width: '53%', top: '8%',
-            formatter (img) {
-              // 处理图片
-              const newImage = MagicImage.opacity(img, disabled ? 30 : 100)
-              // 返回新的图片对象
-              return newImage
-            }
           }]
         })
       }

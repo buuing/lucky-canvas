@@ -329,7 +329,7 @@ export default class LuckyWheel extends Lucky {
         const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius * 2) - radius]
         ctx.save()
         imgInfo.rotate && ctx.rotate(getAngle(this.rotateDeg))
-        this.drawImage(blockImg, xAxis, yAxis, trueWidth, trueHeight)
+        this.drawImage(ctx, blockImg, xAxis, yAxis, trueWidth, trueHeight)
         ctx.restore()
       })
       return radius - this.getLength(block.padding && block.padding.split(' ')[0])
@@ -386,7 +386,7 @@ export default class LuckyWheel extends Lucky {
           prizeHeight
         )
         const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, prizeHeight)]
-        this.drawImage(prizeImg, xAxis, yAxis, trueWidth, trueHeight)
+        this.drawImage(ctx, prizeImg, xAxis, yAxis, trueWidth, trueHeight)
       })
       // 逐行绘制文字
       prize.fonts && prize.fonts.forEach(font => {
@@ -451,7 +451,7 @@ export default class LuckyWheel extends Lucky {
         if (!btnImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(btnImg, imgInfo, radius * 2, radius * 2)
         const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius)]
-        this.drawImage(btnImg, xAxis, yAxis, trueWidth, trueHeight)
+        this.drawImage(ctx, btnImg, xAxis, yAxis, trueWidth, trueHeight)
       })
       // 绘制按钮文字
       btn.fonts && btn.fonts.forEach(font => {

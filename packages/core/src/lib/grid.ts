@@ -454,7 +454,7 @@ export default class LuckyGrid extends Lucky {
           x + this.getOffsetX(trueWidth, cell.col),
           y + this.getHeight(imgInfo.top, cell.row)
         ]
-        this.drawImage(renderImg, xAxis, yAxis, trueWidth, trueHeight)
+        this.drawImage(ctx, renderImg, xAxis, yAxis, trueWidth, trueHeight)
       })
       // 绘制文字
       cell.fonts && cell.fonts.forEach(font => {

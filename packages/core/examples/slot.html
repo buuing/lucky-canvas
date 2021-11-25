@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body style="background: #000;">
+  <div id="my-lucky"></div>
+  <button onclick="myLucky.play()">play()</button>
+  <button onclick="myLucky.stop(0)">stop(0)</button>
+  <button onclick="myLucky.stop(1)">stop(1)</button>
+  <button onclick="myLucky.stop(2)">stop(2)</button>
+  <button onclick="myLucky.stop(-1)">stop(-1)</button>
+  <button onclick="myLucky.init()">init()</button>
+  <hr>
+  <canvas id="off" style="border: 2px solid red;"></canvas>
+  <script src="../dist/index.umd.js"></script>
+  <script>
+    // 创建九宫格抽奖
+    var myLucky = new LuckyCanvas.SlotMachine('#my-lucky', {
+      width: '300px',
+      height: '200px',
+      blocks: [
+        {
+          borderRadius: '20px',
+          padding: '10px 10px',
+          background: '#eb533c',
+        },
+        {
+          padding: '15px 24px',
+          background: '#c63c28',
+          imgs: [{
+              width: '304px',
+              height: '204px',
+              top: '-10',
+              src: './imgs/bg.png'
+          }]
+        },
+      ],
+      slots: [
+        {
+          order: [0,1,2],
+          speed: 10,
+        },
+        {
+          order: [2,0,1],
+          speed: 15,
+          // direction: -1
+        },
+        {
+          order: [1,2,0],
+          speed: 20,
+        }
+      ],
+      prizes: [
+        {
+          background: '#fff',
+          imgs: [{
+            width: '90%',
+            top: '5%',
+            src: './imgs/0.png'
+          }]
+        },
+        {
+          background: '#fff',
+          imgs: [{
+            width: '90%',
+            top: '5%',
+            src: './imgs/1.png'
+          }]
+        },
+        {
+          background: '#fff',
+          imgs: [{
+            width: '90%',
+            top: '5%',
+            src: './imgs/2.png'
+          }]
+        },
+      ],
+      defaultConfig: {
+        rowSpacing: '0px',
+        colSpacing: '6.5px',
+      },
+      end (prize) {
+        console.log(prize)
+      }
+    })
+    const canvas = document.querySelector('#off')
+    const ctx = canvas.getContext('2d')
+    canvas.style['transform-origin'] = 'left top'
+    canvas.style.transform = `scale(${1 / myLucky.config.dpr})`
+    setTimeout(_ => {
+      canvas.width = myLucky._offscreenCanvas.width
+      canvas.height = myLucky._offscreenCanvas.height
+      ctx.drawImage(myLucky._offscreenCanvas, 0, 0)
+    }, 500)
+  </script>
+</body>
+</html>

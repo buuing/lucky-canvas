@@ -1,8 +1,8 @@
 import '../utils/polyfill'
-import { isExpectType, throttle } from '../utils/index'
+import { has, isExpectType, throttle } from '../utils/index'
 import { clip, opacity, blur } from '../utils/image'
 import { name, version } from '../../package.json'
-import { ConfigType, UserConfigType, ImgItemType, ImgType } from '../types/index'
+import { ConfigType, UserConfigType, ImgItemType, ImgType, Tuple } from '../types/index'
 import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
@@ -88,8 +88,7 @@ export default class Lucky {
    protected initLucky () {
     this.resize()
     if (!this.boxWidth || !this.boxHeight) {
-      console.error('无法获取到宽度或高度')
-      return
+      return console.error('无法获取到宽度或高度')
     }
   }
 
@@ -134,8 +133,8 @@ export default class Lucky {
       boxHeight = config.divElement.offsetHeight
     }
     // 先从 data 里取宽高, 如果 config 上面没有, 就从 style 上面取
-    this.boxWidth = this.getLength(data.width || config.width) || boxWidth
-    this.boxHeight = this.getLength(data.height || config.height) || boxHeight
+    this.boxWidth = this.getLength(data.width || config['width']) || boxWidth
+    this.boxHeight = this.getLength(data.height || config['height']) || boxHeight
     // 重新把宽高赋给盒子
     if (config.divElement) {
       config.divElement.style.overflow = 'hidden'
@@ -223,15 +222,17 @@ export default class Lucky {
    * @param imgObj 图片对象
    * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度] 
    */
-  protected drawImage (
+  protected drawImage(
+    ctx: CanvasRenderingContext2D,
     imgObj: ImgType,
-    ...rectInfo: [number, number, number, number]
+    ...rectInfo: [...Tuple<number, 4>, ...Partial<Tuple<number, 4>>]
   ): void {
-    let drawImg, { config, ctx } = this
-    if (['WEB', 'MP-WX'].includes(config.flag)) {
+    let drawImg
+    const { flag, dpr } = this.config
+    if (['WEB', 'MP-WX'].includes(flag)) {
       // 浏览器和新版小程序中直接绘制即可
       drawImg = imgObj
-    } else if (['UNI-H5', 'UNI-MP', 'TARO-H5', 'TARO-MP'].includes(config.flag)) {
+    } else if (['UNI-H5', 'UNI-MP', 'TARO-H5', 'TARO-MP'].includes(flag)) {
       // 旧版本的小程序需要绘制 path, 这里特殊处理一下
       type OldImageType = ImgType & { path: CanvasImageSource }
       drawImg = (imgObj as OldImageType).path
@@ -239,7 +240,10 @@ export default class Lucky {
       // 如果传入了未知的标识
       return console.error('意料之外的 flag, 该平台尚未兼容!')
     }
-    return ctx.drawImage(drawImg, ...rectInfo)
+    if (rectInfo.length === 8) {
+      rectInfo = rectInfo.map((val, index) => index < 4 ? val! * dpr : val) as Tuple<number, 8>
+    }
+    return ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
   }
 
   /**
@@ -272,6 +276,29 @@ export default class Lucky {
       const otherUnitFunc = this.config.unitFunc
       return otherUnitFunc ? otherUnitFunc(num, unit) : num
     }))
+  }
+
+  protected getOffscreenCanvas (width: number, height: number): {
+    _offscreenCanvas: HTMLCanvasElement,
+    _ctx: CanvasRenderingContext2D
+  } | void {
+    if (!has(this, '_offscreenCanvas')) {
+      if (!window || !window.document) return console.error('无法创建离屏Canvas!')
+      this['_offscreenCanvas'] = document.createElement('canvas')
+    }
+    const dpr = this.config.dpr
+    const _offscreenCanvas = this['_offscreenCanvas'] as HTMLCanvasElement
+    _offscreenCanvas.width = (width || 300) * dpr
+    _offscreenCanvas.height = (height || 150) * dpr
+    const _ctx = _offscreenCanvas.getContext('2d')!
+    _ctx.clearRect(0, 0, width, height)
+    _ctx.scale(dpr, dpr)
+    _ctx['dpr'] = dpr
+    return { _offscreenCanvas, _ctx }
+  }
+
+  protected multiplyByDpr <T extends number[]>(...nums: number[]): number[] {
+    return nums.map(num => num * this.config.dpr)
   }
 
   /**
