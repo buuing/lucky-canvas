@@ -193,7 +193,8 @@ export const getSortedArrayByIndex = <T>(arr: T[], order: number[]): T[] => {
     map[i] = arr[i]
   }
   for (let i = 0; i < order.length; i++) {
-    res[i] = map[order[i]]
+    const curr = map[order[i]]
+    if (curr) (res[i] = curr)
   }
   return res
 }

@@ -33,8 +33,6 @@ declare type ConfigType = {
     canvasElement?: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     dpr: number;
-    width: string;
-    height: string;
     unitFunc?: (num: number, unit: string) => number;
     rAF?: Function;
     setTimeout: Function;
@@ -51,6 +49,7 @@ declare type ConfigType = {
 };
 declare type RequireKey = 'width' | 'height';
 declare type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>;
+declare type Tuple<T, Len extends number, Res extends T[] = []> = Res['length'] extends Len ? Res : Tuple<T, Len, [...Res, T]>;
 
 interface WatchOptType {
     handler?: () => Function;
@@ -123,7 +122,7 @@ declare class Lucky {
      * @param imgObj 图片对象
      * @param rectInfo: [x轴位置, y轴位置, 渲染宽度, 渲染高度]
      */
-    protected drawImage(imgObj: ImgType, ...rectInfo: [number, number, number, number]): void;
+    protected drawImage(ctx: CanvasRenderingContext2D, imgObj: ImgType, ...rectInfo: [...Tuple<number, 4>, ...Partial<Tuple<number, 4>>]): void;
     /**
      * 获取长度
      * @param length 将要转换的长度
@@ -137,6 +136,11 @@ declare class Lucky {
      * @return { number } 返回新的字符串
      */
     protected changeUnits(value: string, denominator?: number): number;
+    protected getOffscreenCanvas(width: number, height: number): {
+        _offscreenCanvas: HTMLCanvasElement;
+        _ctx: CanvasRenderingContext2D;
+    } | void;
+    protected multiplyByDpr<T extends number[]>(...nums: number[]): number[];
     /**
      * 图片裁剪
      */
@@ -173,23 +177,23 @@ declare class Lucky {
     protected $watch(expr: string | Function, handler: Function | WatchOptType, watchOpt?: WatchOptType): Function;
 }
 
-declare type PrizeFontType$1 = FontItemType & FontExtendType;
+declare type PrizeFontType$2 = FontItemType & FontExtendType;
 declare type ButtonFontType$1 = FontItemType & {};
-declare type BlockImgType$1 = ImgItemType & {
+declare type BlockImgType$2 = ImgItemType & {
     rotate?: boolean;
 };
-declare type PrizeImgType$1 = ImgItemType & {};
+declare type PrizeImgType$2 = ImgItemType & {};
 declare type ButtonImgType$1 = ImgItemType & {};
-declare type BlockType$1 = {
+declare type BlockType$2 = {
     padding?: string;
     background?: BackgroundType;
-    imgs?: Array<BlockImgType$1>;
+    imgs?: Array<BlockImgType$2>;
 };
-declare type PrizeType$1 = {
+declare type PrizeType$2 = {
     range?: number;
     background?: BackgroundType;
-    fonts?: Array<PrizeFontType$1>;
-    imgs?: Array<PrizeImgType$1>;
+    fonts?: Array<PrizeFontType$2>;
+    imgs?: Array<PrizeImgType$2>;
 };
 declare type ButtonType$1 = {
     radius?: string;
@@ -198,7 +202,7 @@ declare type ButtonType$1 = {
     fonts?: Array<ButtonFontType$1>;
     imgs?: Array<ButtonImgType$1>;
 };
-declare type DefaultConfigType$1 = {
+declare type DefaultConfigType$2 = {
     gutter?: string | number;
     offsetDegree?: number;
     speed?: number;
@@ -207,29 +211,29 @@ declare type DefaultConfigType$1 = {
     decelerationTime?: number;
     stopRange?: number;
 };
-declare type DefaultStyleType$1 = {
+declare type DefaultStyleType$2 = {
     background?: BackgroundType;
-    fontColor?: PrizeFontType$1['fontColor'];
-    fontSize?: PrizeFontType$1['fontSize'];
-    fontStyle?: PrizeFontType$1['fontStyle'];
-    fontWeight?: PrizeFontType$1['fontWeight'];
-    lineHeight?: PrizeFontType$1['lineHeight'];
-    wordWrap?: PrizeFontType$1['wordWrap'];
-    lengthLimit?: PrizeFontType$1['lengthLimit'];
-    lineClamp?: PrizeFontType$1['lineClamp'];
+    fontColor?: PrizeFontType$2['fontColor'];
+    fontSize?: PrizeFontType$2['fontSize'];
+    fontStyle?: PrizeFontType$2['fontStyle'];
+    fontWeight?: PrizeFontType$2['fontWeight'];
+    lineHeight?: PrizeFontType$2['lineHeight'];
+    wordWrap?: PrizeFontType$2['wordWrap'];
+    lengthLimit?: PrizeFontType$2['lengthLimit'];
+    lineClamp?: PrizeFontType$2['lineClamp'];
 };
 declare type StartCallbackType$1 = (e: MouseEvent) => void;
-declare type EndCallbackType$1 = (prize: object) => void;
+declare type EndCallbackType$2 = (prize: object) => void;
 interface LuckyWheelConfig {
     width: string | number;
     height: string | number;
-    blocks?: Array<BlockType$1>;
-    prizes?: Array<PrizeType$1>;
+    blocks?: Array<BlockType$2>;
+    prizes?: Array<PrizeType$2>;
     buttons?: Array<ButtonType$1>;
-    defaultConfig?: DefaultConfigType$1;
-    defaultStyle?: DefaultStyleType$1;
+    defaultConfig?: DefaultConfigType$2;
+    defaultStyle?: DefaultStyleType$2;
     start?: StartCallbackType$1;
-    end?: EndCallbackType$1;
+    end?: EndCallbackType$2;
 }
 
 declare class LuckyWheel extends Lucky {
@@ -359,14 +363,14 @@ declare class LuckyWheel extends Lucky {
     protected conversionAxis(x: number, y: number): [number, number];
 }
 
-declare type PrizeFontType = FontItemType & FontExtendType;
+declare type PrizeFontType$1 = FontItemType & FontExtendType;
 declare type ButtonFontType = FontItemType & FontExtendType;
-declare type BlockImgType = ImgItemType & {};
-declare type PrizeImgType = ImgItemType & {
+declare type BlockImgType$1 = ImgItemType & {};
+declare type PrizeImgType$1 = ImgItemType & {
     activeSrc?: string;
 };
 declare type ButtonImgType = ImgItemType & {};
-declare type BlockType = {
+declare type BlockType$1 = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
     padding?: string;
@@ -374,7 +378,7 @@ declare type BlockType = {
     paddingRight?: string | number;
     paddingBottom?: string | number;
     paddingLeft?: string | number;
-    imgs?: Array<BlockImgType>;
+    imgs?: Array<BlockImgType$1>;
 };
 declare type CellType<T, U> = {
     x: number;
@@ -387,59 +391,59 @@ declare type CellType<T, U> = {
     fonts?: Array<T>;
     imgs?: Array<U>;
 };
-declare type PrizeType = CellType<PrizeFontType, PrizeImgType> & {
+declare type PrizeType$1 = CellType<PrizeFontType$1, PrizeImgType$1> & {
     range?: number;
     disabled?: boolean;
 };
 declare type ButtonType = CellType<ButtonFontType, ButtonImgType> & {
     callback?: Function;
 };
-declare type DefaultConfigType = {
+declare type DefaultConfigType$1 = {
     gutter?: number;
     speed?: number;
     accelerationTime?: number;
     decelerationTime?: number;
 };
-declare type DefaultStyleType = {
+declare type DefaultStyleType$1 = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
     shadow?: ShadowType;
-    fontColor?: PrizeFontType['fontColor'];
-    fontSize?: PrizeFontType['fontSize'];
-    fontStyle?: PrizeFontType['fontStyle'];
-    fontWeight?: PrizeFontType['fontWeight'];
-    lineHeight?: PrizeFontType['lineHeight'];
-    wordWrap?: PrizeFontType['wordWrap'];
-    lengthLimit?: PrizeFontType['lengthLimit'];
-    lineClamp?: PrizeFontType['lineClamp'];
+    fontColor?: PrizeFontType$1['fontColor'];
+    fontSize?: PrizeFontType$1['fontSize'];
+    fontStyle?: PrizeFontType$1['fontStyle'];
+    fontWeight?: PrizeFontType$1['fontWeight'];
+    lineHeight?: PrizeFontType$1['lineHeight'];
+    wordWrap?: PrizeFontType$1['wordWrap'];
+    lengthLimit?: PrizeFontType$1['lengthLimit'];
+    lineClamp?: PrizeFontType$1['lineClamp'];
 };
 declare type ActiveStyleType = {
     background?: BackgroundType;
     shadow?: ShadowType;
-    fontColor?: PrizeFontType['fontColor'];
-    fontSize?: PrizeFontType['fontSize'];
-    fontStyle?: PrizeFontType['fontStyle'];
-    fontWeight?: PrizeFontType['fontWeight'];
-    lineHeight?: PrizeFontType['lineHeight'];
+    fontColor?: PrizeFontType$1['fontColor'];
+    fontSize?: PrizeFontType$1['fontSize'];
+    fontStyle?: PrizeFontType$1['fontStyle'];
+    fontWeight?: PrizeFontType$1['fontWeight'];
+    lineHeight?: PrizeFontType$1['lineHeight'];
 };
 declare type RowsType = number;
 declare type ColsType = number;
 declare type StartCallbackType = (e: MouseEvent, button?: ButtonType) => void;
-declare type EndCallbackType = (prize: object) => void;
+declare type EndCallbackType$1 = (prize: object) => void;
 interface LuckyGridConfig {
     width: string | number;
     height: string | number;
     rows?: RowsType;
     cols?: ColsType;
-    blocks?: Array<BlockType>;
-    prizes?: Array<PrizeType>;
+    blocks?: Array<BlockType$1>;
+    prizes?: Array<PrizeType$1>;
     buttons?: Array<ButtonType>;
     button?: ButtonType;
-    defaultConfig?: DefaultConfigType;
-    defaultStyle?: DefaultStyleType;
+    defaultConfig?: DefaultConfigType$1;
+    defaultStyle?: DefaultStyleType$1;
     activeStyle?: ActiveStyleType;
     start?: StartCallbackType;
-    end?: EndCallbackType;
+    end?: EndCallbackType$1;
 }
 
 declare class LuckyGrid extends Lucky {
@@ -594,4 +598,204 @@ declare class LuckyGrid extends Lucky {
     protected conversionAxis(x: number, y: number): [number, number];
 }
 
-export { LuckyGrid, LuckyWheel };
+declare type PrizeFontType = FontItemType & FontExtendType;
+declare type BlockImgType = ImgItemType & {};
+declare type PrizeImgType = ImgItemType;
+declare type BlockType = {
+    borderRadius?: BorderRadiusType;
+    background?: BackgroundType;
+    padding?: string;
+    paddingTop?: string | number;
+    paddingRight?: string | number;
+    paddingBottom?: string | number;
+    paddingLeft?: string | number;
+    imgs?: Array<BlockImgType>;
+};
+declare type PrizeType = {
+    borderRadius?: BorderRadiusType;
+    background?: BackgroundType;
+    fonts?: Array<PrizeFontType>;
+    imgs?: Array<PrizeImgType>;
+};
+declare type SlotType = {
+    order?: number[];
+    speed?: number;
+    direction?: 1 | -1;
+};
+declare type DefaultConfigType = {
+    /**
+     * vertical 为纵向旋转
+     * horizontal 为横向旋转
+     */
+    mode?: 'vertical' | 'horizontal';
+    /**
+     * 当排列方向 = `vertical`时
+     *    1 bottom to top
+     *   -1 top to bottom
+     * 当排列方向 = `horizontal`时
+     *    1 right to left
+     *   -1 left to right
+     */
+    direction?: 1 | -1;
+    rowSpacing?: number;
+    colSpacing?: number;
+    speed?: number;
+    accelerationTime?: number;
+    decelerationTime?: number;
+};
+declare type DefaultStyleType = {
+    borderRadius?: BorderRadiusType;
+    background?: BackgroundType;
+    fontColor?: PrizeFontType['fontColor'];
+    fontSize?: PrizeFontType['fontSize'];
+    fontStyle?: PrizeFontType['fontStyle'];
+    fontWeight?: PrizeFontType['fontWeight'];
+    lineHeight?: PrizeFontType['lineHeight'];
+    wordWrap?: PrizeFontType['wordWrap'];
+    lengthLimit?: PrizeFontType['lengthLimit'];
+    lineClamp?: PrizeFontType['lineClamp'];
+};
+declare type EndCallbackType = (prize: object) => void;
+interface SlotMachineConfig {
+    width: string | number;
+    height: string | number;
+    blocks?: Array<BlockType>;
+    prizes?: Array<PrizeType>;
+    slots?: Array<SlotType>;
+    defaultConfig?: DefaultConfigType;
+    defaultStyle?: DefaultStyleType;
+    end?: EndCallbackType;
+}
+
+declare class SlotMachine extends Lucky {
+    private blocks;
+    private prizes;
+    private slots;
+    private defaultConfig;
+    private _defaultConfig;
+    private defaultStyle;
+    private _defaultStyle;
+    private endCallback;
+    private _offscreenCanvas?;
+    private cellWidth;
+    private cellHeight;
+    private cellAndSpacing;
+    private widthAndSpacing;
+    private heightAndSpacing;
+    private FPS;
+    private scroll;
+    private stopScroll;
+    private endScroll;
+    private startTime;
+    private endTime;
+    /**
+     * 游戏当前的阶段
+     * step = 0 时, 游戏尚未开始
+     * step = 1 时, 此时处于加速阶段
+     * step = 2 时, 此时处于匀速阶段
+     * step = 3 时, 此时处于减速阶段
+     */
+    private step;
+    /**
+     * 中奖索引
+     * prizeFlag = undefined 时, 处于开始抽奖阶段, 正常旋转
+     * prizeFlag >= 0 时, 说明stop方法被调用, 并且传入了中奖索引
+     * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
+     */
+    private prizeFlag;
+    private prizeArea?;
+    private ImageCache;
+    /**
+     * 老虎机构造器
+     * @param config 配置项
+     * @param data 抽奖数据
+     */
+    constructor(config: UserConfigType, data: SlotMachineConfig);
+    protected resize(): void;
+    protected initLucky(): void;
+    /**
+     * 初始化数据
+     * @param data
+     */
+    private initData;
+    /**
+     * 初始化属性计算
+     */
+    private initComputed;
+    /**
+     * 初始化观察者
+     */
+    private initWatch;
+    /**
+     * 初始化 canvas 抽奖
+     */
+    init(): Promise<void>;
+    private initImageCache;
+    /**
+     * 根据索引单独加载指定图片并缓存
+     * @param cellName 模块名称
+     * @param cellIndex 模块索引
+     * @param imgName 模块对应的图片缓存
+     * @param imgIndex 图片索引
+     */
+    private loadAndCacheImg;
+    /**
+     * 计算图片的渲染宽高
+     * @param imgObj 图片标签元素
+     * @param imgInfo 图片信息
+     * @param maxWidth 最大宽度
+     * @param maxHeight 最大高度
+     * @return [渲染宽度, 渲染高度]
+     */
+    private computedWidthAndHeight;
+    /**
+     * 绘制离屏canvas
+     */
+    protected drawOffscreenCanvas(): void;
+    /**
+     * 绘制背景区域
+     */
+    protected drawBlocks(): SlotMachine['prizeArea'];
+    /**
+     * 绘制老虎机抽奖
+     */
+    protected draw(): void;
+    /**
+     * 对外暴露: 开始抽奖方法
+     */
+    play(): void;
+    /**
+     * 刻舟求剑
+     */
+    private carveOnGunwaleOfAMovingBoat;
+    stop(index: number): void;
+    /**
+     * 让游戏动起来
+     * @param num 记录帧动画执行多少次
+     */
+    private run;
+    private displacement;
+    private displacementWidthOrHeight;
+    /**
+     * 获取相对宽度
+     * @param length 将要转换的宽度
+     * @param width 宽度计算百分比
+     * @return 返回相对宽度
+     */
+    private getWidth;
+    /**
+     * 转换并获取高度
+     * @param height 将要转换的高度
+     * @param row 纵向合并的格子
+     * @return 返回相对高度
+     */
+    private getHeight;
+    /**
+     * 获取相对(居中)X坐标
+     * @param width
+     * @return 返回x坐标
+     */
+    private getOffsetX;
+}
+
+export { LuckyGrid, LuckyWheel, SlotMachine };

@@ -1,7 +1,7 @@
 {
   "name": "lucky-canvas",
-  "version": "1.7.1",
-  "description": "一个基于原生 js 的（大转盘抽奖 / 九宫格抽奖）插件",
+  "version": "1.7.2",
+  "description": "一个基于原生 js 的（大转盘 / 九宫格 / 老虎机）抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.umd.js",
@@ -28,6 +28,7 @@
   "keywords": [
     "大转盘抽奖",
     "九宫格抽奖",
+    "老虎机抽奖",
     "抽奖插件",
     "js抽奖",
     "移动端抽奖",

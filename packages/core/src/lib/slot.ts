@@ -124,6 +124,7 @@ export default class SlotMachine extends Lucky {
     // 默认配置
     this.$computed(this, '_defaultConfig', () => {
       const config = {
+        mode: 'vertical',
         rowSpacing: 0,
         colSpacing: 5,
         speed: 20,
@@ -175,6 +176,11 @@ export default class SlotMachine extends Lucky {
     // 监听 prizes 数据的变化
     this.$watch('prizes', (newData: Array<PrizeType>) => {
       this.initImageCache()
+    }, { deep: true })
+    // 监听 prizes 数据的变化
+    this.$watch('slots', (newData: Array<PrizeType>) => {
+      this.drawOffscreenCanvas()
+      this.draw()
     }, { deep: true })
     this.$watch('defaultConfig', () => this.draw(), { deep: true })
     this.$watch('defaultStyle', () => this.draw(), { deep: true })

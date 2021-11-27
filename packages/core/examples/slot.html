@@ -38,22 +38,18 @@
           }]
         },
       ],
-      slots: [
-        {
-          order: [0,1,2],
-          speed: 10,
-        },
-        {
-          order: [1,2,0],
-          speed: 15,
-          // direction: -1
-        },
-        {
-          order: [2,0,1],
-          speed: 20,
-        }
-      ],
-      prizes: [
+      slots: [],
+      prizes: [],
+      defaultConfig: {
+        rowSpacing: '5px',
+        colSpacing: '6.5px',
+      },
+      end (prize) {
+        console.log(prize)
+      }
+    })
+    setTimeout(() => {
+      myLucky.prizes = [
         {
           background: '#fff',
           imgs: [{
@@ -78,24 +74,35 @@
             src: './imgs/2.png'
           }]
         },
-      ],
-      defaultConfig: {
-        rowSpacing: '5px',
-        colSpacing: '6.5px',
-      },
-      end (prize) {
-        console.log(prize)
-      }
-    })
-    const canvas = document.querySelector('#off')
-    const ctx = canvas.getContext('2d')
-    canvas.style['transform-origin'] = 'left top'
-    canvas.style.transform = `scale(${1 / myLucky.config.dpr})`
-    setTimeout(_ => {
-      canvas.width = myLucky._offscreenCanvas.width
-      canvas.height = myLucky._offscreenCanvas.height
-      ctx.drawImage(myLucky._offscreenCanvas, 0, 0)
-    }, 500)
+      ]
+    }, 100)
+    setTimeout(() => {
+      console.log('slots')
+      myLucky.slots = [
+        {
+          order: [0,1,2],
+          speed: 10,
+        },
+        {
+          order: [1,2,0],
+          speed: 15,
+          // direction: -1
+        },
+        {
+          order: [2,0,1],
+          speed: 20,
+        }
+      ]
+    }, 200)
+    // const canvas = document.querySelector('#off')
+    // const ctx = canvas.getContext('2d')
+    // canvas.style['transform-origin'] = 'left top'
+    // canvas.style.transform = `scale(${1 / myLucky.config.dpr})`
+    // setTimeout(_ => {
+    //   canvas.width = myLucky._offscreenCanvas.width
+    //   canvas.height = myLucky._offscreenCanvas.height
+    //   ctx.drawImage(myLucky._offscreenCanvas, 0, 0)
+    // }, 500)
   </script>
 </body>
 </html>
