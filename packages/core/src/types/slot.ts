@@ -37,7 +37,10 @@ export type SlotType = {
 }
 
 export type DefaultConfigType = {
-  // 用来控制插槽水平排列还是垂直排列
+  /**
+   * vertical 为纵向旋转
+   * horizontal 为横向旋转
+   */
   mode?: 'vertical' | 'horizontal'
   /**
    * 当排列方向 = `vertical`时

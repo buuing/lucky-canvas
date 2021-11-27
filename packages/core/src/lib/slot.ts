@@ -37,10 +37,11 @@ export default class SlotMachine extends Lucky {
   private endCallback: EndCallbackType = () => {}
   // 离屏canvas
   private _offscreenCanvas?: HTMLCanvasElement
-  // 离屏canvas的上下文
-  private _ctx?: CanvasRenderingContext2D
   private cellWidth = 0             // 格子宽度
   private cellHeight = 0            // 格子高度
+  private cellAndSpacing = 0        // 格子+间距
+  private widthAndSpacing = 0       // 格子宽度+列间距
+  private heightAndSpacing = 0      // 格子高度+行间距
   private FPS = 16.6                // 屏幕刷新率
   private scroll: number[] = []     // 滚动的长度
   private stopScroll: number[] = [] // 刻舟求剑
@@ -298,33 +299,29 @@ export default class SlotMachine extends Lucky {
     const { _defaultConfig, _defaultStyle } = this
     const { x, y, w, h } = this.drawBlocks()!
     // 计算单一奖品格子的宽度和高度
-    const slotsLen = this.slots.length
     const prizesLen = this.prizes.length
-    const cellWidth = this.cellWidth = (w - _defaultConfig.colSpacing * (slotsLen - 1)) / slotsLen
-    const cellHeight = this.cellHeight = cellWidth
-    const heightAndSpacing = cellHeight + _defaultConfig.rowSpacing
-    const widthAndSpacing = cellWidth + _defaultConfig.colSpacing
+    const { cellWidth, cellHeight, widthAndSpacing, heightAndSpacing } = this.displacementWidthOrHeight()
     const defaultOrder = new Array(prizesLen).fill(void 0).map((v, i) => i)
-    let maxLen = 0, maxHeight = 0
+    let maxOrderLen = 0, maxOffWidth = 0, maxOffHeight = 0
     this.slots.forEach((slot, slotIndex) => {
       // 初始化 scroll 的值
       if (this.scroll[slotIndex] === void 0) this.scroll[slotIndex] = 0
       // 如果没有order属性, 就填充prizes
       slot.order = slot.order || defaultOrder
-      // 计算最大长度
+      // 计算最大值
       const currLen = slot.order.length
-      maxLen = Math.max(maxLen, currLen)
-      // 计算最大高度
-      maxHeight = Math.max(maxHeight, h + heightAndSpacing * currLen)
+      maxOrderLen = Math.max(maxOrderLen, currLen)
+      maxOffWidth = Math.max(maxOffWidth, w + widthAndSpacing * currLen)
+      maxOffHeight = Math.max(maxOffHeight, h + heightAndSpacing * currLen)
     })
     // 创建一个离屏Canvas来存储画布的内容
-    const { _offscreenCanvas, _ctx } = this.getOffscreenCanvas(cellWidth * slotsLen, maxHeight)!
+    const { _offscreenCanvas, _ctx } = this.getOffscreenCanvas(maxOffWidth, maxOffHeight)!
     this._offscreenCanvas = _offscreenCanvas
-    this._ctx = _ctx
     // 绘制插槽
     this.slots.forEach((slot, slotIndex) => {
-      const _x = cellWidth * slotIndex
-      let heightOfCopy = 0
+      const cellX = cellWidth * slotIndex
+      const cellY = cellHeight * slotIndex
+      let lengthOfCopy = 0
       // 绘制奖品
       const newPrizes = getSortedArrayByIndex(this.prizes, slot.order!)
       // 如果没有奖品则打断逻辑
@@ -332,8 +329,13 @@ export default class SlotMachine extends Lucky {
       newPrizes.forEach((cell, cellIndex) => {
         if (!cell) return
         const orderIndex = slot.order![cellIndex]
-        const _y = heightAndSpacing * cellIndex
-        heightOfCopy += heightAndSpacing
+        const prizesX = widthAndSpacing * cellIndex
+        const prizesY = heightAndSpacing * cellIndex
+        const [_x, _y, spacing] = this.displacement(
+          [cellX, prizesY, heightAndSpacing],
+          [prizesX, cellY, widthAndSpacing]
+        )
+        lengthOfCopy += spacing
         // 绘制背景
         const background = cell.background || _defaultStyle.background
         if (hasBackground(background)) {
@@ -354,14 +356,19 @@ export default class SlotMachine extends Lucky {
           this.drawImage(_ctx, cellImg, xAxis, yAxis, trueWidth, trueHeight)
         })
       })
-      let drawY = heightOfCopy
-      while (drawY < maxHeight) {
+      const [_x, _y, _w, _h] = this.displacement(
+        [cellX, 0, cellWidth, lengthOfCopy],
+        [0, cellY, lengthOfCopy, cellHeight]
+      )
+      let drawLen = lengthOfCopy
+      while (drawLen < maxOffHeight + lengthOfCopy) {
+        const [drawX, drawY] = this.displacement([_x, drawLen], [drawLen, _y])
         this.drawImage(
           _ctx, _offscreenCanvas,
-          _x, 0, cellWidth, heightOfCopy,
-          _x, drawY, cellWidth, heightOfCopy
+          _x, _y, _w, _h,
+          drawX, drawY, _w, _h
         )
-        drawY += heightOfCopy
+        drawLen += lengthOfCopy
       }
     })
   }
@@ -413,27 +420,29 @@ export default class SlotMachine extends Lucky {
     const { x, y, w, h } = this.drawBlocks()!
     // 绘制插槽
     if (!this._offscreenCanvas) return
-    const { cellWidth, cellHeight } = this
-    const heightAndSpacing = cellHeight + _defaultConfig.rowSpacing
-    const widthAndSpacing = cellWidth + _defaultConfig.colSpacing
+    const { cellWidth, cellHeight, cellAndSpacing, widthAndSpacing, heightAndSpacing } = this
     this.slots.forEach((slot, slotIndex) => {
-      const _x = cellWidth * slotIndex
-      const _h = heightAndSpacing * slot.order!.length
+      // 绘制临界点
+      const _p = cellAndSpacing * slot.order!.length
       // 调整奖品垂直居中
-      const start = -(h - cellHeight) / 2
+      const start = this.displacement(-(h - cellHeight) / 2, -(w - cellWidth) / 2)
       let scroll = this.scroll[slotIndex] + start
       // scroll 会无限累加 1 / -1
       if (scroll < 0) {
-        scroll = scroll % _h + _h
+        scroll = scroll % _p + _p
       }
-      if (scroll > _h) {
-        scroll = scroll % _h
+      if (scroll > _p) {
+        scroll = scroll % _p
       }
-      this.drawImage(
-        ctx, this._offscreenCanvas!,
-        _x, scroll, cellWidth, h,
-        x + widthAndSpacing * slotIndex, y, cellWidth, h
+      const [sx, sy, sw, sh] = this.displacement(
+        [cellWidth * slotIndex, scroll, cellWidth, h],
+        [scroll, cellHeight * slotIndex, w, cellHeight]
       )
+      const [dx, dy, dw, dh] = this.displacement(
+        [x + widthAndSpacing * slotIndex, y, cellWidth, h],
+        [x, y + heightAndSpacing * slotIndex, w, cellHeight]
+      )
+      this.drawImage(ctx, this._offscreenCanvas!, sx, sy, sw, sh, dx, dy, dw, dh)
     })
   }
 
@@ -456,7 +465,7 @@ export default class SlotMachine extends Lucky {
    * 刻舟求剑
    */
   private carveOnGunwaleOfAMovingBoat (): void {
-    const { _defaultConfig, prizeFlag } = this
+    const { _defaultConfig, prizeFlag, cellAndSpacing } = this
     // 记录开始停止的时间戳
     this.endTime = Date.now()
     this.slots.forEach((slot, slotIndex) => {
@@ -464,12 +473,11 @@ export default class SlotMachine extends Lucky {
       if (!order.length) return
       const speed = slot.speed || _defaultConfig.speed
       const orderIndex = order.findIndex(prizeIndex => prizeIndex === prizeFlag)
-      const heightAndSpacing = this.cellHeight + this._defaultConfig.rowSpacing
-      const _h = heightAndSpacing * order.length
+      const _p = cellAndSpacing * order.length
       const stopScroll = this.stopScroll[slotIndex] = this.scroll[slotIndex]
       let i = 0
       while (++i) {
-        const endScroll = heightAndSpacing * orderIndex + _h * i  - this.scroll[slotIndex]
+        const endScroll = cellAndSpacing * orderIndex + _p * i  - this.scroll[slotIndex]
         const currSpeed = quad.easeOut(this.FPS, stopScroll, endScroll, _defaultConfig.decelerationTime) - stopScroll
         if (currSpeed > speed) {
           this.endScroll[slotIndex] = endScroll
@@ -498,11 +506,13 @@ export default class SlotMachine extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, step, prizeFlag, _defaultConfig } = this
+    const { rAF, step, prizeFlag, _defaultConfig, cellAndSpacing } = this
     const { accelerationTime, decelerationTime } = _defaultConfig
-    const heightAndSpacing = this.cellHeight + _defaultConfig.rowSpacing
     // 游戏结束
-    if (this.step === 0) return
+    if (this.step === 0) {
+      this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
+      return
+    }
     // 如果等于 -1 就直接停止游戏
     if (prizeFlag === -1) return
     // 计算最终停止的位置
@@ -514,7 +524,7 @@ export default class SlotMachine extends Lucky {
     this.slots.forEach((slot, slotIndex) => {
       const order = slot.order
       if (!order || !order.length) return
-      const _h = heightAndSpacing * order.length
+      const _p = cellAndSpacing * order.length
       const speed = Math.abs(slot.speed || _defaultConfig.speed)
       const direction = slot.direction || _defaultConfig.direction
       let scroll = 0, prevScroll = this.scroll[slotIndex]
@@ -526,10 +536,10 @@ export default class SlotMachine extends Lucky {
         if (currSpeed === speed) {
           this.step = 2
         }
-        scroll = (prevScroll + currSpeed) % _h
+        scroll = (prevScroll + currSpeed) % _p
       } else if (step === 2) { // 匀速阶段
         // 速度保持不变
-        scroll = (prevScroll + speed) % _h
+        scroll = (prevScroll + speed) % _p
         // 如果有 prizeFlag 有值, 则进入减速阶段
         if (prizeFlag !== void 0 && prizeFlag >= 0) {
           this.step = 3
@@ -544,13 +554,46 @@ export default class SlotMachine extends Lucky {
         scroll = quad.easeOut(endInterval, stopScroll, endScroll, decelerationTime)
         if (endInterval >= decelerationTime) {
           this.step = 0
-          this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
         }
       }
       this.scroll[slotIndex] = scroll * direction
     })
     this.draw()
     rAF(this.run.bind(this, num + 1))
+  }
+
+  // 根据mode置换数值
+  private displacement<T> (a: T, b: T): T {
+    return this._defaultConfig.mode === 'horizontal' ? b : a
+  }
+
+  // 根据mode计算宽高
+  private displacementWidthOrHeight () {
+    const mode = this._defaultConfig.mode
+    const slotsLen = this.slots.length
+    const { colSpacing, rowSpacing } = this._defaultConfig
+    const { x, y, w, h } = this.prizeArea || this.drawBlocks()!
+    let cellWidth = 0, cellHeight = 0, widthAndSpacing = 0, heightAndSpacing = 0
+    if (mode === 'horizontal') {
+      cellHeight = this.cellHeight = (h - rowSpacing * (slotsLen - 1)) / slotsLen
+      cellWidth = this.cellWidth = cellHeight
+    } else {
+      cellWidth = this.cellWidth = (w - colSpacing * (slotsLen - 1)) / slotsLen
+      cellHeight = this.cellHeight = cellWidth
+    }
+    widthAndSpacing = this.widthAndSpacing = this.cellWidth + colSpacing
+    heightAndSpacing = this.heightAndSpacing = this.cellHeight + rowSpacing
+    if (mode === 'horizontal') {
+      this.cellAndSpacing = widthAndSpacing
+    } else {
+      this.cellAndSpacing = heightAndSpacing
+    }
+    return {
+      cellWidth,
+      cellHeight,
+      widthAndSpacing,
+      heightAndSpacing,
+    }
   }
 
   /**
