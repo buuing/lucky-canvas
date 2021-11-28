@@ -31,31 +31,9 @@
 
 <br />
 
-## 在 Js / JQuery 中使用
+## 在 JS / TS 中使用
 
-### 方式 1：通过 script 标签引入
-
-- **CDN 链接：** [https://cdn.jsdelivr.net/npm/lucky-canvas@1.6/dist/index.umd.min.js](https://cdn.jsdelivr.net/npm/lucky-canvas@1.6/dist/index.umd.min.js)
-
-```html
-<div id="my-lucky"></div>
-<script src="https://cdn.jsdelivr.net/npm/lucky-canvas@1.6/dist/index.umd.min.js"></script>
-<script>
-  const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
-    width: '200px',
-    height: '200px',
-    blocks: [{ padding: '10px', background: '#869cfa' }],
-    prizes: [
-      { fonts: [{ text: '0' }], background: '#e9e8fe' },
-      { fonts: [{ text: '1' }], background: '#b8c5f2' },
-      { fonts: [{ text: '2' }], background: '#e9e8fe' },
-      { fonts: [{ text: '3' }], background: '#b8c5f2' },
-      { fonts: [{ text: '4' }], background: '#e9e8fe' },
-      { fonts: [{ text: '5' }], background: '#b8c5f2' },
-    ],
-  })
-</script>
-```
+- [跳转官网 查看详情](https://100px.net/usage/js.html)
 
 <br />
 

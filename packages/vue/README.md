@@ -2,7 +2,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
-  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/LuckDraw/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/luckdraw/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />
@@ -34,174 +34,13 @@
 
 <br />
 
-# 在 vue2.x / vue3.x 中使用
+## 在 vue2.x / vue3.x 中使用
 
-## 方式 1：通过 import 引入
-
-### 1. 首先安装插件
-
-```shell
-# npm 安装：
-npm install @lucky-canvas/vue
-
-# yarn 安装：
-yarn add @lucky-canvas/vue
-```
-
-### 2. 然后找到 `main.js` 引入插件并 `use`
-
-- **`vue2.x`**
-
-```js
-/**
- * 完整加载
- */
-import VueLuckyCanvas from '@lucky-canvas/vue'
-Vue.use(VueLuckyCanvas)
-
-/**
- * 按需引入
- */
-import { LuckyWheel, LuckyGrid } from '@lucky-canvas/vue'
-// 大转盘抽奖
-Vue.components('LuckyWheel', LuckyWheel)
-// 九宫格抽奖
-Vue.components('LuckyGrid', LuckyGrid)
-```
-
-- **`vue3.x`**
-
-```js
-/**
- * 完整加载
- */
-import VueLuckyCanvas from '@lucky-canvas/vue'
-createApp(App).use(VueLuckyCanvas).mount('#app')
-
-/**
- * 按需引入
- */
-import { LuckyWheel, LuckyGrid } from '@lucky-canvas/vue'
-// 大转盘抽奖
-Vue.components('LuckyWheel', LuckyWheel)
-// 九宫格抽奖
-Vue.components('LuckyGrid', LuckyGrid)
-```
-
-### 3. 最后在组件内使用
-
-```vue
-<template>
-  <LuckyWheel
-    width="200px"
-    height="200px"
-    :blocks="blocks"
-    :prizes="prizes"
-  />
-</template>
-
-<script>
-export default {
-  data () {
-    return {
-      blocks: [{ padding: '10px', background: '#869cfa' }],
-      prizes: [
-        { fonts: [{ text: '0' }], background: '#e9e8fe' },
-        { fonts: [{ text: '1' }], background: '#b8c5f2' },
-        { fonts: [{ text: '2' }], background: '#e9e8fe' },
-        { fonts: [{ text: '3' }], background: '#b8c5f2' },
-        { fonts: [{ text: '4' }], background: '#e9e8fe' },
-        { fonts: [{ text: '5' }], background: '#b8c5f2' },
-      ]
-    }
-  }
-}
-</script>
-```
+- [跳转官网 查看详情](https://100px.net/usage/vue.html)
 
 <br />
 
-## 方式 2：通过 script 标签引入
-
-- **CDN 链接：** https://cdn.jsdelivr.net/npm/@lucky-canvas/vue/dist/index.umd.min.js
-
-### Vue2.x
-
-```html
-<div id="app">
-  <!-- 大转盘抽奖简易demo -->
-  <lucky-wheel
-    width="200px"
-    height="200px"
-    :blocks="blocks"
-    :prizes="prizes"
-  />
-</div>
-<!-- vuejs 要在前面引入, 使用你自己本地的 vuejs 即可 -->
-<script src="./vue2.js"></script>
-<!-- 为了兼容 vue2.x 需要同时引入以下这三个 CDN 链接 -->
-<script src="https://cdn.jsdelivr.net/npm/@vue/composition-api@1.2.4/dist/vue-composition-api.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-demi@0.11.4/lib/index.iife.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@lucky-canvas/vue/dist/index.umd.min.js"></script>
-<script>
-  new Vue({
-    el: '#app',
-    data () {
-      return {
-        blocks: [{ padding: '10px', background: '#869cfa' }],
-        prizes: [
-          { fonts: [{ text: '0' }], background: '#e9e8fe' },
-          { fonts: [{ text: '1' }], background: '#b8c5f2' },
-          { fonts: [{ text: '2' }], background: '#e9e8fe' },
-          { fonts: [{ text: '3' }], background: '#b8c5f2' },
-          { fonts: [{ text: '4' }], background: '#e9e8fe' },
-          { fonts: [{ text: '5' }], background: '#b8c5f2' },
-        ]
-      }
-    }
-  })
-</script>
-```
-
-### Vue3.x
-
-```html
-<div id="app">
-  <!-- 大转盘抽奖简易demo -->
-  <lucky-wheel
-    width="200px"
-    height="200px"
-    :blocks="blocks"
-    :prizes="prizes"
-  />
-</div>
-<!-- vuejs 要在前面引入, 使用你自己本地的 vuejs 即可 -->
-<script src="./vue3.js"></script>
-<!-- 为了兼容 vue3.x 需要同时引入以下这两个 CDN 链接 -->
-<script src="https://cdn.jsdelivr.net/npm/vue-demi@0.11.4/lib/index.iife.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@lucky-canvas/vue/dist/index.umd.min.js"></script>
-<script>
-  const app = Vue.createApp({
-    data() {
-      return {
-        blocks: [{ padding: '10px', background: '#869cfa' }],
-        prizes: [
-          { fonts: [{ text: '0' }], background: '#e9e8fe' },
-          { fonts: [{ text: '1' }], background: '#b8c5f2' },
-          { fonts: [{ text: '2' }], background: '#e9e8fe' },
-          { fonts: [{ text: '3' }], background: '#b8c5f2' },
-          { fonts: [{ text: '4' }], background: '#e9e8fe' },
-          { fonts: [{ text: '5' }], background: '#b8c5f2' },
-        ]
-      }
-    }
-  }).use(VueLuckyCanvas).mount('#app')
-</script>
-```
-
-<br />
-
-# 🙏🙏🙏 点个Star
+## 🙏🙏🙏 点个Star
 
 **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/LuckDraw/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ☜)**
 

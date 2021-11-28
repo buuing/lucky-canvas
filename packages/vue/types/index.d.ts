@@ -1,7 +1,7 @@
 import * as vue_demi from 'vue-demi';
-import { LuckyWheel, LuckyGrid } from 'lucky-canvas';
+import { LuckyWheel, LuckyGrid, SlotMachine } from 'lucky-canvas';
 
-declare const _default$2: vue_demi.DefineComponent<{
+declare const _default$3: vue_demi.DefineComponent<{
     width: {
         type: (StringConstructor | NumberConstructor)[];
         default: string;
@@ -71,7 +71,7 @@ declare const _default$2: vue_demi.DefineComponent<{
     defaultConfig: Record<string, any>;
 }>;
 
-declare const _default$1: vue_demi.DefineComponent<{
+declare const _default$2: vue_demi.DefineComponent<{
     width: {
         type: (StringConstructor | NumberConstructor)[];
         default: string;
@@ -90,6 +90,10 @@ declare const _default$1: vue_demi.DefineComponent<{
         type: (StringConstructor | NumberConstructor)[];
         default: number;
     };
+    blocks: {
+        type: ArrayConstructor;
+        default: () => never[];
+    };
     prizes: {
         type: ArrayConstructor;
         default: () => never[];
@@ -100,10 +104,6 @@ declare const _default$1: vue_demi.DefineComponent<{
     };
     button: {
         type: ObjectConstructor;
-    };
-    blocks: {
-        type: ArrayConstructor;
-        default: () => never[];
     };
     defaultStyle: {
         type: ObjectConstructor;
@@ -129,10 +129,10 @@ declare const _default$1: vue_demi.DefineComponent<{
     height?: unknown;
     cols?: unknown;
     rows?: unknown;
+    blocks?: unknown;
     prizes?: unknown;
     buttons?: unknown;
     button?: unknown;
-    blocks?: unknown;
     defaultStyle?: unknown;
     activeStyle?: unknown;
     defaultConfig?: unknown;
@@ -168,6 +168,70 @@ declare const _default$1: vue_demi.DefineComponent<{
     defaultConfig: Record<string, any>;
 }>;
 
+declare const _default$1: vue_demi.DefineComponent<{
+    width: {
+        type: (StringConstructor | NumberConstructor)[];
+        default: string;
+        require: boolean;
+    };
+    height: {
+        type: (StringConstructor | NumberConstructor)[];
+        default: string;
+        require: boolean;
+    };
+    blocks: {
+        type: ArrayConstructor;
+        default: () => never[];
+    };
+    prizes: {
+        type: ArrayConstructor;
+        default: () => never[];
+    };
+    slots: {
+        type: ArrayConstructor;
+        default: () => never[];
+    };
+    defaultStyle: {
+        type: ObjectConstructor;
+        default: () => {};
+    };
+    defaultConfig: {
+        type: ObjectConstructor;
+        default: () => {};
+    };
+}, unknown, {
+    $lucky: SlotMachine | null;
+}, {}, {
+    initLucky(): void;
+    init(): void;
+    play(): void;
+    stop(index?: number | undefined): void;
+}, vue_demi.ComponentOptionsMixin, vue_demi.ComponentOptionsMixin, Record<string, any>, string, vue_demi.VNodeProps & vue_demi.AllowedComponentProps & vue_demi.ComponentCustomProps, Readonly<{
+    width?: unknown;
+    height?: unknown;
+    blocks?: unknown;
+    prizes?: unknown;
+    slots?: unknown;
+    defaultStyle?: unknown;
+    defaultConfig?: unknown;
+} & {
+    blocks: unknown[];
+    slots: unknown[];
+    prizes: unknown[];
+    width: string | number;
+    height: string | number;
+    defaultStyle: Record<string, any>;
+    defaultConfig: Record<string, any>;
+} & {}>, {
+    blocks: unknown[];
+    slots: unknown[];
+    prizes: unknown[];
+    width: string | number;
+    height: string | number;
+    defaultStyle: Record<string, any>;
+    defaultConfig: Record<string, any>;
+}>;
+
 declare const install: (app: {
     component: Function;
 }) => void;
@@ -178,4 +242,4 @@ declare const _default: {
     }) => void;
 };
 
-export { _default$1 as LuckyGrid, _default$2 as LuckyWheel, _default as default, install };
+export { _default$2 as LuckyGrid, _default$3 as LuckyWheel, _default$1 as SlotMachine, _default as default, install };
