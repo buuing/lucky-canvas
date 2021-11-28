@@ -135,7 +135,6 @@ export default class SlotMachine extends Lucky {
       }
       config.rowSpacing = this.getLength(config.rowSpacing)
       config.colSpacing = this.getLength(config.colSpacing)
-      config.speed = config.speed / 40
       return config
     })
     // 默认样式
