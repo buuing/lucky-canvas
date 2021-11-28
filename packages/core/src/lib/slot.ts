@@ -453,6 +453,33 @@ export default class SlotMachine extends Lucky {
   }
 
   /**
+   * 刻舟求剑
+   */
+  private carveOnGunwaleOfAMovingBoat (): void {
+    const { _defaultConfig, prizeFlag, cellAndSpacing } = this
+    // 记录开始停止的时间戳
+    this.endTime = Date.now()
+    this.slots.forEach((slot, slotIndex) => {
+      const order = slot.order!
+      if (!order.length) return
+      const speed = slot.speed || _defaultConfig.speed
+      const direction = slot.direction || _defaultConfig.direction
+      const orderIndex = order.findIndex(prizeIndex => prizeIndex === prizeFlag)
+      const _p = cellAndSpacing * order.length
+      const stopScroll = this.stopScroll[slotIndex] = this.scroll[slotIndex]
+      let i = 0
+      while (++i) {
+        const endScroll = cellAndSpacing * orderIndex + (_p * i * direction) - stopScroll
+        const currSpeed = quad.easeOut(this.FPS, stopScroll, endScroll, _defaultConfig.decelerationTime) - stopScroll
+        if (Math.abs(currSpeed) > speed) {
+          this.endScroll[slotIndex] = endScroll
+          break
+        }
+      }
+    })
+  }
+
+  /**
    * 对外暴露: 开始抽奖方法
    */
    public play (): void {
@@ -465,32 +492,6 @@ export default class SlotMachine extends Lucky {
     this.step = 1
     // 开始渲染
     this.run()
-  }
-
-  /**
-   * 刻舟求剑
-   */
-  private carveOnGunwaleOfAMovingBoat (): void {
-    const { _defaultConfig, prizeFlag, cellAndSpacing } = this
-    // 记录开始停止的时间戳
-    this.endTime = Date.now()
-    this.slots.forEach((slot, slotIndex) => {
-      const order = slot.order!
-      if (!order.length) return
-      const speed = slot.speed || _defaultConfig.speed
-      const orderIndex = order.findIndex(prizeIndex => prizeIndex === prizeFlag)
-      const _p = cellAndSpacing * order.length
-      const stopScroll = this.stopScroll[slotIndex] = this.scroll[slotIndex]
-      let i = 0
-      while (++i) {
-        const endScroll = cellAndSpacing * orderIndex + _p * i  - this.scroll[slotIndex]
-        const currSpeed = quad.easeOut(this.FPS, stopScroll, endScroll, _defaultConfig.decelerationTime) - stopScroll
-        if (currSpeed > speed) {
-          this.endScroll[slotIndex] = endScroll
-          break
-        }
-      }
-    })
   }
 
   public stop (index: number): void {
@@ -542,10 +543,10 @@ export default class SlotMachine extends Lucky {
         if (currSpeed === speed) {
           this.step = 2
         }
-        scroll = (prevScroll + currSpeed) % _p
+        scroll = (prevScroll + (currSpeed * direction)) % _p
       } else if (step === 2) { // 匀速阶段
         // 速度保持不变
-        scroll = (prevScroll + speed) % _p
+        scroll = (prevScroll + (speed * direction)) % _p
         // 如果有 prizeFlag 有值, 则进入减速阶段
         if (prizeFlag !== void 0 && prizeFlag >= 0) {
           this.step = 3
@@ -562,7 +563,7 @@ export default class SlotMachine extends Lucky {
           this.step = 0
         }
       }
-      this.scroll[slotIndex] = scroll * direction
+      this.scroll[slotIndex] = scroll
     })
     this.draw()
     rAF(this.run.bind(this, num + 1))

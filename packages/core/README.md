@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
-  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/buuing/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/buuing/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />

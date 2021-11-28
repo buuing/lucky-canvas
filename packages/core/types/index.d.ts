@@ -761,13 +761,13 @@ declare class SlotMachine extends Lucky {
      */
     protected draw(): void;
     /**
-     * 对外暴露: 开始抽奖方法
-     */
-    play(): void;
-    /**
      * 刻舟求剑
      */
     private carveOnGunwaleOfAMovingBoat;
+    /**
+     * 对外暴露: 开始抽奖方法
+     */
+    play(): void;
     stop(index: number): void;
     /**
      * 让游戏动起来
