@@ -33,6 +33,7 @@ export default {
     resolve(),
     commonjs(),
     json(),
+    terser(),
   ],
   external: ['react'],
 }

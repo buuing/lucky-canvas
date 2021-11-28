@@ -1,7 +1,7 @@
 {
   "name": "@lucky-canvas/react",
-  "version": "0.0.4",
-  "description": "react抽奖插件",
+  "version": "0.1.0",
+  "description": "react ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.umd.js",
@@ -18,7 +18,8 @@
   "keywords": [
     "react抽奖插件",
     "大转盘抽奖",
-    "九宫格抽奖"
+    "九宫格抽奖",
+    "老虎机抽奖"
   ],
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
@@ -44,6 +45,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "lucky-canvas": "^1.7.1"
+    "lucky-canvas": "^1.7.4"
   }
 }
