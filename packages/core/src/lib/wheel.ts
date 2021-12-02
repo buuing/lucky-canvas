@@ -17,7 +17,7 @@ import {
   splitText
 } from '../utils/index'
 import { getAngle, fanShapedByArc } from '../utils/math'
-import * as Tween from '../utils/tween'
+import { quad } from '../utils/tween'
 
 export default class LuckyWheel extends Lucky {
   private blocks: Array<BlockType> = []
@@ -40,6 +40,14 @@ export default class LuckyWheel extends Lucky {
   private stopDeg = 0                   // 刻舟求剑
   private endDeg = 0                    // 停止角度
   private FPS = 16.6                    // 屏幕刷新率
+  /**
+   * 游戏当前的阶段
+   * step = 0 时, 游戏尚未开始
+   * step = 1 时, 此时处于加速阶段
+   * step = 2 时, 此时处于匀速阶段
+   * step = 3 时, 此时处于减速阶段
+   */
+  private step: 0 | 1 | 2 | 3 = 0
   /**
    * 中奖索引
    * prizeFlag = undefined 时, 处于开始抽奖阶段, 正常旋转
@@ -471,13 +479,39 @@ export default class LuckyWheel extends Lucky {
   }
 
   /**
+   * 刻舟求剑
+   */
+  private carveOnGunwaleOfAMovingBoat (): void {
+    const { _defaultConfig, prizeFlag, prizeDeg, rotateDeg } = this
+    this.endTime = Date.now()
+    const stopDeg = this.stopDeg = rotateDeg
+    const speed = _defaultConfig.speed
+    const stopRange = (Math.random() * prizeDeg - prizeDeg / 2) * this.getLength(_defaultConfig.stopRange)
+    let i = 0, prevSpeed = 0, prevDeg = 0
+    while (++i) {
+      const endDeg = 360 * i - prizeFlag! * prizeDeg - rotateDeg - _defaultConfig.offsetDegree + stopRange - prizeDeg / 2
+      let currSpeed = quad.easeOut(this.FPS, stopDeg, endDeg, _defaultConfig.decelerationTime) - stopDeg
+      if (currSpeed > speed) {
+        this.endDeg = (speed - prevSpeed > currSpeed - speed) ? endDeg : prevDeg
+        break
+      }
+      prevDeg = endDeg
+      prevSpeed = currSpeed
+    }
+  }
+
+  /**
    * 对外暴露: 开始抽奖方法
    */
   public play (): void {
-    // 再次拦截, 因为play是可以异步调用的
-    if (this.startTime) return
+    if (this.step !== 0) return
+    // 记录游戏开始时间
     this.startTime = Date.now()
+    // 重置中奖索引
     this.prizeFlag = void 0
+    // 加速阶段
+    this.step = 1
+    // 开始游戏
     this.run()
   }
 
@@ -486,6 +520,7 @@ export default class LuckyWheel extends Lucky {
    * @param index 中奖索引
    */
   public stop (index?: number): void {
+    if (this.step === 0 || this.step === 3) return
     // 如果没有传递中奖索引, 则通过range属性计算一个
     if (!index && index !== 0) {
       const rangeArr = this.prizes.map(item => item.range)
@@ -493,10 +528,10 @@ export default class LuckyWheel extends Lucky {
     }
     // 如果index是负数则停止游戏, 反之则传递中奖索引
     if (index < 0) {
+      this.step = 0
       this.prizeFlag = -1
-      this.rotateDeg = 0
-      this.draw()
     } else {
+      this.step = 2
       this.prizeFlag = index % this.prizes.length
     }
   }
@@ -506,53 +541,54 @@ export default class LuckyWheel extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, prizeFlag, prizeDeg, rotateDeg, _defaultConfig } = this
-    // 如果等于 -1 就直接停止游戏
-    if (prizeFlag === -1) return (this.startTime = 0, void 0)
-    let interval = Date.now() - this.startTime
-    // 先完全旋转, 再停止
-    if (interval >= _defaultConfig.accelerationTime && prizeFlag !== void 0) {
-      // 记录帧率
-      this.FPS = interval / num
-      // 记录开始停止的时间戳
-      this.endTime = Date.now()
-      // 记录开始停止的位置
-      this.stopDeg = rotateDeg
-      // 停止范围
-      const stopRange = (Math.random() * prizeDeg - prizeDeg / 2) * this.getLength(_defaultConfig.stopRange)
-      // 测算最终停止的角度
-      let i = 0
-      while (++i) {
-        const endDeg = 360 * i - prizeFlag * prizeDeg - rotateDeg - _defaultConfig.offsetDegree + stopRange - prizeDeg / 2
-        let currSpeed = Tween[_defaultConfig.speedFunction].easeOut(this.FPS, this.stopDeg, endDeg, _defaultConfig.decelerationTime) - this.stopDeg
-        if (currSpeed > _defaultConfig.speed) {
-          this.endDeg = endDeg
-          break
-        }
-      }
-      return this.slowDown()
-    }
-    this.rotateDeg = (rotateDeg + Tween[_defaultConfig.speedFunction].easeIn(interval, 0, _defaultConfig.speed, _defaultConfig.accelerationTime)) % 360
-    this.draw()
-    rAF(this.run.bind(this, num + 1))
-  }
-
-  /**
-   * 缓慢停止的方法
-   */
-  private slowDown (): void {
-    const { rAF, prizes, prizeFlag, stopDeg, endDeg, _defaultConfig } = this
-    // 如果等于 -1 就直接停止游戏
-    if (prizeFlag === -1) return (this.startTime = 0, void 0)
-    let interval = Date.now() - this.endTime
-    if (interval >= _defaultConfig.decelerationTime) {
-      this.startTime = 0
-      this.endCallback?.(prizes.find((prize, index) => index === prizeFlag) || {})
+    const { rAF, step, prizeFlag, stopDeg, endDeg, _defaultConfig } = this
+    const { accelerationTime, decelerationTime, speed } = _defaultConfig
+    // 游戏结束
+    if (step === 0) {
+      this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
-    this.rotateDeg = Tween[_defaultConfig.speedFunction].easeOut(interval, stopDeg, endDeg, _defaultConfig.decelerationTime) % 360
+    // 如果等于 -1 就直接停止游戏
+    if (prizeFlag === -1) return
+    // 计算结束位置
+    if (step === 3 && !this.endDeg) this.carveOnGunwaleOfAMovingBoat()
+    // 计算时间间隔
+    const startInterval = Date.now() - this.startTime
+    const endInterval = Date.now() - this.endTime
+    let rotateDeg = this.rotateDeg
+    // 
+    if (step === 1 || startInterval < accelerationTime) { // 加速阶段
+      // 记录帧率
+      this.FPS = startInterval / num
+      const currSpeed = quad.easeIn(startInterval, 0, speed, accelerationTime)
+      // 加速到峰值后, 进入匀速阶段
+      if (currSpeed === speed) {
+        this.step = 2
+      }
+      rotateDeg = rotateDeg + currSpeed % 360
+    } else if (step === 2) { // 匀速阶段
+      // 速度保持不变
+      rotateDeg = rotateDeg + speed % 360
+      // 如果 prizeFlag 有值, 则进入减速阶段
+      if (prizeFlag !== void 0 && prizeFlag >= 0) {
+        this.step = 3
+        // 清空上一次的位置信息
+        this.stopDeg = 0
+        this.endDeg = 0
+      }
+    } else if (step === 3) { // 减速阶段
+      // 开始缓慢停止
+      rotateDeg = quad.easeOut(endInterval, stopDeg, endDeg, decelerationTime)
+      if (endInterval >= decelerationTime) {
+        this.step = 0
+      }
+    } else {
+      // 出现异常
+      this.stop(-1)
+    }
+    this.rotateDeg = rotateDeg
     this.draw()
-    rAF(this.slowDown.bind(this))
+    rAF(this.run.bind(this, num + 1))
   }
 
   /**

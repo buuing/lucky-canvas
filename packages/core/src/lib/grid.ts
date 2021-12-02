@@ -541,15 +541,15 @@ export default class LuckyGrid extends Lucky {
     this.endTime = Date.now()
     const stopIndex = this.stopIndex = currIndex
     const speed = _defaultConfig.speed
-    let i = 0, prevSpeed = 0, prev = 0
+    let i = 0, prevSpeed = 0, prevIndex = 0
     while (++i) {
       const endIndex = this.prizes.length * i + prizeFlag! - (stopIndex)
       const currSpeed = quad.easeOut(this.FPS, stopIndex, endIndex, _defaultConfig.decelerationTime) - stopIndex
       if (currSpeed > speed) {
-        this.endIndex = (speed - prevSpeed > currSpeed - speed) ? endIndex : prev
+        this.endIndex = (speed - prevSpeed > currSpeed - speed) ? endIndex : prevIndex
         break
       }
-      prev = endIndex
+      prevIndex = endIndex
       prevSpeed = currSpeed
     }
   }
@@ -598,14 +598,14 @@ export default class LuckyGrid extends Lucky {
     const { rAF, step, prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
     const { accelerationTime, decelerationTime, speed } = _defaultConfig
     // 结束游戏
-    if (this.step === 0) {
+    if (step === 0) {
       this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
     // 如果等于 -1 就直接停止游戏
     if (prizeFlag === -1) return
     // 计算结束位置
-    if (this.step === 3 && !this.endIndex) this.carveOnGunwaleOfAMovingBoat()
+    if (step === 3 && !this.endIndex) this.carveOnGunwaleOfAMovingBoat()
     // 计算时间间隔
     const startInterval = Date.now() - this.startTime
     const endInterval = Date.now() - this.endTime
@@ -630,12 +630,15 @@ export default class LuckyGrid extends Lucky {
         this.stopIndex = 0
         this.endIndex = 0
       }
-    } else if (step === 3 && endInterval) { // 减速阶段
+    } else if (step === 3) { // 减速阶段
       // 开始缓慢停止
       currIndex = quad.easeOut(endInterval, stopIndex, endIndex, decelerationTime)
       if (endInterval >= decelerationTime) {
         this.step = 0
       }
+    } else {
+      // 出现异常
+      this.stop(-1)
     }
     this.currIndex = currIndex
     this.draw()

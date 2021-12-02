@@ -7,101 +7,39 @@
 </head>
 <body>
   <body>
-    <script>
+    <!-- <script>
       var documentElement = document.documentElement;
-
       function callback() {
-          var clientWidth = documentElement.clientWidth;
-          // 屏幕宽度大于780，不在放大
-          clientWidth = clientWidth < 780 ? clientWidth : 780;
-          documentElement.style.fontSize = clientWidth / 10 + 'px';
+        var clientWidth = documentElement.clientWidth;
+        // 屏幕宽度大于780，不在放大
+        clientWidth = clientWidth < 780 ? clientWidth : 780;
+        documentElement.style.fontSize = clientWidth / 10 + 'px';
       }
-
       document.addEventListener('DOMContentLoaded', callback);
       window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', callback);
-    </script>
+    </script> -->
     <div id="my-lucky"></div>
-    <button onclick="luckyWheel.stop(-1)">stop(-1)</button>
-    <button onclick="luckyWheel.init()">init()</button>
-    <button onclick="luckyWheel.draw()">draw()</button>
-    <button onclick="luckyWheel.height = luckyWheel.width = '300px'">300px</button>
-    <button onclick="luckyWheel.height = luckyWheel.width = '60vw'">60vw</button>
     <br />
-    <canvas id="canvas" style="border: 1px solid red"></canvas>
-    <!-- <script src="../dist/index.umd.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/lucky-canvas@1.7/dist/index.umd.min.js"></script>
-    
+    <button onclick="myLucky.play()">play()</button>
+    <button onclick="myLucky.stop(0)">stop(0)</button>
+    <button onclick="myLucky.stop(1)">stop(1)</button>
+    <button onclick="myLucky.stop(-1)">stop(-1)</button>
+    <button onclick="myLucky.init()">init()</button>
+    <script src="../dist/index.umd.js"></script>
     <script>
-      const canvas = document.querySelector('canvas')
-      const ctx = canvas.getContext('2d')
-
-      
-
-      ctx.beginPath()
-      ctx.arc(100, 100, 50, -Math.PI / 2, 0)
-      // ctx.closePath()
-      ctx.stroke()
-      // ctx.fill()
-
-      // 创建大转盘抽奖
-      var luckyWheel = new LuckyCanvas.LuckyWheel('#my-lucky', {
-        width: '300px',
-        height: '300px',
-        blocks: [{ padding: '10px', background: '#617df2' }],
-        prizes: [],
-        buttons: [
-            { radius: '50px', background: 'rgba(0, 0, 0, 0.1)' },
+      const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
+        width: '200px',
+        height: '200px',
+        blocks: [{ padding: '10px', background: '#869cfa' }],
+        prizes: [
+          { fonts: [{ text: '0', top: '10%' }], background: '#e9e8fe' },
+          { fonts: [{ text: '1', top: '10%' }], background: '#b8c5f2' },
+          { fonts: [{ text: '2', top: '10%' }], background: '#e9e8fe' },
+          { fonts: [{ text: '3', top: '10%' }], background: '#b8c5f2' },
+          { fonts: [{ text: '4', top: '10%' }], background: '#e9e8fe' },
+          { fonts: [{ text: '5', top: '10%' }], background: '#b8c5f2' },
         ],
-        defaultStyle: {
-        //   fontSize: '14px'
-          lineClamp: 3,
-        },
-        defaultConfig: {
-          offsetDegree: 0,
-          gutter: 10,
-          stopRange: 0,
-        },
-        start () {
-          luckyWheel.play()
-          setTimeout(() => {
-            luckyWheel.stop(3)
-          }, 3000)
-        },
-        end (prize) {
-          console.log(prize)
-          // alert(`恭喜你获得${prize.title}`)
-        },
       })
-      // 设置奖品
-      setTimeout(() => {
-        const prizes = []
-        let data = [
-          { name: '10元红包啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', img: '10.png' },
-          { name: '20元红包', img: '20.png' },
-          { name: '50元红包', img: '50.png' },
-          { name: '100元红包', img: '100.png' },
-          { name: '20元红包', img: '20.png' },
-          { name: '10元红包', img: '10.png' },
-        ]
-        data.forEach((item, index) => {
-          prizes.push({
-            background: index % 2 ? '#e9e8fe' : '#b8c5f2',
-            fonts: [{ text: item.name, top: '10%', fontWeight: 300 }],
-            imgs: [{
-              src: `./imgs/${item.img}`,
-              width: '30%',
-              top: '35%',
-              // 对当前图片做一些处理, 比如裁剪之类的
-              formatter (img) {
-                // 处理图片
-                // img.crossOrigin = 'Anonymous'
-                return img
-              },
-            }],
-          })
-        })
-        luckyWheel.prizes = prizes
-      }, 500)
     </script>
   </body>
 </body>

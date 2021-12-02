@@ -258,6 +258,14 @@ declare class LuckyWheel extends Lucky {
     private endDeg;
     private FPS;
     /**
+     * 游戏当前的阶段
+     * step = 0 时, 游戏尚未开始
+     * step = 1 时, 此时处于加速阶段
+     * step = 2 时, 此时处于匀速阶段
+     * step = 3 时, 此时处于减速阶段
+     */
+    private step;
+    /**
      * 中奖索引
      * prizeFlag = undefined 时, 处于开始抽奖阶段, 正常旋转
      * prizeFlag >= 0 时, 说明stop方法被调用, 并且传入了中奖索引
@@ -318,6 +326,10 @@ declare class LuckyWheel extends Lucky {
      */
     protected draw(): void;
     /**
+     * 刻舟求剑
+     */
+    private carveOnGunwaleOfAMovingBoat;
+    /**
      * 对外暴露: 开始抽奖方法
      */
     play(): void;
@@ -331,10 +343,6 @@ declare class LuckyWheel extends Lucky {
      * @param num 记录帧动画执行多少次
      */
     private run;
-    /**
-     * 缓慢停止的方法
-     */
-    private slowDown;
     /**
      * 获取相对宽度
      * @param length 将要转换的宽度
@@ -472,6 +480,14 @@ declare class LuckyGrid extends Lucky {
     private timer;
     private FPS;
     /**
+     * 游戏当前的阶段
+     * step = 0 时, 游戏尚未开始
+     * step = 1 时, 此时处于加速阶段
+     * step = 2 时, 此时处于匀速阶段
+     * step = 3 时, 此时处于减速阶段
+     */
+    private step;
+    /**
      * 中奖索引
      * prizeFlag = undefined 时, 处于开始抽奖阶段, 正常旋转
      * prizeFlag >= 0 时, 说明stop方法被调用, 并且传入了中奖索引
@@ -543,6 +559,10 @@ declare class LuckyGrid extends Lucky {
      */
     private handleBackground;
     /**
+     * 刻舟求剑
+     */
+    private carveOnGunwaleOfAMovingBoat;
+    /**
      * 对外暴露: 开始抽奖方法
      */
     play(): void;
@@ -556,14 +576,6 @@ declare class LuckyGrid extends Lucky {
      * @param num 记录帧动画执行多少次
      */
     private run;
-    /**
-     * 缓慢停止的方法
-     */
-    private slowDown;
-    /**
-     * 开启中奖标识自动游走
-     */
-    walk(): void;
     /**
      * 计算奖品格子的几何属性
      * @param { array } [...矩阵坐标, col, row]
