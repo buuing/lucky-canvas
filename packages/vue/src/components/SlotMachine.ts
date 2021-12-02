@@ -105,8 +105,8 @@ export default defineComponent({
      * stop方法可以传递一个中奖索引, 来停止游戏
      * @param index 中奖索引
      */
-    stop (index?: number) {
-    //   this.$lucky?.stop(index)
+    stop (index: number) {
+      this.$lucky?.stop(index)
     },
   },
   render() {

@@ -205,7 +205,7 @@ declare const _default$1: vue_demi.DefineComponent<{
     initLucky(): void;
     init(): void;
     play(): void;
-    stop(index?: number | undefined): void;
+    stop(index: number): void;
 }, vue_demi.ComponentOptionsMixin, vue_demi.ComponentOptionsMixin, Record<string, any>, string, vue_demi.VNodeProps & vue_demi.AllowedComponentProps & vue_demi.ComponentCustomProps, Readonly<{
     width?: unknown;
     height?: unknown;
