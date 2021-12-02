@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
-  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/buuing/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/buuing/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />
@@ -108,9 +108,6 @@ export default {
 
 - 另外: 如果你修复了某些bug或兼容, 欢迎提给我, 我会把你展示到官网的贡献者列表当中
 
----
-
-<font color="blue">作者留言: (●ˇ∀ˇ●)我开源是出于爱好, 所以不接受中差评! <b>低于5星的提问我将不予理会</b> (我心情不好的情况下, 拒绝解答问题似乎是一个很合理的行为)</font>
 
 <br />
 
@@ -134,4 +131,9 @@ export default {
 
 5. 为什么这个插件不支持app
 
-> 答: 因为有几个沙雕刷差评, 所以我不开心, 也就不想浪费时间在uni-app上面了
+> 答: 看见这俩人没, 跟我这玩激将法呢? 想用差评胁迫我兼容app? 啧啧啧, 我这该死的逆反心理
+> <img src="https://cdn.jsdelivr.net/gh/buuing/cdn@0.0.2/imgs/Snipaste_2021-11-29_20-40-39.png" width="400" />
+
+---
+
+<font color="blue">作者留言: 我觉得uniapp这边兼容的很累, 不是因为技术原因, 而是因为这个评分机制, 偶尔几个差评非常破坏心情, 或许有的人他就是天生的内心坏, 就想恶心别人. 所以低于5星的提问我将不予理会</font>
