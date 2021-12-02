@@ -7,9 +7,9 @@
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     />
     <!-- 按钮 -->
-    <view v-if="btnShow">
+    <view v-show="btnShow">
       <view v-if="flag === 'WEB'">
-        <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @touchstart="toPlay(btn)" :style="{
+        <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
           top: btn.top + 'px',
           left: btn.left + 'px',
           width: btn.width + 'px',
