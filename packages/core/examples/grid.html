@@ -7,79 +7,47 @@
 </head>
 <body>
   <div id="my-lucky"></div>
-  <button onclick="luckyGrid.play()">play()</button>
-  <button onclick="luckyGrid.stop(0)">stop(0)</button>
-  <button onclick="luckyGrid.stop(1)">stop(1)</button>
-  <button onclick="luckyGrid.stop(2)">stop(2)</button>
-  <button onclick="luckyGrid.stop(-1)">stop(-1)</button>
-  <button onclick="luckyGrid.init()">init()</button>
+  <button onclick="myLucky.play()">play()</button>
+  <button onclick="myLucky.stop(0)">stop(0)</button>
+  <button onclick="myLucky.stop(1)">stop(1)</button>
+  <button onclick="myLucky.stop(2)">stop(2)</button>
+  <button onclick="myLucky.stop(-1)">stop(-1)</button>
+  <button onclick="myLucky.init()">init()</button>
   <script src="../dist/index.umd.js"></script>
     <script>
-    let luckyNum = 1
-    // 创建九宫格抽奖
-    var luckyGrid = new LuckyCanvas.LuckyGrid('#my-lucky', {
-      width: '400px',
-      height: '300px',
-      blocks: [
+      const myLucky = new LuckyCanvas.LuckyGrid('#my-lucky', {
+        width: '200px',
+        height: '200px',
+        rows: 4,
+        cols: 4,
+        blocks: [
           { padding: '10px', background: '#869cfa' },
           { padding: '10px', background: '#e9e8fe' },
-      ],
-      buttons: [
-        {x:1, y:1},
-        {x:0, y:1}
-      ],
-      prizes: [],
-      defaultStyle: {
-          background: '#b8c5f2',
-          lineClamp: 3,
-          lengthLimit: '100%'
-      },
-      start (e, btn) {
-        if (!luckyNum) return alert('还剩0次抽奖机会')
-          luckyGrid.stop(4)
-        luckyGrid.play()
-        setTimeout(() => {
-          luckyGrid.stop(4)
-        }, 3000)
-      },
-      end (prize) {
-        console.log(prize)
-        // alert(`恭喜你获得大奖: ${prize.name}`)
-        // luckyNum--
-        // luckyGrid.buttons[0].fonts[0].text = `${luckyNum} 次`
-        // luckyGrid.stop(-1)
-      }
-    })
-    // 模拟接口异步请求奖品列表
-    setTimeout(() => {
-      const prizes = []
-      const data = [
-        { name: '10元红包', img: './imgs/10.png' },
-        { name: '20元红包', img: './imgs/20.png' },
-        { name: '50元红包', img: './imgs/50.png' },
-        { name: '50元红包', img: './imgs/50.png' },
-        { name: '50元红包', img: './imgs/50.png' },
-        { name: '50元红包', img: './imgs/50.png' },
-        { name: '50元红包', img: './imgs/50.png' },
-        // { name: '100元红包111111111111111111111111111111111111111', img: './imgs/100.png' },
-      ]
-      let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
-      for (let i = 0; i < data.length; i++) {
-        let item = data[i]
-        const disabled = i<6
-        prizes.push({
-          name: item.name,
-          index: i, x: axis[i][0], y: axis[i][1],
-          fonts: [{ text: item.name, top: '0%' }],
-          disabled: disabled,
-          imgs: [{
-            src: item.img, width: '53%', top: '8%',
-          }]
-        })
-      }
-      console.log(prizes)
-      luckyGrid.prizes = prizes
-    })
+        ],
+        prizes: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 2, y: 0 },
+          { x: 3, y: 0 },
+          { x: 3, y: 1 },
+          { x: 3, y: 2 },
+          { x: 3, y: 3 },
+          { x: 2, y: 3 },
+          { x: 1, y: 3 },
+          { x: 0, y: 3 },
+          { x: 0, y: 2 },
+          { x: 0, y: 1 },
+        ],
+        buttons: [
+          {
+            x: 1, y: 1,
+            row: 2, col: 2,
+          },
+        ],
+        defaultStyle: {
+          background: '#b8c5f2'
+        }
+      })
   </script>
 </body>
 </html>

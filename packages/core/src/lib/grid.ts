@@ -52,6 +52,14 @@ export default class LuckyGrid extends Lucky {
   private timer = 0                     // 游走定时器
   private FPS = 16.6                    // 屏幕刷新率
   /**
+   * 游戏当前的阶段
+   * step = 0 时, 游戏尚未开始
+   * step = 1 时, 此时处于加速阶段
+   * step = 2 时, 此时处于匀速阶段
+   * step = 3 时, 此时处于减速阶段
+   */
+  private step: 0 | 1 | 2 | 3 = 0
+  /**
    * 中奖索引
    * prizeFlag = undefined 时, 处于开始抽奖阶段, 正常旋转
    * prizeFlag >= 0 时, 说明stop方法被调用, 并且传入了中奖索引
@@ -526,14 +534,38 @@ export default class LuckyGrid extends Lucky {
   }
 
   /**
+   * 刻舟求剑
+   */
+  private carveOnGunwaleOfAMovingBoat (): void {
+    const { _defaultConfig, prizeFlag, currIndex } = this
+    this.endTime = Date.now()
+    const stopIndex = this.stopIndex = currIndex
+    const speed = _defaultConfig.speed
+    let i = 0, prevSpeed = 0, prev = 0
+    while (++i) {
+      const endIndex = this.prizes.length * i + prizeFlag! - (stopIndex)
+      const currSpeed = quad.easeOut(this.FPS, stopIndex, endIndex, _defaultConfig.decelerationTime) - stopIndex
+      if (currSpeed > speed) {
+        this.endIndex = (speed - prevSpeed > currSpeed - speed) ? endIndex : prev
+        break
+      }
+      prev = endIndex
+      prevSpeed = currSpeed
+    }
+  }
+
+  /**
    * 对外暴露: 开始抽奖方法
    */
   public play (): void {
-    const { clearInterval } = this.config
-    if (this.startTime) return
-    clearInterval(this.timer)
+    if (this.step !== 0) return
+    // 记录游戏开始的时间
     this.startTime = Date.now()
+    // 重置中奖索引
     this.prizeFlag = void 0
+    // 开始加速
+    this.step = 1
+    // 开始运行
     this.run()
   }
 
@@ -542,6 +574,7 @@ export default class LuckyGrid extends Lucky {
    * @param index 中奖索引
    */
   public stop (index?: number): void {
+    if (this.step === 0 || this.step === 3) return
     // 如果没有传递中奖索引, 则通过range属性计算一个
     if (!index && index !== 0) {
       const rangeArr = this.prizes.map(item => item.range)
@@ -549,10 +582,10 @@ export default class LuckyGrid extends Lucky {
     }
     // 如果index是负数则停止游戏, 反之则传递中奖索引
     if (index < 0) {
+      this.step = 0
       this.prizeFlag = -1
-      this.currIndex = 0
-      this.draw()
     } else {
+      this.step = 2
       this.prizeFlag = index % this.prizes.length
     }
   }
@@ -562,63 +595,51 @@ export default class LuckyGrid extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, currIndex, prizes, prizeFlag, startTime, _defaultConfig } = this
-    // 如果等于 -1 就直接停止游戏
-    if (prizeFlag === -1) return (this.startTime = 0, void 0)
-    let interval = Date.now() - startTime
-    // 先完全旋转, 再停止
-    if (interval >= _defaultConfig.accelerationTime && prizeFlag !== void 0) {
-      // 记录帧率
-      this.FPS = interval / num
-      // 记录开始停止的时间戳
-      this.endTime = Date.now()
-      // 记录开始停止的索引
-      this.stopIndex = currIndex
-      // 测算最终停止的索引
-      let i = 0
-      while (++i) {
-        const endIndex = prizes.length * i + prizeFlag - (currIndex >> 0)
-        let currSpeed = quad.easeOut(this.FPS, this.stopIndex, endIndex, _defaultConfig.decelerationTime) - this.stopIndex
-        if (currSpeed > _defaultConfig.speed) {
-          this.endIndex = endIndex
-          break
-        }
-      }
-      return this.slowDown()
-    }
-    this.currIndex = (currIndex + quad.easeIn(interval, 0.1, _defaultConfig.speed, _defaultConfig.accelerationTime)) % prizes.length
-    this.draw()
-    rAF(this.run.bind(this, num + 1))
-  }
-
-  /**
-   * 缓慢停止的方法
-   */
-  private slowDown (): void {
-    const { rAF, prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
-    // 如果等于 -1 就直接停止游戏
-    if (prizeFlag === -1) return (this.startTime = 0, void 0)
-    let interval = Date.now() - this.endTime
-    if (interval > _defaultConfig.decelerationTime) {
-      this.startTime = 0
-      this.endCallback?.(prizes.find((prize, index) => index === prizeFlag) || {})
+    const { rAF, step, prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
+    const { accelerationTime, decelerationTime, speed } = _defaultConfig
+    // 结束游戏
+    if (this.step === 0) {
+      this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
-    this.currIndex = quad.easeOut(interval, stopIndex, endIndex, _defaultConfig.decelerationTime) % prizes.length
+    // 如果等于 -1 就直接停止游戏
+    if (prizeFlag === -1) return
+    // 计算结束位置
+    if (this.step === 3 && !this.endIndex) this.carveOnGunwaleOfAMovingBoat()
+    // 计算时间间隔
+    const startInterval = Date.now() - this.startTime
+    const endInterval = Date.now() - this.endTime
+    let currIndex = this.currIndex
+    // 
+    if (step === 1 || startInterval < accelerationTime) { // 加速阶段
+      // 记录帧率
+      this.FPS = startInterval / num
+      const currSpeed = quad.easeIn(startInterval, 0.1, speed - 0.1, accelerationTime)
+      // 加速到峰值后, 进入匀速阶段
+      if (currSpeed === speed) {
+        this.step = 2
+      }
+      currIndex = currIndex + currSpeed % prizes.length
+    } else if (step === 2) { // 匀速阶段
+      // 速度保持不变
+      currIndex = currIndex + speed % prizes.length
+      // 如果 prizeFlag 有值, 则进入减速阶段
+      if (prizeFlag !== void 0 && prizeFlag >= 0) {
+        this.step = 3
+        // 清空上一次的位置信息
+        this.stopIndex = 0
+        this.endIndex = 0
+      }
+    } else if (step === 3 && endInterval) { // 减速阶段
+      // 开始缓慢停止
+      currIndex = quad.easeOut(endInterval, stopIndex, endIndex, decelerationTime)
+      if (endInterval >= decelerationTime) {
+        this.step = 0
+      }
+    }
+    this.currIndex = currIndex
     this.draw()
-    rAF(this.slowDown.bind(this))
-  }
-
-  /**
-   * 开启中奖标识自动游走
-   */
-  public walk (): void {
-    const { setInterval, clearInterval } = this.config
-    clearInterval(this.timer)
-    this.timer = setInterval(() => {
-      this.currIndex += 1
-      this.draw()
-    }, 1300)
+    rAF(this.run.bind(this, num + 1))
   }
 
   /**
