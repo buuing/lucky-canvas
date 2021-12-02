@@ -15,7 +15,7 @@ export default [
         sourcemap: true,
       },
       {
-        file: pkg.unpkg,
+        file: pkg.jsdelivr,
         format: 'umd',
         name: 'VueLuckyCanvas',
         sourcemap: true,
