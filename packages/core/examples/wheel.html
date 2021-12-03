@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
+<body style="opacity: 1;">
   <body>
     <!-- <script>
       var documentElement = document.documentElement;
@@ -39,6 +39,21 @@
           { fonts: [{ text: '4', top: '10%' }], background: '#e9e8fe' },
           { fonts: [{ text: '5', top: '10%' }], background: '#b8c5f2' },
         ],
+        buttons: [
+          { radius: '50%', background: '#617df2' },
+          { radius: '45%', background: '#afc8ff' },
+          {
+            radius: '40%', background: '#869cfa',
+            pointer: true,
+            fonts: [{ text: '开始\n抽奖', top: '-20px' }]
+          },
+        ],
+        start () {
+          myLucky.play()
+          setTimeout(() => {
+          myLucky.stop(0)
+          })
+        }
       })
     </script>
   </body>

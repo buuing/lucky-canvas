@@ -99,6 +99,7 @@ export default class SlotMachine extends Lucky {
   protected initLucky (): void {
     this.FPS = 16.6
     this.prizeFlag = -1
+    this.step = 0
     super.initLucky()
   }
 

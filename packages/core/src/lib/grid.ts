@@ -114,6 +114,7 @@ export default class LuckyGrid extends Lucky {
     this.timer = 0
     this.FPS = 16.6
     this.prizeFlag = -1
+    this.step = 0
     super.initLucky()
   }
 
@@ -274,7 +275,7 @@ export default class LuckyGrid extends Lucky {
       ctx.beginPath()
       ctx.rect(x, y, width, height)
       if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return
-      if (this.startTime) return
+      if (this.step !== 0) return
       // 如果btn里有单独的回调方法, 优先触发
       if (typeof btn.callback === 'function') btn.callback.call(this, btn)
       // 最后触发公共回调

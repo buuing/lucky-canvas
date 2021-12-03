@@ -2,7 +2,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>微信小程序 抽奖组件</h1>
-  <p>一个基于微信小程序的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>一个基于微信小程序的 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/buuing/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/buuing/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />

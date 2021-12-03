@@ -101,6 +101,7 @@ export default class LuckyWheel extends Lucky {
     this.endDeg = 0
     this.FPS = 16.6
     this.prizeFlag = -1
+    this.step = 0
     super.initLucky()
   }
 
@@ -235,7 +236,7 @@ export default class LuckyWheel extends Lucky {
     ctx.beginPath()
     ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2, false)
     if (!ctx.isPointInPath(e.offsetX, e.offsetY)) return
-    if (this.startTime) return
+    if (this.step !== 0) return
     this.startCallback?.(e)
   }
 
