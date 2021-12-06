@@ -97,7 +97,17 @@ export default class SlotMachine extends Lucky {
   }
 
   protected initLucky (): void {
+    this.cellWidth = 0
+    this.cellHeight = 0
+    this.cellAndSpacing = 0
+    this.widthAndSpacing = 0
+    this.heightAndSpacing = 0
     this.FPS = 16.6
+    this.scroll = []
+    this.stopScroll = []
+    this.endScroll = []
+    this.startTime = 0
+    this.endTime = 0
     this.prizeFlag = -1
     this.step = 0
     super.initLucky()
@@ -303,7 +313,7 @@ export default class SlotMachine extends Lucky {
    */
   protected drawOffscreenCanvas (): void {
     const { _defaultConfig, _defaultStyle } = this
-    const { x, y, w, h } = this.drawBlocks()!
+    const { w, h } = this.drawBlocks()!
     // 计算单一奖品格子的宽度和高度
     const prizesLen = this.prizes.length
     const { cellWidth, cellHeight, widthAndSpacing, heightAndSpacing } = this.displacementWidthOrHeight()
@@ -335,8 +345,8 @@ export default class SlotMachine extends Lucky {
       newPrizes.forEach((cell, cellIndex) => {
         if (!cell) return
         const orderIndex = slot.order![cellIndex]
-        const prizesX = widthAndSpacing * cellIndex
-        const prizesY = heightAndSpacing * cellIndex
+        const prizesX = widthAndSpacing * cellIndex + _defaultConfig.colSpacing / 2
+        const prizesY = heightAndSpacing * cellIndex + _defaultConfig.rowSpacing / 2
         const [_x, _y, spacing] = this.displacement(
           [cellX, prizesY, heightAndSpacing],
           [prizesX, cellY, widthAndSpacing]
@@ -360,6 +370,38 @@ export default class SlotMachine extends Lucky {
             _y + this.getHeight(imgInfo.top, cellHeight)
           ]
           this.drawImage(_ctx, cellImg, xAxis, yAxis, trueWidth, trueHeight)
+        })
+        // 绘制文字
+        cell.fonts && cell.fonts.forEach(font => {
+          // 字体样式
+          const style = font.fontStyle || _defaultStyle.fontStyle
+          // 字体加粗
+          const fontWeight = font.fontWeight || _defaultStyle.fontWeight
+          // 字体大小
+          const size = this.getLength(font.fontSize || _defaultStyle.fontSize)
+          // 字体行高
+          const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
+          const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+          const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
+          const lineClamp = font.lineClamp || _defaultStyle.lineClamp
+          _ctx.font = `${fontWeight} ${size >> 0}px ${style}`
+          _ctx.fillStyle = font.fontColor || _defaultStyle.fontColor
+          let lines = [], text = String(font.text)
+          // 计算文字换行
+          if (wordWrap) {
+            // 最大宽度
+            let maxWidth = this.getWidth(lengthLimit, cellWidth)
+            lines = splitText(_ctx, removeEnter(text), () => maxWidth, lineClamp)
+          } else {
+            lines = text.split('\n')
+          }
+          lines.forEach((line, lineIndex) => {
+            _ctx.fillText(
+              line,
+              _x + this.getOffsetX(_ctx.measureText(line).width, cellWidth),
+              _y + this.getHeight(font.top, cellHeight) + (lineIndex + 1) * this.getLength(lineHeight)
+            )
+          })
         })
       })
       const [_x, _y, _w, _h] = this.displacement(
@@ -516,7 +558,7 @@ export default class SlotMachine extends Lucky {
     const { rAF, step, prizeFlag, _defaultConfig, cellAndSpacing } = this
     const { accelerationTime, decelerationTime } = _defaultConfig
     // 游戏结束
-    if (this.step === 0) {
+    if (this.step === 0 && prizeFlag !== void 0 && prizeFlag >= 0) {
       this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
       return
     }
