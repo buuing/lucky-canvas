@@ -39,7 +39,10 @@ export default [
       json(),
       resolve(),
       commonjs(),
-      babel({ exclude: 'node_modules/**' }),
+      babel({
+        runtimeHelpers: true,
+        exclude: 'node_modules/**',
+      }),
       terser()
     ]
   }, {

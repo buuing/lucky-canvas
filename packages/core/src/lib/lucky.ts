@@ -297,10 +297,6 @@ export default class Lucky {
     return { _offscreenCanvas, _ctx }
   }
 
-  protected multiplyByDpr <T extends number[]>(...nums: number[]): number[] {
-    return nums.map(num => num * this.config.dpr)
-  }
-
   /**
    * 图片裁剪
    */

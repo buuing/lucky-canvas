@@ -38,7 +38,10 @@ export default {
       tsconfig: path.resolve(__dirname, './tsconfig.json'),
       extensions: ['.js', '.ts']
     }),
-    babel({ exclude: 'node_modules/**' }),
+    babel({
+      runtimeHelpers: true,
+      exclude: 'node_modules/**',
+    }),
     livereload(),
     serve({
       open: true,

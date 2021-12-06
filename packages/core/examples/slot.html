@@ -42,7 +42,7 @@
       prizes: [],
       defaultConfig: {
         // mode: 'horizontal',
-        rowSpacing: '5px',
+        rowSpacing: '20px',
         colSpacing: '6.5px',
       },
       end (prize) {
@@ -53,11 +53,14 @@
       myLucky.prizes = [
         {
           background: '#fff',
-          imgs: [{
-            width: '90%',
-            top: '5%',
-            src: './imgs/0.png'
+          fonts: [{
+            text: '1'
           }]
+          // imgs: [{
+          //   width: '90%',
+          //   top: '5%',
+          //   src: './imgs/0.png'
+          // }]
         },
         {
           background: '#fff',
@@ -81,10 +84,11 @@
       myLucky.slots = [
         {
           order: [0,1,2],
+          speed: 1
         },
         {
           order: [2,0,1],
-          speed: 15,
+          speed: 1,
           direction: -1
         },
         {

@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "一个基于原生 js 的（大转盘 / 九宫格 / 老虎机）抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -36,6 +36,9 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/runtime": "^7.16.3",
+    "core-js": "^3.19.2",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-eslint": "^8.0.1",
     "@rollup/plugin-json": "^4.1.0",

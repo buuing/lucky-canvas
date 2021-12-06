@@ -140,7 +140,6 @@ declare class Lucky {
         _offscreenCanvas: HTMLCanvasElement;
         _ctx: CanvasRenderingContext2D;
     } | void;
-    protected multiplyByDpr<T extends number[]>(...nums: number[]): number[];
     /**
      * 图片裁剪
      */

@@ -157,7 +157,6 @@ export default class SlotMachine extends Lucky {
         fontStyle: 'sans-serif',
         fontWeight: '400',
         background: 'rgba(0,0,0,0)',
-        shadow: '',
         wordWrap: true,
         lengthLimit: '90%',
         ...this.defaultStyle
