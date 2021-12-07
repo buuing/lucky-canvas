@@ -472,7 +472,7 @@ export default class SlotMachine extends Lucky {
       // 绘制临界点
       const _p = cellAndSpacing * slot.order!.length
       // 调整奖品垂直居中
-      const start = this.displacement(-(h - cellHeight) / 2, -(w - cellWidth) / 2)
+      const start = this.displacement(-(h - heightAndSpacing) / 2, -(w - widthAndSpacing) / 2)
       let scroll = this.scroll[slotIndex] + start
       // scroll 会无限累加 1 / -1
       if (scroll < 0) {

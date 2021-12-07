@@ -60,11 +60,15 @@ export default class Lucky {
       console.error('无法获取到 CanvasContext2D')
     }
     // 监听 window 触发 resize 时重置
-    window && window.addEventListener('resize', throttle(() => this.resize(), 300))
+    if (window && typeof window.addEventListener === 'function') {
+      window.addEventListener('resize', throttle(() => this.resize(), 300))
+    }
     // 监听异步设置 html 的 fontSize 并重新绘制
-    window && window.MutationObserver && new window.MutationObserver(() => {
-      this.resize()
-    }).observe(document.documentElement, { attributes: true })
+    if (window && typeof window.MutationObserver === 'function') {
+      new window.MutationObserver(() => {
+        this.resize()
+      }).observe(document.documentElement, { attributes: true })
+    }
   }
 
   /**
