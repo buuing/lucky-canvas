@@ -57,6 +57,7 @@ export type ConfigType = {
   afterInit?: Function
   beforeDraw?: Function
   afterDraw?: Function
+  afterStart?: Function
 }
 
 type RequireKey = 'width' | 'height'

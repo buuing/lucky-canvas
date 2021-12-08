@@ -512,6 +512,8 @@ export default class LuckyWheel extends Lucky {
     this.prizeFlag = void 0
     // 加速阶段
     this.step = 1
+    // 触发回调
+    this.config.afterStart?.()
     // 开始游戏
     this.run()
   }

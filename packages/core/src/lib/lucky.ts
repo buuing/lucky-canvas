@@ -110,6 +110,13 @@ export default class Lucky {
     this.htmlFontSize = +window.getComputedStyle(document.documentElement).fontSize.slice(0, -2)
   }
 
+  // 清空画布
+  public clearCanvas (): void {
+    const dpr = this.config.dpr
+    const [width, height] = [this.boxWidth * dpr, this.boxHeight * dpr]
+    this.ctx.clearRect(-width, -height, width, height)
+  }
+
   /**
    * 设备像素比
    * window 环境下自动获取, 其余环境手动传入
