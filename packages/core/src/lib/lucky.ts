@@ -112,9 +112,8 @@ export default class Lucky {
 
   // 清空画布
   public clearCanvas (): void {
-    const dpr = this.config.dpr
-    const [width, height] = [this.boxWidth * dpr, this.boxHeight * dpr]
-    this.ctx.clearRect(-width, -height, width, height)
+    const [width, height] = [this.boxWidth, this.boxHeight]
+    this.ctx.clearRect(-width, -height, width * 2, height * 2)
   }
 
   /**
