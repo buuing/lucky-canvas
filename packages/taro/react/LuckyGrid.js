@@ -2,7 +2,7 @@ import React from 'react'
 import Taro from '@tarojs/taro'
 import { View, Canvas, CoverView, Image } from '@tarojs/components'
 import { LuckyGrid as Grid } from 'lucky-canvas'
-import { changeUnits, resolveImage, getFlag } from '../utils'
+import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 import '../utils/index.css'
 
 export default class LuckyGrid extends React.Component {
@@ -10,6 +10,7 @@ export default class LuckyGrid extends React.Component {
   ctx = null
   canvas = null
   state = {
+    imgSrc: '',
     $lucky: null,
     boxWidth: 300,
     boxHeight: 300,
@@ -53,6 +54,28 @@ export default class LuckyGrid extends React.Component {
   async imgBindloadActive (res, name, index, i) {
     const img = this.props[name][index].imgs[i]
     resolveImage(img, this.canvas, 'activeSrc', '$activeResolve')
+  }
+
+  getImage () {
+    const page = Taro.getCurrentInstance().page
+    return getImage.call(page, 'lucky-grid', this.canvas)
+  }
+
+  showCanvas () {
+    this.setState({
+      imgSrc: ''
+    })
+  }
+
+  hideCanvas () {
+    this.getImage().then(res => {
+      if (res.errMsg !== 'canvasToTempFilePath:ok') {
+        return console.error(res)
+      }
+      this.setState({
+        imgSrc: res.tempFilePath
+      })
+    })
   }
 
   initLucky () {
@@ -131,6 +154,9 @@ export default class LuckyGrid extends React.Component {
         })
         _this.setState({ btns, btnShow: true })
       },
+      afterStart: () => {
+        this.showCanvas()
+      }
     }, {
       ...props,
       start: (...rest) => {
@@ -138,6 +164,7 @@ export default class LuckyGrid extends React.Component {
       },
       end: (...rest) => {
         props.onEnd && props.onEnd(...rest)
+        this.hideCanvas()
       }
     })
     this.setState({ $lucky })
@@ -157,14 +184,12 @@ export default class LuckyGrid extends React.Component {
 
   render () {
     const { props, state, flag } = this
+    const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
+    const showImage = state.$lucky && flag !== 'WEB'
     return flag === 'WEB' ? <div id="lucky-box"></div> : (
-      <View className="lucky-box" style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}>
-        <Canvas
-          type="2d"
-          id="lucky-grid"
-          canvasId="lucky-grid"
-          style={{ width: state.boxWidth + 'px', height: state.boxHeight + 'px' }}
-        ></Canvas>
+      <View className="lucky-box" style={boxSize}>
+        <Canvas type="2d" id="lucky-grid" canvasId="lucky-grid" style={boxSize}></Canvas>
+        <Image src={state.imgSrc} onLoad={() => state.$lucky.clearCanvas()} style={boxSize}></Image>
         {/* 按钮 */}
         {
           state.btnShow ? <View>
@@ -179,7 +204,7 @@ export default class LuckyGrid extends React.Component {
           </View> : null
         }
         {/* 图片 */}
-        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
+        { showImage ? <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>
               {
@@ -193,7 +218,7 @@ export default class LuckyGrid extends React.Component {
             </View>)
           }
         </View> : null }
-        { state.$lucky && flag !== 'WEB' ? <View className="lucky-imgs">
+        { showImage ? <View className="lucky-imgs">
           {
             props.buttons.map((button, index) => <View key={index}>
               {

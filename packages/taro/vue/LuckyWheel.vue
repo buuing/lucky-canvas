@@ -6,6 +6,11 @@
       canvasId="lucky-wheel"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     />
+    <image
+      :src="imgSrc"
+      @load="$lucky.clearCanvas()"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></image>
     <!-- 按钮 -->
     <view v-if="flag === 'WEB'" class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <cover-view v-else class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
@@ -39,7 +44,7 @@
 <script>
 import Taro from '@tarojs/taro'
 import { LuckyWheel as Wheel } from 'lucky-canvas'
-import { changeUnits, resolveImage, getFlag } from '../utils'
+import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 export default {
   props: {
     width: {
@@ -81,6 +86,7 @@ export default {
       boxHeight: 300,
       btnWidth: 0,
       btnHeight: 0,
+      imgSrc: '',
     }
   },
   watch: {
@@ -101,6 +107,21 @@ export default {
     async imgBindload (res, name, index, i) {
       const img = this[name][index].imgs[i]
       resolveImage(img, this.canvas)
+    },
+    getImage () {
+      const page = Taro.getCurrentInstance().page
+      return getImage.call(page, 'lucky-wheel', this.canvas)
+    },
+    showCanvas () {
+      this.imgSrc = ''
+    },
+    hideCanvas () {
+      this.getImage().then(res => {
+        if (res.errMsg !== 'canvasToTempFilePath:ok') {
+          return console.error(res)
+        }
+        this.imgSrc = res.tempFilePath
+      })
     },
     initLucky () {
       this.boxWidth = changeUnits(this.width)
@@ -161,10 +182,16 @@ export default {
             _this.btnWidth = this.maxBtnRadius * 2
             _this.btnHeight = this.maxBtnRadius * 2
           },
+          afterStart: () => {
+            this.showCanvas()
+          },
         }, {
           ...this.$props,
           start: (...rest) => this.$emit('start', ...rest),
-          end: (...rest) => this.$emit('end', ...rest),
+          end: (...rest) => {
+            this.$emit('end', ...rest)
+            this.hideCanvas()
+          },
         })
       })
     },

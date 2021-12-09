@@ -1,6 +1,7 @@
 .lucky-box {
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
 }
 #lucky-wheel, #lucky-grid {
   position: absolute;

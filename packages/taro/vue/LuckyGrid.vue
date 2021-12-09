@@ -6,6 +6,11 @@
       canvasId="lucky-grid"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     />
+    <image
+      :src="imgSrc"
+      @load="$lucky.clearCanvas()"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></image>
     <!-- 按钮 -->
     <view v-show="btnShow">
       <view v-if="flag === 'WEB'">
@@ -51,7 +56,7 @@
 <script>
 import Taro from '@tarojs/taro'
 import { LuckyGrid as Grid } from 'lucky-canvas'
-import { changeUnits, resolveImage, getFlag } from '../utils'
+import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 export default {
   props: {
     width: {
@@ -105,6 +110,7 @@ export default {
       boxHeight: 300,
       btns: [],
       btnShow: false,
+      imgSrc: '',
     }
   },
   watch: {
@@ -135,6 +141,21 @@ export default {
     async imgBindloadActive (res, name, index, i) {
       const img = this[name][index].imgs[i]
       resolveImage(img, this.canvas, 'activeSrc', '$activeResolve')
+    },
+    getImage () {
+      const page = Taro.getCurrentInstance().page
+      return getImage.call(page, 'lucky-grid', this.canvas)
+    },
+    showCanvas () {
+      this.imgSrc = ''
+    },
+    hideCanvas () {
+      this.getImage().then(res => {
+        if (res.errMsg !== 'canvasToTempFilePath:ok') {
+          return console.error(res)
+        }
+        this.imgSrc = res.tempFilePath
+      })
     },
     initLucky () {
       this.boxWidth = changeUnits(this.width)
@@ -196,10 +217,16 @@ export default {
             })
             _this.btnShow = true
           },
+          afterStart: () => {
+            this.showCanvas()
+          },
         }, {
           ...this.$props,
           start: (...rest) => this.$emit('start', ...rest),
-          end: (...rest) => this.$emit('end', ...rest),
+          end: (...rest) => {
+            this.$emit('end', ...rest)
+            this.hideCanvas()
+          },
         })
       })
     },
