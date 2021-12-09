@@ -23,19 +23,19 @@ export const changeUnits = (value) => {
 }
 
 export const resolveImage = (e, img, canvas, srcName = 'src', resolveName = '$resolve') => {
-  let imgObj = canvas.createImage()
+  const imgObj = canvas.createImage()
   imgObj.onload = () => {
     img[resolveName](imgObj)
   }
   imgObj.src = img[srcName]
 }
 
-export function getImage () {
+export function getImage() {
   return new Promise((resolve, reject) => {
     wx.canvasToTempFilePath({
       canvas: this.canvas,
       success: res => resolve(res),
       fail: err => reject(err)
-    });
+    })
   })
 }

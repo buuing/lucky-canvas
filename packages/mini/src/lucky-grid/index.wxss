@@ -2,14 +2,17 @@
 .lucky-box {
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
 }
-.lucky-img {
+.lucky-box .lucky-img {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 100;
 }
-#lucky-grid {
+.lucky-box #lucky-grid {
   position: absolute;
+  left: 0;
+  top: 0;
   z-index: 99;
 }

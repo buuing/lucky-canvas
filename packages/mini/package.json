@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/mini",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -70,6 +70,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "lucky-canvas": "~1.7.0"
+    "lucky-canvas": "~1.7.10"
   }
 }
