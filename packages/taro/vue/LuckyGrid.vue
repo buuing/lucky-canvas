@@ -150,6 +150,7 @@ export default {
       this.imgSrc = ''
     },
     hideCanvas () {
+      if (this.flag === 'WEB') return
       this.getImage().then(res => {
         if (res.errMsg !== 'canvasToTempFilePath:ok') {
           return console.error(res)
