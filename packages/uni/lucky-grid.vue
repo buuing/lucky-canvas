@@ -6,6 +6,12 @@
       canvas-id="lucky-grid"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     ></canvas>
+    <image
+      v-if="imgSrc"
+      :src="imgSrc"
+      @load="myLucky.clearCanvas()"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></image>
     <!-- #ifdef APP-PLUS -->
     <view v-if="btnShow">
       <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
@@ -62,6 +68,7 @@
     name: 'lucky-grid',
     data () {
       return {
+        imgSrc: '',
         myLucky: null,
         canvas: null,
         isShow: false,
@@ -171,8 +178,13 @@
         const img = this[name].imgs[i]
         resolveImage(img, this.canvas)
       },
-      async getImage () {
-        return getImage.call(this, 'lucky-grid')
+      getImage () {
+        return getImage.call(this, 'lucky-grid', this.canvas)
+      },
+      hideCanvas () {
+        this.getImage().then(res => {
+          this.imgSrc = res.tempFilePath
+        })
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)
@@ -212,8 +224,6 @@
             // #endif
             ctx,
             dpr,
-            width,
-            height,
             setTimeout,
             clearTimeout,
             setInterval,
@@ -235,13 +245,19 @@
               })
               _this.$forceUpdate()
             },
+            afterStart: () => {
+              this.imgSrc = ''
+            },
           }, {
             ...this.$props,
+            width,
+            height,
             start: (...rest) => {
               this.$emit('start', ...rest)
             },
             end: (...rest) => {
               this.$emit('end', ...rest)
+              this.hideCanvas()
             },
           })
           this.btnShow = true
@@ -267,6 +283,7 @@
   .lucky-box {
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
   }
   .lucky-box canvas {
     position: absolute;

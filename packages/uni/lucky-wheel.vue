@@ -6,6 +6,12 @@
       canvas-id="lucky-wheel"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     ></canvas>
+    <image
+      v-if="imgSrc"
+      :src="imgSrc"
+      @load="myLucky.clearCanvas()"
+      :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
+    ></image>
     <!-- #ifdef APP-PLUS -->
     <view class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
     <!-- #endif -->
@@ -47,6 +53,7 @@
     name: 'lucky-wheel',
     data () {
       return {
+        imgSrc: '',
         myLucky: null,
         canvas: null,
         isShow: false,
@@ -117,8 +124,13 @@
         const img = this[name][index].imgs[i]
         resolveImage(img, this.canvas)
       },
-      async getImage () {
-        return getImage.call(this, 'lucky-wheel')
+      getImage () {
+        return getImage.call(this, 'lucky-wheel', this.canvas)
+      },
+      hideCanvas () {
+        this.getImage().then(res => {
+          this.imgSrc = res.tempFilePath
+        })
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)
@@ -149,6 +161,7 @@
           canvas.height = height * dpr
           ctx.scale(dpr, dpr)
           // #endif
+          const Radius = Math.min(width, height) / 2
           const myLucky = this.myLucky = new LuckyWheel({
             // #ifdef H5
             flag: 'WEB',
@@ -158,8 +171,6 @@
             // #endif
             ctx,
             dpr,
-            width,
-            height,
             setTimeout,
             clearTimeout,
             setInterval,
@@ -169,28 +180,30 @@
             // #endif
             unitFunc: (num, unit) => changeUnits(num + unit),
             beforeCreate: function () {
-              const Radius = Math.min(this.config.width, this.config.height) / 2
-              // 设置坐标轴
-              _this.Radius = Radius
               ctx.translate(Radius, Radius)
             },
-			      beforeResize: function () {
-              const Radius = Math.min(width, height) / 2
+            beforeResize: function () {
               ctx.translate(-Radius, -Radius)
-			      },
+            },
             afterInit: function () {
               // 动态设置按钮
               _this.btnWidth = this.maxBtnRadius * 2
               _this.btnHeight = this.maxBtnRadius * 2
               _this.$forceUpdate()
             },
+            afterStart: () => {
+              this.imgSrc = ''
+            },
           }, {
             ...this.$props,
-            start: function (...rest) {
-              _this.$emit('start', ...rest)
+            width,
+            height,
+            start: (...rest) => {
+              this.$emit('start', ...rest)
             },
             end: (...rest) => {
               this.$emit('end', ...rest)
+              this.hideCanvas()
             },
           })
         })
@@ -215,6 +228,7 @@
   .lucky-box {
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
   }
   .lucky-box canvas {
     position: absolute;
