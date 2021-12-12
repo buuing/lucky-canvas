@@ -74,7 +74,7 @@ export type DefaultStyleType = {
   lineClamp?: PrizeFontType['lineClamp']
 }
 
-export type EndCallbackType = (prize: object) => void
+export type EndCallbackType = (prize: PrizeType | undefined) => void
 
 export default interface SlotMachineConfig {
   width: string | number

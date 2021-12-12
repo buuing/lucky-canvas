@@ -46,6 +46,7 @@ declare type ConfigType = {
     afterInit?: Function;
     beforeDraw?: Function;
     afterDraw?: Function;
+    afterStart?: Function;
 };
 declare type RequireKey = 'width' | 'height';
 declare type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>;
@@ -94,6 +95,7 @@ declare class Lucky {
      * 根标签的字体大小
      */
     protected setHTMLFontSize(): void;
+    clearCanvas(): void;
     /**
      * 设备像素比
      * window 环境下自动获取, 其余环境手动传入
@@ -666,7 +668,7 @@ declare type DefaultStyleType = {
     lengthLimit?: PrizeFontType['lengthLimit'];
     lineClamp?: PrizeFontType['lineClamp'];
 };
-declare type EndCallbackType = (prize: object) => void;
+declare type EndCallbackType = (prize: PrizeType | undefined) => void;
 interface SlotMachineConfig {
     width: string | number;
     height: string | number;
@@ -779,7 +781,7 @@ declare class SlotMachine extends Lucky {
      * 对外暴露: 开始抽奖方法
      */
     play(): void;
-    stop(index: number): void;
+    stop(index: number | number[]): void;
     /**
      * 让游戏动起来
      * @param num 记录帧动画执行多少次

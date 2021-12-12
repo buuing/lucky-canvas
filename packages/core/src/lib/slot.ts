@@ -62,7 +62,7 @@ export default class SlotMachine extends Lucky {
    * prizeFlag >= 0 时, 说明stop方法被调用, 并且传入了中奖索引
    * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
    */
-  private prizeFlag: number | undefined = -1
+  private prizeFlag: number[] | undefined = void 0
   // 奖品区域几何信息
   private prizeArea?: { x: number, y: number, w: number, h: number }
   // 图片缓存
@@ -108,7 +108,7 @@ export default class SlotMachine extends Lucky {
     this.endScroll = []
     this.startTime = 0
     this.endTime = 0
-    this.prizeFlag = -1
+    this.prizeFlag = void 0
     this.step = 0
     super.initLucky()
   }
@@ -505,7 +505,7 @@ export default class SlotMachine extends Lucky {
       if (!order.length) return
       const speed = slot.speed || _defaultConfig.speed
       const direction = slot.direction || _defaultConfig.direction
-      const orderIndex = order.findIndex(prizeIndex => prizeIndex === prizeFlag)
+      const orderIndex = order.findIndex(prizeIndex => prizeIndex === prizeFlag![slotIndex])
       const _p = cellAndSpacing * order.length
       const stopScroll = this.stopScroll[slotIndex] = this.scroll[slotIndex]
       let i = 0
@@ -535,12 +535,25 @@ export default class SlotMachine extends Lucky {
     this.run()
   }
 
-  public stop (index: number): void {
+  public stop (index: number | number[]): void {
     if (this.step === 0 || this.step === 3) return
     // 设置中奖索引
-    this.prizeFlag = index
-    // 如果index是负数则停止游戏, 反之则传递中奖索引
-    if (index < 0) {
+    if (typeof index === 'number') {
+      this.prizeFlag = new Array(this.slots.length).fill(index)
+    } else if (isExpectType(index, 'array')) {
+      if (index.length === this.slots.length) {
+        this.prizeFlag = index
+      } else {
+        this.stop(-1)
+        return console.error(`stop([${index}]) 参数长度的不正确`)
+      }
+    } else {
+      this.stop(-1)
+      return console.error(`stop() 无法识别的参数类型 ${typeof index}`)
+    }
+    // 如果包含负数则停止游戏, 反之则继续游戏
+    if (this.prizeFlag?.includes(-1)) {
+      this.prizeFlag = []
       // 停止游戏
       this.step = 0
     } else {
@@ -554,22 +567,30 @@ export default class SlotMachine extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, step, prizeFlag, _defaultConfig, cellAndSpacing } = this
+    const { rAF, step, prizeFlag, _defaultConfig, cellAndSpacing, slots } = this
     const { accelerationTime, decelerationTime } = _defaultConfig
     // 游戏结束
-    if (this.step === 0 && prizeFlag !== void 0 && prizeFlag >= 0) {
-      this.endCallback?.(this.prizes.find((prize, index) => index === prizeFlag) || {})
+    if (this.step === 0 && prizeFlag?.length === slots.length) {
+      let flag = prizeFlag[0]
+      for (let i = 0; i < slots.length; i++) {
+        const slot = slots[i], currFlag = prizeFlag[i]
+        if (!slot.order?.includes(currFlag) || flag !== currFlag) {
+          flag = -1
+          break
+        }
+      }
+      this.endCallback?.(this.prizes.find((prize, index) => index === flag) || void 0)
       return
     }
-    // 如果等于 -1 就直接停止游戏
-    if (prizeFlag === -1) return
+    // 如果长度为 0 就直接停止游戏
+    if (prizeFlag !== void 0 && !prizeFlag.length) return
     // 计算最终停止的位置
     if (this.step === 3 && !this.endScroll.length) this.carveOnGunwaleOfAMovingBoat()
     // 计算时间间隔
     const startInterval = Date.now() - this.startTime
     const endInterval = Date.now() - this.endTime
     // 分别计算对应插槽的加速度
-    this.slots.forEach((slot, slotIndex) => {
+    slots.forEach((slot, slotIndex) => {
       const order = slot.order
       if (!order || !order.length) return
       const _p = cellAndSpacing * order.length
@@ -589,7 +610,7 @@ export default class SlotMachine extends Lucky {
         // 速度保持不变
         scroll = (prevScroll + (speed * direction)) % _p
         // 如果有 prizeFlag 有值, 则进入减速阶段
-        if (prizeFlag !== void 0 && prizeFlag >= 0) {
+        if (prizeFlag?.length === slots.length) {
           this.step = 3
           // 清空上一轮的位置信息
           this.stopScroll = []
