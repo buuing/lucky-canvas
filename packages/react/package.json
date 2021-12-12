@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/react",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "react ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -44,6 +44,6 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "lucky-canvas": "^1.7.7"
+    "lucky-canvas": "^1.7.11"
   }
 }

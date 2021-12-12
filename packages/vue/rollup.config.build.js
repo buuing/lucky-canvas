@@ -39,6 +39,7 @@ export default [
       resolve(),
       commonjs(),
       PostCSS(),
+      terser(),
     ],
     external: ['vue-demi'],
   }, {
