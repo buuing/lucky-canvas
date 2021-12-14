@@ -288,6 +288,81 @@ export default class Lucky {
     }))
   }
 
+  /**
+   * 计算图片的渲染宽高
+   * @param imgObj 图片标签元素
+   * @param imgInfo 图片信息
+   * @param maxWidth 最大宽度
+   * @param maxHeight 最大高度
+   * @return [渲染宽度, 渲染高度]
+   */
+  protected computedWidthAndHeight (
+    imgObj: ImgType,
+    imgInfo: ImgItemType,
+    maxWidth: number,
+    maxHeight: number
+  ): [number, number] {
+    // 根据配置的样式计算图片的真实宽高
+    if (!imgInfo.width && !imgInfo.height) {
+      // 如果没有配置宽高, 则使用图片本身的宽高
+      return [imgObj.width, imgObj.height]
+    } else if (imgInfo.width && !imgInfo.height) {
+      // 如果只填写了宽度, 没填写高度
+      let trueWidth = this.getWidth(imgInfo.width, maxWidth)
+      // 那高度就随着宽度进行等比缩放
+      return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
+    } else if (!imgInfo.width && imgInfo.height) {
+      // 如果只填写了宽度, 没填写高度
+      let trueHeight = this.getHeight(imgInfo.height, maxHeight)
+      // 那宽度就随着高度进行等比缩放
+      return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
+    }
+    // 如果宽度和高度都填写了, 就如实计算
+    return [
+      this.getWidth(imgInfo.width, maxWidth),
+      this.getHeight(imgInfo.height, maxHeight)
+    ]
+  }
+
+  /**
+   * 转换并获取宽度
+   * @param width 将要转换的宽度
+   * @param maxWidth 最大宽度
+   * @return 返回相对宽度
+   */
+  protected getWidth (
+    width: string | number | undefined,
+    maxWidth: number
+  ): number {
+    if (isExpectType(width, 'number')) return (width as number)
+    if (isExpectType(width, 'string')) return this.changeUnits(width as string, maxWidth)
+    return 0
+  }
+
+  /**
+   * 转换并获取高度
+   * @param height 将要转换的高度
+   * @param maxHeight 最大高度
+   * @return 返回相对高度
+   */
+  protected getHeight (
+    height: string | number | undefined,
+    maxHeight: number
+  ): number {
+    if (isExpectType(height, 'number')) return (height as number)
+    if (isExpectType(height, 'string')) return this.changeUnits(height as string, maxHeight)
+    return 0
+  }
+
+  /**
+   * 获取相对(居中)X坐标
+   * @param width
+   * @param col
+   */
+  protected getOffsetX (width: number, maxWidth: number = 0): number {
+    return (maxWidth - width) / 2
+  }
+
   protected getOffscreenCanvas (width: number, height: number): {
     _offscreenCanvas: HTMLCanvasElement,
     _ctx: CanvasRenderingContext2D

@@ -272,42 +272,6 @@ export default class SlotMachine extends Lucky {
   }
 
   /**
-   * 计算图片的渲染宽高
-   * @param imgObj 图片标签元素
-   * @param imgInfo 图片信息
-   * @param maxWidth 最大宽度
-   * @param maxHeight 最大高度
-   * @return [渲染宽度, 渲染高度]
-   */
-  private computedWidthAndHeight (
-    imgObj: ImgType,
-    imgInfo: ImgItemType,
-    maxWidth: number,
-    maxHeight: number
-  ): [number, number] {
-    // 根据配置的样式计算图片的真实宽高
-    if (!imgInfo.width && !imgInfo.height) {
-      // 如果没有配置宽高, 则使用图片本身的宽高
-      return [imgObj.width, imgObj.height]
-    } else if (imgInfo.width && !imgInfo.height) {
-      // 如果只填写了宽度, 没填写高度
-      let trueWidth = this.getWidth(imgInfo.width, maxWidth)
-      // 那高度就随着宽度进行等比缩放
-      return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
-    } else if (!imgInfo.width && imgInfo.height) {
-      // 如果只填写了宽度, 没填写高度
-      let trueHeight = this.getHeight(imgInfo.height, maxHeight)
-      // 那宽度就随着高度进行等比缩放
-      return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
-    }
-    // 如果宽度和高度都填写了, 就如实计算
-    return [
-      this.getWidth(imgInfo.width, maxWidth),
-      this.getHeight(imgInfo.height, maxHeight)
-    ]
-  }
-
-  /**
    * 绘制离屏canvas
    */
   protected drawOffscreenCanvas (): void {
@@ -425,7 +389,7 @@ export default class SlotMachine extends Lucky {
    */
   protected drawBlocks (): SlotMachine['prizeArea'] {
     const { config, ctx, _defaultConfig, _defaultStyle } = this
-    // 绘制背景区域, 并计算获取奖品区域
+    // 绘制背景区域, 并计算奖品区域
     return this.prizeArea = this.blocks.reduce(({x, y, w, h}, block, blockIndex) => {
       const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block)
       const r = block.borderRadius ? this.getLength(block.borderRadius) : 0
@@ -663,44 +627,5 @@ export default class SlotMachine extends Lucky {
       widthAndSpacing,
       heightAndSpacing,
     }
-  }
-
-  /**
-   * 获取相对宽度
-   * @param length 将要转换的宽度
-   * @param width 宽度计算百分比
-   * @return 返回相对宽度
-   */
-  private getWidth (
-    length: string | number | undefined,
-    width: number
-  ): number {
-    if (isExpectType(length, 'number')) return (length as number)
-    if (isExpectType(length, 'string')) return this.changeUnits(length as string, width)
-    return 0
-  }
-
-  /**
-   * 转换并获取高度
-   * @param height 将要转换的高度
-   * @param row 纵向合并的格子
-   * @return 返回相对高度
-   */
-  private getHeight (
-    length: string | number | undefined,
-    height: number
-  ): number {
-    if (isExpectType(length, 'number')) return (length as number)
-    if (isExpectType(length, 'string')) return this.changeUnits(length as string, height)
-    return 0
-  }
-
-  /**
-   * 获取相对(居中)X坐标
-   * @param width
-   * @return 返回x坐标
-   */
-  private getOffsetX (width: number, maxWidth: number): number {
-    return (maxWidth - width) / 2
   }
 }

@@ -16,6 +16,7 @@ import LuckyGridConfig, {
   EndCallbackType,
 } from '../types/grid'
 import {
+  get,
   isExpectType,
   removeEnter,
   computePadding,
@@ -331,40 +332,6 @@ export default class LuckyGrid extends Lucky {
   }
 
   /**
-   * 计算图片的渲染宽高
-   * @param imgObj 图片标签元素
-   * @param imgInfo 图片信息
-   * @param cell 格子信息
-   * @return [渲染宽度, 渲染高度]
-   */
-  private computedWidthAndHeight (
-    imgObj: ImgType,
-    imgInfo: CellImgType,
-    cell: CellType<CellFontType, CellImgType>
-  ): [number, number] {
-    // 根据配置的样式计算图片的真实宽高
-    if (!imgInfo.width && !imgInfo.height) {
-      // 如果没有配置宽高, 则使用图片本身的宽高
-      return [imgObj.width, imgObj.height]
-    } else if (imgInfo.width && !imgInfo.height) {
-      // 如果只填写了宽度, 没填写高度
-      let trueWidth = this.getWidth(imgInfo.width, cell.col)
-      // 那高度就随着宽度进行等比缩放
-      return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
-    } else if (!imgInfo.width && imgInfo.height) {
-      // 如果只填写了宽度, 没填写高度
-      let trueHeight = this.getHeight(imgInfo.height, cell.row)
-      // 那宽度就随着高度进行等比缩放
-      return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
-    }
-    // 如果宽度和高度都填写了, 就分别计算
-    return [
-      this.getWidth(imgInfo.width, cell.col),
-      this.getHeight(imgInfo.height, cell.row)
-    ]
-  }
-
-  /**
    * 绘制九宫格抽奖
    */
   protected draw (): void {
@@ -384,7 +351,7 @@ export default class LuckyGrid extends Lucky {
       cell.row = cell.row || 1
     })
     // 计算获取奖品区域的几何信息
-    this.prizeArea = this.blocks.reduce(({x, y, w, h}, block) => {
+    this.prizeArea = this.blocks.reduce(({x, y, w, h}, block, blockIndex) => {
       const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block)
       const r = block.borderRadius ? this.getLength(block.borderRadius) : 0
       // 绘制边框
@@ -394,6 +361,15 @@ export default class LuckyGrid extends Lucky {
         roundRectByArc(ctx, x, y, w, h, r)
         ctx.fill()
       }
+      // 绘制图片
+      block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
+        const blockImg = get(this.ImageCache, `blocks.${blockIndex}.${imgIndex}.defaultImg`)
+        if (!blockImg) return
+        // 绘制图片
+        const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, w, h)
+        const [xAxis, yAxis] = [this.getOffsetX(trueWidth, w), this.getHeight(imgInfo.top, h)]
+        this.drawImage(ctx, blockImg, x + xAxis, y + yAxis, trueWidth, trueHeight)
+      })
       return {
         x: x + paddingLeft,
         y: y + paddingTop,
@@ -458,10 +434,10 @@ export default class LuckyGrid extends Lucky {
         if (!cellImg) return
         const renderImg = (isActive && cellImg['activeImg']) || cellImg.defaultImg
         if (!renderImg) return
-        const [trueWidth, trueHeight] = this.computedWidthAndHeight(renderImg, imgInfo, cell)
+        const [trueWidth, trueHeight] = this.computedWidthAndHeight(renderImg, imgInfo, width, height)
         const [xAxis, yAxis] = [
-          x + this.getOffsetX(trueWidth, cell.col),
-          y + this.getHeight(imgInfo.top, cell.row)
+          x + this.getOffsetX(trueWidth, width),
+          y + this.getHeight(imgInfo.top, height)
         ]
         this.drawImage(ctx, renderImg, xAxis, yAxis, trueWidth, trueHeight)
       })
@@ -492,7 +468,7 @@ export default class LuckyGrid extends Lucky {
         // 计算文字换行
         if (wordWrap) {
           // 最大宽度
-          let maxWidth = this.getWidth(lengthLimit, cell.col)
+          let maxWidth = this.getWidth(lengthLimit, width)
           lines = splitText(ctx, removeEnter(text), () => maxWidth, lineClamp)
         } else {
           lines = text.split('\n')
@@ -500,8 +476,8 @@ export default class LuckyGrid extends Lucky {
         lines.forEach((line, lineIndex) => {
           ctx.fillText(
             line,
-            x + this.getOffsetX(ctx.measureText(line).width, cell.col),
-            y + this.getHeight(font.top, cell.row) + (lineIndex + 1) * this.getLength(lineHeight)
+            x + this.getOffsetX(ctx.measureText(line).width, width),
+            y + this.getHeight(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)
           )
         })
       })
@@ -665,51 +641,6 @@ export default class LuckyGrid extends Lucky {
       cellHeight * row + gutter * (row - 1),
     )
     return res
-  }
-
-  /**
-   * 转换并获取宽度
-   * @param width 将要转换的宽度
-   * @param col 横向合并的格子
-   * @return 返回相对宽度
-   */
-  private getWidth (
-    width: string | number | undefined,
-    col: number = 1
-  ): number {
-    if (isExpectType(width, 'number')) return (width as number)
-    if (isExpectType(width, 'string')) return this.changeUnits(
-      width as string,
-      this.cellWidth * col + this._defaultConfig.gutter * (col - 1)
-    )
-    return 0
-  }
-
-  /**
-   * 转换并获取高度
-   * @param height 将要转换的高度
-   * @param row 纵向合并的格子
-   * @return 返回相对高度
-   */
-  private getHeight (
-    height: string | number | undefined,
-    row: number = 1
-  ): number {
-    if (isExpectType(height, 'number')) return (height as number)
-    if (isExpectType(height, 'string')) return this.changeUnits(
-      height as string,
-      this.cellHeight * row + this._defaultConfig.gutter * (row - 1)
-    )
-    return 0
-  }
-
-  /**
-   * 获取相对(居中)X坐标
-   * @param width
-   * @param col
-   */
-  private getOffsetX (width: number, col = 1): number {
-    return (this.cellWidth * col + this._defaultConfig.gutter * (col - 1) - width) / 2
   }
 
   /**
