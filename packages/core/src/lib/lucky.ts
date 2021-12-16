@@ -1,6 +1,5 @@
 import '../utils/polyfill'
 import { has, isExpectType, throttle } from '../utils/index'
-import { clip, opacity, blur } from '../utils/image'
 import { name, version } from '../../package.json'
 import { ConfigType, UserConfigType, ImgItemType, ImgType, Tuple } from '../types/index'
 import { defineReactive } from '../observer'
@@ -18,6 +17,7 @@ export default class Lucky {
     width: string | number,
     height: string | number
   }
+
   /**
    * 公共构造器
    * @param config
@@ -274,17 +274,18 @@ export default class Lucky {
    * @return { number } 返回新的字符串
    */
   protected changeUnits (value: string, denominator = 1): number {
+    const { config } = this
     return Number(value.replace(/^([-]*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
-      const unitFunc = {
+      const handleCssUnit = {
         '%': (n: number) => n * (denominator / 100),
         'px': (n: number) => n * 1,
         'rem': (n: number) => n * this.htmlFontSize,
         'vw': (n: number) => n / 100 * window.innerWidth,
       }[unit]
-      if (unitFunc) return unitFunc(num)
+      if (handleCssUnit) return handleCssUnit(num)
       // 如果找不到默认单位, 就交给外面处理
-      const otherUnitFunc = this.config.unitFunc
-      return otherUnitFunc ? otherUnitFunc(num, unit) : num
+      const otherHandleCssUnit = config.handleCssUnit || config['unitFunc']
+      return otherHandleCssUnit ? otherHandleCssUnit(num, unit) : num
     }))
   }
 
@@ -380,30 +381,6 @@ export default class Lucky {
     _ctx.scale(dpr, dpr)
     _ctx['dpr'] = dpr
     return { _offscreenCanvas, _ctx }
-  }
-
-  /**
-   * 图片裁剪
-   */
-  public $clip (img: ImgType, ...params: (string | number)[]): ImgType {
-    const args: number[] = params.map(val => {
-      return this.getLength(val)
-    })
-    return clip(img, ...(args as [number, number, number, number, number]))
-  }
-
-  /**
-   * 透明度
-   */
-  public $opacity (img: ImgType, value: string | number) {
-    return opacity(img, this.getLength(value))
-  }
-
-  /**
-   * 高斯模糊
-   */
-  public $blur (img: ImgType, radius: string | number) {
-    return blur(img, this.getLength(radius))
   }
 
   /**

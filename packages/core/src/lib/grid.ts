@@ -313,13 +313,13 @@ export default class LuckyGrid extends Lucky {
         this.loadImg(imgInfo.src, imgInfo),
         imgInfo['activeSrc'] && this.loadImg(imgInfo['activeSrc'], imgInfo, '$activeResolve')
       ]
-      Promise.all(request).then(([defaultImg, activeImg]) => {
+      Promise.all(request).then(async ([defaultImg, activeImg]) => {
         const formatter = imgInfo.formatter
         // 对图片进行处理
         if (typeof formatter === 'function') {
-          defaultImg = formatter.call(this, defaultImg)
+          defaultImg = await Promise.resolve(formatter.call(this, defaultImg))
           if (activeImg) {
-            activeImg = formatter.call(this, activeImg)
+            activeImg = await Promise.resolve(formatter.call(this, activeImg))
           }
         }
         ImageCache[imgName][cellIndex][imgIndex] = { defaultImg, activeImg }

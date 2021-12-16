@@ -262,9 +262,9 @@ export default class LuckyWheel extends Lucky {
       const ImageCache = this.ImageCache
       if (!ImageCache[imgName][cellIndex]) ImageCache[imgName][cellIndex] = []
       // 异步加载图片
-      this.loadImg(imgInfo.src, imgInfo).then(currImg => {
+      this.loadImg(imgInfo.src, imgInfo).then(async currImg => {
         if (typeof imgInfo.formatter === 'function') {
-          currImg = imgInfo.formatter.call(this, currImg)
+          currImg = await Promise.resolve(imgInfo.formatter.call(this, currImg))
         }
         ImageCache[imgName][cellIndex][imgIndex] = currImg
         resolve()

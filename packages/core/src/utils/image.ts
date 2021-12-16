@@ -16,31 +16,18 @@ export const getImage = (src: string): Promise<ImgType> => {
 }
 
 /**
- * 图像裁剪
+ * 切割圆角
  * @param img 将要裁剪的图片对象
- * @param x 裁剪的 x 坐标
- * @param y 裁剪的 y 坐标
- * @param w 裁剪的宽度
- * @param h 裁剪的高度
- * @param r 裁剪的圆角半径
+ * @param radius 裁剪的圆角半径
  * @returns 返回一个离屏 canvas 用于渲染
  */
-export const clip = (
-  img: ImgType,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  r: number
-): ImgType => {
+export const cutRound = (img: ImgType, radius: number): ImgType => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')!
   const { width, height } = img
-  // 设置图片宽高
   canvas.width = width
   canvas.height = height
-  const scale = width / w
-  roundRectByArc(ctx, x * scale, y * scale, w * scale, h * scale, r * scale)
+  roundRectByArc(ctx, 0, 0, width, height, radius)
   ctx.clip()
   ctx.drawImage(img, 0, 0, width, height)
   return canvas
@@ -59,24 +46,21 @@ export const opacity = (
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')!
   const { width, height } = img
-  // 设置图片宽高
   canvas.width = width
   canvas.height = height
   // 绘制图片, 部分浏览器不支持 filter 属性, 需要处理兼容
   if (typeof ctx.filter === 'string') {
-    ctx.filter = `opacity(${opacity}%)`
+    ctx.filter = `opacity(${opacity * 100}%)`
     ctx.drawImage(img, 0, 0, width, height)
   } else {
     ctx.drawImage(img, 0, 0, width, height)
-    // 获取数据
     const imageData = ctx.getImageData(0, 0, width, height)
     const { data } = imageData
     const len = data.length
     for (let i = 0; i < len; i += 4) {
       const alpha = data[i + 3]
-      if (alpha !== 0) data[i + 3] = alpha * opacity / 100
+      if (alpha !== 0) data[i + 3] = alpha * opacity
     }
-    // 更新数据
     ctx.putImageData(imageData, 0, 0)
   }
   return canvas

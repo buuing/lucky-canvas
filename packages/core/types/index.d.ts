@@ -33,7 +33,7 @@ declare type ConfigType = {
     canvasElement?: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     dpr: number;
-    unitFunc?: (num: number, unit: string) => number;
+    handleCssUnit?: (num: number, unit: string) => number;
     rAF?: Function;
     setTimeout: Function;
     setInterval: Function;
@@ -138,22 +138,39 @@ declare class Lucky {
      * @return { number } 返回新的字符串
      */
     protected changeUnits(value: string, denominator?: number): number;
+    /**
+     * 计算图片的渲染宽高
+     * @param imgObj 图片标签元素
+     * @param imgInfo 图片信息
+     * @param maxWidth 最大宽度
+     * @param maxHeight 最大高度
+     * @return [渲染宽度, 渲染高度]
+     */
+    protected computedWidthAndHeight(imgObj: ImgType, imgInfo: ImgItemType, maxWidth: number, maxHeight: number): [number, number];
+    /**
+     * 转换并获取宽度
+     * @param width 将要转换的宽度
+     * @param maxWidth 最大宽度
+     * @return 返回相对宽度
+     */
+    protected getWidth(width: string | number | undefined, maxWidth: number): number;
+    /**
+     * 转换并获取高度
+     * @param height 将要转换的高度
+     * @param maxHeight 最大高度
+     * @return 返回相对高度
+     */
+    protected getHeight(height: string | number | undefined, maxHeight: number): number;
+    /**
+     * 获取相对(居中)X坐标
+     * @param width
+     * @param col
+     */
+    protected getOffsetX(width: number, maxWidth?: number): number;
     protected getOffscreenCanvas(width: number, height: number): {
         _offscreenCanvas: HTMLCanvasElement;
         _ctx: CanvasRenderingContext2D;
     } | void;
-    /**
-     * 图片裁剪
-     */
-    $clip(img: ImgType, ...params: (string | number)[]): ImgType;
-    /**
-     * 透明度
-     */
-    $opacity(img: ImgType, value: string | number): ImgType;
-    /**
-     * 高斯模糊
-     */
-    $blur(img: ImgType, radius: string | number): ImgType;
     /**
      * 添加一个新的响应式数据 (临时)
      * @param data 数据
@@ -314,15 +331,6 @@ declare class LuckyWheel extends Lucky {
      */
     private loadAndCacheImg;
     /**
-     * 计算图片的渲染宽高
-     * @param imgObj 图片标签元素
-     * @param imgInfo 图片信息
-     * @param maxWidth 最大宽度
-     * @param maxHeight 最大高度
-     * @return [渲染宽度, 渲染高度]
-     */
-    private computedWidthAndHeight;
-    /**
      * 开始绘制
      */
     protected draw(): void;
@@ -344,26 +352,6 @@ declare class LuckyWheel extends Lucky {
      * @param num 记录帧动画执行多少次
      */
     private run;
-    /**
-     * 获取相对宽度
-     * @param length 将要转换的宽度
-     * @param width 宽度计算百分比
-     * @return 返回相对宽度
-     */
-    private getWidth;
-    /**
-     * 获取相对高度
-     * @param length 将要转换的高度
-     * @param height 高度计算百分比
-     * @return 返回相对高度
-     */
-    private getHeight;
-    /**
-     * 获取相对(居中)X坐标
-     * @param width
-     * @return 返回x坐标
-     */
-    private getOffsetX;
     /**
      * 换算渲染坐标
      * @param x
@@ -538,14 +526,6 @@ declare class LuckyGrid extends Lucky {
      */
     private loadAndCacheImg;
     /**
-     * 计算图片的渲染宽高
-     * @param imgObj 图片标签元素
-     * @param imgInfo 图片信息
-     * @param cell 格子信息
-     * @return [渲染宽度, 渲染高度]
-     */
-    private computedWidthAndHeight;
-    /**
      * 绘制九宫格抽奖
      */
     protected draw(): void;
@@ -583,26 +563,6 @@ declare class LuckyGrid extends Lucky {
      * @return { array } [...真实坐标, width, height]
      */
     private getGeometricProperty;
-    /**
-     * 转换并获取宽度
-     * @param width 将要转换的宽度
-     * @param col 横向合并的格子
-     * @return 返回相对宽度
-     */
-    private getWidth;
-    /**
-     * 转换并获取高度
-     * @param height 将要转换的高度
-     * @param row 纵向合并的格子
-     * @return 返回相对高度
-     */
-    private getHeight;
-    /**
-     * 获取相对(居中)X坐标
-     * @param width
-     * @param col
-     */
-    private getOffsetX;
     /**
      * 换算渲染坐标
      * @param x
@@ -753,15 +713,6 @@ declare class SlotMachine extends Lucky {
      */
     private loadAndCacheImg;
     /**
-     * 计算图片的渲染宽高
-     * @param imgObj 图片标签元素
-     * @param imgInfo 图片信息
-     * @param maxWidth 最大宽度
-     * @param maxHeight 最大高度
-     * @return [渲染宽度, 渲染高度]
-     */
-    private computedWidthAndHeight;
-    /**
      * 绘制离屏canvas
      */
     protected drawOffscreenCanvas(): void;
@@ -789,26 +740,21 @@ declare class SlotMachine extends Lucky {
     private run;
     private displacement;
     private displacementWidthOrHeight;
-    /**
-     * 获取相对宽度
-     * @param length 将要转换的宽度
-     * @param width 宽度计算百分比
-     * @return 返回相对宽度
-     */
-    private getWidth;
-    /**
-     * 转换并获取高度
-     * @param height 将要转换的高度
-     * @param row 纵向合并的格子
-     * @return 返回相对高度
-     */
-    private getHeight;
-    /**
-     * 获取相对(居中)X坐标
-     * @param width
-     * @return 返回x坐标
-     */
-    private getOffsetX;
 }
 
-export { LuckyGrid, LuckyWheel, SlotMachine };
+/**
+ * 切割圆角
+ * @param img 将要裁剪的图片对象
+ * @param radius 裁剪的圆角半径
+ * @returns 返回一个离屏 canvas 用于渲染
+ */
+declare const cutRound: (img: ImgType, radius: number) => ImgType;
+/**
+ * 透明度
+ * @param img 将要处理的图片对象
+ * @param opacity 透明度
+ * @returns 返回一个离屏 canvas 用于渲染
+ */
+declare const opacity: (img: ImgType, opacity: number) => ImgType;
+
+export { LuckyGrid, LuckyWheel, SlotMachine, cutRound, opacity };

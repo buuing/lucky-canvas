@@ -42,7 +42,7 @@ export type ConfigType = {
   canvasElement?: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   dpr: number
-  unitFunc?: (num: number, unit: string) => number
+  handleCssUnit?: (num: number, unit: string) => number
   // 覆盖方法
   rAF?: Function
   setTimeout: Function
