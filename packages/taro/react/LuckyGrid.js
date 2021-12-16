@@ -11,7 +11,7 @@ export default class LuckyGrid extends React.Component {
   canvas = null
   state = {
     imgSrc: '',
-    $lucky: null,
+    myLucky: null,
     boxWidth: 300,
     boxHeight: 300,
     btns: [],
@@ -28,21 +28,21 @@ export default class LuckyGrid extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { props, state } = this
-    if (!state.$lucky) return
+    if (!state.myLucky) return
     if (props.cols !== prevProps.cols) {
-      state.$lucky.cols = props.cols
+      state.myLucky.cols = props.cols
     }
     if (props.rows !== prevProps.rows) {
-      state.$lucky.rows = props.rows
+      state.myLucky.rows = props.rows
     }
     if (props.blocks !== prevProps.blocks) {
-      state.$lucky.blocks = props.blocks
+      state.myLucky.blocks = props.blocks
     }
     if (props.prizes !== prevProps.prizes) {
-      state.$lucky.prizes = props.prizes
+      state.myLucky.prizes = props.prizes
     }
     if (props.buttons !== prevProps.buttons) {
-      state.$lucky.buttons = props.buttons
+      state.myLucky.buttons = props.buttons
     }
   }
 
@@ -58,7 +58,7 @@ export default class LuckyGrid extends React.Component {
 
   getImage () {
     const page = Taro.getCurrentInstance().page
-    return getImage.call(page, 'lucky-grid', this.canvas)
+    return getImage.call(page, this.props.canvasId, this.canvas)
   }
 
   showCanvas () {
@@ -109,7 +109,7 @@ export default class LuckyGrid extends React.Component {
     } else {
       // 小程序环境
       const page = Taro.getCurrentInstance().page
-      Taro.createSelectorQuery().in(page).select('#lucky-grid').fields({
+      Taro.createSelectorQuery().in(page).select(`#${this.props.canvasId}`).fields({
         node: true, size: true
       }).exec((res) => {
         if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
@@ -133,7 +133,7 @@ export default class LuckyGrid extends React.Component {
   drawLucky (config) {
     const _this = this
     const { props } = this
-    const $lucky = new Grid({
+    const myLucky = new Grid({
       ...config,
       setTimeout,
       clearTimeout,
@@ -168,29 +168,29 @@ export default class LuckyGrid extends React.Component {
         this.hideCanvas()
       }
     })
-    this.setState({ $lucky })
+    this.setState({ myLucky })
   }
 
   play (...rest) {
-    this.state.$lucky.play(...rest)
+    this.state.myLucky.play(...rest)
   }
 
   stop (...rest) {
-    this.state.$lucky.stop(...rest)
+    this.state.myLucky.stop(...rest)
   }
 
   toPlay (btn) {
-    this.state.$lucky.startCallback(btn)
+    this.state.myLucky.startCallback(btn)
   }
 
   render () {
     const { props, state, flag } = this
     const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
-    const showImage = state.$lucky && flag !== 'WEB'
+    const showImage = state.myLucky && flag !== 'WEB'
     return flag === 'WEB' ? <div id="lucky-box"></div> : (
       <View className="lucky-box" style={boxSize}>
-        <Canvas type="2d" id="lucky-grid" canvasId="lucky-grid" style={boxSize}></Canvas>
-        <Image src={state.imgSrc} onLoad={() => state.$lucky.clearCanvas()} style={boxSize}></Image>
+        <Canvas type="2d" className="lucky-canvas" id={props.canvasId} canvasId={props.canvasId} style={boxSize}></Canvas>
+        <Image src={state.imgSrc} onLoad={() => state.myLucky.clearCanvas()} style={boxSize}></Image>
         {/* 按钮 */}
         {
           state.btnShow ? <View>
@@ -236,6 +236,7 @@ export default class LuckyGrid extends React.Component {
 }
 
 LuckyGrid.defaultProps = {
+  canvasId: 'lucky-grid',
   width: '600rpx',
   height: '600rpx',
   cols: 3,

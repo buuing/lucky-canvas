@@ -3,13 +3,13 @@
   overflow: hidden;
   margin: 0 auto;
 }
-#lucky-wheel, #lucky-grid {
+.lucky-box .lucky-canvas {
   position: absolute;
   pointer-events: none;
   left: 0;
   top: 0;
 }
-.lucky-wheel-btn {
+.lucky-box .lucky-wheel-btn {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -18,13 +18,13 @@
   border-radius: 50%;
   cursor: pointer;
 }
-.lucky-grid-btn {
+.lucky-box .lucky-grid-btn {
   position: absolute;
   background: rgba(0, 0, 0, 0);
   border-radius: 0;
   cursor: pointer;
 }
-.lucky-imgs {
+.lucky-box .lucky-imgs {
   width: 0;
   height: 0;
   visibility: hidden;

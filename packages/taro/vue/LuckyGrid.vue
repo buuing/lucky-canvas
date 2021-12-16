@@ -2,13 +2,14 @@
 	<view class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas
       type="2d"
-      id="lucky-grid"
-      canvasId="lucky-grid"
+      class="lucky-canvas"
+      :id="canvasId"
+      :canvasId="canvasId"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     />
     <image
       :src="imgSrc"
-      @load="$lucky.clearCanvas()"
+      @load="myLucky.clearCanvas()"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     ></image>
     <!-- 按钮 -->
@@ -31,7 +32,7 @@
       </view>
     </view>
     <!-- 图片 -->
-    <view v-if="$lucky && flag !== 'WEB'">
+    <view v-if="myLucky && flag !== 'WEB'">
       <view class="lucky-imgs">
         <view v-for="(prize, index) in prizes" :key="index">
           <view v-if="prize.imgs">
@@ -59,6 +60,10 @@ import { LuckyGrid as Grid } from 'lucky-canvas'
 import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 export default {
   props: {
+    canvasId: {
+      type: String,
+      default: 'lucky-grid'
+    },
     width: {
       type: [String, Number],
       default: '600rpx'
@@ -105,7 +110,7 @@ export default {
       flag: getFlag(),
       ctx: null,
       canvas: null,
-      $lucky: null,
+      myLucky: null,
       boxWidth: 300,
       boxHeight: 300,
       btns: [],
@@ -115,19 +120,19 @@ export default {
   },
   watch: {
     cols (newData) {
-      this.$lucky.cols = newData
+      this.myLucky.cols = newData
     },
     rows (newData) {
-      this.$lucky.rows = newData
+      this.myLucky.rows = newData
     },
     blocks (newData) {
-      this.$lucky.blocks = newData
+      this.myLucky.blocks = newData
     },
     prizes (newData) {
-      this.$lucky.prizes = newData
+      this.myLucky.prizes = newData
     },
     buttons (newData) {
-      this.$lucky.buttons = newData
+      this.myLucky.buttons = newData
     },
   },
   mounted () {
@@ -144,7 +149,7 @@ export default {
     },
     getImage () {
       const page = Taro.getCurrentInstance().page
-      return getImage.call(page, 'lucky-grid', this.canvas)
+      return getImage.call(page, this.canvasId, this.canvas)
     },
     showCanvas () {
       this.imgSrc = ''
@@ -171,13 +176,13 @@ export default {
     draw () {
       const _this = this
       const page = Taro.getCurrentInstance().page
-      Taro.createSelectorQuery().in(page).select('#lucky-grid').fields({
+      Taro.createSelectorQuery().in(page).select(`#${this.canvasId}`).fields({
         node: true, size: true
       }).exec((res) => {
         let flag = this.flag, rAF
         if (flag === 'WEB') {
           res[0] = {
-            node: document.querySelector('#lucky-grid canvas'),
+            node: document.querySelector(`#${this.canvasId} canvas`),
             width: this.boxWidth,
             height: this.boxHeight,
           }
@@ -192,7 +197,7 @@ export default {
         canvas.width = width * dpr
         canvas.height = height * dpr
         ctx.scale(dpr, dpr)
-        const $lucky = this.$lucky = new Grid({
+        const myLucky = this.myLucky = new Grid({
           flag,
           ctx,
           dpr,
@@ -232,13 +237,13 @@ export default {
       })
     },
     play (...rest) {
-      this.$lucky.play(...rest)
+      this.myLucky.play(...rest)
     },
     stop (...rest) {
-      this.$lucky.stop(...rest)
+      this.myLucky.stop(...rest)
     },
     toPlay (btn) {
-      this.$lucky.startCallback(btn)
+      this.myLucky.startCallback(btn)
     },
   }
 }

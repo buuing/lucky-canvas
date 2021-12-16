@@ -11,7 +11,7 @@ export default class LuckyWheel extends React.Component {
   canvas = null
   state = {
     imgSrc: '',
-    $lucky: null,
+    myLucky: null,
     boxWidth: 300,
     boxHeight: 300,
     btnWidth: 0,
@@ -28,15 +28,15 @@ export default class LuckyWheel extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { props, state } = this
-    if (!state.$lucky) return
+    if (!state.myLucky) return
     if (props.blocks !== prevProps.blocks) {
-      state.$lucky.blocks = props.blocks
+      state.myLucky.blocks = props.blocks
     }
     if (props.prizes !== prevProps.prizes) {
-      state.$lucky.prizes = props.prizes
+      state.myLucky.prizes = props.prizes
     }
     if (props.buttons !== prevProps.buttons) {
-      state.$lucky.buttons = props.buttons
+      state.myLucky.buttons = props.buttons
     }
   }
 
@@ -47,7 +47,7 @@ export default class LuckyWheel extends React.Component {
 
   getImage () {
     const page = Taro.getCurrentInstance().page
-    return getImage.call(page, 'lucky-wheel', this.canvas)
+    return getImage.call(page, this.props.canvasId, this.canvas)
   }
 
   showCanvas () {
@@ -96,7 +96,7 @@ export default class LuckyWheel extends React.Component {
     } else {
       // 小程序环境
       const page = Taro.getCurrentInstance().page
-      Taro.createSelectorQuery().in(page).select('#lucky-wheel').fields({
+      Taro.createSelectorQuery().in(page).select(`#${this.props.canvasId}`).fields({
         node: true, size: true
       }).exec((res) => {
         if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
@@ -120,7 +120,7 @@ export default class LuckyWheel extends React.Component {
   drawLucky (config) {
     const _this = this
     const { props, flag, ctx } = this
-    const $lucky = new Wheel({
+    const myLucky = new Wheel({
       ...config,
       setTimeout,
       clearTimeout,
@@ -156,30 +156,30 @@ export default class LuckyWheel extends React.Component {
         this.hideCanvas()
       }
     })
-    this.setState({ $lucky })
+    this.setState({ myLucky })
   }
 
   play (...rest) {
-    this.state.$lucky.play(...rest)
+    this.state.myLucky.play(...rest)
   }
 
   stop (...rest) {
-    this.state.$lucky.stop(...rest)
+    this.state.myLucky.stop(...rest)
   }
 
   toPlay () {
-    this.state.$lucky.startCallback()
+    this.state.myLucky.startCallback()
   }
 
   render () {
     const { props, state, flag } = this
     const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
     const btnSize = { width: state.btnWidth + 'px', height: state.btnHeight + 'px' }
-    const showImage = state.$lucky && flag !== 'WEB'
+    const showImage = state.myLucky && flag !== 'WEB'
     return flag === 'WEB' ? <div id="lucky-box"></div> : (
       <View className="lucky-box" style={boxSize}>
-        <Canvas type="2d" id="lucky-wheel" canvasId="lucky-wheel" style={boxSize}></Canvas>
-        <Image src={state.imgSrc} onLoad={() => state.$lucky.clearCanvas()} style={boxSize}></Image>
+        <Canvas type="2d" className="lucky-canvas" id={props.canvasId} canvasId={props.canvasId} style={boxSize}></Canvas>
+        <Image src={state.imgSrc} onLoad={() => state.myLucky.clearCanvas()} style={boxSize}></Image>
         {/* 按钮 */}
         <View className="lucky-wheel-btn" onTouchstart={e => this.toPlay(e)} style={btnSize}></View>
         {/* 图片 */}
@@ -222,6 +222,7 @@ export default class LuckyWheel extends React.Component {
 }
 
 LuckyWheel.defaultProps = {
+  canvasId: 'lucky-wheel',
   width: '600rpx',
   height: '600rpx',
   blocks: [],
