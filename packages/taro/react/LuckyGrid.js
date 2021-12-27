@@ -97,7 +97,7 @@ export default class LuckyGrid extends React.Component {
     const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
     if (flag === 'WEB') {
       // H5 环境
-      const divElement = document.querySelector('#lucky-box')
+      const divElement = document.querySelector(`#${this.props.canvasId}`)
       this.drawLucky({
         dpr,
         flag,
@@ -187,7 +187,7 @@ export default class LuckyGrid extends React.Component {
     const { props, state, flag } = this
     const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
     const showImage = state.myLucky && flag !== 'WEB'
-    return flag === 'WEB' ? <div id="lucky-box"></div> : (
+    return flag === 'WEB' ? <div id={props.canvasId}></div> : (
       <View className="lucky-box" style={boxSize}>
         <Canvas type="2d" className="lucky-canvas" id={props.canvasId} canvasId={props.canvasId} style={boxSize}></Canvas>
         <Image src={state.imgSrc} onLoad={() => state.myLucky.clearCanvas()} style={boxSize}></Image>
@@ -195,7 +195,7 @@ export default class LuckyGrid extends React.Component {
         {
           state.btnShow ? <View>
             {
-              state.btns.map((btn, index) => <CoverView className="lucky-grid-btn" key={index} onTouchstart={e => this.toPlay(btn)} style={{
+              state.btns.map((btn, index) => <CoverView className="lucky-grid-btn" key={index} onClick={e => this.toPlay(btn)} style={{
                 top: btn.top + 'px',
                 left: btn.left + 'px',
                 width: btn.width + 'px',

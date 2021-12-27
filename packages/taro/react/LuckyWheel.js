@@ -84,7 +84,7 @@ export default class LuckyWheel extends React.Component {
     const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
     if (flag === 'WEB') {
       // H5 环境
-      const divElement = document.querySelector('#lucky-box')
+      const divElement = document.querySelector(`#${this.props.canvasId}`)
       this.drawLucky({
         dpr,
         flag,
@@ -176,12 +176,12 @@ export default class LuckyWheel extends React.Component {
     const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
     const btnSize = { width: state.btnWidth + 'px', height: state.btnHeight + 'px' }
     const showImage = state.myLucky && flag !== 'WEB'
-    return flag === 'WEB' ? <div id="lucky-box"></div> : (
+    return flag === 'WEB' ? <div id={props.canvasId}></div> : (
       <View className="lucky-box" style={boxSize}>
         <Canvas type="2d" className="lucky-canvas" id={props.canvasId} canvasId={props.canvasId} style={boxSize}></Canvas>
         <Image src={state.imgSrc} onLoad={() => state.myLucky.clearCanvas()} style={boxSize}></Image>
         {/* 按钮 */}
-        <View className="lucky-wheel-btn" onTouchstart={e => this.toPlay(e)} style={btnSize}></View>
+        <View className="lucky-wheel-btn" onClick={e => this.toPlay(e)} style={btnSize}></View>
         {/* 图片 */}
         { showImage ? <View className="lucky-imgs">
           {

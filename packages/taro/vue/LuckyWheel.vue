@@ -14,7 +14,7 @@
     ></image>
     <!-- 按钮 -->
     <view v-if="flag === 'WEB'" class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
-    <cover-view v-else class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
+    <cover-view v-else class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- 图片 -->
     <view v-if="myLucky && flag !== 'WEB'">
       <view class="lucky-imgs">
