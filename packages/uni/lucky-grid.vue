@@ -35,6 +35,16 @@
     <!-- #ifndef H5 -->
     <view v-if="myLucky">
       <div class="lucky-imgs">
+        <div v-for="(block, index) in blocks" :key="index">
+          <div v-if="block.imgs">
+            <div v-for="(img, i) in block.imgs" :key="i">
+              <image :src="img.src" :data-index="index" :data-i="i" @load="e => imgBindload(e, 'blocks')"></image>
+              <image :src="img.activeSrc" :data-index="index" :data-i="i" @load="e => imgBindloadActive(e, 'blocks')"></image>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lucky-imgs">
         <div v-for="(prize, index) in prizes" :key="index">
           <div v-if="prize.imgs">
             <div v-for="(img, i) in prize.imgs" :key="i">
