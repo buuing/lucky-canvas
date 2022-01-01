@@ -495,6 +495,8 @@ export default class SlotMachine extends Lucky {
     this.prizeFlag = void 0
     // 开始加速
     this.step = 1
+    // 触发回调
+    this.config.afterStart?.()
     // 开始渲染
     this.run()
   }
