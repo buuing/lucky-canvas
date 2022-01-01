@@ -1,6 +1,6 @@
 {
   "name": "lucky-canvas",
-  "version": "1.7.13",
+  "version": "1.7.14",
   "description": "一个基于原生 js 的（大转盘 / 九宫格 / 老虎机）抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

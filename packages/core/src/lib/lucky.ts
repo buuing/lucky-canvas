@@ -250,10 +250,17 @@ export default class Lucky {
       // 如果传入了未知的标识
       return console.error('意料之外的 flag, 该平台尚未兼容!')
     }
-    if (rectInfo.length === 8) {
-      rectInfo = rectInfo.map((val, index) => index < 4 ? val! * dpr : val) as Tuple<number, 8>
+    if (drawImg['canvas']) {
+			const _ctx = drawImg['canvas'].getContext('2d')
+      rectInfo = rectInfo.map(val => val! * dpr) as Tuple<number, 8>
+			const temp = _ctx.getImageData(...rectInfo.slice(0, 4))
+			ctx.putImageData(temp, ...(rectInfo.slice(4, 6) as Tuple<number, 2>))
+    } else {
+      if (rectInfo.length === 8) {
+        rectInfo = rectInfo.map((val, index) => index < 4 ? val! * dpr : val) as Tuple<number, 8>
+      }
+      return ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
     }
-    return ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
   }
 
   /**
@@ -369,8 +376,12 @@ export default class Lucky {
     _ctx: CanvasRenderingContext2D
   } | void {
     if (!has(this, '_offscreenCanvas')) {
-      if (!window || !window.document) return console.error('无法创建离屏Canvas!')
-      this['_offscreenCanvas'] = document.createElement('canvas')
+      if (window && window.document) {
+        this['_offscreenCanvas'] = document.createElement('canvas')
+      } else {
+        this['_offscreenCanvas'] = this.config['offscreenCanvas']
+      }
+      if (!this['_offscreenCanvas']) return console.log('离屏 Canvas 无法渲染!')
     }
     const dpr = this.config.dpr
     const _offscreenCanvas = this['_offscreenCanvas'] as HTMLCanvasElement
