@@ -757,4 +757,4 @@ declare const cutRound: (img: ImgType, radius: number) => ImgType;
  */
 declare const opacity: (img: ImgType, opacity: number) => ImgType;
 
-export { LuckyGrid, LuckyGridConfig, LuckyWheel, LuckyWheelConfig, SlotMachine, SlotMachineConfig, cutRound, opacity };
+export { LuckyGrid, LuckyWheel, SlotMachine, cutRound, opacity };
