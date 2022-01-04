@@ -20,6 +20,7 @@ export type ButtonImgType = ImgItemType & {}
 export type BlockType = {
   padding?: string
   background?: BackgroundType
+  zIndex?: number
   imgs?: Array<BlockImgType>
 }
 

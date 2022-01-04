@@ -1,5 +1,5 @@
 import Lucky from './lucky'
-import { UserConfigType, FontItemType, ImgItemType, ImgType } from '../types/index'
+import { UserConfigType, FontItemType, ImgType } from '../types/index'
 import LuckyWheelConfig, {
   BlockType,
   PrizeType,
@@ -14,7 +14,7 @@ import {
   removeEnter,
   hasBackground,
   computeRange,
-  splitText
+  splitText,
 } from '../utils/index'
 import { getAngle, fanShapedByArc } from '../utils/math'
 import { quad } from '../utils/tween'
@@ -275,6 +275,29 @@ export default class LuckyWheel extends Lucky {
     })
   }
 
+  private drawBlock (radius: number, block: BlockType, blockIndex: number): void {
+    const { ctx } = this
+    if (hasBackground(block.background)) {
+      ctx.beginPath()
+      ctx.fillStyle = block.background!
+      ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
+      ctx.fill()
+    }
+    block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
+      const blockImgs = this.ImageCache['blocks']
+      if (!blockImgs || !blockImgs[blockIndex]) return
+      const blockImg = blockImgs[blockIndex][imgIndex]
+      if (!blockImg) return
+      // 绘制图片
+      const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, radius * 2, radius * 2)
+      const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius * 2) - radius]
+      ctx.save()
+      imgInfo.rotate && ctx.rotate(getAngle(this.rotateDeg))
+      this.drawImage(ctx, blockImg, xAxis, yAxis, trueWidth, trueHeight)
+      ctx.restore()
+    })
+  }
+
   /**
    * 开始绘制
    */
@@ -284,29 +307,20 @@ export default class LuckyWheel extends Lucky {
     config.beforeDraw?.call(this, ctx)
     // 清空画布
     ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
-    // 绘制blocks边框
+    // 计算 padding
+    const blocksArr: [number, BlockType, number][] = []
     this.prizeRadius = this.blocks.reduce((radius, block, blockIndex) => {
-      if (hasBackground(block.background)) {
-        ctx.beginPath()
-        ctx.fillStyle = block.background!
-        ctx.arc(0, 0, radius, 0, Math.PI * 2, false)
-        ctx.fill()
-      }
-      block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
-        const blockImgs = this.ImageCache['blocks']
-        if (!blockImgs || !blockImgs[blockIndex]) return
-        const blockImg = blockImgs[blockIndex][imgIndex]
-        if (!blockImg) return
-        // 绘制图片
-        const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, radius * 2, radius * 2)
-        const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius * 2) - radius]
-        ctx.save()
-        imgInfo.rotate && ctx.rotate(getAngle(this.rotateDeg))
-        this.drawImage(ctx, blockImg, xAxis, yAxis, trueWidth, trueHeight)
-        ctx.restore()
-      })
+      blocksArr.push([radius, block, blockIndex])
       return radius - this.getLength(block.padding && block.padding.split(' ')[0])
     }, this.Radius)
+    // 绘制blocks边框
+    blocksArr.sort((a, b) => ~~a[1].zIndex! - ~~b[1].zIndex!)
+    while (blocksArr.length) {
+      const [radius, block, blockIndex] = blocksArr[0]
+      if (~~block?.zIndex! > 0) break
+      this.drawBlock(radius, block, blockIndex)
+      blocksArr.shift()
+    }
     // 计算起始弧度
     this.prizeDeg = 360 / this.prizes.length
     this.prizeRadian = getAngle(this.prizeDeg)
@@ -438,6 +452,9 @@ export default class LuckyWheel extends Lucky {
           ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
         })
       })
+    })
+    blocksArr.forEach(([radius, block, blockIndex]) => {
+      this.drawBlock(radius, block, blockIndex)
     })
     // 触发绘制后回调
     config.afterDraw?.call(this, ctx)
