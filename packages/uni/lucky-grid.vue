@@ -14,7 +14,7 @@
     ></image>
     <!-- #ifdef APP-PLUS -->
     <view v-if="btnShow">
-      <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+      <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn, index)" :style="{
         top: btn.top + 'px',
         left: btn.left + 'px',
         width: btn.width + 'px',
@@ -24,7 +24,7 @@
     <!-- #endif -->
     <!-- #ifndef APP-PLUS -->
     <view v-if="btnShow">
-      <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+      <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn, index)" :style="{
         top: btn.top + 'px',
         left: btn.left + 'px',
         width: btn.width + 'px',
@@ -273,8 +273,8 @@
           this.btnShow = true
         })
       },
-      toPlay (btn) {
-        this.myLucky.startCallback(btn)
+      toPlay (btn, index) {
+        this.myLucky.startCallback(btn, this.$props.buttons[index])
       },
       init () {
         this.myLucky.init()
