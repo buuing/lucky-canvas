@@ -123,6 +123,9 @@ Component({
       // 触发抽奖逻辑
       this.$lucky.startCallback()
     },
+    init (...rest) {
+      this.$lucky.init(...rest)
+    },
     play(...rest) {
       this.$lucky.play(...rest)
     },

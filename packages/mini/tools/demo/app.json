@@ -18,6 +18,7 @@
   },
   "usingComponents": {
     "lucky-wheel": "./components/lucky-wheel/index",
-    "lucky-grid": "./components/lucky-grid/index"
+    "lucky-grid": "./components/lucky-grid/index",
+    "slot-machine": "./components/slot-machine/index"
   }
 }

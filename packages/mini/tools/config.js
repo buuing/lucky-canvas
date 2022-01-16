@@ -12,7 +12,7 @@ const dev = path.join(demoDist, 'components')
 const dist = path.resolve(__dirname, '../dist')
 
 module.exports = {
-  entry: ['lucky-wheel/index', 'lucky-grid/index'],
+  entry: ['lucky-wheel/index', 'lucky-grid/index', 'slot-machine/index'],
 
   isDev,
   isWatch,
