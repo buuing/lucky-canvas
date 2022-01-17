@@ -1,6 +1,7 @@
 <view class="lucky-box" style="width: {{width}}; height: {{height}}">
   <canvas
     type="2d"
+    class="lucky-canvas"
     id="lucky-wheel"
     canvas-id="lucky-wheel"
     bindtouchstart="handleClickOfCanvas"

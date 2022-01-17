@@ -10,8 +10,8 @@ Component({
     buttons: { type: Array, value: [] },
     defaultConfig: { type: Object, value: {} },
     defaultStyle: { type: Object, value: {} },
-    start: { type: Function, value: () => {} },
-    end: { type: Function, value: () => {} },
+    start: { type: null, value: () => {} },
+    end: { type: null, value: () => {} },
   },
   data: {
     isShow: false,

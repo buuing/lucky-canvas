@@ -1,6 +1,7 @@
 <view class="lucky-box" style="width: {{width}}; height: {{height}}">
   <canvas
     type="2d"
+    class="lucky-canvas"
     id="slot-machine"
     canvas-id="slot-machine"
     style="width: {{width}}; height: {{height}}; visibility: {{showCanvas ? 'visible' : 'hidden'}}"

@@ -10,7 +10,7 @@
   top: 0;
   z-index: 100;
 }
-.lucky-box #lucky-wheel {
+.lucky-box .lucky-canvas {
   position: absolute;
   left: 0;
   top: 0;

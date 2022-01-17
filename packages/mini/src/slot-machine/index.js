@@ -10,8 +10,7 @@ Component({
     slots: { type: Array, value: [] },
     defaultConfig: { type: Object, value: {} },
     defaultStyle: { type: Object, value: {} },
-    start: { type: Function, value: () => {} },
-    end: { type: Function, value: () => {} },
+    end: { type: null, value: () => {} },
   },
   data: {
     isShow: false,
@@ -67,6 +66,7 @@ Component({
         height: res[0].height,
         blocks: data.blocks,
         prizes: data.prizes,
+        slots: data.slots,
         defaultConfig: data.defaultConfig,
         defaultStyle: data.defaultStyle,
         end: (...rest) => {
