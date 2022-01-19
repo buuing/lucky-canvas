@@ -55,11 +55,7 @@ export default class LuckyWheel extends Lucky {
    * prizeFlag === -1 时, 说明stop方法被调用, 并且传入了负值, 本次抽奖无效
    */
   private prizeFlag: number | undefined
-  private ImageCache = {
-    blocks: [] as Array<ImgType[]>,
-    prizes: [] as Array<ImgType[]>,
-    buttons: [] as Array<ImgType[]>,
-  }
+  private ImageCache = new Map()
 
   /**
    * 大转盘构造器
@@ -216,7 +212,7 @@ export default class LuckyWheel extends Lucky {
         const allPromise: Promise<void>[] = []
         willUpdate && willUpdate.forEach((imgs, cellIndex) => {
           imgs && imgs.forEach((imgInfo, imgIndex) => {
-            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgName, imgIndex))
+            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgIndex))
           })
         })
         Promise.all(allPromise).then(() => {
@@ -248,9 +244,8 @@ export default class LuckyWheel extends Lucky {
    * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
-    cellName: keyof typeof this.ImageCache,
+    cellName: 'blocks' | 'prizes' | 'buttons',
     cellIndex: number,
-    imgName: keyof typeof this.ImageCache,
     imgIndex: number,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -259,14 +254,12 @@ export default class LuckyWheel extends Lucky {
       if (!cell || !cell.imgs) return
       const imgInfo = cell.imgs[imgIndex]
       if (!imgInfo) return
-      const ImageCache = this.ImageCache
-      if (!ImageCache[imgName][cellIndex]) ImageCache[imgName][cellIndex] = []
       // 异步加载图片
       this.loadImg(imgInfo.src, imgInfo).then(async currImg => {
         if (typeof imgInfo.formatter === 'function') {
           currImg = await Promise.resolve(imgInfo.formatter.call(this, currImg))
         }
-        ImageCache[imgName][cellIndex][imgIndex] = currImg
+        this.ImageCache.set(imgInfo['src'], currImg)
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -284,9 +277,7 @@ export default class LuckyWheel extends Lucky {
       ctx.fill()
     }
     block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
-      const blockImgs = this.ImageCache['blocks']
-      if (!blockImgs || !blockImgs[blockIndex]) return
-      const blockImg = blockImgs[blockIndex][imgIndex]
+      const blockImg = this.ImageCache.get(imgInfo.src)
       if (!blockImg) return
       // 绘制图片
       const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, radius * 2, radius * 2)
@@ -307,20 +298,11 @@ export default class LuckyWheel extends Lucky {
     config.beforeDraw?.call(this, ctx)
     // 清空画布
     ctx.clearRect(-this.Radius, -this.Radius, this.Radius * 2, this.Radius * 2)
-    // 计算 padding
-    const blocksArr: [number, BlockType, number][] = []
+    // 计算 padding 并绘制 blocks 边框
     this.prizeRadius = this.blocks.reduce((radius, block, blockIndex) => {
-      blocksArr.push([radius, block, blockIndex])
+      this.drawBlock(radius, block, blockIndex)
       return radius - this.getLength(block.padding && block.padding.split(' ')[0])
     }, this.Radius)
-    // 绘制blocks边框
-    blocksArr.sort((a, b) => ~~a[1].zIndex! - ~~b[1].zIndex!)
-    while (blocksArr.length) {
-      const [radius, block, blockIndex] = blocksArr[0]
-      if (~~block?.zIndex! > 0) break
-      this.drawBlock(radius, block, blockIndex)
-      blocksArr.shift()
-    }
     // 计算起始弧度
     this.prizeDeg = 360 / this.prizes.length
     this.prizeRadian = getAngle(this.prizeDeg)
@@ -362,9 +344,7 @@ export default class LuckyWheel extends Lucky {
       ctx.rotate(currMiddleDeg + getAngle(90))
       // 绘制图片
       prize.imgs && prize.imgs.forEach((imgInfo, imgIndex) => {
-        const prizeImgs = this.ImageCache['prizes']
-        if (!prizeImgs || !prizeImgs[prizeIndex]) return
-        const prizeImg = prizeImgs[prizeIndex][imgIndex]
+        const prizeImg = this.ImageCache.get(imgInfo.src)
         if (!prizeImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(
           prizeImg,
@@ -432,9 +412,7 @@ export default class LuckyWheel extends Lucky {
       }
       // 绘制按钮图片
       btn.imgs && btn.imgs.forEach((imgInfo, imgIndex) => {
-        const btnImgs = this.ImageCache['buttons']
-        if (!btnImgs || !btnImgs[btnIndex]) return
-        const btnImg = btnImgs[btnIndex][imgIndex]
+        const btnImg = this.ImageCache.get(imgInfo.src)
         if (!btnImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(btnImg, imgInfo, radius * 2, radius * 2)
         const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius)]
@@ -452,9 +430,6 @@ export default class LuckyWheel extends Lucky {
           ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
         })
       })
-    })
-    blocksArr.forEach(([radius, block, blockIndex]) => {
-      this.drawBlock(radius, block, blockIndex)
     })
     // 触发绘制后回调
     config.afterDraw?.call(this, ctx)

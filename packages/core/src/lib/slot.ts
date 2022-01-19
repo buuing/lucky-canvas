@@ -66,10 +66,7 @@ export default class SlotMachine extends Lucky {
   // 奖品区域几何信息
   private prizeArea?: { x: number, y: number, w: number, h: number }
   // 图片缓存
-  private ImageCache = {
-    blocks: [] as Array<ImgType[]>,
-    prizes: [] as Array<ImgType[]>,
-  }
+  private ImageCache = new Map()
 
   /**
    * 老虎机构造器
@@ -225,7 +222,7 @@ export default class SlotMachine extends Lucky {
         const allPromise: Promise<void>[] = []
         willUpdate && willUpdate.forEach((imgs, cellIndex) => {
           imgs && imgs.forEach((imgInfo, imgIndex) => {
-            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgName, imgIndex))
+            allPromise.push(this.loadAndCacheImg(imgName, cellIndex, imgIndex))
           })
         })
         Promise.all(allPromise).then(() => {
@@ -245,9 +242,8 @@ export default class SlotMachine extends Lucky {
    * @param imgIndex 图片索引
    */
   private async loadAndCacheImg (
-    cellName: keyof typeof this.ImageCache,
+    cellName: 'blocks' | 'prizes',
     cellIndex: number,
-    imgName: keyof typeof this.ImageCache,
     imgIndex: number
   ): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -255,14 +251,12 @@ export default class SlotMachine extends Lucky {
       if (!cell || !cell.imgs) return
       const imgInfo = cell.imgs[imgIndex]
       if (!imgInfo) return
-      const ImageCache = this.ImageCache
-      if (!ImageCache[imgName][cellIndex]) ImageCache[imgName][cellIndex] = []
       // 异步加载图片
       this.loadImg(imgInfo.src, imgInfo).then(async currImg => {
         if (typeof imgInfo.formatter === 'function') {
           currImg = await Promise.resolve(imgInfo.formatter.call(this, currImg))
         }
-        ImageCache[imgName][cellIndex][imgIndex] = currImg
+        this.ImageCache.set(imgInfo['src'], currImg)
         resolve()
       }).catch(err => {
         console.error(`${cellName}[${cellIndex}].imgs[${imgIndex}] ${err}`)
@@ -325,7 +319,7 @@ export default class SlotMachine extends Lucky {
         }
         // 绘制图片
         cell.imgs && cell.imgs.forEach((imgInfo, imgIndex) => {
-          const cellImg = get(this.ImageCache, `prizes.${orderIndex}.${imgIndex}`)
+          const cellImg = this.ImageCache.get(imgInfo.src)
           if (!cellImg) return
           const [trueWidth, trueHeight] = this.computedWidthAndHeight(cellImg, imgInfo, cellWidth, cellHeight)
           const [xAxis, yAxis] = [
@@ -402,7 +396,7 @@ export default class SlotMachine extends Lucky {
       }
       // 绘制图片
       block.imgs && block.imgs.forEach((imgInfo, imgIndex) => {
-        const blockImg = get(this.ImageCache, `blocks.${blockIndex}.${imgIndex}`)
+        const blockImg = this.ImageCache.get(imgInfo.src)
         if (!blockImg) return
         // 绘制图片
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, w, h)
