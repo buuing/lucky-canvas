@@ -160,6 +160,8 @@ export default class LuckyGrid extends React.Component {
       }
     }, {
       ...props,
+      width: config.width,
+      height: config.height,
       start: (...rest) => {
         props.onStart && props.onStart(...rest)
       },
@@ -169,6 +171,10 @@ export default class LuckyGrid extends React.Component {
       }
     })
     this.setState({ myLucky })
+  }
+
+  init (...rest) {
+    this.state.myLucky.init(...rest)
   }
 
   play (...rest) {
@@ -205,6 +211,17 @@ export default class LuckyGrid extends React.Component {
           </View> : null
         }
         {/* 图片 */}
+        { showImage ? <View className="lucky-imgs">
+          {
+            props.blocks.map((block, index) => <View key={index}>
+              {
+                block.imgs ? <View>
+                  { block.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'blocks', index, i)}></Image>) }
+                </View> : null
+              }
+            </View>)
+          }
+        </View> : null }
         { showImage ? <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>

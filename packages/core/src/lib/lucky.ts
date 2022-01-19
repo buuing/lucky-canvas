@@ -376,7 +376,7 @@ export default class Lucky {
     _ctx: CanvasRenderingContext2D
   } | void {
     if (!has(this, '_offscreenCanvas')) {
-      if (window && window.document) {
+      if (window && window.document && this.config.flag === 'WEB') {
         this['_offscreenCanvas'] = document.createElement('canvas')
       } else {
         this['_offscreenCanvas'] = this.config['offscreenCanvas']

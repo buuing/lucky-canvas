@@ -15,7 +15,7 @@
     <!-- 按钮 -->
     <view v-show="btnShow">
       <view v-if="flag === 'WEB'">
-        <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+        <view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @touchstart="toPlay(btn)" :style="{
           top: btn.top + 'px',
           left: btn.left + 'px',
           width: btn.width + 'px',
@@ -33,6 +33,13 @@
     </view>
     <!-- 图片 -->
     <view v-if="myLucky && flag !== 'WEB'">
+      <view class="lucky-imgs">
+        <view v-for="(block, index) in blocks" :key="index">
+          <view v-if="block.imgs">
+            <image v-for="(img, i) in block.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'blocks', index, i)"></image>
+          </view>
+        </view>
+      </view>
       <view class="lucky-imgs">
         <view v-for="(prize, index) in prizes" :key="index">
           <view v-if="prize.imgs">
@@ -201,8 +208,6 @@ export default {
           flag,
           ctx,
           dpr,
-          width,
-          height,
           rAF,
           setTimeout,
           clearTimeout,
@@ -228,6 +233,8 @@ export default {
           },
         }, {
           ...this.$props,
+          width,
+          height,
           start: (...rest) => this.$emit('start', ...rest),
           end: (...rest) => {
             this.$emit('end', ...rest)
@@ -235,6 +242,9 @@ export default {
           },
         })
       })
+    },
+    init (...rest) {
+      this.myLucky.init(...rest)
     },
     play (...rest) {
       this.myLucky.play(...rest)

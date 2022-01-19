@@ -1,5 +1,5 @@
 <template>
-  <view class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
+	<view class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas
       type="2d"
       class="lucky-canvas"
@@ -12,9 +12,6 @@
       @load="myLucky.clearCanvas()"
       :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }"
     ></image>
-    <!-- 按钮 -->
-    <view v-if="flag === 'WEB'" class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
-    <cover-view v-else class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- 图片 -->
     <view v-if="myLucky && flag !== 'WEB'">
       <view class="lucky-imgs">
@@ -31,26 +28,19 @@
           </view>
         </view>
       </view>
-      <view class="lucky-imgs">
-        <view v-for="(btn, index) in buttons" :key="index">
-          <view v-if="btn.imgs">
-            <image v-for="(img, i) in btn.imgs" :key="i" :src="img.src" @load="e => imgBindload(e, 'buttons', index, i)"></image>
-          </view>
-        </view>
-      </view>
     </view>
   </view>
 </template>
 
 <script>
 import Taro from '@tarojs/taro'
-import { LuckyWheel as Wheel } from 'lucky-canvas'
+import { SlotMachine as Slot } from 'lucky-canvas'
 import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 export default {
   props: {
     canvasId: {
       type: String,
-      default: 'lucky-wheel'
+      default: 'slot-machine'
     },
     width: {
       type: [String, Number],
@@ -68,7 +58,7 @@ export default {
       type: Array,
       default: () => []
     },
-    buttons: {
+    slots: {
       type: Array,
       default: () => []
     },
@@ -89,8 +79,6 @@ export default {
       myLucky: null,
       boxWidth: 300,
       boxHeight: 300,
-      btnWidth: 0,
-      btnHeight: 0,
       imgSrc: '',
     }
   },
@@ -101,12 +89,11 @@ export default {
     prizes (newData) {
       this.myLucky.prizes = newData
     },
-    buttons (newData) {
-      this.myLucky.buttons = newData
+    slots (newData) {
+      this.myLucky.slots = newData
     },
   },
   mounted () {
-    console.log(this.canvasId)
     this.initLucky()
   },
   methods: {
@@ -146,7 +133,7 @@ export default {
       Taro.createSelectorQuery().in(page).select(`#${this.canvasId}`).fields({
         node: true, size: true
       }).exec((res) => {
-        let flag = this.flag, rAF
+        let flag = this.flag, rAF, offscreenCanvas
         if (flag === 'WEB') {
           res[0] = {
             node: document.querySelector(`#${this.canvasId} canvas`),
@@ -155,6 +142,9 @@ export default {
           }
           // 小程序使用帧动画真机会报错
           rAF = requestAnimationFrame
+        } else {
+          // 小程序提供离屏 canvas
+          offscreenCanvas = Taro.createOffscreenCanvas({ type: '2d' })
         }
         if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
         const { node, width, height } = res[0]
@@ -164,29 +154,17 @@ export default {
         canvas.width = width * dpr
         canvas.height = height * dpr
         ctx.scale(dpr, dpr)
-        const myLucky = this.myLucky = new Wheel({
+        const myLucky = this.myLucky = new Slot({
           flag,
           ctx,
           dpr,
           rAF,
+          offscreenCanvas,
           setTimeout,
           clearTimeout,
           setInterval,
           clearInterval,
           unitFunc: (num, unit) => changeUnits(num + unit),
-          beforeCreate: function () {
-            if (flag === 'WEB') return
-            const Radius = Math.min(this.config.width, this.config.height) / 2
-            ctx.translate(Radius, Radius)
-          },
-          beforeInit: function () {
-            if (flag === 'WEB') return
-            ctx.translate(-this.Radius, -this.Radius)
-          },
-          afterInit: function () {
-            _this.btnWidth = this.maxBtnRadius * 2
-            _this.btnHeight = this.maxBtnRadius * 2
-          },
           afterStart: () => {
             this.showCanvas()
           },
@@ -194,7 +172,6 @@ export default {
           ...this.$props,
           width,
           height,
-          start: (...rest) => this.$emit('start', ...rest),
           end: (...rest) => {
             this.$emit('end', ...rest)
             this.hideCanvas()
@@ -210,9 +187,6 @@ export default {
     },
     stop (...rest) {
       this.myLucky.stop(...rest)
-    },
-    toPlay () {
-      this.myLucky.startCallback()
     },
   }
 }

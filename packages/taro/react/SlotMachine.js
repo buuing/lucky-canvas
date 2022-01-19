@@ -1,11 +1,11 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
-import { View, Canvas, CoverView, Image } from '@tarojs/components'
-import { LuckyWheel as Wheel } from 'lucky-canvas'
+import { View, Canvas, Image } from '@tarojs/components'
+import { SlotMachine as Slot } from 'lucky-canvas'
 import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 import '../utils/index.css'
 
-export default class LuckyWheel extends React.Component {
+export default class SlotMachine extends React.Component {
   flag = getFlag()
   ctx = null
   canvas = null
@@ -14,8 +14,6 @@ export default class LuckyWheel extends React.Component {
     myLucky: null,
     boxWidth: 300,
     boxHeight: 300,
-    btnWidth: 0,
-    btnHeight: 0,
   }
 
   constructor (props) {
@@ -35,8 +33,8 @@ export default class LuckyWheel extends React.Component {
     if (props.prizes !== prevProps.prizes) {
       state.myLucky.prizes = props.prizes
     }
-    if (props.buttons !== prevProps.buttons) {
-      state.myLucky.buttons = props.buttons
+    if (props.slots !== prevProps.slots) {
+      state.myLucky.slots = props.slots
     }
   }
 
@@ -112,6 +110,7 @@ export default class LuckyWheel extends React.Component {
           ctx,
           width,
           height,
+          offscreenCanvas: Taro.createOffscreenCanvas({ type: '2d' })
         })
       })
     }
@@ -120,29 +119,13 @@ export default class LuckyWheel extends React.Component {
   drawLucky (config) {
     const _this = this
     const { props, flag, ctx } = this
-    const myLucky = new Wheel({
+    const myLucky = new Slot({
       ...config,
       setTimeout,
       clearTimeout,
       setInterval,
       clearInterval,
       unitFunc: (num, unit) => changeUnits(num + unit),
-      beforeCreate: function () {
-        if (flag === 'WEB') return
-        const Radius = Math.min(this.config.width, this.config.height) / 2
-        ctx.translate(Radius, Radius)
-      },
-      beforeInit: function () {
-        if (flag === 'WEB') return
-        ctx.translate(-this.Radius, -this.Radius)
-      },
-      afterInit: function () {
-        // 动态设置按钮大小
-        _this.setState({
-          btnWidth: this.maxBtnRadius * 2,
-          btnHeight: this.maxBtnRadius * 2,
-        })
-      },
       afterStart: () => {
         this.showCanvas()
       },
@@ -150,9 +133,6 @@ export default class LuckyWheel extends React.Component {
       ...props,
       width: config.width,
       height: config.height,
-      start: (...rest) => {
-        props.onStart && props.onStart(...rest)
-      },
       end: (...rest) => {
         props.onEnd && props.onEnd(...rest)
         this.hideCanvas()
@@ -173,21 +153,14 @@ export default class LuckyWheel extends React.Component {
     this.state.myLucky.stop(...rest)
   }
 
-  toPlay () {
-    this.state.myLucky.startCallback()
-  }
-
   render () {
     const { props, state, flag } = this
     const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
-    const btnSize = { width: state.btnWidth + 'px', height: state.btnHeight + 'px' }
     const showImage = state.myLucky && flag !== 'WEB'
     return flag === 'WEB' ? <div id={props.canvasId}></div> : (
       <View className="lucky-box" style={boxSize}>
         <Canvas type="2d" className="lucky-canvas" id={props.canvasId} canvasId={props.canvasId} style={boxSize}></Canvas>
         <Image src={state.imgSrc} onLoad={() => state.myLucky.clearCanvas()} style={boxSize}></Image>
-        {/* 按钮 */}
-        <View className="lucky-wheel-btn" onClick={e => this.toPlay(e)} style={btnSize}></View>
         {/* 图片 */}
         { showImage ? <View className="lucky-imgs">
           {
@@ -211,29 +184,18 @@ export default class LuckyWheel extends React.Component {
             </View>)
           }
         </View> : null }
-        { showImage ? <View className="lucky-imgs">
-          {
-            props.buttons.map((button, index) => <View key={index}>
-              {
-                button.imgs ? <View>
-                  { button.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'buttons', index, i)}></Image>) }
-                </View> : null
-              }
-            </View>)
-          }
-        </View> : null }
       </View>
     )
   }
 }
 
-LuckyWheel.defaultProps = {
-  canvasId: 'lucky-wheel',
+SlotMachine.defaultProps = {
+  canvasId: 'slot-machine',
   width: '600rpx',
   height: '600rpx',
   blocks: [],
   prizes: [],
-  buttons: [],
+  slots: [],
   defaultStyle: {},
   defaultConfig: {},
 }
