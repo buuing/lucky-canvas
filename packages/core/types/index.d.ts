@@ -330,6 +330,7 @@ declare class LuckyWheel extends Lucky {
      * @param imgIndex 图片索引
      */
     private loadAndCacheImg;
+    private drawBlock;
     /**
      * 开始绘制
      */

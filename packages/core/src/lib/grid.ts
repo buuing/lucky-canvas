@@ -567,7 +567,7 @@ export default class LuckyGrid extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, step, prizes, prizeFlag, stopIndex, endIndex, _defaultConfig } = this
+    const { rAF, step, prizes, prizeFlag, _defaultConfig } = this
     const { accelerationTime, decelerationTime, speed } = _defaultConfig
     // 结束游戏
     if (step === 0) {
@@ -604,7 +604,7 @@ export default class LuckyGrid extends Lucky {
       }
     } else if (step === 3) { // 减速阶段
       // 开始缓慢停止
-      currIndex = quad.easeOut(endInterval, stopIndex, endIndex, decelerationTime)
+      currIndex = quad.easeOut(endInterval, this.stopIndex, this.endIndex, decelerationTime)
       if (endInterval >= decelerationTime) {
         this.step = 0
       }

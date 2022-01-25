@@ -500,7 +500,7 @@ export default class LuckyWheel extends Lucky {
    * @param num 记录帧动画执行多少次
    */
   private run (num: number = 0): void {
-    const { rAF, step, prizeFlag, stopDeg, endDeg, _defaultConfig } = this
+    const { rAF, step, prizeFlag, _defaultConfig } = this
     const { accelerationTime, decelerationTime, speed } = _defaultConfig
     // 游戏结束
     if (step === 0) {
@@ -537,7 +537,7 @@ export default class LuckyWheel extends Lucky {
       }
     } else if (step === 3) { // 减速阶段
       // 开始缓慢停止
-      rotateDeg = quad.easeOut(endInterval, stopDeg, endDeg, decelerationTime)
+      rotateDeg = quad.easeOut(endInterval, this.stopDeg, this.endDeg, decelerationTime)
       if (endInterval >= decelerationTime) {
         this.step = 0
       }
