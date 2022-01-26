@@ -192,9 +192,11 @@
         return getImage.call(this, 'lucky-grid', this.canvas)
       },
       hideCanvas () {
+        // #ifdef MP
         this.getImage().then(res => {
           this.imgSrc = res.tempFilePath
         })
+        // #endif
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)

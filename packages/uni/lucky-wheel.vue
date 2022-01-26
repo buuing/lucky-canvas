@@ -128,9 +128,11 @@
         return getImage.call(this, 'lucky-wheel', this.canvas)
       },
       hideCanvas () {
+        // #ifdef MP
         this.getImage().then(res => {
           this.imgSrc = res.tempFilePath
         })
+        // #endif
       },
       initLucky () {
         this.boxWidth = changeUnits(this.width)

@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/uni",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "uni-app【大转盘 / 九宫格 / 老虎机】抽奖插件",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,6 @@
   "author": "ldq <ldq404@qq.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "lucky-canvas": "~1.7.16"
+    "lucky-canvas": "~1.7.19"
   }
 }
