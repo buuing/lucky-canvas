@@ -23,7 +23,7 @@
         }"></view>
       </view>
       <view v-else>
-        <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @click="toPlay(btn)" :style="{
+        <cover-view class="lucky-grid-btn" v-for="(btn, index) in btns" :key="index" @touchstart="toPlay(btn)" :style="{
           top: btn.top + 'px',
           left: btn.left + 'px',
           width: btn.width + 'px',

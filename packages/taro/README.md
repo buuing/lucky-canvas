@@ -2,7 +2,7 @@
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.jpg" width="210" alt="logo" />
   <h1>@lucky-canvas/taro 抽奖插件</h1>
-  <p>一个基于 Taro 的 ( 大转盘 / 九宫格 ) 抽奖插件</p>
+  <p>一个基于 Taro 的 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
     <a href="https://github.com/LuckDraw/lucky-canvas/stargazers" target="_black">
       <img src="https://img.shields.io/github/stars/LuckDraw/lucky-canvas?color=%23ffba15&logo=github&style=flat-square" alt="stars" />
@@ -23,7 +23,7 @@
 
 ## 官方文档
 
-> **中文**：[https://100px.net/document/taro.html](https://100px.net/document/taro.html)
+> **中文**：[https://100px.net/usage/taro.html](https://100px.net/usage/taro.html)
 
 <br />
 
@@ -35,10 +35,10 @@
 
 ```shell
 # npm 安装：
-npm install taro
+npm install @lucky-canvas/taro@latest
 
 # yarn 安装：
-yarn add taro
+yarn add @lucky-canvas/taro@latest
 ```
 
 
@@ -60,13 +60,16 @@ yarn add taro
     <!-- 九宫格抽奖 -->
     <LuckyGrid width="600rpx" height="600rpx" ...你的配置 />
 
+    <!-- 老虎机抽奖 -->
+    <SlotMachine width="600rpx" height="600rpx" ...你的配置 />
+
   </view>
 </template>
 
 <script>
-import { LuckyWheel, LuckyGrid } from '@lucky-canvas/taro/vue'
+import { LuckyWheel, LuckyGrid, SlotMachine } from '@lucky-canvas/taro/vue'
 export default {
-  components: { LuckyWheel, LuckyGrid },
+  components: { LuckyWheel, LuckyGrid, SlotMachine },
 }
 </script>
 ```
@@ -80,7 +83,7 @@ export default {
 ```js
 import React from 'react'
 import { View } from '@tarojs/components'
-import { LuckyWheel, LuckyGrid } from '@lucky-canvas/taro/react'
+import { LuckyWheel, LuckyGrid, SlotMachine } from '@lucky-canvas/taro/react'
 
 export default class Index extends React.Component {
   render () {
@@ -91,6 +94,9 @@ export default class Index extends React.Component {
 
       {/* 大转盘抽奖 */}
       <LuckyGrid width="300px" height="300px" ...你的配置 />
+
+      {/* 老虎机抽奖 */}
+      <SlotMachine width="300px" height="300px" ...你的配置 />
 
     </View>
   }

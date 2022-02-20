@@ -14,7 +14,7 @@
     ></image>
     <!-- 按钮 -->
     <view v-if="flag === 'WEB'" class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></view>
-    <cover-view v-else class="lucky-wheel-btn" @click="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
+    <cover-view v-else class="lucky-wheel-btn" @touchstart="toPlay" :style="{ width: btnWidth + 'px', height: btnHeight + 'px' }"></cover-view>
     <!-- 图片 -->
     <view v-if="myLucky && flag !== 'WEB'">
       <view class="lucky-imgs">
@@ -176,7 +176,7 @@ export default {
           unitFunc: (num, unit) => changeUnits(num + unit),
           beforeCreate: function () {
             if (flag === 'WEB') return
-            const Radius = Math.min(this.config.width, this.config.height) / 2
+            const Radius = Math.min(this.data.width, this.data.height) / 2
             ctx.translate(Radius, Radius)
           },
           beforeInit: function () {
