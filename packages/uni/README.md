@@ -98,7 +98,7 @@ export default {
 
 由于 uni-app 渲染 md 的时候会出问题，所以我把 demo 代码放到了文档里
 
-- [https://100px.net/document/uni-app.html](https://100px.net/document/uni-app.html)
+- [https://100px.net/usage/uni-app.html](https://100px.net/usage/uni-app.html)
 
 <br />
 

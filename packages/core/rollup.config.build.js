@@ -27,7 +27,7 @@ export default [
         file: pkg.jsdelivr,
         format: 'umd',
         name: 'LuckyCanvas',
-        sourcemap: true,
+        sourcemap: false,
       },
     ],
     plugins: [

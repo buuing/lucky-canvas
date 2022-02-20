@@ -2,6 +2,7 @@
 export type FontItemType = {
   text: string
   top?: string | number
+  left?: string | number
   fontColor?: string
   fontSize?: string
   fontStyle?: string
@@ -21,6 +22,7 @@ export type ImgType = HTMLImageElement | HTMLCanvasElement
 export type ImgItemType = {
   src: string
   top?: string | number
+  left?: string | number
   width?: string
   height?: string
   formatter?: (img: ImgType) => ImgType

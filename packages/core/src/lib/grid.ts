@@ -16,7 +16,7 @@ import LuckyGridConfig, {
   EndCallbackType,
 } from '../types/grid'
 import {
-  get,
+  has,
   isExpectType,
   removeEnter,
   computePadding,
@@ -361,7 +361,10 @@ export default class LuckyGrid extends Lucky {
         if (!blockImg) return
         // 绘制图片
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, w, h)
-        const [xAxis, yAxis] = [this.getOffsetX(trueWidth, w), this.getHeight(imgInfo.top, h)]
+        const [xAxis, yAxis] = [
+          this.getOffsetX(trueWidth, w) + this.getLength(imgInfo.left, w),
+          this.getLength(imgInfo.top, h)
+        ]
         this.drawImage(ctx, blockImg, x + xAxis, y + yAxis, trueWidth, trueHeight)
       })
       return {
@@ -429,8 +432,8 @@ export default class LuckyGrid extends Lucky {
         if (!renderImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(renderImg, imgInfo, width, height)
         const [xAxis, yAxis] = [
-          x + this.getOffsetX(trueWidth, width),
-          y + this.getHeight(imgInfo.top, height)
+          x + this.getOffsetX(trueWidth, width) + this.getLength(imgInfo.left, width),
+          y + this.getLength(imgInfo.top, height)
         ]
         this.drawImage(ctx, renderImg, xAxis, yAxis, trueWidth, trueHeight)
       })
@@ -452,7 +455,7 @@ export default class LuckyGrid extends Lucky {
         const lineHeight = isActive && _activeStyle.lineHeight
           ? _activeStyle.lineHeight
           : font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-        const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+        const wordWrap = has(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
         const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
         const lineClamp = font.lineClamp || _defaultStyle.lineClamp
         ctx.font = `${fontWeight} ${size >> 0}px ${style}`
@@ -461,7 +464,7 @@ export default class LuckyGrid extends Lucky {
         // 计算文字换行
         if (wordWrap) {
           // 最大宽度
-          let maxWidth = this.getWidth(lengthLimit, width)
+          let maxWidth = this.getLength(lengthLimit, width)
           lines = splitText(ctx, removeEnter(text), () => maxWidth, lineClamp)
         } else {
           lines = text.split('\n')
@@ -469,8 +472,8 @@ export default class LuckyGrid extends Lucky {
         lines.forEach((line, lineIndex) => {
           ctx.fillText(
             line,
-            x + this.getOffsetX(ctx.measureText(line).width, width),
-            y + this.getHeight(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)
+            x + this.getOffsetX(ctx.measureText(line).width, width) + this.getLength(font.left, width),
+            y + this.getLength(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)
           )
         })
       })

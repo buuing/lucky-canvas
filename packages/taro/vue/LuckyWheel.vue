@@ -106,7 +106,6 @@ export default {
     },
   },
   mounted () {
-    console.log(this.canvasId)
     this.initLucky()
   },
   methods: {

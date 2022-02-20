@@ -26,7 +26,7 @@ export default [
         file: pkg.jsdelivr,
         format: 'umd',
         name: 'VueLuckyCanvas',
-        sourcemap: true,
+        sourcemap: false,
         globals: {
           'vue-demi': 'VueDemi',
           'lucky-canvas': 'LuckyCanvas',

@@ -1,6 +1,7 @@
 declare type FontItemType = {
     text: string;
     top?: string | number;
+    left?: string | number;
     fontColor?: string;
     fontSize?: string;
     fontStyle?: string;
@@ -16,6 +17,7 @@ declare type ImgType = HTMLImageElement | HTMLCanvasElement;
 declare type ImgItemType = {
     src: string;
     top?: string | number;
+    left?: string | number;
     width?: string;
     height?: string;
     formatter?: (img: ImgType) => ImgType;
@@ -59,6 +61,7 @@ interface WatchOptType {
 }
 
 declare class Lucky {
+    static version: string;
     protected readonly version: string;
     protected readonly config: ConfigType;
     protected readonly ctx: CanvasRenderingContext2D;
@@ -126,19 +129,6 @@ declare class Lucky {
      */
     protected drawImage(ctx: CanvasRenderingContext2D, imgObj: ImgType, ...rectInfo: [...Tuple<number, 4>, ...Partial<Tuple<number, 4>>]): void;
     /**
-     * 获取长度
-     * @param length 将要转换的长度
-     * @return 返回长度
-     */
-    protected getLength(length: string | number | undefined): number;
-    /**
-     * 转换单位
-     * @param { string } value 将要转换的值
-     * @param { number } denominator 分子
-     * @return { number } 返回新的字符串
-     */
-    protected changeUnits(value: string, denominator?: number): number;
-    /**
      * 计算图片的渲染宽高
      * @param imgObj 图片标签元素
      * @param imgInfo 图片信息
@@ -148,19 +138,19 @@ declare class Lucky {
      */
     protected computedWidthAndHeight(imgObj: ImgType, imgInfo: ImgItemType, maxWidth: number, maxHeight: number): [number, number];
     /**
-     * 转换并获取宽度
-     * @param width 将要转换的宽度
-     * @param maxWidth 最大宽度
-     * @return 返回相对宽度
+     * 转换单位
+     * @param { string } value 将要转换的值
+     * @param { number } denominator 分子
+     * @return { number } 返回新的字符串
      */
-    protected getWidth(width: string | number | undefined, maxWidth: number): number;
+    protected changeUnits(value: string, denominator?: number): number;
     /**
-     * 转换并获取高度
-     * @param height 将要转换的高度
-     * @param maxHeight 最大高度
-     * @return 返回相对高度
+     * 获取长度
+     * @param length 将要转换的长度
+     * @param maxLength 最大长度
+     * @return 返回长度
      */
-    protected getHeight(height: string | number | undefined, maxHeight: number): number;
+    protected getLength(length: string | number | undefined, maxLength?: number): number;
     /**
      * 获取相对(居中)X坐标
      * @param width
@@ -267,7 +257,7 @@ declare class LuckyWheel extends Lucky {
     private Radius;
     private prizeRadius;
     private prizeDeg;
-    private prizeRadian;
+    private prizeAng;
     private rotateDeg;
     private maxBtnRadius;
     private startTime;

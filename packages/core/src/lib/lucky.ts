@@ -6,6 +6,7 @@ import { defineReactive } from '../observer'
 import Watcher, { WatchOptType } from '../observer/watcher'
 
 export default class Lucky {
+  static version: string = version
   protected readonly version: string = version
   protected readonly config: ConfigType
   protected readonly ctx: CanvasRenderingContext2D
@@ -264,39 +265,6 @@ export default class Lucky {
   }
 
   /**
-   * 获取长度
-   * @param length 将要转换的长度
-   * @return 返回长度
-   */
-  protected getLength (length: string | number | undefined): number {
-    if (isExpectType(length, 'number')) return length as number
-    if (isExpectType(length, 'string')) return this.changeUnits(length as string)
-    return 0
-  }
-
-  /**
-   * 转换单位
-   * @param { string } value 将要转换的值
-   * @param { number } denominator 分子
-   * @return { number } 返回新的字符串
-   */
-  protected changeUnits (value: string, denominator = 1): number {
-    const { config } = this
-    return Number(value.replace(/^([-]*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
-      const handleCssUnit = {
-        '%': (n: number) => n * (denominator / 100),
-        'px': (n: number) => n * 1,
-        'rem': (n: number) => n * this.htmlFontSize,
-        'vw': (n: number) => n / 100 * window.innerWidth,
-      }[unit]
-      if (handleCssUnit) return handleCssUnit(num)
-      // 如果找不到默认单位, 就交给外面处理
-      const otherHandleCssUnit = config.handleCssUnit || config['unitFunc']
-      return otherHandleCssUnit ? otherHandleCssUnit(num, unit) : num
-    }))
-  }
-
-  /**
    * 计算图片的渲染宽高
    * @param imgObj 图片标签元素
    * @param imgInfo 图片信息
@@ -316,49 +284,53 @@ export default class Lucky {
       return [imgObj.width, imgObj.height]
     } else if (imgInfo.width && !imgInfo.height) {
       // 如果只填写了宽度, 没填写高度
-      let trueWidth = this.getWidth(imgInfo.width, maxWidth)
+      let trueWidth = this.getLength(imgInfo.width, maxWidth)
       // 那高度就随着宽度进行等比缩放
       return [trueWidth, imgObj.height * (trueWidth / imgObj.width)]
     } else if (!imgInfo.width && imgInfo.height) {
       // 如果只填写了宽度, 没填写高度
-      let trueHeight = this.getHeight(imgInfo.height, maxHeight)
+      let trueHeight = this.getLength(imgInfo.height, maxHeight)
       // 那宽度就随着高度进行等比缩放
       return [imgObj.width * (trueHeight / imgObj.height), trueHeight]
     }
     // 如果宽度和高度都填写了, 就如实计算
     return [
-      this.getWidth(imgInfo.width, maxWidth),
-      this.getHeight(imgInfo.height, maxHeight)
+      this.getLength(imgInfo.width, maxWidth),
+      this.getLength(imgInfo.height, maxHeight)
     ]
   }
 
   /**
-   * 转换并获取宽度
-   * @param width 将要转换的宽度
-   * @param maxWidth 最大宽度
-   * @return 返回相对宽度
+   * 转换单位
+   * @param { string } value 将要转换的值
+   * @param { number } denominator 分子
+   * @return { number } 返回新的字符串
    */
-  protected getWidth (
-    width: string | number | undefined,
-    maxWidth: number
-  ): number {
-    if (isExpectType(width, 'number')) return (width as number)
-    if (isExpectType(width, 'string')) return this.changeUnits(width as string, maxWidth)
-    return 0
+  protected changeUnits (value: string, denominator = 1): number {
+    const { config } = this
+    return Number(value.replace(/^([-]*[0-9.]*)([a-z%]*)$/, (val, num, unit) => {
+      const handleCssUnit = {
+        '%': (n: number) => n * (denominator / 100),
+        'px': (n: number) => n * 1,
+        'rem': (n: number) => n * this.htmlFontSize,
+        'vw': (n: number) => n / 100 * window.innerWidth,
+      }[unit]
+      if (handleCssUnit) return handleCssUnit(num)
+      // 如果找不到默认单位, 就交给外面处理
+      const otherHandleCssUnit = config.handleCssUnit || config['unitFunc']
+      return otherHandleCssUnit ? otherHandleCssUnit(num, unit) : num
+    }))
   }
 
   /**
-   * 转换并获取高度
-   * @param height 将要转换的高度
-   * @param maxHeight 最大高度
-   * @return 返回相对高度
+   * 获取长度
+   * @param length 将要转换的长度
+   * @param maxLength 最大长度
+   * @return 返回长度
    */
-  protected getHeight (
-    height: string | number | undefined,
-    maxHeight: number
-  ): number {
-    if (isExpectType(height, 'number')) return (height as number)
-    if (isExpectType(height, 'string')) return this.changeUnits(height as string, maxHeight)
+  protected getLength (length: string | number | undefined, maxLength?: number): number {
+    if (isExpectType(length, 'number')) return length as number
+    if (isExpectType(length, 'string')) return this.changeUnits(length as string, maxLength)
     return 0
   }
 
@@ -381,7 +353,7 @@ export default class Lucky {
       } else {
         this['_offscreenCanvas'] = this.config['offscreenCanvas']
       }
-      if (!this['_offscreenCanvas']) return console.log('离屏 Canvas 无法渲染!')
+      if (!this['_offscreenCanvas']) return console.error('离屏 Canvas 无法渲染!')
     }
     const dpr = this.config.dpr
     const _offscreenCanvas = this['_offscreenCanvas'] as HTMLCanvasElement

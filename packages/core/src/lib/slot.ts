@@ -323,8 +323,8 @@ export default class SlotMachine extends Lucky {
           if (!cellImg) return
           const [trueWidth, trueHeight] = this.computedWidthAndHeight(cellImg, imgInfo, cellWidth, cellHeight)
           const [xAxis, yAxis] = [
-            _x + this.getOffsetX(trueWidth, cellWidth),
-            _y + this.getHeight(imgInfo.top, cellHeight)
+            _x + this.getOffsetX(trueWidth, cellWidth) + this.getLength(imgInfo.left, cellWidth),
+            _y + this.getLength(imgInfo.top, cellHeight)
           ]
           this.drawImage(_ctx, cellImg, xAxis, yAxis, trueWidth, trueHeight)
         })
@@ -338,7 +338,7 @@ export default class SlotMachine extends Lucky {
           const size = this.getLength(font.fontSize || _defaultStyle.fontSize)
           // 字体行高
           const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-          const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+          const wordWrap = has(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
           const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
           const lineClamp = font.lineClamp || _defaultStyle.lineClamp
           _ctx.font = `${fontWeight} ${size >> 0}px ${style}`
@@ -347,7 +347,7 @@ export default class SlotMachine extends Lucky {
           // 计算文字换行
           if (wordWrap) {
             // 最大宽度
-            let maxWidth = this.getWidth(lengthLimit, cellWidth)
+            let maxWidth = this.getLength(lengthLimit, cellWidth)
             lines = splitText(_ctx, removeEnter(text), () => maxWidth, lineClamp)
           } else {
             lines = text.split('\n')
@@ -355,8 +355,8 @@ export default class SlotMachine extends Lucky {
           lines.forEach((line, lineIndex) => {
             _ctx.fillText(
               line,
-              _x + this.getOffsetX(_ctx.measureText(line).width, cellWidth),
-              _y + this.getHeight(font.top, cellHeight) + (lineIndex + 1) * this.getLength(lineHeight)
+              _x + this.getOffsetX(_ctx.measureText(line).width, cellWidth) + this.getLength(font.left, cellWidth),
+              _y + this.getLength(font.top, cellHeight) + (lineIndex + 1) * this.getLength(lineHeight)
             )
           })
         })
@@ -400,7 +400,7 @@ export default class SlotMachine extends Lucky {
         if (!blockImg) return
         // 绘制图片
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, w, h)
-        const [xAxis, yAxis] = [this.getOffsetX(trueWidth, w), this.getHeight(imgInfo.top, h)]
+        const [xAxis, yAxis] = [this.getOffsetX(trueWidth, w) + this.getLength(imgInfo.left, w), this.getLength(imgInfo.top, h)]
         this.drawImage(ctx, blockImg, x + xAxis, y + yAxis, trueWidth, trueHeight)
       })
       return {

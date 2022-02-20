@@ -18,7 +18,7 @@ export const get = (data: object, strKeys: string) => {
   return data
 }
 
-export const has = (data: object, key: string | number) => {
+export const has = (data: object, key: string | number): boolean => {
   return Object.prototype.hasOwnProperty.call(data, key)
 }
 
@@ -98,7 +98,7 @@ export const computePadding = (
   const res = { paddingTop, paddingBottom, paddingLeft, paddingRight }
   for (let key in res) {
     // 是否含有这个属性, 并且是数字或字符串
-    res[key] = Object.prototype.hasOwnProperty.call(block, key) && isExpectType(block[key], 'string', 'number')
+    res[key] = has(block, key) && isExpectType(block[key], 'string', 'number')
       ? ~~String(block[key]).replace(/px/g, '')
       : res[key]
   }

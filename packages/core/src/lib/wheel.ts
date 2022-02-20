@@ -10,11 +10,11 @@ import LuckyWheelConfig, {
   EndCallbackType
 } from '../types/wheel'
 import {
-  isExpectType,
   removeEnter,
   hasBackground,
   computeRange,
   splitText,
+  has,
 } from '../utils/index'
 import { getAngle, fanShapedByArc } from '../utils/math'
 import { quad } from '../utils/tween'
@@ -32,7 +32,7 @@ export default class LuckyWheel extends Lucky {
   private Radius = 0                    // 大转盘半径
   private prizeRadius = 0               // 奖品区域半径
   private prizeDeg = 0                  // 奖品数学角度
-  private prizeRadian = 0               // 奖品运算角度
+  private prizeAng = 0               // 奖品运算角度
   private rotateDeg = 0                 // 转盘旋转角度
   private maxBtnRadius = 0              // 最大按钮半径
   private startTime = 0                 // 开始时间戳
@@ -88,7 +88,7 @@ export default class LuckyWheel extends Lucky {
     this.Radius = 0
     this.prizeRadius = 0
     this.prizeDeg = 0
-    this.prizeRadian = 0
+    this.prizeAng = 0
     this.rotateDeg = 0
     this.maxBtnRadius = 0
     this.startTime = 0
@@ -281,7 +281,7 @@ export default class LuckyWheel extends Lucky {
       if (!blockImg) return
       // 绘制图片
       const [trueWidth, trueHeight] = this.computedWidthAndHeight(blockImg, imgInfo, radius * 2, radius * 2)
-      const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius * 2) - radius]
+      const [xAxis, yAxis] = [this.getOffsetX(trueWidth) + this.getLength(imgInfo.left, radius * 2), this.getLength(imgInfo.top, radius * 2) - radius]
       ctx.save()
       imgInfo.rotate && ctx.rotate(getAngle(this.rotateDeg))
       this.drawImage(ctx, blockImg, xAxis, yAxis, trueWidth, trueHeight)
@@ -305,24 +305,25 @@ export default class LuckyWheel extends Lucky {
     }, this.Radius)
     // 计算起始弧度
     this.prizeDeg = 360 / this.prizes.length
-    this.prizeRadian = getAngle(this.prizeDeg)
+    this.prizeAng = getAngle(this.prizeDeg)
+    const shortSide = this.prizeRadius * Math.sin(this.prizeAng / 2) * 2
     // 起始角度调整到正上方, 并且减去半个扇形角度
     let start = getAngle(this.rotateDeg - 90 + this.prizeDeg / 2 + _defaultConfig.offsetDegree)
     // 计算文字横坐标
-    const getFontX = (line: string) => {
-      return this.getOffsetX(ctx.measureText(line).width)
+    const getFontX = (font: FontItemType, line: string) => {
+      return this.getOffsetX(ctx.measureText(line).width) + this.getLength(font.left, shortSide)
     }
     // 计算文字纵坐标
     const getFontY = (font: FontItemType, height: number, lineIndex: number) => {
       // 优先使用字体行高, 要么使用默认行高, 其次使用字体大小, 否则使用默认字体大小
       const lineHeight = font.lineHeight || _defaultStyle.lineHeight || font.fontSize || _defaultStyle.fontSize
-      return this.getHeight(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)
+      return this.getLength(font.top, height) + (lineIndex + 1) * this.getLength(lineHeight)
     }
     ctx.save()
     // 绘制prizes奖品区域
     this.prizes.forEach((prize, prizeIndex) => {
       // 计算当前奖品区域中间坐标点
-      let currMiddleDeg = start + prizeIndex * this.prizeRadian
+      let currMiddleDeg = start + prizeIndex * this.prizeAng
       // 奖品区域可见高度
       let prizeHeight = this.prizeRadius - this.maxBtnRadius
       // 绘制背景
@@ -331,8 +332,8 @@ export default class LuckyWheel extends Lucky {
         ctx.fillStyle = background
         fanShapedByArc(
           ctx, this.maxBtnRadius, this.prizeRadius,
-          currMiddleDeg - this.prizeRadian / 2,
-          currMiddleDeg + this.prizeRadian / 2,
+          currMiddleDeg - this.prizeAng / 2,
+          currMiddleDeg + this.prizeAng / 2,
           this.getLength(_defaultConfig.gutter),
         )
         ctx.fill()
@@ -349,10 +350,13 @@ export default class LuckyWheel extends Lucky {
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(
           prizeImg,
           imgInfo,
-          this.prizeRadian * this.prizeRadius,
+          this.prizeAng * this.prizeRadius,
           prizeHeight
         )
-        const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, prizeHeight)]
+        const [xAxis, yAxis] = [
+          this.getOffsetX(trueWidth) + this.getLength(imgInfo.left, shortSide),
+          this.getLength(imgInfo.top, prizeHeight)
+        ]
         this.drawImage(ctx, prizeImg, xAxis, yAxis, trueWidth, trueHeight)
       })
       // 逐行绘制文字
@@ -361,7 +365,7 @@ export default class LuckyWheel extends Lucky {
         const fontWeight = font.fontWeight || _defaultStyle.fontWeight
         const fontSize = this.getLength(font.fontSize || _defaultStyle.fontSize)
         const fontStyle = font.fontStyle || _defaultStyle.fontStyle
-        const wordWrap = Object.prototype.hasOwnProperty.call(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
+        const wordWrap = has(font, 'wordWrap') ? font.wordWrap : _defaultStyle.wordWrap
         const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit
         const lineClamp = font.lineClamp || _defaultStyle.lineClamp
         ctx.fillStyle = fontColor
@@ -370,18 +374,18 @@ export default class LuckyWheel extends Lucky {
         if (wordWrap) {
           lines = splitText(ctx, removeEnter(text), (lines) => {
             // 三角形临边
-            const adjacentSides = this.prizeRadius - getFontY(font, prizeHeight, lines.length)
+            const adjacentSide = this.prizeRadius - getFontY(font, prizeHeight, lines.length)
             // 三角形短边
-            const shortSide = adjacentSides * Math.tan(this.prizeRadian / 2)
+            const shortSide = adjacentSide * Math.tan(this.prizeAng / 2)
             // 最大宽度
             let maxWidth = shortSide * 2 - this.getLength(_defaultConfig.gutter)
-            return this.getWidth(lengthLimit, maxWidth)
+            return this.getLength(lengthLimit, maxWidth)
           }, lineClamp)
         } else {
           lines = text.split('\n')
         }
         lines.filter(line => !!line).forEach((line, lineIndex) => {
-          ctx.fillText(line, getFontX(line), getFontY(font, prizeHeight, lineIndex))
+          ctx.fillText(line, getFontX(font, line), getFontY(font, prizeHeight, lineIndex))
         })
       })
       // 修正旋转角度和原点坐标
@@ -391,7 +395,7 @@ export default class LuckyWheel extends Lucky {
     ctx.restore()
     // 绘制按钮
     this.buttons.forEach((btn, btnIndex) => {
-      let radius = this.getHeight(btn.radius, this.prizeRadius)
+      let radius = this.getLength(btn.radius, this.prizeRadius)
       // 绘制背景颜色
       this.maxBtnRadius = Math.max(this.maxBtnRadius, radius)
       if (hasBackground(btn.background)) {
@@ -415,7 +419,7 @@ export default class LuckyWheel extends Lucky {
         const btnImg = this.ImageCache.get(imgInfo.src)
         if (!btnImg) return
         const [trueWidth, trueHeight] = this.computedWidthAndHeight(btnImg, imgInfo, radius * 2, radius * 2)
-        const [xAxis, yAxis] = [this.getOffsetX(trueWidth), this.getHeight(imgInfo.top, radius)]
+        const [xAxis, yAxis] = [this.getOffsetX(trueWidth) + this.getLength(imgInfo.left, radius), this.getLength(imgInfo.top, radius)]
         this.drawImage(ctx, btnImg, xAxis, yAxis, trueWidth, trueHeight)
       })
       // 绘制按钮文字
@@ -427,7 +431,7 @@ export default class LuckyWheel extends Lucky {
         ctx.fillStyle = fontColor
         ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`
         String(font.text).split('\n').forEach((line, lineIndex) => {
-          ctx.fillText(line, getFontX(line), getFontY(font, radius, lineIndex))
+          ctx.fillText(line, getFontX(font, line), getFontY(font, radius, lineIndex))
         })
       })
     })
