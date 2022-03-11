@@ -127,19 +127,19 @@ export default {
   },
   watch: {
     cols (newData) {
-      this.myLucky.cols = newData
+      this.myLucky && (this.myLucky.cols = newData)
     },
     rows (newData) {
-      this.myLucky.rows = newData
+      this.myLucky && (this.myLucky.rows = newData)
     },
     blocks (newData) {
-      this.myLucky.blocks = newData
+      this.myLucky && (this.myLucky.blocks = newData)
     },
     prizes (newData) {
-      this.myLucky.prizes = newData
+      this.myLucky && (this.myLucky.prizes = newData)
     },
     buttons (newData) {
-      this.myLucky.buttons = newData
+      this.myLucky && (this.myLucky.buttons = newData)
     },
   },
   mounted () {

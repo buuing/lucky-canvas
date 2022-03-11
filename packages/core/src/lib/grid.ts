@@ -349,9 +349,9 @@ export default class LuckyGrid extends Lucky {
       const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block)
       const r = block.borderRadius ? this.getLength(block.borderRadius) : 0
       // 绘制边框
-      const background = block.background || _defaultStyle.background
+      const background = block.background
       if (hasBackground(background)) {
-        ctx.fillStyle = this.handleBackground(x, y, w, h, background)
+        ctx.fillStyle = this.handleBackground(x, y, w, h, background!)
         roundRectByArc(ctx, x, y, w, h, r)
         ctx.fill()
       }

@@ -84,13 +84,13 @@ export default {
   },
   watch: {
     blocks (newData) {
-      this.myLucky.blocks = newData
+      this.myLucky && (this.myLucky.blocks = newData)
     },
     prizes (newData) {
-      this.myLucky.prizes = newData
+      this.myLucky && (this.myLucky.prizes = newData)
     },
     slots (newData) {
-      this.myLucky.slots = newData
+      this.myLucky && (this.myLucky.slots = newData)
     },
   },
   mounted () {
