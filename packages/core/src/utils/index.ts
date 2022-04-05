@@ -68,9 +68,10 @@ export const hasBackground = (color: string | undefined | null): boolean => {
  * @return { object } block 边框信息
  */
 export const computePadding = (
-  block: { padding?: string }
+  block: { padding?: string },
+  getLength: Function
 ): [number, number, number, number] => {
-  let padding = block.padding?.replace(/px/g, '').split(' ').map(n => ~~n) || [0],
+  let padding = block.padding?.split(' ').map(n => getLength(n)) || [0],
     paddingTop = 0,
     paddingBottom = 0,
     paddingLeft = 0,
@@ -99,7 +100,7 @@ export const computePadding = (
   for (let key in res) {
     // 是否含有这个属性, 并且是数字或字符串
     res[key] = has(block, key) && isExpectType(block[key], 'string', 'number')
-      ? ~~String(block[key]).replace(/px/g, '')
+      ? getLength(block[key])
       : res[key]
   }
   return [paddingTop, paddingBottom, paddingLeft, paddingRight]

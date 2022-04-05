@@ -346,7 +346,7 @@ export default class LuckyGrid extends Lucky {
     })
     // 计算获取奖品区域的几何信息
     this.prizeArea = this.blocks.reduce(({x, y, w, h}, block, blockIndex) => {
-      const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block)
+      const [paddingTop, paddingBottom, paddingLeft, paddingRight] = computePadding(block, this.getLength.bind(this))
       const r = block.borderRadius ? this.getLength(block.borderRadius) : 0
       // 绘制边框
       const background = block.background

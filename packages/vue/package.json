@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/vue",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "一个支持 vue2 / vue3 的（大转盘 / 九宫格 / 老虎机）luckydraw 抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -32,7 +32,7 @@
   "homepage": "https://100px.net",
   "dependencies": {
     "@vue/composition-api": "^1.0.0",
-    "lucky-canvas": "^1.7.20",
+    "lucky-canvas": "^1.7.21",
     "vue-demi": "^0.7.4"
   },
   "peerDependencies": {

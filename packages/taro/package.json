@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/taro",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "基于 taro 实现的大转盘 / 九宫格 / 老虎机抽奖插件",
   "main": "index.js",
   "scripts": {
