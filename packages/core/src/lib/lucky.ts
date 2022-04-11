@@ -90,7 +90,7 @@ export default class Lucky {
   /**
    * 初始化方法
    */
-   protected initLucky () {
+  protected initLucky () {
     this.resize()
     if (!this.boxWidth || !this.boxHeight) {
       return console.error('无法获取到宽度或高度')
@@ -260,7 +260,13 @@ export default class Lucky {
       if (rectInfo.length === 8) {
         rectInfo = rectInfo.map((val, index) => index < 4 ? val! * dpr : val) as Tuple<number, 8>
       }
-      return ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
+      // 尝试捕获错误
+      try {
+        ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
+      } catch (err) {
+        // TODO: safari浏览器下, init() 会出现奇怪的报错 [IndexSizeError: The index is not in the allowed range]
+        // console.log(err)
+      }
     }
   }
 
