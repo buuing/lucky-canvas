@@ -264,7 +264,11 @@ export default class Lucky {
       try {
         ctx.drawImage(drawImg, ...rectInfo as Tuple<number, 8>)
       } catch (err) {
-        // TODO: safari浏览器下, init() 会出现奇怪的报错 [IndexSizeError: The index is not in the allowed range]
+        /**
+         * TODO: safari浏览器下, init() 会出现奇怪的报错
+         * IndexSizeError: The index is not in the allowed range
+         * 但是这个报错并不影响实际的绘制, 目前先放一放, 等待有缘人
+         */
         // console.log(err)
       }
     }
