@@ -4,13 +4,9 @@ import { LuckyWheel, LuckyGrid, SlotMachine } from 'lucky-canvas';
 declare const _default$3: vue_demi.DefineComponent<{
     width: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     height: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     blocks: {
         type: ArrayConstructor;
@@ -51,11 +47,12 @@ declare const _default$3: vue_demi.DefineComponent<{
     blocks: unknown[];
     prizes: unknown[];
     buttons: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
-} & {}> & {
+} & {
+    width?: string | number | undefined;
+    height?: string | number | undefined;
+}> & {
     onStart?: ((...args: any[]) => any) | undefined;
     onEnd?: ((...args: any[]) => any) | undefined;
     onSuccess?: ((...args: any[]) => any) | undefined;
@@ -65,8 +62,6 @@ declare const _default$3: vue_demi.DefineComponent<{
     blocks: unknown[];
     prizes: unknown[];
     buttons: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
 }>;
@@ -74,13 +69,9 @@ declare const _default$3: vue_demi.DefineComponent<{
 declare const _default$2: vue_demi.DefineComponent<{
     width: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     height: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     cols: {
         type: (StringConstructor | NumberConstructor)[];
@@ -142,13 +133,13 @@ declare const _default$2: vue_demi.DefineComponent<{
     blocks: unknown[];
     prizes: unknown[];
     buttons: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     activeStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
 } & {
     button?: Record<string, any> | undefined;
+    width?: string | number | undefined;
+    height?: string | number | undefined;
 }> & {
     onStart?: ((...args: any[]) => any) | undefined;
     onEnd?: ((...args: any[]) => any) | undefined;
@@ -161,8 +152,6 @@ declare const _default$2: vue_demi.DefineComponent<{
     blocks: unknown[];
     prizes: unknown[];
     buttons: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     activeStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
@@ -171,13 +160,9 @@ declare const _default$2: vue_demi.DefineComponent<{
 declare const _default$1: vue_demi.DefineComponent<{
     width: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     height: {
         type: (StringConstructor | NumberConstructor)[];
-        default: string;
-        require: boolean;
     };
     blocks: {
         type: ArrayConstructor;
@@ -218,16 +203,15 @@ declare const _default$1: vue_demi.DefineComponent<{
     blocks: unknown[];
     slots: unknown[];
     prizes: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
-} & {}>, {
+} & {
+    width?: string | number | undefined;
+    height?: string | number | undefined;
+}>, {
     blocks: unknown[];
     slots: unknown[];
     prizes: unknown[];
-    width: string | number;
-    height: string | number;
     defaultStyle: Record<string, any>;
     defaultConfig: Record<string, any>;
 }>;

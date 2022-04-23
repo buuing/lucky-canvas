@@ -9,13 +9,9 @@ export default defineComponent({
   props: {
     width: {
       type: [String, Number],
-      default: '300px',
-      require: true
     },
     height: {
       type: [String, Number],
-      default: '300px',
-      require: true
     },
     cols: {
       type: [String, Number],

@@ -120,8 +120,8 @@ export default class LuckyGrid extends Lucky {
    * @param data
    */
   private initData (data: LuckyGridConfig): void {
-    this.$set(this, 'width', data.width || '300px')
-    this.$set(this, 'height', data.height || '300px')
+    this.$set(this, 'width', data.width)
+    this.$set(this, 'height', data.height)
     this.$set(this, 'rows', Number(data.rows) || 3)
     this.$set(this, 'cols', Number(data.cols) || 3)
     this.$set(this, 'blocks', data.blocks || [])

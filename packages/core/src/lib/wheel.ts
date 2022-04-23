@@ -106,8 +106,8 @@ export default class LuckyWheel extends Lucky {
    * @param data
    */
   private initData (data: LuckyWheelConfig): void {
-    this.$set(this, 'width', data.width || '300px')
-    this.$set(this, 'height', data.height || '300px')
+    this.$set(this, 'width', data.width)
+    this.$set(this, 'height', data.height)
     this.$set(this, 'blocks', data.blocks || [])
     this.$set(this, 'prizes', data.prizes || [])
     this.$set(this, 'buttons', data.buttons || [])
