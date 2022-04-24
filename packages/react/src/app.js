@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Wheel from './luckyWheel-demo';
-import Grid from './luckyGrid-demo';
-import Slot from './slot-demo';
+import LuckyWheel from './demo/LuckyWheel';
+import LuckyGrid from './demo/LuckyGrid';
+import SlotMachine from './demo/SlotMachine';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Wheel />
-    <Grid />
-    <Slot />
+    <LuckyWheel />
+    {/* <LuckyGrid /> */}
+    {/* <SlotMachine /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

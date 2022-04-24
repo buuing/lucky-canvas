@@ -1,4 +1,4 @@
-import SlotMachine from './components/SlotMachine.js'
+import SlotMachine from '../components/SlotMachine.js'
 import React from 'react'
 
 export default class SlotDemo extends React.Component {

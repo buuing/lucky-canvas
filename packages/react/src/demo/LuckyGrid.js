@@ -1,4 +1,4 @@
-import LuckyGrid from './components/LuckyGrid.js'
+import LuckyGrid from '../components/LuckyGrid.js'
 import React from 'react'
 
 export default class GridDemo extends React.Component {
