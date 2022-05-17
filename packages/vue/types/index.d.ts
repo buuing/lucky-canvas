@@ -29,7 +29,7 @@ declare const _default$3: vue_demi.DefineComponent<{
         default: () => {};
     };
 }, unknown, {
-    $lucky: LuckyWheel | null;
+    lucky: LuckyWheel | null;
 }, {}, {
     initLucky(): void;
     init(): void;
@@ -109,7 +109,7 @@ declare const _default$2: vue_demi.DefineComponent<{
         default: () => {};
     };
 }, unknown, {
-    $lucky: LuckyGrid | null;
+    lucky: LuckyGrid | null;
 }, {}, {
     initLucky(): void;
     init(): void;
@@ -185,7 +185,7 @@ declare const _default$1: vue_demi.DefineComponent<{
         default: () => {};
     };
 }, unknown, {
-    $lucky: SlotMachine | null;
+    lucky: SlotMachine | null;
 }, {}, {
     initLucky(): void;
     init(): void;

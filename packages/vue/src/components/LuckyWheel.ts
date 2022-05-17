@@ -43,18 +43,18 @@ export default defineComponent({
   ],
   watch: {
     blocks (newData, oldData) {
-      this.$lucky && ((this.$lucky as any).blocks = newData)
+      this.lucky && ((this.lucky as any).blocks = newData)
     },
     prizes (newData, oldData) {
-      this.$lucky && ((this.$lucky as any).prizes = newData)
+      this.lucky && ((this.lucky as any).prizes = newData)
     },
     buttons (newData, oldData) {
-      this.$lucky && ((this.$lucky as any).buttons = newData)
+      this.lucky && ((this.lucky as any).buttons = newData)
     },
   },
   data() {
     return {
-      $lucky: null as LuckyWheel | null,
+      lucky: null as LuckyWheel | null,
     };
   },
   mounted () {
@@ -75,7 +75,7 @@ export default defineComponent({
   },
   methods: {
     initLucky () {
-      this.$lucky = new LuckyWheel({
+      this.lucky = new LuckyWheel({
         flag: 'WEB',
         width: String(this.width),
         height: String(this.height),
@@ -96,20 +96,20 @@ export default defineComponent({
       })
     },
     init () {
-      this.$lucky && this.$lucky.init()
+      this.lucky && this.lucky.init()
     },
     /**
      * play方法可以让抽奖开始旋转
      */
     play () {
-      this.$lucky?.play()
+      this.lucky?.play()
     },
     /**
      * stop方法可以传递一个中奖索引, 来停止游戏
      * @param index 中奖索引
      */
     stop (index?: number) {
-      this.$lucky?.stop(index)
+      this.lucky?.stop(index)
     },
   },
   render() {
