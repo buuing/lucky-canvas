@@ -14,19 +14,20 @@ Component({
     end: { type: null, value: () => {} },
   },
   data: {
+    lucky: null,
     isShow: false,
     luckyImg: '',
     showCanvas: true,
   },
   observers: {
     'blocks.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.blocks = newData)
+      this.lucky && (this.lucky.blocks = newData)
     },
     'prizes.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.prizes = newData)
+      this.lucky && (this.lucky.prizes = newData)
     },
     'buttons.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.buttons = newData)
+      this.lucky && (this.lucky.buttons = newData)
     },
   },
   ready() {
@@ -43,7 +44,7 @@ Component({
       canvas.width = res[0].width * dpr
       canvas.height = res[0].height * dpr
       ctx.scale(dpr, dpr)
-      this.$lucky = new LuckyWheel({
+      this.lucky = new LuckyWheel({
         flag: 'MP-WX',
         ctx,
         dpr,
@@ -66,7 +67,7 @@ Component({
         },
         afterStart: () => {
           // 隐藏图片并显示canvas
-          this.$lucky.draw()
+          this.lucky.draw()
           this.setData({
             luckyImg: '',
             showCanvas: true
@@ -100,7 +101,7 @@ Component({
     },
     luckyImgLoad() {
       this.setData({ showCanvas: false })
-      this.$lucky.clearCanvas()
+      this.lucky.clearCanvas()
     },
     handleClickOfImg(e) {
       const { clientX: x, clientY: y } = e.changedTouches[0]
@@ -118,19 +119,19 @@ Component({
     toPlay(x, y) {
       const ctx = this.ctx
       ctx.beginPath()
-      ctx.arc(0, 0, this.$lucky.maxBtnRadius, 0, Math.PI * 2, false)
+      ctx.arc(0, 0, this.lucky.maxBtnRadius, 0, Math.PI * 2, false)
       if (!ctx.isPointInPath(x * this.dpr, y * this.dpr)) return
       // 触发抽奖逻辑
-      this.$lucky.startCallback()
+      this.lucky.startCallback()
     },
     init (...rest) {
-      this.$lucky.init(...rest)
+      this.lucky.init(...rest)
     },
     play(...rest) {
-      this.$lucky.play(...rest)
+      this.lucky.play(...rest)
     },
     stop(...rest) {
-      this.$lucky.stop(...rest)
+      this.lucky.stop(...rest)
     },
   },
 })

@@ -13,19 +13,20 @@ Component({
     end: { type: null, value: () => {} },
   },
   data: {
+    lucky: null,
     isShow: false,
     luckyImg: '',
     showCanvas: true,
   },
   observers: {
     'blocks.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.blocks = newData)
+      this.lucky && (this.lucky.blocks = newData)
     },
     'prizes.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.prizes = newData)
+      this.lucky && (this.lucky.prizes = newData)
     },
     'slots.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.slots = newData)
+      this.lucky && (this.lucky.slots = newData)
     },
   },
   ready() {
@@ -42,7 +43,7 @@ Component({
       canvas.width = res[0].width * dpr
       canvas.height = res[0].height * dpr
       ctx.scale(dpr, dpr)
-      this.$lucky = new SlotMachine({
+      this.lucky = new SlotMachine({
         flag: 'MP-WX',
         ctx,
         dpr,
@@ -55,7 +56,7 @@ Component({
         unitFunc: (num, unit) => changeUnits(num + unit),
         afterStart: () => {
           // 隐藏图片并显示canvas
-          this.$lucky.draw()
+          this.lucky.draw()
           this.setData({
             luckyImg: '',
             showCanvas: true
@@ -88,16 +89,16 @@ Component({
     },
     luckyImgLoad() {
       this.setData({ showCanvas: false })
-      this.$lucky.clearCanvas()
+      this.lucky.clearCanvas()
     },
     init (...rest) {
-      this.$lucky.init(...rest)
+      this.lucky.init(...rest)
     },
     play(...rest) {
-      this.$lucky.play(...rest)
+      this.lucky.play(...rest)
     },
     stop(...rest) {
-      this.$lucky.stop(...rest)
+      this.lucky.stop(...rest)
     },
   },
 })

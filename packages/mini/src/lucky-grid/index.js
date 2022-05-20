@@ -17,16 +17,17 @@ Component({
     end: { type: null, value: () => {} },
   },
   data: {
+    lucky: null,
     isShow: false,
     luckyImg: '',
     showCanvas: true,
   },
   observers: {
     'prizes.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.prizes = newData)
+      this.lucky && (this.lucky.prizes = newData)
     },
     'buttons.**': function (newData, oldData) {
-      this.$lucky && (this.$lucky.buttons = newData)
+      this.lucky && (this.lucky.buttons = newData)
     },
   },
   ready() {
@@ -44,7 +45,7 @@ Component({
       canvas.width = res[0].width * dpr
       canvas.height = res[0].height * dpr
       ctx.scale(dpr, dpr)
-      this.$lucky = new LuckyGrid({
+      this.lucky = new LuckyGrid({
         flag: 'MP-WX',
         ctx,
         dpr,
@@ -58,7 +59,7 @@ Component({
         unitFunc: (num, unit) => changeUnits(num + unit),
         afterStart: () => {
           // 隐藏图片并显示canvas
-          this.$lucky.draw()
+          this.lucky.draw()
           this.setData({
             luckyImg: '',
             showCanvas: true
@@ -100,7 +101,7 @@ Component({
     },
     luckyImgLoad() {
       this.setData({ showCanvas: false })
-      this.$lucky.clearCanvas()
+      this.lucky.clearCanvas()
     },
     handleClickOfImg(e) {
       const { clientX: x, clientY: y } = e.changedTouches[0]
@@ -120,7 +121,7 @@ Component({
       this.data.buttons.forEach(btn => {
         if (!btn) return
         ctx.beginPath()
-        ctx.rect(...this.$lucky.getGeometricProperty([
+        ctx.rect(...this.lucky.getGeometricProperty([
           btn.x,
           btn.y,
           btn.col || 1,
@@ -128,17 +129,17 @@ Component({
         ]))
         if (!ctx.isPointInPath(x * this.dpr, y * this.dpr)) return
         // 触发抽奖逻辑
-        this.$lucky.startCallback()
+        this.lucky.startCallback()
       })
     },
     init (...rest) {
-      this.$lucky.init(...rest)
+      this.lucky.init(...rest)
     },
     play(...rest) {
-      this.$lucky.play(...rest)
+      this.lucky.play(...rest)
     },
     stop(...rest) {
-      this.$lucky.stop(...rest)
+      this.lucky.stop(...rest)
     },
   },
 })

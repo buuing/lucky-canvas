@@ -1,0 +1,16 @@
+<view class="box">
+  <view>
+    <slot-machine
+      class="my-lucky"
+      id="slot-machine"
+      width="600rpx"
+      height="600rpx"
+      blocks="{{blocks}}"
+      prizes="{{prizes}}"
+      slots="{{slots}}"
+      bindend="handleEnd"
+    />
+    <view bindtouchstart="handleStart">开始111</view>
+    <view class="mask" wx:if="{{maskShow}}" bindtouchstart="maskHidden"></view>
+  </view>
+</view>
