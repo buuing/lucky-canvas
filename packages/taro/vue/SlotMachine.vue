@@ -1,5 +1,5 @@
 <template>
-	<view class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
+  <view class="lucky-box" :style="{ width: boxWidth + 'px', height: boxHeight + 'px' }">
     <canvas
       type="2d"
       class="lucky-canvas"

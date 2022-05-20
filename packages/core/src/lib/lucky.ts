@@ -251,11 +251,11 @@ export default class Lucky {
       // 如果传入了未知的标识
       return console.error('意料之外的 flag, 该平台尚未兼容!')
     }
-    if (drawImg['canvas']) {
-			const _ctx = drawImg['canvas'].getContext('2d')
+    const miniProgramOffCtx = (drawImg['canvas'] || drawImg).getContext?.('2d')
+    if (miniProgramOffCtx) {
       rectInfo = rectInfo.map(val => val! * dpr) as Tuple<number, 8>
-			const temp = _ctx.getImageData(...rectInfo.slice(0, 4))
-			ctx.putImageData(temp, ...(rectInfo.slice(4, 6) as Tuple<number, 2>))
+      const temp = miniProgramOffCtx.getImageData(...rectInfo.slice(0, 4))
+      ctx.putImageData(temp, ...(rectInfo.slice(4, 6) as Tuple<number, 2>))
     } else {
       if (rectInfo.length === 8) {
         rectInfo = rectInfo.map((val, index) => index < 4 ? val! * dpr : val) as Tuple<number, 8>
