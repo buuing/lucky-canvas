@@ -61,11 +61,16 @@
     <td align="center"><a href="https://github.com/Eaoncan" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/70514533?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/Haoz03" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18543217?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/theozhang32" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/92575976?v=4"></a><div><span title="修复bug">🛠</span></div></td>
+    <td align="center"><a href="https://github.com/pointline" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26851754?v=4"></a><div><span title="修复bug">🛠</span></div></td>
     <td align="center"><a href="https://github.com/saltedfishDing" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/26900681?v=4"></a><div><span title="维护文档">📚</span></div></td>
     <td align="center"><a href="https://github.com/igxm" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/32808955?v=4"></a><div><span title="维护文档">📚</span></div></td>
     <td align="center"><a href="https://github.com/nanjing910823" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/18729086?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
     <td align="center"><a href="https://github.com/fatcat712" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/60590060?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
     <td align="center"><a href="https://github.com/FlowerFestival" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/23180446?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+    <td align="center"><a href="https://github.com/yang302" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/20217508?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/ywymoshi" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/46644748?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
   </tr>
 </table>
 
@@ -75,6 +80,19 @@
 
 **如果您觉得这个项目还不错, 可以在 [Github](https://github.com/buuing/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ☜)**
 
+<br />
+
+## 问题反馈
+
+<img align="left" width="180" src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/pay.png" />
+
+- Bug 反馈请直接去 Github 上面提 Issues，我会实时收到邮件提醒前去查看
+- **如果是小白需要技术指导的话, 左边是我的赞赏码, 备注好你的微信号, 我看到后会主动加你**
+- 但如果是因为我文档没写清楚，或者是插件本身的bug，导致你无法正常使用的话，赞赏全额返还
+
+<hr />
+
+> **`注好你的微信号!`** **`微信看不到赞赏人的信息`** **`所以你必须在备注里写上`**
 
 <br />
 
