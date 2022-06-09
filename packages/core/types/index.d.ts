@@ -116,6 +116,7 @@ declare class Lucky {
      * 从 window 对象上获取一些方法
      */
     private initWindowFunction;
+    isWeb(): boolean;
     /**
      * 异步加载图片并返回图片的几何信息
      * @param src 图片路径

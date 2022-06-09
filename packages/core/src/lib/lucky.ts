@@ -202,6 +202,10 @@ export default class Lucky {
     }
   }
 
+  public isWeb () {
+    return ['WEB', 'UNI-H5', 'TARO-H5'].includes(this.config.flag)
+  }
+
   /**
    * 异步加载图片并返回图片的几何信息
    * @param src 图片路径
@@ -252,7 +256,7 @@ export default class Lucky {
       return console.error('意料之外的 flag, 该平台尚未兼容!')
     }
     const miniProgramOffCtx = (drawImg['canvas'] || drawImg).getContext?.('2d')
-    if (miniProgramOffCtx) {
+    if (miniProgramOffCtx && !this.isWeb()) {
       rectInfo = rectInfo.map(val => val! * dpr) as Tuple<number, 8>
       const temp = miniProgramOffCtx.getImageData(...rectInfo.slice(0, 4))
       ctx.putImageData(temp, ...(rectInfo.slice(4, 6) as Tuple<number, 2>))
