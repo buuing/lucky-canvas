@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png" width="128" alt="logo" />
+  <img src="https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
   <p>一个基于 JavaScript 的跨平台 ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件</p>
   <p>
@@ -84,7 +84,7 @@
 
 ## 问题反馈
 
-<img align="left" width="180" src="https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/pay.png" />
+<img align="left" width="180" src="https://unpkg.com/buuing@0.0.1/imgs/pay.png" />
 
 - Bug 反馈请直接去 Github 上面提 Issues，我会实时收到邮件提醒前去查看
 - **如果是小白需要技术指导的话, 左边是我的赞赏码, 备注好你的微信号, 我看到后会主动加你**

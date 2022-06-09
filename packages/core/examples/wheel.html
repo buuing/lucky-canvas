@@ -25,29 +25,34 @@
     <button onclick="myLucky.stop(1)">stop(1)</button>
     <button onclick="myLucky.stop(-1)">stop(-1)</button>
     <button onclick="myLucky.init()">init()</button>
+    <br />
+    <button onclick="test1()">test1()</button>
     <script src="../dist/index.umd.js"></script>
     <script>
+      function test1() {
+        myLucky.defaultStyle.background = '#ddd'
+      }
       const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
         width: '200px',
         height: '200px',
-        blocks: [{ padding: '10px', background: '#869cfa' }],
+        blocks: [{ padding: '1px', background: '#ccc' }],
         prizes: [
-          { fonts: [{ text: '0', top: '0%', left: '49%' }], background: '#e9e8fe' },
-          { fonts: [{ text: '1', top: '10%' }], background: '#b8c5f2' },
-          { fonts: [{ text: '2', top: '10%' }], background: '#e9e8fe' },
-          { fonts: [{ text: '3', top: '10%' }], background: '#b8c5f2' },
-          { fonts: [{ text: '4', top: '10%' }], background: '#e9e8fe' },
-          { fonts: [{ text: '5', top: '10%' }], background: '#b8c5f2' },
+          { fonts: [{ text: '0', top: '0%', left: '49%' }],  },
+          { fonts: [{ text: '1', top: '10%' }] },
+          { fonts: [{ text: '2', top: '10%' }] },
+          { fonts: [{ text: '3', top: '10%' }] },
+          { fonts: [{ text: '4', top: '10%' }] },
+          { fonts: [{ text: '5', top: '10%' }] },
         ],
         buttons: [
-          { radius: '50%', background: '#617df2' },
-          { radius: '45%', background: '#afc8ff' },
-          {
-            radius: '40%', background: '#869cfa',
-            pointer: true,
-            fonts: [{ text: '开始\n抽奖', top: '-20px' }]
-          },
+          { radius: '50%', background: '#fff' },
         ],
+        defaultStyle: {
+          background: '#fff'
+        },
+        defaultConfig: {
+          gutter: 1
+        },
         start () {
           myLucky.play()
           setTimeout(() => {

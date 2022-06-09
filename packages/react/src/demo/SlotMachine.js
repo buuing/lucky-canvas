@@ -7,14 +7,14 @@ export default class SlotDemo extends React.Component {
     this.myLucky = React.createRef()
 
     const data = [
-        { name: '1元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '100元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '0.5元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '2元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '10元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '50元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '0.3元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' },
-        { name: '5元红包', img: 'https://cdn.jsdelivr.net/gh/buuing/cdn/imgs/lucky-canvas.png' }
+        { name: '1元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '100元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '0.5元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '2元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '10元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '50元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '0.3元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' },
+        { name: '5元红包', img: 'https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png' }
       ]
       let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
       const prizes = []
