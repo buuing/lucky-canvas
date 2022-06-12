@@ -11,7 +11,7 @@ export default class SlotMachine extends React.Component {
     const { props } = this
     this.myLucky.current.setAttribute('package', `${name}@${version}`)
     try {
-      this.init()
+      this.initLucky()
       props.onSuccess && props.onSuccess()
     } catch (err) {
       props.onError && props.onError(err)
@@ -20,26 +20,26 @@ export default class SlotMachine extends React.Component {
     }
   }
   componentDidUpdate (prevProps) {
-    if (!this.$lucky) return
+    if (!this.lucky) return
     if (this.props.width !== prevProps.width) {
-      this.$lucky.width = this.props.width
+      this.lucky.width = this.props.width
     }
     if (this.props.height !== prevProps.height) {
-      this.$lucky.height = this.props.height
+      this.lucky.height = this.props.height
     }
     if (this.props.blocks !== prevProps.blocks) {
-      this.$lucky.blocks = this.props.blocks
+      this.lucky.blocks = this.props.blocks
     }
     if (this.props.prizes !== prevProps.prizes) {
-      this.$lucky.prizes = this.props.prizes
+      this.lucky.prizes = this.props.prizes
     }
     if (this.props.slots !== prevProps.slots) {
-      this.$lucky.slots = this.props.slots
+      this.lucky.slots = this.props.slots
     }
   }
-  init () {
+  initLucky () {
     const { props } = this
-    this.$lucky = new Slot({
+    this.lucky = new Slot({
       flag: 'WEB',
       divElement: this.myLucky.current
     }, {
@@ -52,11 +52,14 @@ export default class SlotMachine extends React.Component {
       }
     })
   }
+  init (...rest) {
+    this.lucky.init(...rest)
+  }
   play (...rest) {
-    this.$lucky.play(...rest)
+    this.lucky.play(...rest)
   }
   stop (...rest) {
-    this.$lucky.stop(...rest)
+    this.lucky.stop(...rest)
   }
   render () {
     return <div ref={this.myLucky}></div>

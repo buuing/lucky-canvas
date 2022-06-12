@@ -7,8 +7,8 @@ import SlotMachine from './demo/SlotMachine';
 ReactDOM.render(
   <React.StrictMode>
     <LuckyWheel />
-    {/* <LuckyGrid /> */}
-    {/* <SlotMachine /> */}
+    <LuckyGrid />
+    <SlotMachine />
   </React.StrictMode>,
   document.getElementById('root')
 );
