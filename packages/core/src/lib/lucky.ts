@@ -220,6 +220,7 @@ export default class Lucky {
       if (!src) reject(`=> '${info.src}' 不能为空或不合法`)
       if (this.config.flag === 'WEB') {
         let imgObj = new Image()
+        imgObj['crossorigin'] = 'anonymous'
         imgObj.onload = () => resolve(imgObj)
         imgObj.onerror = () => reject(`=> '${info.src}' 图片加载失败`)
         imgObj.src = src
