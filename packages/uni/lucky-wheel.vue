@@ -49,6 +49,7 @@
 <script>
   import { changeUnits, resolveImage, getImage } from './utils.js'
   import { LuckyWheel } from '../../lucky-canvas'
+  let myCanvas
   export default {
     name: 'lucky-wheel',
     data () {
@@ -122,10 +123,10 @@
     methods: {
       async imgBindload (res, name, index, i) {
         const img = this[name][index].imgs[i]
-        resolveImage(img, this.canvas)
+        resolveImage(img, myCanvas)
       },
       getImage () {
-        return getImage.call(this, 'lucky-wheel', this.canvas)
+        return getImage.call(this, 'lucky-wheel', myCanvas)
       },
       hideCanvas () {
         // #ifdef MP
@@ -155,7 +156,7 @@
           // #endif
           if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
           const { node, width, height } = res[0]
-          const canvas = this.canvas = node
+          const canvas = myCanvas = node
           const ctx = this.ctx = canvas.getContext('2d')
           const dpr = this.dpr = uni.getSystemInfoSync().pixelRatio
           // #ifndef H5
