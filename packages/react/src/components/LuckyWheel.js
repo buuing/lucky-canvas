@@ -6,8 +6,13 @@ export default class LuckyWheel extends React.Component {
   constructor (props) {
     super(props)
     this.myLucky = React.createRef()
+    this.lucky = undefined
   }
   componentDidMount () {
+    // 当前已经有实例时，不再进行，解决在`react18 + strictMode`下组件componentDidMount会被触发两次的问题
+    if (this.lucky) {
+      return
+    }
     const { props } = this
     this.myLucky.current.setAttribute('package', `${name}@${version}`)
     try {
