@@ -62,8 +62,7 @@ export type ConfigType = {
   afterStart?: Function
 }
 
-type RequireKey = 'width' | 'height'
-export type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>
+export type UserConfigType = Partial<ConfigType>
 
 export type UniImageType = {
   path: string

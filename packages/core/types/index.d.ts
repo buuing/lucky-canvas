@@ -50,8 +50,7 @@ declare type ConfigType = {
     afterDraw?: Function;
     afterStart?: Function;
 };
-declare type RequireKey = 'width' | 'height';
-declare type UserConfigType = Partial<Omit<ConfigType, RequireKey>> & Required<Pick<ConfigType, RequireKey>>;
+declare type UserConfigType = Partial<ConfigType>;
 declare type Tuple<T, Len extends number, Res extends T[] = []> = Res['length'] extends Len ? Res : Tuple<T, Len, [...Res, T]>;
 
 interface WatchOptType {
