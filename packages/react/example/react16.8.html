@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky-canva-react Demo</title>
+    <script crossorigin src="https://cdn.staticfile.org/react/16.8.0/umd/react.development.js"></script>
+    <script crossorigin src="https://cdn.staticfile.org/react-dom/16.8.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <script src="../dist/index.umd.js"></script>
+    <script type="text/babel">
+
+      function App () {
+        const myLucky = React.useRef();
+        const buttons = [
+          { radius: "40%", background: "#617df2" },
+          { radius: "35%", background: "#afc8ff" },
+          {
+            radius: "30%",
+            background: "#869cfa",
+            pointer: true,
+            fonts: [{ text: "开始", top: "-10px" }],
+          },
+        ];
+        const prizes = [
+          { background: "#e9e8fe", fonts: [{ text: "0" }] },
+          { background: "#b8c5f2", fonts: [{ text: "1" }] },
+          { background: "#e9e8fe", fonts: [{ text: "2" }] },
+          { background: "#b8c5f2", fonts: [{ text: "3" }] },
+          { background: "#e9e8fe", fonts: [{ text: "4" }] },
+          { background: "#b8c5f2", fonts: [{ text: "5" }] },
+        ];
+        function onSuccess() {
+          console.log('success')
+        }
+        function onStart() {
+          myLucky.current.play();
+          setTimeout(() => {
+            const index = (Math.random() * 6) >> 0;
+            myLucky.current.stop(index);
+          }, 2500);
+          console.log('start')
+        }
+        function onEnd() {
+          console.log('end')
+        }
+        return <ReactLuckDraw.LuckyWheel
+          ref={myLucky}
+          width="300px"
+          height="300px"
+          prizes={prizes}
+          buttons={buttons}
+          onSuccess={onSuccess}
+          onStart={onStart}
+          onEnd={onEnd}
+        />
+      }
+        ReactDOM.render(
+          <React.StrictMode><App/></React.StrictMode>,
+          document.getElementById('root')
+        )
+    </script>
+</body>
+</html>
