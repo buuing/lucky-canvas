@@ -1,6 +1,6 @@
 {
   "name": "@lucky-canvas/react",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "react ( 大转盘 / 九宫格 / 老虎机 ) 抽奖插件",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

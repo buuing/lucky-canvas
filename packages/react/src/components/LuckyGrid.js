@@ -13,15 +13,14 @@ export default class LuckyGrid extends React.Component {
     if (this.lucky) {
       return
     }
-    const { props } = this
     this.myLucky.current.setAttribute('package', `${name}@${version}`)
     try {
       this.initLucky()
-      props.onSuccess && props.onSuccess()
+      this.props.onSuccess && this.props.onSuccess()
     } catch (err) {
-      props.onError && props.onError(err)
+      this.props.onError && this.props.onError(err)
     } finally {
-      props.onFinally && props.onFinally(err)
+      this.props.onFinally && this.props.onFinally(err)
     }
   }
   componentDidUpdate (prevProps) {
@@ -49,17 +48,16 @@ export default class LuckyGrid extends React.Component {
     }
   }
   initLucky () {
-    const { props } = this
     this.lucky = new Grid({
       flag: 'WEB',
       divElement: this.myLucky.current
     }, {
-      ...props,
+      ...this.props,
       start: (...rest) => {
-        props.onStart && props.onStart(...rest)
+        this.props.onStart && this.props.onStart(...rest)
       },
       end: (...rest) => {
-        props.onEnd && props.onEnd(...rest)
+        this.props.onEnd && this.props.onEnd(...rest)
       }
     })
   }

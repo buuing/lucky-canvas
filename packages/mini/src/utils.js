@@ -6,6 +6,7 @@ export const rpx2px = (value) => {
 }
 
 export const changeUnits = (value) => {
+  value = String(value)
   return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
     switch (unit) {
       case 'px':
@@ -34,8 +35,8 @@ export function getImage() {
   return new Promise((resolve, reject) => {
     wx.canvasToTempFilePath({
       canvas: this.canvas,
-      success: res => resolve(res),
-      fail: err => reject(err)
+      success: res => resolve(res),
+      fail: err => reject(err)
     })
   })
 }

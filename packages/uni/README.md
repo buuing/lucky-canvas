@@ -136,3 +136,5 @@ export default {
 ---
 
 <font color="blue">作者留言: 为了使我自己保持心情愉悦, 低于5星的提问我用浏览器插件都屏蔽了</font>
+
+<font color="green" size="50">不要通过插件市场赞赏!!!</font>

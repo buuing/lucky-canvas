@@ -8,6 +8,7 @@ export const rpx2px = (value) => {
 }
 
 export const changeUnits = (value) => {
+  value = String(value)
   return Number(value.replace(/^(\-*[0-9.]*)([a-z%]*)$/, (value, num, unit) => {
     switch (unit) {
       case 'px':

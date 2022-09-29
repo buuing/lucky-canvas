@@ -21,7 +21,7 @@ export default {
     {
       file: pkg.jsdelivr,
       format: 'umd',
-      name: 'ReactLuckDraw',
+      name: 'ReactLuckyCanvas',
       sourcemap: true,
       globals: {
         'lucky-canvas': 'LuckyCanvas',
