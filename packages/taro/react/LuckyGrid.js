@@ -201,12 +201,12 @@ export default class LuckyGrid extends React.Component {
         {
           state.btnShow ? <View>
             {
-              state.btns.map((btn, index) => <CoverView className="lucky-grid-btn" key={index} onClick={e => this.toPlay(btn)} style={{
+              state.btns.map((btn, index) => <View className="lucky-grid-btn" key={index} onClick={e => this.toPlay(btn)} style={{
                 top: btn.top + 'px',
                 left: btn.left + 'px',
                 width: btn.width + 'px',
                 height: btn.height + 'px',
-              }}></CoverView>)
+              }}></View>)
             }
           </View> : null
         }
