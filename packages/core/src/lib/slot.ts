@@ -48,6 +48,8 @@ export default class SlotMachine extends Lucky {
   private endScroll: number[] = []  // 最终停止的长度
   private startTime = 0             // 开始游戏的时间
   private endTime = 0               // 开始停止的时间
+  // 默认顺序由 prizes 生成
+  private defaultOrder: number[] = []
   /**
    * 游戏当前的阶段
    * step = 0 时, 游戏尚未开始
@@ -274,15 +276,15 @@ export default class SlotMachine extends Lucky {
     // 计算单一奖品格子的宽度和高度
     const prizesLen = this.prizes.length
     const { cellWidth, cellHeight, widthAndSpacing, heightAndSpacing } = this.displacementWidthOrHeight()
-    const defaultOrder = new Array(prizesLen).fill(void 0).map((v, i) => i)
+    this.defaultOrder = new Array(prizesLen).fill(void 0).map((v, i) => i)
     let maxOrderLen = 0, maxOffWidth = 0, maxOffHeight = 0
     this.slots.forEach((slot, slotIndex) => {
       // 初始化 scroll 的值
       if (this.scroll[slotIndex] === void 0) this.scroll[slotIndex] = 0
       // 如果没有order属性, 就填充prizes
-      slot.order = slot.order || defaultOrder
+      const order = slot.order || this.defaultOrder
       // 计算最大值
-      const currLen = slot.order.length
+      const currLen = order.length
       maxOrderLen = Math.max(maxOrderLen, currLen)
       maxOffWidth = Math.max(maxOffWidth, w + widthAndSpacing * currLen)
       maxOffHeight = Math.max(maxOffHeight, h + heightAndSpacing * currLen)
@@ -296,12 +298,11 @@ export default class SlotMachine extends Lucky {
       const cellY = cellHeight * slotIndex
       let lengthOfCopy = 0
       // 绘制奖品
-      const newPrizes = getSortedArrayByIndex(this.prizes, slot.order!)
+      const newPrizes = getSortedArrayByIndex(this.prizes, slot.order||this.defaultOrder)
       // 如果没有奖品则打断逻辑
       if (!newPrizes.length) return
       newPrizes.forEach((cell, cellIndex) => {
         if (!cell) return
-        const orderIndex = slot.order![cellIndex]
         const prizesX = widthAndSpacing * cellIndex + _defaultConfig.colSpacing / 2
         const prizesY = heightAndSpacing * cellIndex + _defaultConfig.rowSpacing / 2
         const [_x, _y, spacing] = this.displacement(
@@ -427,8 +428,9 @@ export default class SlotMachine extends Lucky {
     if (!this._offscreenCanvas) return
     const { cellWidth, cellHeight, cellAndSpacing, widthAndSpacing, heightAndSpacing } = this
     this.slots.forEach((slot, slotIndex) => {
+      const order = slot.order || this.defaultOrder
       // 绘制临界点
-      const _p = cellAndSpacing * slot.order!.length
+      const _p = cellAndSpacing * order.length
       // 调整奖品垂直居中
       const start = this.displacement(-(h - heightAndSpacing) / 2, -(w - widthAndSpacing) / 2)
       let scroll = this.scroll[slotIndex] + start
@@ -459,7 +461,7 @@ export default class SlotMachine extends Lucky {
     // 记录开始停止的时间戳
     this.endTime = Date.now()
     this.slots.forEach((slot, slotIndex) => {
-      const order = slot.order!
+      const order = slot.order || this.defaultOrder
       if (!order.length) return
       const speed = slot.speed || _defaultConfig.speed
       const direction = slot.direction || _defaultConfig.direction
@@ -534,7 +536,8 @@ export default class SlotMachine extends Lucky {
       let flag = prizeFlag[0]
       for (let i = 0; i < slots.length; i++) {
         const slot = slots[i], currFlag = prizeFlag[i]
-        if (!slot.order?.includes(currFlag) || flag !== currFlag) {
+        const order = slot.order || this.defaultOrder
+        if (!order?.includes(currFlag) || flag !== currFlag) {
           flag = -1
           break
         }
@@ -551,7 +554,7 @@ export default class SlotMachine extends Lucky {
     const endInterval = Date.now() - this.endTime
     // 分别计算对应插槽的加速度
     slots.forEach((slot, slotIndex) => {
-      const order = slot.order
+      const order = slot.order || this.defaultOrder
       if (!order || !order.length) return
       const _p = cellAndSpacing * order.length
       const speed = Math.abs(slot.speed || _defaultConfig.speed)
