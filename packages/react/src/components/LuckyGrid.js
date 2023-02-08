@@ -62,7 +62,7 @@ export default class LuckyGrid extends React.Component {
     })
   }
   init (...rest) {
-    this.$lucky.init(...rest)
+    this.lucky.init(...rest)
   }
   play (...rest) {
     this.lucky.play(...rest)
