@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue-demi'
 import { LuckyGrid } from 'lucky-canvas'
+import { defineComponent } from 'vue-demi'
 import h from "../utils/h-demi"
 // @ts-ignore
 import { name, version } from '../../package.json'
@@ -55,33 +55,34 @@ export default defineComponent({
     'success',
     'error',
     'finally',
+    'change',
   ],
   watch: {
-    cols (newData, oldData) {
+    cols(newData, oldData) {
       this.lucky && ((this.lucky as any).cols = newData)
     },
-    rows (newData, oldData) {
+    rows(newData, oldData) {
       this.lucky && ((this.lucky as any).rows = newData)
     },
-    blocks (newData, oldData) {
+    blocks(newData, oldData) {
       this.lucky && ((this.lucky as any).blocks = newData)
     },
-    prizes (newData, oldData) {
+    prizes(newData, oldData) {
       this.lucky && ((this.lucky as any).prizes = newData)
     },
-    buttons (newData, oldData) {
+    buttons(newData, oldData) {
       this.lucky && ((this.lucky as any).buttons = newData)
     },
-    button (newData, oldData) {
+    button(newData, oldData) {
       this.lucky && ((this.lucky as any).button = newData)
     },
   },
   data() {
     return {
       lucky: null as LuckyGrid | null,
-    };
+    }
   },
-  mounted () {
+  mounted() {
     // 添加版本信息到标签上, 方便定位版本问题
     if (this.$refs.myLucky) {
       const dom = this.$refs.myLucky as HTMLDivElement
@@ -98,7 +99,7 @@ export default defineComponent({
     }
   },
   methods: {
-    initLucky () {
+    initLucky() {
       this.lucky = new LuckyGrid({
         flag: 'WEB',
         width: String(this.width),
@@ -117,22 +118,25 @@ export default defineComponent({
         end: (prize) => {
           this.$emit('end', prize)
         },
+        change: (currentIndex: number) => {
+          this.$emit('change', currentIndex)
+        },
       })
     },
-    init () {
+    init() {
       this.lucky && this.lucky.init()
     },
     /**
      * play方法可以让抽奖开始旋转
      */
-    play () {
+    play() {
       this.lucky?.play()
     },
     /**
      * stop方法可以传递一个中奖索引, 来停止游戏
      * @param index 中奖索引
      */
-    stop (index?: number) {
+    stop(index?: number) {
       this.lucky?.stop(index)
     },
   },
