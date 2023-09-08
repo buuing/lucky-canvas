@@ -16,14 +16,17 @@
     <a href="https://github.com/buuing/lucky-canvas/blob/master/LICENSE" target="_black">
       <img src="https://img.shields.io/github/license/buuing/lucky-canvas?color=%232dce89&logo=github&style=flat-square" alt="license" />
     </a>
+    <a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black">
+      <img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" />
+    </a>
   </p>
 </div>
 
 <div align="center">
 
-|适配框架|npm包|最新版本|npm下载量|CDN使用量|
-| :-: | :-: | :-: | :-: | :-: |
-|`JS` / `JQ`|[lucky-canvas](https://100px.net/usage/js.html)|<img src="https://img.shields.io/npm/v/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/lucky-canvas" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/lucky-canvas/badge" alt="downloads" /></a>|
+|适配框架|npm包|最新版本|npm下载量|
+| :-: | :-: | :-: | :-: |
+|`JS` / `JQ`|[lucky-canvas](https://100px.net/usage/js.html)|<img src="https://img.shields.io/npm/v/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/lucky-canvas" target="_black"><img src="https://img.shields.io/npm/dm/lucky-canvas?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|
 |`Vue`|[@lucky-canvas/vue](https://100px.net/usage/vue.html)|<img src="https://img.shields.io/npm/v/@lucky-canvas/vue?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/@lucky-canvas/vue" target="_black"><img src="https://img.shields.io/npm/dm/@lucky-canvas/vue?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|<a href="https://www.jsdelivr.com/package/npm/@lucky-canvas/vue" target="_black"><img src="https://data.jsdelivr.com/v1/package/npm/@lucky-canvas/vue/badge" alt="downloads" /></a>|
 |`React`|[@lucky-canvas/react](https://100px.net/usage/react.html)|<img src="https://img.shields.io/npm/v/@lucky-canvas/react?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/@lucky-canvas/react" target="_black"><img src="https://img.shields.io/npm/dm/@lucky-canvas/react?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
 |`UniApp`|[@lucky-canvas/uni](https://100px.net/usage/uni.html)|<img src="https://img.shields.io/npm/v/@lucky-canvas/uni?color=%23ffba15&logo=npm&style=flat-square" alt="version" />|<a href="https://www.npmjs.com/package/@lucky-canvas/uni" target="_black"><img src="https://img.shields.io/npm/dm/@lucky-canvas/uni?color=%23ffba15&logo=npm&style=flat-square" alt="downloads" /></a>|-|
