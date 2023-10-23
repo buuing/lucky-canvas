@@ -44,6 +44,7 @@
 
 <script>
 import Taro from '@tarojs/taro'
+import { markRaw } from 'vue'
 import { LuckyWheel as Wheel } from 'lucky-canvas'
 import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
 export default {
@@ -157,7 +158,7 @@ export default {
         }
         if (!res[0] || !res[0].node) return console.error('lucky-canvas 获取不到 canvas 标签')
         const { node, width, height } = res[0]
-        const canvas = this.canvas = node
+        const canvas = this.canvas = markRaw ? markRaw(node) : node
         const ctx = this.ctx = canvas.getContext('2d')
         const dpr = this.dpr = Taro.getSystemInfoSync().pixelRatio
         canvas.width = width * dpr
