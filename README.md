@@ -74,6 +74,7 @@
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/ywymoshi" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/46644748?v=4"></a><div><span title="贡献Demo">🎨</span></div></td>
+    <td align="center"><a href="https://github.com/yyy917172" target="_blank"><img width="50px" src="https://avatars.githubusercontent.com/u/37855143?v=4"></a><div><span title="基础建设">🛰</span></div></td>
   </tr>
 </table>
 
