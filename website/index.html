@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="lucky-canvas：基于 JavaScript 与 Canvas 的大转盘、九宫格和老虎机抽奖组件。"
+    />
+    <title>lucky-canvas 抽奖插件</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="lucky-canvas 首页">lucky-canvas <span>抽奖插件</span></a>
+      <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false">☰</button>
+      <nav class="site-nav" aria-label="主导航">
+        <a class="is-active" href="./">首页</a>
+        <a href="./docs/">文档实验室</a>
+        <a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">JavaScript · Canvas · 跨平台</p>
+            <h1>lucky-canvas</h1>
+            <p class="hero-description">
+              基于 JavaScript 与 Canvas 的大转盘、九宫格、老虎机抽奖组件，用简单配置实现自由定制，快速完成营销活动需求。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="./docs/">开始体验文档实验室</a>
+              <a class="button button-ghost" href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">查看 GitHub</a>
+            </div>
+            <div class="repo-links" aria-label="代码仓库">
+              <a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">GitHub 仓库</a>
+              <span>·</span>
+              <a href="https://gitee.com/ldq404/lucky-canvas" target="_blank" rel="noreferrer">Gitee 镜像</a>
+            </div>
+          </div>
+          <img class="hero-illustration" src="./assets/delivery.svg" alt="lucky-canvas 插画" />
+        </div>
+      </section>
+
+      <section class="features" aria-label="核心能力">
+        <article class="feature-card">
+          <img src="./assets/configure.svg" alt="" />
+          <h2>自由配置</h2>
+          <p>奖品、文字、图片、颜色与按钮均可配置，支持同步或异步抽奖，中奖概率可由前后端控制。</p>
+        </article>
+        <article class="feature-card">
+          <img src="./assets/platforms.svg" alt="" />
+          <h2>多端适配</h2>
+          <p>支持 JS、Vue、React、微信小程序、UniApp、Taro 等环境，并保持一致的使用体验。</p>
+        </article>
+        <article class="feature-card">
+          <img src="./assets/responsive.svg" alt="" />
+          <h2>响应式清晰度</h2>
+          <p>自动根据设备 DPR 调整清晰度，同时支持百分比、rem、rpx 等单位适配不同布局。</p>
+        </article>
+      </section>
+
+      <section class="experiment-callout" id="documentation">
+        <div>
+          <p class="eyebrow">正在构建</p>
+          <h2>把文档变成可实时调试的实验室</h2>
+          <p>调整参数、即时查看抽奖效果、同步生成代码，并可通过链接分享当前配置。</p>
+        </div>
+        <a class="button button-primary" href="./docs/">进入文档实验室</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>本插件完全免费并保持开源，欢迎在 GitHub 点个 Star 支持项目。</p>
+      <p>2019 – <span id="current-year"></span> · <a href="https://github.com/buuing/lucky-canvas/blob/master/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a></p>
+    </footer>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
