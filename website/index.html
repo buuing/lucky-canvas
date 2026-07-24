@@ -3,77 +3,171 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="lucky-canvas：基于 JavaScript 与 Canvas 的大转盘、九宫格和老虎机抽奖组件。"
-    />
+    <meta name="description" content="基于 JavaScript 和 Canvas 的大转盘、九宫格、老虎机抽奖插件。" />
     <title>lucky-canvas 抽奖插件</title>
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="./" aria-label="lucky-canvas 首页">lucky-canvas <span>抽奖插件</span></a>
-      <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false">☰</button>
-      <nav class="site-nav" aria-label="主导航">
-        <a class="is-active" href="./">首页</a>
-        <a href="#documentation">文档实验室</a>
-        <a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">GitHub</a>
-      </nav>
+      <div class="header-inner">
+        <a class="logo" href="./">lucky-canvas 抽奖插件</a>
+        <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false">☰</button>
+        <nav class="site-nav" aria-label="主导航">
+          <a class="is-active" href="./">首页</a>
+          <details class="nav-dropdown">
+            <summary>使用</summary>
+            <div class="dropdown-menu">
+              <a href="#playground">在 JS / TS 中使用</a>
+              <a href="#playground">在 Vue 中使用</a>
+              <a href="#playground">在 React 中使用</a>
+              <a href="#faq">在 微信小程序 中使用</a>
+              <a href="#faq">在 UniApp 中使用</a>
+              <a href="#faq">在 Taro 中使用</a>
+            </div>
+          </details>
+          <details class="nav-dropdown">
+            <summary>文档</summary>
+            <div class="dropdown-menu">
+              <a href="#playground">大转盘 LuckyWheel</a>
+              <a href="#playground">九宫格 LuckyGrid</a>
+              <a href="#playground">老虎机 SlotMachine</a>
+            </div>
+          </details>
+          <details class="nav-dropdown">
+            <summary>示例</summary>
+            <div class="dropdown-menu">
+              <a href="#playground">基础示例</a>
+              <a href="#playground">完整示例</a>
+            </div>
+          </details>
+          <a href="#faq">常见问题</a>
+          <a href="#playground">Playground</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-copy">
-            <p class="eyebrow">JavaScript · Canvas · 跨平台</p>
+    <main class="home-page">
+      <section class="home-banner">
+        <div class="container banner-inner">
+          <div class="banner-copy">
             <h1>lucky-canvas</h1>
-            <p class="hero-description">
-              基于 JavaScript 与 Canvas 的大转盘、九宫格、老虎机抽奖组件，用简单配置实现自由定制，快速完成营销活动需求。
+            <p class="repository-links">
+              <a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">
+                Github 仓库：<img src="https://img.shields.io/github/stars/buuing/lucky-canvas?style=social" height="22" alt="GitHub stars" />
+              </a>
+              <a href="https://gitee.com/ldq404/lucky-canvas/stargazers" target="_blank" rel="noreferrer">
+                码云仓库：<img src="https://gitee.com/ldq404/lucky-canvas/badge/star.svg?theme=dark" height="23" alt="Gitee stars" />
+              </a>
             </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="#documentation">开始体验文档实验室</a>
-              <a class="button button-ghost" href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">查看 GitHub</a>
-            </div>
-            <div class="repo-links" aria-label="代码仓库">
-              <a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">GitHub 仓库</a>
-              <span>·</span>
-              <a href="https://gitee.com/ldq404/lucky-canvas" target="_blank" rel="noreferrer">Gitee 镜像</a>
+            <p class="banner-description">
+              基于 JS + Canvas 实现的【大转盘 &amp; 九宫格 &amp; 老虎机】抽奖，致力于为 WEB 前端提供一个
+              <b class="code">功能强大</b>且<b class="code">专业可靠</b>的营销组件，只需要通过
+              <b class="code">简单配置</b>即可实现<b class="code">自由化定制</b>，帮助你快速的完成产品需求
+            </p>
+          </div>
+          <img class="banner-illustration" src="/assets/delivery.svg" alt="抽奖组件跨端交付插画" />
+        </div>
+      </section>
+
+      <div class="home-content">
+        <section class="container feature-list" aria-label="插件特性">
+          <article class="feature-panel">
+            <img src="/assets/configure.svg" alt="" />
+            <h2>自由配置</h2>
+            <p>奖品 / 文字 / 图片 / 颜色 / 按钮均可自由配置；支持同步 / 异步抽奖；中奖概率前 / 后端可控</p>
+          </article>
+          <article class="feature-panel">
+            <img src="/assets/platforms.svg" alt="" />
+            <h2>多端适配</h2>
+            <p>支持 JS / TS / JQ / Vue / React / 微信小程序 / UniApp / Taro 等；并且多端使用 / 表现形式完全一致</p>
+          </article>
+          <article class="feature-panel">
+            <img src="/assets/responsive.svg" alt="" />
+            <h2>响应式</h2>
+            <p>自动根据设备 dpr 调整清晰度；并支持使用 百分比 / rem / rpx 属性来适配移动端布局</p>
+          </article>
+        </section>
+
+        <section class="container playground-section" id="playground" aria-label="在线演示">
+          <div class="sandbox-toolbar">
+            <span class="sandbox-title">在线演示</span>
+            <span class="sandbox-tabs"><b>HTML</b><span>Vue</span><span>React</span></span>
+          </div>
+          <div class="sandbox-body">
+            <pre><code>const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
+  width: '200px',
+  height: '200px',
+  blocks: [{ padding: '10px', background: '#869cfa' }],
+  prizes: [
+    { background: '#e9e8fe', fonts: [{ text: '0' }] },
+    { background: '#b8c5f2', fonts: [{ text: '1' }] },
+  ]
+})</code></pre>
+            <div class="sandbox-preview" aria-label="大转盘效果预览">
+              <div class="demo-wheel"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><button type="button">开始</button></div>
             </div>
           </div>
-          <img class="hero-illustration" src="/assets/delivery.svg" alt="lucky-canvas 插画" />
-        </div>
-      </section>
+        </section>
 
-      <section class="features" aria-label="核心能力">
-        <article class="feature-card">
-          <img src="/assets/configure.svg" alt="" />
-          <h2>自由配置</h2>
-          <p>奖品、文字、图片、颜色与按钮均可配置，支持同步或异步抽奖，中奖概率可由前后端控制。</p>
-        </article>
-        <article class="feature-card">
-          <img src="/assets/platforms.svg" alt="" />
-          <h2>多端适配</h2>
-          <p>支持 JS、Vue、React、微信小程序、UniApp、Taro 等环境，并保持一致的使用体验。</p>
-        </article>
-        <article class="feature-card">
-          <img src="/assets/responsive.svg" alt="" />
-          <h2>响应式清晰度</h2>
-          <p>自动根据设备 DPR 调整清晰度，同时支持百分比、rem、rpx 等单位适配不同布局。</p>
-        </article>
-      </section>
+        <section class="container content-row join-section">
+          <div class="illustration-wrap"><img src="/assets/Subscribe.svg" alt="加入 lucky-canvas 社区插画" /></div>
+          <div class="text-wrap">
+            <h2>加入我们</h2>
+            <ul class="contribution-list">
+              <li><img src="/assets/core.svg" alt="" /><b>核心开发：</b>实现了重要的功能 &amp; 核心逻辑 &amp; 提交过多次 PR</li>
+              <li><img src="/assets/feat.svg" alt="" /><b>需求优化：</b>参与项目的需求开发，提交 PR 完成合并</li>
+              <li><img src="/assets/base.svg" alt="" /><b>基础建设：</b>完善项目的打包 / 发布流程，优化一些项目构建相关</li>
+              <li><img src="/assets/bug.svg" alt="" /><b>修复 Bug：</b>修复某个可能会导致代码运行的逻辑漏洞</li>
+              <li><img src="/assets/docs.svg" alt="" /><b>维护文档：</b>参与文档的开发 / 维护 / 翻译</li>
+              <li><img src="/assets/demo.svg" alt="" /><b>贡献 Demo：</b>如果你们公司的抽奖 UI 设计图比较好看，可以发给我审核</li>
+            </ul>
+          </div>
+        </section>
 
-      <section class="experiment-callout" id="documentation">
-        <div>
-          <p class="eyebrow">正在构建</p>
-          <h2>把文档变成可实时调试的实验室</h2>
-          <p>调整参数、即时查看抽奖效果、同步生成代码，并可通过链接分享当前配置。</p>
-        </div>
-        <a class="button button-primary" href="#documentation">关注文档实验室</a>
-      </section>
+        <section class="container contributor-section" aria-label="贡献者">
+          <h2>贡献者</h2>
+          <div class="contributors">
+            <a href="https://github.com/buuing" target="_blank" rel="noreferrer"><img src="https://avatars.githubusercontent.com/u/36689704?v=4" alt="buuing" /></a>
+            <a href="https://github.com/httpcheck" target="_blank" rel="noreferrer"><img src="https://avatars.githubusercontent.com/u/26322785?v=4" alt="httpcheck" /></a>
+            <img src="https://avatars.githubusercontent.com/u/24652625?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/35678187?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/52775847?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/1503105?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/26900681?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/18729086?v=4" alt="贡献者" />
+            <img src="https://avatars.githubusercontent.com/u/60590060?v=4" alt="贡献者" />
+          </div>
+        </section>
+
+        <section class="container content-row feedback-section">
+          <div class="text-wrap">
+            <h2>问题反馈</h2>
+            <img class="pay-code" src="/assets/pay.png" alt="赞赏码" />
+            <ul class="feedback-list">
+              <li><img src="/assets/notice.svg" alt="" />Bug 反馈请直接去 GitHub 上面提 <a href="https://github.com/buuing/lucky-canvas/issues" target="_blank" rel="noreferrer">Issues</a>，我会实时收到邮件提醒前去查看</li>
+              <li><img src="/assets/msg.svg" alt="" />如果是小白需要技术指导的话，右边是我的赞赏码，备注好你的微信号，我看到后会主动加你</li>
+              <li><img src="/assets/issues.svg" alt="" />但如果是因为我文档没写清楚，或者是插件本身的 bug，导致你无法正常使用的话，赞赏全额返还</li>
+            </ul>
+          </div>
+          <div class="illustration-wrap"><img src="/assets/Data.svg" alt="问题反馈插画" /></div>
+        </section>
+
+        <section class="container content-row faq-section" id="faq">
+          <div class="illustration-wrap"><img src="/assets/Success.svg" alt="常见问题插画" /></div>
+          <div class="text-wrap">
+            <h2>常见问题</h2>
+            <ul class="faq-list">
+              <li>小程序里 canvas 的层级太高了，把弹窗挡住了怎么办</li>
+            </ul>
+            <p>小程序内 canvas 是原生组件，所以默认就是顶层渲染，我特意对此进行了优化：第一次开始游戏之后，每次结束游戏都会切换成图片来显示；但游戏开始时，抽奖组件还是会切换到 canvas 来渲染</p>
+            <p>查看更多：<a href="https://github.com/buuing/lucky-canvas/issues/181" target="_blank" rel="noreferrer">GitHub Issue #181</a></p>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer class="site-footer">
-      <p>本插件完全免费并保持开源，欢迎在 GitHub 点个 Star 支持项目。</p>
-      <p>2019 – <span id="current-year"></span> · <a href="https://github.com/buuing/lucky-canvas/blob/master/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a></p>
+      <p>本插件完全免费，开源不易，<a href="https://github.com/buuing/lucky-canvas" target="_blank" rel="noreferrer">如果您觉得好用可以在 Github 点个 <b>Star</b> 支持一下</a></p>
+      <p>2019 ~ <span id="current-year"></span> <a href="https://github.com/buuing/lucky-canvas/blob/master/LICENSE" target="_blank" rel="noreferrer">Apache-2.0 License</a></p>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
