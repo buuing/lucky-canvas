@@ -2,7 +2,7 @@ import React from 'react'
 import Taro from '@tarojs/taro'
 import { View, Canvas, Image } from '@tarojs/components'
 import { LuckyWheel as Wheel } from 'lucky-canvas'
-import { changeUnits, resolveImage, getFlag, getImage } from '../utils'
+import { changeUnits, resolveImage, getFlag, getImage, extractUnit } from '../utils'
 import '../utils/index.css'
 
 export default class LuckyWheel extends React.Component {
@@ -16,9 +16,11 @@ export default class LuckyWheel extends React.Component {
     boxHeight: 300,
     btnWidth: 0,
     btnHeight: 0,
+    widthUnix: 'px',
+    heightUnix: 'px'
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
@@ -70,7 +72,9 @@ export default class LuckyWheel extends React.Component {
     const { props } = this
     this.setState({
       boxWidth: changeUnits(props.width),
-      boxHeight: changeUnits(props.height)
+      boxHeight: changeUnits(props.height),
+      widthUnix: extractUnit(props.width),
+      heightUnix: extractUnit(props.height)
     }, () => {
       // 某些情况下获取不到 canvas
       setTimeout(() => {
@@ -179,7 +183,7 @@ export default class LuckyWheel extends React.Component {
 
   render () {
     const { props, state, flag } = this
-    const boxSize = { width: state.boxWidth + 'px', height: state.boxHeight + 'px' }
+    const boxSize = { width: state.boxWidth + state.widthUnix, height: state.boxHeight + state.heightUnix }
     const btnSize = { width: state.btnWidth + 'px', height: state.btnHeight + 'px' }
     const showImage = state.myLucky && flag !== 'WEB'
     return flag === 'WEB' ? <div id={props.canvasId}></div> : (
@@ -189,39 +193,39 @@ export default class LuckyWheel extends React.Component {
         {/* 按钮 */}
         <View className="lucky-wheel-btn" onClick={e => this.toPlay(e)} style={btnSize}></View>
         {/* 图片 */}
-        { showImage ? <View className="lucky-imgs">
+        {showImage ? <View className="lucky-imgs">
           {
             props.blocks.map((block, index) => <View key={index}>
               {
                 block.imgs ? <View>
-                  { block.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'blocks', index, i)}></Image>) }
+                  {block.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'blocks', index, i)}></Image>)}
                 </View> : null
               }
             </View>)
           }
-        </View> : null }
-        { showImage ? <View className="lucky-imgs">
+        </View> : null}
+        {showImage ? <View className="lucky-imgs">
           {
             props.prizes.map((prize, index) => <View key={index}>
               {
                 prize.imgs ? <View>
-                  { prize.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'prizes', index, i)}></Image>) }
+                  {prize.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'prizes', index, i)}></Image>)}
                 </View> : null
               }
             </View>)
           }
-        </View> : null }
-        { showImage ? <View className="lucky-imgs">
+        </View> : null}
+        {showImage ? <View className="lucky-imgs">
           {
             props.buttons.map((button, index) => <View key={index}>
               {
                 button.imgs ? <View>
-                  { button.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'buttons', index, i)}></Image>) }
+                  {button.imgs.map((img, i) => <Image key={i} src={img.src} onLoad={e => this.imgBindload(e, 'buttons', index, i)}></Image>)}
                 </View> : null
               }
             </View>)
           }
-        </View> : null }
+        </View> : null}
       </View>
     )
   }

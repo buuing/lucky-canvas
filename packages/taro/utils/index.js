@@ -89,3 +89,11 @@ export function getImage (canvasId, canvas) {
     }, this)
   })
 }
+
+export const extractUnit = (value) => {
+  const match = value.match(/^(\-*[0-9.]*)([a-z%]*)$/);
+  if (match) {
+    return match[2]; // 返回匹配到的单位部分
+  }
+  return ''; // 如果没有匹配到，返回空字符串或其他默认值
+};
