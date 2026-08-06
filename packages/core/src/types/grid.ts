@@ -1,10 +1,10 @@
 import {
+  BackgroundType,
+  BorderRadiusType,
+  FontExtendType,
   FontItemType,
   ImgItemType,
-  BorderRadiusType,
-  BackgroundType,
-  ShadowType,
-  FontExtendType
+  ShadowType
 } from './index'
 
 export type PrizeFontType = FontItemType & FontExtendType
@@ -90,6 +90,7 @@ export type RowsType = number
 export type ColsType = number
 export type StartCallbackType = (e: MouseEvent, button?: ButtonType) => void
 export type EndCallbackType = (prize: object) => void
+export type ChangeCallbackType = (index: number) => void
 
 export default interface LuckyGridConfig {
   width: string | number
@@ -105,4 +106,5 @@ export default interface LuckyGridConfig {
   activeStyle?: ActiveStyleType
   start?: StartCallbackType
   end?: EndCallbackType
+  change?: ChangeCallbackType
 }
