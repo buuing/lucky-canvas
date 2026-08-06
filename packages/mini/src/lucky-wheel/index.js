@@ -72,6 +72,12 @@ Component({
             luckyImg: '',
             showCanvas: true
           })
+        },
+        // iOS-specific accessibility code
+        accessibility: {
+          role: 'button',
+          label: 'Lucky Wheel',
+          hint: 'Double tap to start the game'
         }
       }, {
         blocks: data.blocks,

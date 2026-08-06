@@ -61,6 +61,12 @@ Component({
             luckyImg: '',
             showCanvas: true
           })
+        },
+        // iOS-specific accessibility code
+        accessibility: {
+          role: 'button',
+          label: 'Slot Machine',
+          hint: 'Double tap to start the game'
         }
       }, {
         width: res[0].width,

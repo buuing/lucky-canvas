@@ -64,6 +64,12 @@ Component({
             luckyImg: '',
             showCanvas: true
           })
+        },
+        // iOS-specific accessibility code
+        accessibility: {
+          role: 'button',
+          label: 'Lucky Grid',
+          hint: 'Double tap to start the game'
         }
       }, {
         rows: data.rows,
