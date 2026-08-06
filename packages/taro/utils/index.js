@@ -1,6 +1,12 @@
 import Taro from '@tarojs/taro'
 
-const windowWidth = Taro.getSystemInfoSync().windowWidth
+const windowWidth = (() => {
+  if (typeof navigator !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform)) {
+    return window.innerWidth;
+  } else {
+    return Taro.getSystemInfoSync().windowWidth;
+  }
+})();
 
 export const getFlag = () => {
   let flag

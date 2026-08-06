@@ -1,6 +1,12 @@
-let windowWidth = uni.getSystemInfoSync().windowWidth
-// uni-app@2.9起, 屏幕最多适配到960, 超出则按375计算
-if (windowWidth > 960) windowWidth = 375
+let windowWidth = (() => {
+  if (typeof navigator !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform)) {
+    return window.innerWidth;
+  } else {
+    let width = uni.getSystemInfoSync().windowWidth;
+    if (width > 960) width = 375;
+    return width;
+  }
+})();
 
 export const rpx2px = (value) => {
   if (typeof value === 'string') value = Number(value.replace(/[a-z]*/g, ''))

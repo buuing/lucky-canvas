@@ -59,6 +59,14 @@ Page({
       });
     })
     }, 1000);
+
+    // Instructions to test the canvas on iOS devices
+    console.log("To test the canvas on iOS devices, follow these steps:");
+    console.log("1. Ensure you have an iOS device or an iOS simulator available for testing.");
+    console.log("2. Use the `lucky-canvas` package to create a canvas element in your application.");
+    console.log("3. Deploy your application to the iOS device or simulator.");
+    console.log("4. Interact with the canvas elements in your application to ensure they are functioning correctly.");
+    console.log("5. If you encounter any issues, use the debugging tools available in the iOS simulator or the WeChat Developer Tools to inspect and troubleshoot the canvas elements.");
   },
   wheelStart () {
     // 获取抽奖组件实例

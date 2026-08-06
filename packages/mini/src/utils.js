@@ -1,4 +1,10 @@
-const windowWidth = wx.getSystemInfoSync().windowWidth
+const windowWidth = (() => {
+  if (typeof navigator !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform)) {
+    return window.innerWidth;
+  } else {
+    return wx.getSystemInfoSync().windowWidth;
+  }
+})();
 
 export const rpx2px = (value) => {
   if (typeof value === 'string') value = Number(value.replace(/[a-z]*/g, ''))
